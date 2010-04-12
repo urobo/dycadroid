@@ -3,15 +3,22 @@
  */
 package eu.fbk.dycapo.opentrip;
 
+import java.util.Date;
+
+
+
 /**
  * @author riccardo
  *
  */
 public class Person {
-	private String name;
-	private String userid;
+	private String username;
 	private String email;
+	private String password;
+	private String first_name;
+	private String last_name;
 	private String uri;
+	
 	private String phone;
 	private Location position;
 	private int age;
@@ -26,28 +33,16 @@ public class Person {
 	public Person() {
 	}
 	/**
-	 * @return the name
+	 * @return the username
 	 */
-	public String getName() {
-		return name;
+	public String getUsername() {
+		return username;
 	}
 	/**
-	 * @param name the name to set
+	 * @param username the username to set
 	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-	/**
-	 * @return the userid
-	 */
-	public String getUserid() {
-		return userid;
-	}
-	/**
-	 * @param userid the userid to set
-	 */
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	/**
 	 * @return the email
@@ -60,6 +55,66 @@ public class Person {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	/**
+	 * @return the first_name
+	 */
+	public String getFirst_name() {
+		return first_name;
+	}
+	/**
+	 * @param firstName the first_name to set
+	 */
+	public void setFirst_name(String firstName) {
+		first_name = firstName;
+	}
+	/**
+	 * @return the last_name
+	 */
+	public String getLast_name() {
+		return last_name;
+	}
+	/**
+	 * @param lastName the last_name to set
+	 */
+	public void setLast_name(String lastName) {
+		last_name = lastName;
+	}
+	/**
+	 * @return the last_login
+	 */
+	public Date getLast_login() {
+		return last_login;
+	}
+	/**
+	 * @param lastLogin the last_login to set
+	 */
+	public void setLast_login(Date lastLogin) {
+		last_login = lastLogin;
+	}
+	/**
+	 * @return the date_joined
+	 */
+	public Date getDate_joined() {
+		return date_joined;
+	}
+	/**
+	 * @param dateJoined the date_joined to set
+	 */
+	public void setDate_joined(Date dateJoined) {
+		date_joined = dateJoined;
 	}
 	/**
 	 * @return the uri
@@ -169,4 +224,5 @@ public class Person {
 	public void setDog(boolean dog) {
 		this.dog = dog;
 	}
+	
 }

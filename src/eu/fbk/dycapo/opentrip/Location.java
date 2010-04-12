@@ -3,7 +3,7 @@
  */
 package eu.fbk.dycapo.opentrip;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @author riccardo
@@ -23,12 +23,10 @@ public class Location {
 	private String georss_point;
 	private float georss_latitude;
 	private float georss_longitude;
-	private int georss_radius;
-	private String georss_box;
 	private int offset;
 	private String recurs;
 	private String days;
-	private Timestamp leaves;
+	private Date leaves;
 	/**
 	 * 
 	 */
@@ -192,30 +190,6 @@ public class Location {
 		georss_longitude = georssLongitude;
 	}
 	/**
-	 * @return the georss_radius
-	 */
-	public int getGeorss_radius() {
-		return georss_radius;
-	}
-	/**
-	 * @param georssRadius the georss_radius to set
-	 */
-	public void setGeorss_radius(int georssRadius) {
-		georss_radius = georssRadius;
-	}
-	/**
-	 * @return the georss_box
-	 */
-	public String getGeorss_box() {
-		return georss_box;
-	}
-	/**
-	 * @param georssBox the georss_box to set
-	 */
-	public void setGeorss_box(String georssBox) {
-		georss_box = georssBox;
-	}
-	/**
 	 * @return the offset
 	 */
 	public int getOffset() {
@@ -254,13 +228,14 @@ public class Location {
 	/**
 	 * @return the leaves
 	 */
-	public Timestamp getLeaves() {
+	public Date getLeaves() {
 		return leaves;
 	}
 	/**
 	 * @param leaves the leaves to set
 	 */
-	public void setLeaves(Timestamp leaves) {
+	public void setLeaves(Date leaves) {
 		this.leaves = leaves;
-	}	
+	}
+		
 }
