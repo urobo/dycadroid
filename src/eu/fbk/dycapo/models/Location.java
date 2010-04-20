@@ -1,15 +1,35 @@
 /**
  * 
  */
-package eu.fbk.dycapo.opentrip;
+package eu.fbk.dycapo.models;
 
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * @author riccardo
  *
  */
-public class Location {
+public class Location implements XMLRPCModel {
+	
+	private static final String LABEL="label";
+	private static final String STREET="street";
+	private static final String POINT="point";
+	private static final String COUNTRY="country";
+	private static final String REGION="region";
+	private static final String TOWN="town";
+	private static final String POSTCODE="postcode";
+	private static final String SUBREGION="subregion";
+	private static final String INTERSECTION="intersection";
+	private static final String ADDRESS="address";
+	private static final String GEORSS_POINT="georss_point";
+	private static final String GEORSS_LATITUDE="georss_latitude";
+	private static final String GEORSS_LONGITUDE="georss_longitude";
+	private static final String OFFSET="offset";
+	private static final String RECURS="recurs";
+	private static final String DAYS="days";
+	private static final String LEAVES="leaves";	
+	
 	private String label;
 	private String street;
 	private String point;
@@ -237,5 +257,26 @@ public class Location {
 	public void setLeaves(Date leaves) {
 		this.leaves = leaves;
 	}
-		
+	
+	public HashMap<String,Object> toHashMap(){
+		HashMap<String,Object> result = new HashMap<String,Object>();
+		result.put(Location.ADDRESS,this.address);
+		result.put(Location.COUNTRY,this.country);
+		result.put(Location.DAYS,this.days);
+		result.put(Location.GEORSS_LATITUDE,this.georss_latitude);
+		result.put(Location.GEORSS_LONGITUDE,this.address);
+		result.put(Location.GEORSS_POINT,this.address);
+		result.put(Location.INTERSECTION,this.address);
+		result.put(Location.LABEL,this.address);
+		result.put(Location.LEAVES,this.address);
+		result.put(Location.OFFSET,this.address);
+		result.put(Location.POINT,this.address);
+		result.put(Location.POSTCODE,this.address);
+		result.put(Location.RECURS,this.address);
+		result.put(Location.REGION,this.address);
+		result.put(Location.STREET,this.address);
+		result.put(Location.SUBREGION,this.address);
+		result.put(Location.TOWN, this.town);
+		return result;
+	}
 }

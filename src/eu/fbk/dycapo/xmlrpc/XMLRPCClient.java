@@ -23,6 +23,8 @@ import org.apache.http.params.HttpProtocolParams;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import android.util.Log;
+
 /**
  * XMLRPCClient allows to call remote XMLRPC method.
  * 
@@ -74,12 +76,13 @@ public class XMLRPCClient extends XMLRPCCommon {
 	private HttpClient client;
 	private HttpPost postMethod;
 	private HttpParams httpParams;
+	
+	
+	
+	
+	
+	public XMLRPCClient(URI uri, HttpClient client) {
 
-	/**
-	 * XMLRPCClient constructor. Creates new instance based on server URI
-	 * @param XMLRPC server URI
-	 */
-	public XMLRPCClient(URI uri) {
 		postMethod = new HttpPost(uri);
 		postMethod.addHeader("Content-Type", "text/xml");
 		
@@ -88,8 +91,17 @@ public class XMLRPCClient extends XMLRPCCommon {
 		// two second delay between sending http POST request and POST body 
 		httpParams = postMethod.getParams();
 		HttpProtocolParams.setUseExpectContinue(httpParams, false);
-		client = new DefaultHttpClient();
+		this.client = client;
 	}
+	/**
+	 * XMLRPCClient constructor. Creates new instance based on server URI
+	 * @param XMLRPC server URI
+	 */
+	public XMLRPCClient(URI uri) {
+		this(uri, new DefaultHttpClient());
+	}
+
+	
 	
 	/**
 	 * Convenience constructor. Creates new instance based on server String address
@@ -103,6 +115,7 @@ public class XMLRPCClient extends XMLRPCCommon {
 	 * Convenience XMLRPCClient constructor. Creates new instance based on server URL
 	 * @param XMLRPC server URL
 	 */
+	
 	public XMLRPCClient(URL url) {
 		this(URI.create(url.toExternalForm()));
 	}
@@ -171,11 +184,14 @@ AuthScope.ANY_REALM),
 
 			// set POST body
 			HttpEntity entity = new StringEntity(body);
+			
 			postMethod.setEntity(entity);
 
-			//Log.d(Tag.LOG, "ros HTTP POST");
+			Log.d(Tag.LOG, "ros HTTP POST");
 			// execute HTTP POST request
+	
 			HttpResponse response = client.execute(postMethod);
+
 			//Log.d(Tag.LOG, "ros HTTP POSTed");
 
 			// check status code
@@ -232,7 +248,8 @@ AuthScope.ANY_REALM),
 			// catch & propagate XMLRPCException/XMLRPCFault
 			throw e;
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			Log.e("xmlrpc", e.getMessage());
 			// wrap any other Exception(s) around XMLRPCException
 			throw new XMLRPCException(e);
 		}

@@ -1,17 +1,30 @@
 /**
  * 
  */
-package eu.fbk.dycapo.opentrip;
+package eu.fbk.dycapo.models;
 
 
 import java.util.Date;
+import java.util.HashMap;
 
 
 /**
  * @author riccardo
  *
  */
-public class Trip {
+public class Trip implements XMLRPCModel {
+	private static final String PUBLISHED="published";
+	private static final String UPDATED="updated";
+	private static final String EXPIRES="expires";
+	private static final String CONTENT="content";
+	private static final String ACTIVE="active";
+	private static final String AUTHOR="author";
+	private static final String MODE="mode";
+	private static final String PREFERENCES="preferences";
+	private static final String ORIGIN="origin";
+	private static final String DESTINATION="destination";
+	private static final String WAYPOINTS="waypoints";
+	
 	private Date published;
 	private Date updated;
 	private Date expires;
@@ -188,4 +201,21 @@ public class Trip {
 		this.waypoints = waypoints;
 	}
 	
+	public HashMap<String,Object> toHashMap(){
+		HashMap<String,Object> result = new HashMap<String,Object>();
+		result.put(Trip.ACTIVE,this.active);
+		result.put(Trip.AUTHOR,this.author);
+		result.put(Trip.CONTENT,this.content);
+		result.putAll(this.destination.toHashMap());
+		result.put(Trip.EXPIRES,this.expires);
+		result.putAll(this.mode.toHashMap());
+		result.putAll(this.origin.toHashMap());
+		result.putAll(this.preferences.toHashMap());
+		result.put(Trip.PUBLISHED,this.published);
+		result.put(Trip.UPDATED, this.updated);
+		int length= this.waypoints.length;
+		for (int i = 0 ; i< length ; i++)
+			result.putAll(this.waypoints[i].toHashMap());
+		return result;
+	}
 }

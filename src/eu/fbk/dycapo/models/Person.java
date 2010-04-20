@@ -1,24 +1,37 @@
 /**
  * 
  */
-package eu.fbk.dycapo.opentrip;
+package eu.fbk.dycapo.models;
 
-import java.util.Date;
-
-
+import java.util.HashMap;
 
 /**
  * @author riccardo
  *
  */
-public class Person {
+public class Person implements XMLRPCModel{
+	
+	private static final String USERNAME="username";
+	private static final String EMAIL="email";
+	private static final String PASSWORD="password";
+	private static final String FIRST_NAME="first_name";
+	private static final String LAST_NAME="last_name";
+	private static final String URI="uri";
+	private static final String PHONE="phone";
+	private static final String POSITION="position";
+	private static final String AGE="age";
+	private static final String GENDER="gender";
+	private static final String SMOKER="smoker";
+	private static final String BLIND="blind";
+	private static final String DEAF="deaf";
+	private static final String DOG="dog";
+	
 	private String username;
 	private String email;
 	private String password;
 	private String first_name;
 	private String last_name;
 	private String uri;
-	
 	private String phone;
 	private Location position;
 	private int age;
@@ -27,11 +40,69 @@ public class Person {
 	private boolean blind;
 	private boolean deaf;
 	private boolean dog;
+	
 	/**
 	 * 
 	 */
 	public Person() {
 	}
+	
+	
+	public Person(String username, String email, String password,
+			String firstName, String lastName, int age, String gender,
+			boolean smoker, boolean blind, boolean deaf, boolean dog) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.first_name = firstName;
+		this.last_name = lastName;
+		this.age = age;
+		this.gender = gender;
+		this.smoker = smoker;
+		this.blind = blind;
+		this.deaf = deaf;
+		this.dog = dog;
+	}
+	
+
+
+	/**
+	 * @param username
+	 * @param email
+	 * @param password
+	 * @param firstName
+	 * @param lastName
+	 * @param uri
+	 * @param phone
+	 * @param position
+	 * @param age
+	 * @param gender
+	 * @param smoker
+	 * @param blind
+	 * @param deaf
+	 * @param dog
+	 */
+	public Person(String username, String email, String password,
+			String firstName, String lastName, String uri, String phone,
+			Location position, int age, String gender, boolean smoker,
+			boolean blind, boolean deaf, boolean dog) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.first_name = firstName;
+		this.last_name = lastName;
+		this.uri = uri;
+		this.phone = phone;
+		this.position = position;
+		this.age = age;
+		this.gender = gender;
+		this.smoker = smoker;
+		this.blind = blind;
+		this.deaf = deaf;
+		this.dog = dog;
+	}
+
+
 	/**
 	 * @return the username
 	 */
@@ -92,30 +163,8 @@ public class Person {
 	public void setLast_name(String lastName) {
 		last_name = lastName;
 	}
-	/**
-	 * @return the last_login
-	 */
-	public Date getLast_login() {
-		return last_login;
-	}
-	/**
-	 * @param lastLogin the last_login to set
-	 */
-	public void setLast_login(Date lastLogin) {
-		last_login = lastLogin;
-	}
-	/**
-	 * @return the date_joined
-	 */
-	public Date getDate_joined() {
-		return date_joined;
-	}
-	/**
-	 * @param dateJoined the date_joined to set
-	 */
-	public void setDate_joined(Date dateJoined) {
-		date_joined = dateJoined;
-	}
+	
+
 	/**
 	 * @return the uri
 	 */
@@ -223,6 +272,27 @@ public class Person {
 	 */
 	public void setDog(boolean dog) {
 		this.dog = dog;
+	}
+
+
+	@Override
+	public HashMap<String, Object> toHashMap() {
+		HashMap<String,Object> result = new HashMap<String,Object>();
+		result.put(Person.AGE,this.age);
+		result.put(Person.BLIND,this.blind);
+		result.put(Person.DEAF,this.deaf);
+		result.put(Person.DOG,this.dog);
+		result.put(Person.EMAIL,this.email);
+		result.put(Person.FIRST_NAME,this.first_name);
+		result.put(Person.GENDER,this.gender);
+		result.put(Person.LAST_NAME,this.last_name);
+		result.put(Person.PASSWORD,this.password);
+		result.put(Person.PHONE,this.phone);
+		result.put(Person.POSITION,this.position);
+		result.put(Person.SMOKER,this.smoker);
+		result.put(Person.URI,this.uri);
+		result.put(Person.USERNAME,this.username);
+		return result;
 	}
 	
 }

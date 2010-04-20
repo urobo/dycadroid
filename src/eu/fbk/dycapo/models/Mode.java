@@ -1,7 +1,9 @@
 /**
  * 
  */
-package eu.fbk.dycapo.opentrip;
+package eu.fbk.dycapo.models;
+
+import java.util.HashMap;
 
 /**
  * @author riccardo
@@ -11,7 +13,18 @@ package eu.fbk.dycapo.opentrip;
  * @author riccardo
  *
  */
-public class Mode {
+public class Mode implements XMLRPCModel {
+	
+	private static final String KIND="kind";
+	private static final String CAPACITY="capacity";
+	private static final String VACANCY="vacancy";
+	private static final String MAKE="make";
+	private static final String MODEL="model";
+	private static final String YEAR="year";
+	private static final String COLOR="color";
+	private static final String LIC="lic";
+	private static final String COST="cost";
+	
 	private String kind;
 	private int capacity;
 	private int vacancy;
@@ -155,4 +168,17 @@ public class Mode {
 		this.cost = cost;
 	}
 	
+	public HashMap<String,Object> toHashMap(){
+		HashMap<String,Object> result = new HashMap<String,Object>();
+		result.put(Mode.CAPACITY,this.capacity);
+		result.put(Mode.COLOR,this.color);
+		result.put(Mode.COST,this.cost);
+		result.put(Mode.KIND,this.kind);
+		result.put(Mode.LIC,this.lic);
+		result.put(Mode.MAKE,this.make);
+		result.put(Mode.MODEL,this.model);
+		result.put(Mode.VACANCY,this.vacancy);
+		result.put(Mode.YEAR,this.year);
+		return result;
+	}
 }

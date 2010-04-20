@@ -1,7 +1,7 @@
 /**
  * 
  */
-package eu.fbk.dycapo.opentrip;
+package eu.fbk.dycapo.models;
 
 import java.util.HashMap;
 
@@ -13,7 +13,7 @@ public class Response {
 	private int code;
 	private String message;
 	private String type;
-	private HashMap value;
+	private HashMap<String,Object> value;
 	
 	/**
 	 * 
@@ -67,14 +67,14 @@ public class Response {
 	/**
 	 * @return the value
 	 */
-	public HashMap getValue() {
+	public HashMap<String,Object> getValue() {
 		return value;
 	}
 
 	/**
 	 * @param value the value to set
 	 */
-	public void setValue(HashMap value) {
+	public void setValue(HashMap<String,Object> value) {
 		this.value = value;
 	}
 }
