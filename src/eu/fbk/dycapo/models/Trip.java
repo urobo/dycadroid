@@ -17,17 +17,12 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
 
 public class Trip implements XMLRPCModel {
-	private static final String PUBLISHED="published";
-	private static final String UPDATED="updated";
-	private static final String EXPIRES="expires";
-	private static final String CONTENT="content";
-	private static final String ACTIVE="active";
-	private static final String AUTHOR="author";
-	private static final String MODE="mode";
-	private static final String PREFERENCES="preferences";
-	private static final String ORIGIN="origin";
-	private static final String DESTINATION="destination";
-	private static final String WAYPOINTS="waypoints";
+	public static final String PUBLISHED="published";
+	public static final String UPDATED="updated";
+	public static final String EXPIRES="expires";
+	public static final String CONTENT="content";
+	public static final String AUTHOR="author";
+
 	
 	private Date published;			//may
 	private Date updated;			//should
@@ -37,6 +32,12 @@ public class Trip implements XMLRPCModel {
 	
 	
 	public class Content implements XMLRPCModel{
+		public static final String MODE="mode";
+		public static final String PREFERENCES="preferences";
+		public static final String ORIGIN="origin";
+		public static final String DESTINATION="destination";
+		public static final String WAYPOINTS="waypoints";
+		
 		private Mode mode;					//must
 		private Preferences preferences;	//must
 		private Location origin;			//must

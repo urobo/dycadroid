@@ -14,20 +14,20 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  */
 public class Location implements XMLRPCModel {
 	
-	private static final String LABEL="label";
-	private static final String STREET="street";
-	private static final String POINT="point";
-	private static final String COUNTRY="country";
-	private static final String REGION="region";
-	private static final String TOWN="town";
-	private static final String POSTCODE="postcode";
-	private static final String SUBREGION="subregion";
-	private static final String GEORSS_POINT="georss_point";
-	private static final String OFFSET="offset";
-	private static final String RECURS="recurs";
-	private static final String DAYS="days";
-	private static final String LEAVES="leaves";
-	private static final String[] POINT_TYPE = {	"orig",
+	public static final String LABEL="label";
+	public static final String STREET="street";
+	public static final String POINT="point";
+	public static final String COUNTRY="country";
+	public static final String REGION="region";
+	public static final String TOWN="town";
+	public static final String POSTCODE="postcode";
+	public static final String SUBREGION="subregion";
+	public static final String GEORSS_POINT="georss_point";
+	public static final String OFFSET="offset";
+	public static final String RECURS="recurs";
+	public static final String DAYS="days";
+	public static final String LEAVES="leaves";
+	public static final String[] POINT_TYPE = {	"orig",
 													"dest",
 													"wayp",
 													"posi"
