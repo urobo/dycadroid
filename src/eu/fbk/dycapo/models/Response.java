@@ -3,17 +3,21 @@
  */
 package eu.fbk.dycapo.models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import eu.fbk.dycapo.factories.DycapoObjectsFactory;
+import eu.fbk.dycapo.factories.DycapoObjectsFetcher;
 
 /**
  * @author riccardo
  *
  */
-public class Response {
-	private int code;
-	private String message;
-	private String type;
-	private HashMap<String,Object> value;
+public class Response implements DycapoObjectsFactory{
+	private int code;						//must
+	private String message;					//must
+	private String type;					//must
+	private HashMap<String,Object> value;	//must
 	
 	/**
 	 * 
@@ -77,4 +81,23 @@ public class Response {
 	public void setValue(HashMap<String,Object> value) {
 		this.value = value;
 	}
+
+	@Override
+	public Object fetchXMLRPCResponse() {
+		if (this instanceof eu.fbk.dycapo.models.Response){
+			if(this.type.toLowerCase() == "trip"){
+				return DycapoObjectsFetcher.buildTrip(this.value);
+			}else if(this.type.toLowerCase() == "person"){
+				return DycapoObjectsFetcher.buildPerson(this.value);
+			}else if (this.type.toLowerCase() == "location"){
+				return DycapoObjectsFetcher.buildLocation(this.value);
+			}else if (this.type.toLowerCase() == "mode"){
+				return DycapoObjectsFetcher.buildMode(this.value);
+			}
+		}
+		return null;
+	}
+
+	
+	
 }

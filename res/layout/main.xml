@@ -2,11 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
+    android:layout_height="fill_parent">
+	<LinearLayout android:id="@+id/LinearLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content">
+		<TextView  
+			android:id="@+id/TextView01" 
+   	 		android:layout_width="fill_parent" 
+   	 		android:layout_height="wrap_content" 
+   	 		android:text="@string/test1"/>
+   	 	<Button 
+   	 		android:text="@string/button" 
+   	 		android:id="@+id/Button01" 
+   	 		android:layout_width="wrap_content" 
+   	 		android:layout_height="wrap_content">
+   	 	</Button>
+   	</LinearLayout>
+	<LinearLayout android:id="@+id/LinearLayout02" android:layout_width="wrap_content" android:layout_height="wrap_content">
+		<TextView 
+			android:text="@string/test2" 
+			android:id="@+id/TextView02" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content">
+		</TextView>
+		<Button 
+			android:text="@string/button" 
+			android:id="@+id/Button02" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content">
+		</Button>
+	</LinearLayout>
 </LinearLayout>

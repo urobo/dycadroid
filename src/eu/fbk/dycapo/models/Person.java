@@ -5,6 +5,8 @@ package eu.fbk.dycapo.models;
 
 import java.util.HashMap;
 
+import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
+
 /**
  * @author riccardo
  *
@@ -26,21 +28,21 @@ public class Person implements XMLRPCModel{
 	private static final String DEAF="deaf";
 	private static final String DOG="dog";
 	
-	private String username;
-	private String email;
-	private String password;
-	private String first_name;
-	private String last_name;
-	private String uri;
-	private String phone;
-	private Location position;
-	private int age;
-	private String gender;
-	private boolean smoker;
-	private boolean blind;
-	private boolean deaf;
-	private boolean dog;
-	
+	private String username;	//must
+	private String email;		//may
+	private String password;	
+	private String first_name;	//should
+	private String last_name;	//should
+	private String uri;			//may
+	private String phone;		//should
+	private Location position;	//may
+	private int age;			//should
+	private String gender;		//should
+	private boolean smoker;		//may
+	private boolean blind;		//should
+	private boolean deaf;		//should
+	private boolean dog;		//should
+		
 	/**
 	 * 
 	 */
@@ -264,7 +266,7 @@ public class Person implements XMLRPCModel{
 	/**
 	 * @return the dog
 	 */
-	public boolean isDog() {
+	public boolean hasDog() {
 		return dog;
 	}
 	/**
@@ -278,20 +280,19 @@ public class Person implements XMLRPCModel{
 	@Override
 	public HashMap<String, Object> toHashMap() {
 		HashMap<String,Object> result = new HashMap<String,Object>();
-		result.put(Person.AGE,this.age);
+		if (this.age > 0 && this.age < 100)result.put(Person.AGE,this.age);
 		result.put(Person.BLIND,this.blind);
 		result.put(Person.DEAF,this.deaf);
 		result.put(Person.DOG,this.dog);
-		result.put(Person.EMAIL,this.email);
-		result.put(Person.FIRST_NAME,this.first_name);
-		result.put(Person.GENDER,this.gender);
-		result.put(Person.LAST_NAME,this.last_name);
-		result.put(Person.PASSWORD,this.password);
-		result.put(Person.PHONE,this.phone);
-		result.put(Person.POSITION,this.position);
+		if (this.email instanceof java.lang.String)result.put(Person.EMAIL,this.email);
+		if (this.first_name instanceof java.lang.String)result.put(Person.FIRST_NAME,this.first_name);
+		if (this.gender instanceof java.lang.String)result.put(Person.GENDER,this.gender);
+		if (this.last_name instanceof java.lang.String)result.put(Person.LAST_NAME,this.last_name);
+		if (this.phone instanceof java.lang.String)result.put(Person.PHONE,this.phone);
+		result.putAll(this.position.toHashMap());
 		result.put(Person.SMOKER,this.smoker);
-		result.put(Person.URI,this.uri);
-		result.put(Person.USERNAME,this.username);
+		if (this.uri instanceof java.lang.String)result.put(Person.URI,this.uri);
+		if (this.username instanceof java.lang.String)result.put(Person.USERNAME,this.username);
 		return result;
 	}
 	

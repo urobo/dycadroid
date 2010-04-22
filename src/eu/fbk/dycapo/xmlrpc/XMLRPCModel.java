@@ -1,7 +1,7 @@
 /**
  * 
  */
-package eu.fbk.dycapo.models;
+package eu.fbk.dycapo.xmlrpc;
 
 import java.util.HashMap;
 

@@ -6,6 +6,8 @@ package eu.fbk.dycapo.models;
 import java.util.Date;
 import java.util.HashMap;
 
+import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
+
 /**
  * @author riccardo
  *
@@ -20,39 +22,53 @@ public class Location implements XMLRPCModel {
 	private static final String TOWN="town";
 	private static final String POSTCODE="postcode";
 	private static final String SUBREGION="subregion";
-	private static final String INTERSECTION="intersection";
-	private static final String ADDRESS="address";
 	private static final String GEORSS_POINT="georss_point";
-	private static final String GEORSS_LATITUDE="georss_latitude";
-	private static final String GEORSS_LONGITUDE="georss_longitude";
 	private static final String OFFSET="offset";
 	private static final String RECURS="recurs";
 	private static final String DAYS="days";
-	private static final String LEAVES="leaves";	
+	private static final String LEAVES="leaves";
+	private static final String[] POINT_TYPE = {	"orig",
+													"dest",
+													"wayp",
+													"posi"
+													};
 	
 	private String label;
 	private String street;
-	private String point;
+	private int point;
 	private String country;
 	private String region;
 	private String town;
 	private int postcode;
 	private String subregion;
-	private String intersection;
-	private String address;
 	private String georss_point;
-	private float georss_latitude;
-	private float georss_longitude;
 	private int offset;
 	private String recurs;
 	private String days;
-	private Date leaves;
+	private Date leaves; 
 	/**
 	 * 
 	 */
 	public Location() {
 		
 	}
+	
+	/** 
+	 * @param label
+	 * @param point
+	 * @param georssPoint
+	 * @param offset
+	 * @param leaves
+	 */
+	public Location(String label, int point, String georssPoint,
+			int offset, Date leaves) {
+		this.label = label;
+		this.point = point;
+		this.georss_point = georssPoint;
+		this.offset = offset;
+		this.leaves = leaves;
+	}
+
 	/**
 	 * @return the label
 	 */
@@ -80,13 +96,13 @@ public class Location implements XMLRPCModel {
 	/**
 	 * @return the point
 	 */
-	public String getPoint() {
+	public int getPoint() {
 		return point;
 	}
 	/**
 	 * @param point the point to set
 	 */
-	public void setPoint(String point) {
+	public void setPoint(int point) {
 		this.point = point;
 	}
 	/**
@@ -149,30 +165,7 @@ public class Location implements XMLRPCModel {
 	public void setSubregion(String subregion) {
 		this.subregion = subregion;
 	}
-	/**
-	 * @return the intersection
-	 */
-	public String getIntersection() {
-		return intersection;
-	}
-	/**
-	 * @param intersection the intersection to set
-	 */
-	public void setIntersection(String intersection) {
-		this.intersection = intersection;
-	}
-	/**
-	 * @return the address
-	 */
-	public String getAddress() {
-		return address;
-	}
-	/**
-	 * @param address the address to set
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
+
 	/**
 	 * @return the georss_point
 	 */
@@ -188,27 +181,7 @@ public class Location implements XMLRPCModel {
 	/**
 	 * @return the georss_latitude
 	 */
-	public float getGeorss_latitude() {
-		return georss_latitude;
-	}
-	/**
-	 * @param georssLatitude the georss_latitude to set
-	 */
-	public void setGeorss_latitude(float georssLatitude) {
-		georss_latitude = georssLatitude;
-	}
-	/**
-	 * @return the georss_longitude
-	 */
-	public float getGeorss_longitude() {
-		return georss_longitude;
-	}
-	/**
-	 * @param georssLongitude the georss_longitude to set
-	 */
-	public void setGeorss_longitude(float georssLongitude) {
-		georss_longitude = georssLongitude;
-	}
+	
 	/**
 	 * @return the offset
 	 */
@@ -254,29 +227,26 @@ public class Location implements XMLRPCModel {
 	/**
 	 * @param leaves the leaves to set
 	 */
+	//FIXME
 	public void setLeaves(Date leaves) {
 		this.leaves = leaves;
 	}
-	
+
 	public HashMap<String,Object> toHashMap(){
 		HashMap<String,Object> result = new HashMap<String,Object>();
-		result.put(Location.ADDRESS,this.address);
-		result.put(Location.COUNTRY,this.country);
-		result.put(Location.DAYS,this.days);
-		result.put(Location.GEORSS_LATITUDE,this.georss_latitude);
-		result.put(Location.GEORSS_LONGITUDE,this.address);
-		result.put(Location.GEORSS_POINT,this.address);
-		result.put(Location.INTERSECTION,this.address);
-		result.put(Location.LABEL,this.address);
-		result.put(Location.LEAVES,this.address);
-		result.put(Location.OFFSET,this.address);
-		result.put(Location.POINT,this.address);
-		result.put(Location.POSTCODE,this.address);
-		result.put(Location.RECURS,this.address);
-		result.put(Location.REGION,this.address);
-		result.put(Location.STREET,this.address);
-		result.put(Location.SUBREGION,this.address);
-		result.put(Location.TOWN, this.town);
+	    if (this.country instanceof java.lang.String)result.put(Location.COUNTRY,this.country);
+		if (this.days instanceof java.lang.String)result.put(Location.DAYS,this.days);
+		if (this.georss_point instanceof java.lang.String)result.put(Location.GEORSS_POINT,this.georss_point);
+		if (this.label instanceof java.lang.String)result.put(Location.LABEL,this.label);
+		if (this.leaves instanceof java.util.Date)result.put(Location.LEAVES,this.leaves.toString());
+		if (this.offset > 0)result.put(Location.OFFSET,this.offset);
+		if (this.point >= 0 && this.point <4)result.put(Location.POINT,Location.POINT_TYPE[this.point]);
+		if (this.postcode >= 0)result.put(Location.POSTCODE,this.postcode);
+		if (this.recurs instanceof java.lang.String)result.put(Location.RECURS,this.recurs);
+		if (this.region instanceof java.lang.String)result.put(Location.REGION,this.region);
+		if (this.street instanceof java.lang.String)result.put(Location.STREET,this.street);
+		if (this.subregion instanceof java.lang.String)result.put(Location.SUBREGION,this.subregion);
+		if (this.town instanceof java.lang.String)result.put(Location.TOWN, this.town);
 		return result;
 	}
 }

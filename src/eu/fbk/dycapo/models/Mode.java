@@ -5,6 +5,8 @@ package eu.fbk.dycapo.models;
 
 import java.util.HashMap;
 
+import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
+
 /**
  * @author riccardo
  *
@@ -25,15 +27,15 @@ public class Mode implements XMLRPCModel {
 	private static final String LIC="lic";
 	private static final String COST="cost";
 	
-	private String kind;
-	private int capacity;
-	private int vacancy;
-	private String make;
-	private String model;
-	private int year;
-	private String color;
-	private String lic;
-	private float cost;
+	private String kind;		//must
+	private int capacity;		//must
+	private int vacancy;		//must
+	private String make;		//must
+	private String model;		//must
+	private int year;			//may
+	private String color;		//should
+	private String lic;			//should
+	private float cost;			//should
 	
 	/**
 	 * 
@@ -170,15 +172,15 @@ public class Mode implements XMLRPCModel {
 	
 	public HashMap<String,Object> toHashMap(){
 		HashMap<String,Object> result = new HashMap<String,Object>();
-		result.put(Mode.CAPACITY,this.capacity);
-		result.put(Mode.COLOR,this.color);
-		result.put(Mode.COST,this.cost);
-		result.put(Mode.KIND,this.kind);
-		result.put(Mode.LIC,this.lic);
-		result.put(Mode.MAKE,this.make);
-		result.put(Mode.MODEL,this.model);
-		result.put(Mode.VACANCY,this.vacancy);
-		result.put(Mode.YEAR,this.year);
+		if (this.capacity >= 2)result.put(Mode.CAPACITY,this.capacity);
+		if (this.color instanceof java.lang.String)result.put(Mode.COLOR,this.color);
+		if (this.cost > 0)result.put(Mode.COST,this.cost);
+		if (this.kind instanceof java.lang.String)result.put(Mode.KIND,this.kind);
+		if (this.lic instanceof java.lang.String)result.put(Mode.LIC,this.lic);
+		if (this.make instanceof java.lang.String)result.put(Mode.MAKE,this.make);
+		if (this.model instanceof java.lang.String)result.put(Mode.MODEL,this.model);
+		if (this.vacancy >=0 && this.vacancy < this.capacity)result.put(Mode.VACANCY,this.vacancy);
+		if (this.year >= 0)result.put(Mode.YEAR,this.year);
 		return result;
 	}
 }

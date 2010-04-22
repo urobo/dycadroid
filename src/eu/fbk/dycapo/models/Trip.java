@@ -7,11 +7,15 @@ package eu.fbk.dycapo.models;
 import java.util.Date;
 import java.util.HashMap;
 
+import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
+
 
 /**
  * @author riccardo
  *
  */
+
+
 public class Trip implements XMLRPCModel {
 	private static final String PUBLISHED="published";
 	private static final String UPDATED="updated";
@@ -25,20 +29,104 @@ public class Trip implements XMLRPCModel {
 	private static final String DESTINATION="destination";
 	private static final String WAYPOINTS="waypoints";
 	
-	private Date published;
-	private Date updated;
-	private Date expires;
-	private String content;
-	private boolean active;
-	private Person author;
-	private Mode mode;
-	private Preferences preferences;
-	private Location origin;
-	private Location destination;
-	private Location[] waypoints;
+	private Date published;			//may
+	private Date updated;			//should
+	private Date expires;			//must
+	private Person author;			//must
+	private Content content;		//must
 	
 	
+	public class Content implements XMLRPCModel{
+		private Mode mode;					//must
+		private Preferences preferences;	//must
+		private Location origin;			//must
+		private Location destination;		//must
+		private Location[] waypoints;		//may
+		
+		/**
+		 * @return the mode
+		 */
+		public Mode getMode() {
+			return mode;
+		}
 
+		/**
+		 * @param mode the mode to set
+		 */
+		public void setMode(Mode mode) {
+			this.mode = mode;
+		}
+
+		/**
+		 * @return the preferences
+		 */
+		public Preferences getPreferences() {
+			return preferences;
+		}
+
+		/**
+		 * @param preferences the preferences to set
+		 */
+		public void setPreferences(Preferences preferences) {
+			this.preferences = preferences;
+		}
+
+		/**
+		 * @return the origin
+		 */
+		public Location getOrigin() {
+			return origin;
+		}
+
+		/**
+		 * @param origin the origin to set
+		 */
+		public void setOrigin(Location origin) {
+			this.origin = origin;
+		}
+
+		/**
+		 * @return the destination
+		 */
+		public Location getDestination() {
+			return destination;
+		}
+
+		/**
+		 * @param destination the destination to set
+		 */
+		public void setDestination(Location destination) {
+			this.destination = destination;
+		}
+
+		/**
+		 * @return the waypoints
+		 */
+		public Location[] getWaypoints() {
+			return waypoints;
+		}
+
+		/**
+		 * @param waypoints the waypoints to set
+		 */
+		public void setWaypoints(Location[] waypoints) {
+			this.waypoints = waypoints;
+		}
+
+		@Override
+		public HashMap<String, Object> toHashMap() {
+			HashMap<String,Object> result = new HashMap<String,Object>();
+			if (this.destination instanceof eu.fbk.dycapo.models.Location)result.putAll(this.destination.toHashMap());
+			if (this.mode instanceof eu.fbk.dycapo.models.Mode)result.putAll(this.mode.toHashMap());
+			if (this.origin instanceof eu.fbk.dycapo.models.Location)result.putAll(this.origin.toHashMap());
+			if (this.preferences instanceof eu.fbk.dycapo.models.Preferences)result.putAll(this.preferences.toHashMap());
+			int length = this.waypoints.length;
+			for(int i = 0 ; i < length ; i++)
+				if(this.waypoints[i] instanceof eu.fbk.dycapo.models.Location)result.putAll(this.waypoints[i].toHashMap());			
+			return result;
+		}
+
+	}
 
 	/**
 	 * 
@@ -90,34 +178,6 @@ public class Trip implements XMLRPCModel {
 	}
 
 	/**
-	 * @return the content
-	 */
-	public String getContent() {
-		return content;
-	}
-
-	/**
-	 * @param content the content to set
-	 */
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	/**
-	 * @return the active
-	 */
-	public boolean isActive() {
-		return active;
-	}
-
-	/**
-	 * @param active the active to set
-	 */
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
-	/**
 	 * @return the author
 	 */
 	public Person getAuthor() {
@@ -135,87 +195,80 @@ public class Trip implements XMLRPCModel {
 	 * @return the mode
 	 */
 	public Mode getMode() {
-		return mode;
+		return this.content.getMode();
 	}
 
 	/**
 	 * @param mode the mode to set
 	 */
 	public void setMode(Mode mode) {
-		this.mode = mode;
+		this.content.setMode(mode);
 	}
 
 	/**
 	 * @return the preferences
 	 */
 	public Preferences getPreferences() {
-		return preferences;
+		return this.content.getPreferences();
 	}
 
 	/**
 	 * @param preferences the preferences to set
 	 */
 	public void setPreferences(Preferences preferences) {
-		this.preferences = preferences;
+		this.content.setPreferences(preferences);
 	}
 
 	/**
 	 * @return the origin
 	 */
 	public Location getOrigin() {
-		return origin;
+		return this.content.getOrigin();
 	}
 
 	/**
 	 * @param origin the origin to set
 	 */
 	public void setOrigin(Location origin) {
-		this.origin = origin;
+		this.content.origin = origin;
 	}
 
 	/**
 	 * @return the destination
 	 */
 	public Location getDestination() {
-		return destination;
+		return this.content.destination;
 	}
 
 	/**
 	 * @param destination the destination to set
 	 */
 	public void setDestination(Location destination) {
-		this.destination = destination;
+		this.content.destination = destination;
 	}
 
 	/**
 	 * @return the waypoints
 	 */
 	public Location[] getWaypoints() {
-		return waypoints;
+		return this.content.waypoints;
 	}
 
 	/**
 	 * @param waypoints the waypoints to set
 	 */
 	public void setWaypoints(Location[] waypoints) {
-		this.waypoints = waypoints;
+		this.content.waypoints = waypoints;
 	}
 	
 	public HashMap<String,Object> toHashMap(){
 		HashMap<String,Object> result = new HashMap<String,Object>();
-		result.put(Trip.ACTIVE,this.active);
-		result.put(Trip.AUTHOR,this.author);
-		result.put(Trip.CONTENT,this.content);
-		result.putAll(this.destination.toHashMap());
-		result.put(Trip.EXPIRES,this.expires);
-		result.putAll(this.mode.toHashMap());
-		result.putAll(this.origin.toHashMap());
-		result.putAll(this.preferences.toHashMap());
-		result.put(Trip.PUBLISHED,this.published);
-		result.put(Trip.UPDATED, this.updated);
-		int length= this.waypoints.length;
-		for (int i = 0 ; i< length ; i++)
-			result.putAll(this.waypoints[i].toHashMap());
+		if (this.author instanceof eu.fbk.dycapo.models.Person)result.put(Trip.AUTHOR,this.author);
+		if (this.content instanceof eu.fbk.dycapo.models.Trip.Content)result.putAll(this.content.toHashMap());
+		if (this.expires instanceof java.util.Date)result.put(Trip.EXPIRES,this.expires.toString());
+		if (this.published instanceof java.util.Date)result.put(Trip.PUBLISHED,this.published.toString());
+		if (this.updated instanceof java.util.Date)result.put(Trip.UPDATED, this.updated.toString());
+
 		return result;
 	}
 }

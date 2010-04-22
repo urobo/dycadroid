@@ -5,6 +5,8 @@ package eu.fbk.dycapo.models;
 
 import java.util.HashMap;
 
+import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
+
 /**
  * @author riccardo
  *
@@ -17,11 +19,11 @@ public class Preferences implements XMLRPCModel {
 	private static final String DRIVE="drive";
 	private static final String RIDE="ride";
 	
-	private String age;
-	private boolean nonsmoking;
-	private String gender;
-	private boolean drive;
-	private boolean ride;
+	private String age;				//may
+	private boolean nonsmoking;		//may
+	private boolean gender;			//may
+	private boolean drive;			//may
+	private boolean ride;			//may
 	
 	public Preferences(){
 		
@@ -58,14 +60,14 @@ public class Preferences implements XMLRPCModel {
 	/**
 	 * @return the gender
 	 */
-	public String getGender() {
+	public boolean getGender() {
 		return gender;
 	}
 
 	/**
 	 * @param gender the gender to set
 	 */
-	public void setGender(String gender) {
+	public void setGender(boolean gender) {
 		this.gender = gender;
 	}
 
@@ -99,7 +101,7 @@ public class Preferences implements XMLRPCModel {
 	
 	public HashMap<String,Object> toHashMap(){
 		HashMap<String,Object> result= new HashMap<String,Object>();
-		result.put(Preferences.AGE, this.age);
+		if (this.age instanceof java.lang.String)result.put(Preferences.AGE, this.age);
 		result.put(Preferences.DRIVE, this.drive);
 		result.put(Preferences.GENDER, this.gender);
 		result.put(Preferences.NONSMOKING, this.nonsmoking);
