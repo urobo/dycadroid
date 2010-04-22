@@ -3,8 +3,11 @@
  */
 package eu.fbk.dycapo.models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+
+import android.util.Log;
 
 import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
@@ -238,7 +241,14 @@ public class Location implements XMLRPCModel {
 		if (this.days instanceof java.lang.String)result.put(Location.DAYS,this.days);
 		if (this.georss_point instanceof java.lang.String)result.put(Location.GEORSS_POINT,this.georss_point);
 		if (this.label instanceof java.lang.String)result.put(Location.LABEL,this.label);
-		if (this.leaves instanceof java.util.Date)result.put(Location.LEAVES,this.leaves.toString());
+		if (this.leaves instanceof java.util.Date){
+			SimpleDateFormat formatter
+		     = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+			result.put(Location.LEAVES,formatter.format(this.leaves));
+			Log.i("sdf",formatter.format(this.leaves));
+		}
+		Log.i("date",this.leaves.toString());
+		//if (this.leaves instanceof java.util.Date)result.put(Location.LEAVES,this.leaves);
 		if (this.offset > 0)result.put(Location.OFFSET,this.offset);
 		if (this.point >= 0 && this.point <4)result.put(Location.POINT,Location.POINT_TYPE[this.point]);
 		if (this.postcode >= 0)result.put(Location.POSTCODE,this.postcode);

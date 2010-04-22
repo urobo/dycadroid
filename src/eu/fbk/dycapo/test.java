@@ -35,7 +35,7 @@ public class test extends Activity implements OnClickListener{
 
     public void xmlrpc_call_update(int attempt) throws MalformedURLException, XMLRPCException{
 	   
-    	Location fbk = new Location("fbk", 3,"46.462822799999998, 11.3343092",
+    	Location fbk = new Location("fbk", 3,"45.96304996635425, 11.106381118297577",
     			10, new Date());
     	Person user = new Person("rider1", "rico.sleeps@gmail.com","password",
 			"riccardo", "buttarelli", "http://", "3409289053",fbk

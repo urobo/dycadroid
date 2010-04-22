@@ -3,6 +3,8 @@
  */
 package eu.fbk.dycapo.factories;
 
+import eu.fbk.dycapo.exceptions.DycapoException;
+
 
 
 /**
@@ -10,5 +12,5 @@ package eu.fbk.dycapo.factories;
  *
  */
 public interface DycapoObjectsFactory {
-	public Object fetchXMLRPCResponse();
+	public Object fetchXMLRPCResponse(Object value) throws DycapoException;
 }

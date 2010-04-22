@@ -13,7 +13,19 @@ import eu.fbk.dycapo.factories.DycapoObjectsFetcher;
  * @author riccardo
  *
  */
-public class Response implements DycapoObjectsFactory{
+public class Response{
+	
+	public static final String CODE = "code";
+	public static final String MESSAGE = "message";
+	public static final String TYPE = "type";
+	public static final String VALUE = "value";
+	public static final String[] TYPES = {  "bool",
+											"location",
+											"mode",
+											"person",
+											"trip",
+											};
+	
 	private int code;						//must
 	private String message;					//must
 	private String type;					//must
@@ -81,23 +93,5 @@ public class Response implements DycapoObjectsFactory{
 	public void setValue(HashMap<String,Object> value) {
 		this.value = value;
 	}
-
-	@Override
-	public Object fetchXMLRPCResponse() {
-		if (this instanceof eu.fbk.dycapo.models.Response){
-			if(this.type.toLowerCase() == "trip"){
-				return DycapoObjectsFetcher.buildTrip(this.value);
-			}else if(this.type.toLowerCase() == "person"){
-				return DycapoObjectsFetcher.buildPerson(this.value);
-			}else if (this.type.toLowerCase() == "location"){
-				return DycapoObjectsFetcher.buildLocation(this.value);
-			}else if (this.type.toLowerCase() == "mode"){
-				return DycapoObjectsFetcher.buildMode(this.value);
-			}
-		}
-		return null;
-	}
-
-	
 	
 }

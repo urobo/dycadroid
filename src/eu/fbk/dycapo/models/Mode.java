@@ -17,25 +17,25 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  */
 public class Mode implements XMLRPCModel {
 	
-	private static final String KIND="kind";
-	private static final String CAPACITY="capacity";
-	private static final String VACANCY="vacancy";
-	private static final String MAKE="make";
-	private static final String MODEL="model";
-	private static final String YEAR="year";
-	private static final String COLOR="color";
-	private static final String LIC="lic";
-	private static final String COST="cost";
+	public static final String KIND="kind";
+	public static final String CAPACITY="capacity";
+	public static final String VACANCY="vacancy";
+	public static final String MAKE="make";
+	public static final String MODEL="model";
+	public static final String YEAR="year";
+	public static final String COLOR="color";
+	public static final String LIC="lic";
+	public static final String COST="cost";
 	
-	private String kind;		//must
-	private int capacity;		//must
-	private int vacancy;		//must
-	private String make;		//must
-	private String model;		//must
-	private int year;			//may
-	private String color;		//should
-	private String lic;			//should
-	private float cost;			//should
+	private String kind;			//must
+	private Integer capacity;		//must
+	private Integer vacancy;		//must
+	private String make;			//must
+	private String model;			//must
+	private Integer year;			//may
+	private String color;			//should
+	private String lic;				//should
+	private Double cost;			//should
 	
 	/**
 	 * 
@@ -159,14 +159,14 @@ public class Mode implements XMLRPCModel {
 	/**
 	 * @return the cost
 	 */
-	public float getCost() {
+	public Double getCost() {
 		return cost;
 	}
 
 	/**
 	 * @param cost the cost to set
 	 */
-	public void setCost(float cost) {
+	public void setCost(Double cost) {
 		this.cost = cost;
 	}
 	
