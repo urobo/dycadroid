@@ -13,11 +13,11 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  */
 public class Preferences implements XMLRPCModel {
 	
-	private static final String AGE="age";
-	private static final String NONSMOKING="nonsmoking";
-	private static final String GENDER="gender";
-	private static final String DRIVE="drive";
-	private static final String RIDE="ride";
+	public static final String AGE="age";
+	public static final String NONSMOKING="nonsmoking";
+	public static final String GENDER="gender";
+	public static final String DRIVE="drive";
+	public static final String RIDE="ride";
 	
 	private String age;				//may
 	private boolean nonsmoking;		//may

@@ -3,7 +3,10 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-	<LinearLayout android:id="@+id/LinearLayout01" android:layout_width="fill_parent" android:layout_height="wrap_content">
+	<LinearLayout 
+		android:id="@+id/LinearLayout01" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content">
 		<TextView  
 			android:id="@+id/TextView01" 
    	 		android:layout_width="wrap_content" 
@@ -16,7 +19,10 @@
    	 		android:layout_height="wrap_content">
    	 	</Button>
    	</LinearLayout>
-	<LinearLayout android:id="@+id/LinearLayout02" android:layout_width="fill_parent" android:layout_height="wrap_content">
+	<LinearLayout 
+		android:id="@+id/LinearLayout02" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content">
 		<TextView 
 			android:text="@string/test2" 
 			android:id="@+id/TextView02" 
@@ -26,6 +32,74 @@
 		<Button 
 			android:text="@string/button" 
 			android:id="@+id/Button02" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content">
+		</Button>
+	</LinearLayout>
+		<LinearLayout 
+		android:id="@+id/LinearLayout03" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content">
+		<TextView 
+			android:text="@string/test3" 
+			android:id="@+id/TextView03" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content">
+		</TextView>
+		<Button 
+			android:text="@string/button" 
+			android:id="@+id/Button03" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content">
+		</Button>
+	</LinearLayout>
+		<LinearLayout 
+		android:id="@+id/LinearLayout04" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content">
+		<TextView 
+			android:text="@string/test4" 
+			android:id="@+id/TextView04" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content">
+		</TextView>
+		<Button 
+			android:text="@string/button" 
+			android:id="@+id/Button04" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content">
+		</Button>
+	</LinearLayout>
+		<LinearLayout 
+		android:id="@+id/LinearLayout05" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content">
+		<TextView 
+			android:text="@string/test5" 
+			android:id="@+id/TextView05" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content">
+		</TextView>
+		<Button 
+			android:text="@string/button" 
+			android:id="@+id/Button05" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content">
+		</Button>
+	</LinearLayout>
+	<LinearLayout 
+		android:id="@+id/LinearLayout06" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content">
+		<TextView 
+			android:text="@string/test6" 
+			android:id="@+id/TextView06" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content">
+		</TextView>
+		<Button 
+			android:text="@string/button" 
+			android:id="@+id/Button06" 
 			android:layout_width="wrap_content" 
 			android:layout_height="wrap_content">
 		</Button>

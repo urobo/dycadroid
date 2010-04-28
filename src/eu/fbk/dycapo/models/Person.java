@@ -13,20 +13,20 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  */
 public class Person implements XMLRPCModel{
 	
-	private static final String USERNAME="username";
-	private static final String EMAIL="email";
-	private static final String PASSWORD="password";
-	private static final String FIRST_NAME="first_name";
-	private static final String LAST_NAME="last_name";
-	private static final String URI="uri";
-	private static final String PHONE="phone";
-	private static final String POSITION="position";
-	private static final String AGE="age";
-	private static final String GENDER="gender";
-	private static final String SMOKER="smoker";
-	private static final String BLIND="blind";
-	private static final String DEAF="deaf";
-	private static final String DOG="dog";
+	public static final String USERNAME="username";
+	public static final String EMAIL="email";
+	public static final String PASSWORD="password";
+	public static final String FIRST_NAME="first_name";
+	public static final String LAST_NAME="last_name";
+	public static final String URI="uri";
+	public static final String PHONE="phone";
+	public static final String POSITION="position";
+	public static final String AGE="age";
+	public static final String GENDER="gender";
+	public static final String SMOKER="smoker";
+	public static final String BLIND="blind";
+	public static final String DEAF="deaf";
+	public static final String DOG="dog";
 	
 	private String username;	//must
 	private String email;		//may
@@ -36,12 +36,12 @@ public class Person implements XMLRPCModel{
 	private String uri;			//may
 	private String phone;		//should
 	private Location position;	//may
-	private int age;			//should
+	private Integer age;			//should
 	private String gender;		//should
-	private boolean smoker;		//may
-	private boolean blind;		//should
-	private boolean deaf;		//should
-	private boolean dog;		//should
+	private Boolean smoker;		//may
+	private Boolean blind;		//should
+	private Boolean deaf;		//should
+	private Boolean dog;		//should
 		
 	/**
 	 * 

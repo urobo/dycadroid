@@ -19,7 +19,7 @@ public class Response{
 	public static final String MESSAGE = "message";
 	public static final String TYPE = "type";
 	public static final String VALUE = "value";
-	public static final String[] TYPES = {  "bool",
+	public static final String[] TYPES = {  "boolean",
 											"location",
 											"mode",
 											"person",

@@ -36,19 +36,19 @@ public class Location implements XMLRPCModel {
 													"posi"
 													};
 	
-	private String label;
-	private String street;
-	private int point;
-	private String country;
-	private String region;
-	private String town;
-	private int postcode;
-	private String subregion;
-	private String georss_point;
-	private int offset;
-	private String recurs;
-	private String days;
-	private Date leaves; 
+	private String label;			//may
+	private String street;			//should*
+	private int point;				//must
+	private String country;			//may
+	private String region;			//may
+	private String town;			//should*
+	private int postcode;			//should*
+	private String subregion;		//may
+	private String georss_point;	//should*
+	private int offset;				//should
+	private String recurs;			//may
+	private String days;			//may
+	private Date leaves; 			//must
 	/**
 	 * 
 	 */

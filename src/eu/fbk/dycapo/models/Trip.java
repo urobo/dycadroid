@@ -29,20 +29,26 @@ public class Trip implements XMLRPCModel {
 	private Date expires;			//must
 	private Person author;			//must
 	private Content content;		//must
+	/**
+	 * @return the content
+	 */
+	public Content getContent() {
+		return content;
+	}
+
+	/**
+	 * @param content the content to set
+	 */
+	public void setContent(Content content) {
+		this.content = content;
+	}
+
 	
 	
 	public class Content implements XMLRPCModel{
 		public static final String MODE="mode";
 		public static final String PREFERENCES="preferences";
-		public static final String ORIGIN="origin";
-		public static final String DESTINATION="destination";
-		public static final String WAYPOINTS="waypoints";
-		
-		private Mode mode;					//must
-		private Preferences preferences;	//must
-		private Location origin;			//must
-		private Location destination;		//must
-		private Location[] waypoints;		//may
+		public static final String LOCATIONS="locations";
 		
 		/**
 		 * @return the mode
@@ -114,6 +120,12 @@ public class Trip implements XMLRPCModel {
 			this.waypoints = waypoints;
 		}
 
+		private Mode mode;					//must
+		private Preferences preferences;	//must
+		private Location origin;
+		private Location destination;
+		private Location[] waypoints;
+
 		@Override
 		public HashMap<String, Object> toHashMap() {
 			HashMap<String,Object> result = new HashMap<String,Object>();
@@ -121,12 +133,13 @@ public class Trip implements XMLRPCModel {
 			if (this.mode instanceof eu.fbk.dycapo.models.Mode)result.putAll(this.mode.toHashMap());
 			if (this.origin instanceof eu.fbk.dycapo.models.Location)result.putAll(this.origin.toHashMap());
 			if (this.preferences instanceof eu.fbk.dycapo.models.Preferences)result.putAll(this.preferences.toHashMap());
-			int length = this.waypoints.length;
-			for(int i = 0 ; i < length ; i++)
-				if(this.waypoints[i] instanceof eu.fbk.dycapo.models.Location)result.putAll(this.waypoints[i].toHashMap());			
+		    if (this.waypoints != null){
+		    	int size= this.waypoints.length;
+		    	for (int i = 0 ; i< size ; i++)
+		    		result.putAll(this.waypoints[i].toHashMap());
+		    }
 			return result;
 		}
-
 	}
 
 	/**
@@ -192,40 +205,6 @@ public class Trip implements XMLRPCModel {
 		this.author = author;
 	}
 	
-	/**
-	 * @return the mode
-	 */
-	public Mode getMode() {
-		return this.content.getMode();
-	}
-
-	/**
-	 * @param mode the mode to set
-	 */
-	public void setMode(Mode mode) {
-		this.content.setMode(mode);
-	}
-
-	/**
-	 * @return the preferences
-	 */
-	public Preferences getPreferences() {
-		return this.content.getPreferences();
-	}
-
-	/**
-	 * @param preferences the preferences to set
-	 */
-	public void setPreferences(Preferences preferences) {
-		this.content.setPreferences(preferences);
-	}
-
-	/**
-	 * @return the origin
-	 */
-	public Location getOrigin() {
-		return this.content.getOrigin();
-	}
 
 	/**
 	 * @param origin the origin to set
@@ -247,19 +226,32 @@ public class Trip implements XMLRPCModel {
 	public void setDestination(Location destination) {
 		this.content.destination = destination;
 	}
-
 	/**
-	 * @return the waypoints
+	 * @return the mode
 	 */
-	public Location[] getWaypoints() {
-		return this.content.waypoints;
+	public Mode getMode() {
+		return this.content.mode;
 	}
 
 	/**
-	 * @param waypoints the waypoints to set
+	 * @param mode the mode to set
 	 */
-	public void setWaypoints(Location[] waypoints) {
-		this.content.waypoints = waypoints;
+	public void setMode(Mode mode) {
+		this.content.mode = mode;
+	}
+
+	/**
+	 * @return the preferences
+	 */
+	public Preferences getPreferences() {
+		return this.content.preferences;
+	}
+
+	/**
+	 * @param preferences the preferences to set
+	 */
+	public void setPreferences(Preferences preferences) {
+		this.content.preferences = preferences;
 	}
 	
 	public HashMap<String,Object> toHashMap(){
@@ -269,7 +261,6 @@ public class Trip implements XMLRPCModel {
 		if (this.expires instanceof java.util.Date)result.put(Trip.EXPIRES,this.expires.toString());
 		if (this.published instanceof java.util.Date)result.put(Trip.PUBLISHED,this.published.toString());
 		if (this.updated instanceof java.util.Date)result.put(Trip.UPDATED, this.updated.toString());
-
 		return result;
 	}
 }
