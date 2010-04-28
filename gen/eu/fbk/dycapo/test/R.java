@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package eu.fbk.dycapo;
+package eu.fbk.dycapo.test;
 
 public final class R {
     public static final class attr {

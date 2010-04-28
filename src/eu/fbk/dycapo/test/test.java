@@ -1,9 +1,9 @@
 package eu.fbk.dycapo.test;
 
 
-import eu.fbk.dycapo.R;
-import eu.fbk.dycapo.R.id;
-import eu.fbk.dycapo.R.layout;
+import eu.fbk.dycapo.test.R;
+import eu.fbk.dycapo.test.R.id;
+import eu.fbk.dycapo.test.R.layout;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
