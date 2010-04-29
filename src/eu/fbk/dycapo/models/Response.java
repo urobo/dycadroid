@@ -3,11 +3,7 @@
  */
 package eu.fbk.dycapo.models;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-
-import eu.fbk.dycapo.factories.DycapoObjectsFactory;
-import eu.fbk.dycapo.factories.DycapoObjectsFetcher;
 
 /**
  * @author riccardo

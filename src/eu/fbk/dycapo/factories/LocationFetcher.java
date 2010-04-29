@@ -71,8 +71,6 @@ public class LocationFetcher {
 					throw new DycapoException (message);
 				}	
 			}
-			
 			return result;
-
 	}
 }

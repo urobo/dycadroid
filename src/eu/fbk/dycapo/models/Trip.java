@@ -4,6 +4,7 @@
 package eu.fbk.dycapo.models;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -29,26 +30,18 @@ public class Trip implements XMLRPCModel {
 	private Date expires;			//must
 	private Person author;			//must
 	private Content content;		//must
-	/**
-	 * @return the content
-	 */
-	public Content getContent() {
-		return content;
-	}
-
-	/**
-	 * @param content the content to set
-	 */
-	public void setContent(Content content) {
-		this.content = content;
-	}
-
-	
 	
 	public class Content implements XMLRPCModel{
 		public static final String MODE="mode";
 		public static final String PREFERENCES="preferences";
 		public static final String LOCATIONS="locations";
+		
+		private Mode mode;					//must
+		private Preferences preferences;	//must
+		private Location origin;			//must
+		private Location destination;		//must
+		private ArrayList<Location> waypoints;  //may
+
 		
 		/**
 		 * @return the mode
@@ -109,22 +102,17 @@ public class Trip implements XMLRPCModel {
 		/**
 		 * @return the waypoints
 		 */
-		public Location[] getWaypoints() {
+		public ArrayList<Location> getWaypoints() {
 			return waypoints;
 		}
 
 		/**
 		 * @param waypoints the waypoints to set
 		 */
-		public void setWaypoints(Location[] waypoints) {
+		public void setWaypoints(ArrayList<Location> waypoints) {
 			this.waypoints = waypoints;
 		}
 
-		private Mode mode;					//must
-		private Preferences preferences;	//must
-		private Location origin;
-		private Location destination;
-		private Location[] waypoints;
 
 		@Override
 		public HashMap<String, Object> toHashMap() {
@@ -133,14 +121,34 @@ public class Trip implements XMLRPCModel {
 			if (this.mode instanceof eu.fbk.dycapo.models.Mode)result.putAll(this.mode.toHashMap());
 			if (this.origin instanceof eu.fbk.dycapo.models.Location)result.putAll(this.origin.toHashMap());
 			if (this.preferences instanceof eu.fbk.dycapo.models.Preferences)result.putAll(this.preferences.toHashMap());
-		    if (this.waypoints != null){
-		    	int size= this.waypoints.length;
+		    if (this.waypoints instanceof ArrayList<?>){
+		    	int size= this.waypoints.size();
+		    	ArrayList<HashMap<String,Object>> locations = new ArrayList<HashMap<String,Object>>();
 		    	for (int i = 0 ; i< size ; i++)
-		    		result.putAll(this.waypoints[i].toHashMap());
+		    		locations.get(i).putAll(this.waypoints.get(i).toHashMap());
+		    	result.put(Trip.Content.LOCATIONS, locations.toArray());
 		    }
 			return result;
 		}
 	}
+	
+	/**
+	 * @return the content
+	 */
+	public Content getContent() {
+		return content;
+	}
+
+	/**
+	 * @param content the content to set
+	 */
+	public void setContent(Content content) {
+		this.content = content;
+	}
+
+	
+	
+	
 
 	/**
 	 * 
@@ -207,11 +215,20 @@ public class Trip implements XMLRPCModel {
 	
 
 	/**
+	 * @return the origin
+	 */
+	public Location getOrigin() {
+		return content.origin;
+	}
+	/**
 	 * @param origin the origin to set
 	 */
 	public void setOrigin(Location origin) {
 		this.content.origin = origin;
 	}
+	
+
+
 
 	/**
 	 * @return the destination

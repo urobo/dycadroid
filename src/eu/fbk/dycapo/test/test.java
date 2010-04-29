@@ -2,8 +2,6 @@ package eu.fbk.dycapo.test;
 
 
 import eu.fbk.dycapo.test.R;
-import eu.fbk.dycapo.test.R.id;
-import eu.fbk.dycapo.test.R.layout;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,13 +25,13 @@ public class test extends Activity implements OnClickListener{
         	Button testget = (Button) findViewById (R.id.Button02);
         	testget.setOnClickListener((OnClickListener)this);
         	Button testadd = (Button) findViewById (R.id.Button03);
-        	testget.setOnClickListener((OnClickListener)this);
+        	testadd.setOnClickListener((OnClickListener)this);
         	Button testsearch = (Button) findViewById (R.id.Button04);
-        	testget.setOnClickListener((OnClickListener)this);
+        	testsearch.setOnClickListener((OnClickListener)this);
         	Button testrequest = (Button) findViewById (R.id.Button05);
-        	testget.setOnClickListener((OnClickListener)this);
+        	testrequest.setOnClickListener((OnClickListener)this);
         	Button testcheck = (Button) findViewById (R.id.Button06);
-        	testget.setOnClickListener((OnClickListener)this);
+        	testcheck.setOnClickListener((OnClickListener)this);
         	}catch (Exception e){
         		Log.e("exception", e.getMessage());
         	}

@@ -27,6 +27,7 @@ public class Test implements Runnable {
 											"dycapo.request_ride",
 											"dycapo.check_ride_requests"
 											};
+	
 	private String method;
 	private Location fbk;
 	private Person user;
@@ -77,13 +78,13 @@ public class Test implements Runnable {
 		    		
 		    		
 		    		}else if (this.method== Test.METHODS[2]){
-		    			
+		    			return;
 		    		}else if (this.method== Test.METHODS[3]){
-		    			
+		    			return;
 		    		}else if (this.method== Test.METHODS[4]){
-		    			
+		    			return;
 		    		}else if (this.method== Test.METHODS[5]){
-		    			
+		    			return;
 		    		}else throw new DycapoException("Invalid method passed");
 		    		
 		    		p= DycapoObjectsFetcher.fetchXMLRPCResponse(p);
