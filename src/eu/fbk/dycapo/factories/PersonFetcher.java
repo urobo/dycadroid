@@ -15,7 +15,7 @@ import eu.fbk.dycapo.models.Person;
 public class PersonFetcher {
 	@SuppressWarnings("unchecked")
 	public static Person fetchPerson(HashMap<String,Object> value) throws DycapoException{
-		if(value instanceof HashMap<?,?>){
+		
 			Person result = new Person();
 			String message = "error PersonFetcher.fetchPerson : not enough parameters are given to define a person: missing ";
 			
@@ -52,7 +52,6 @@ public class PersonFetcher {
 				result.setDog((Boolean)value.get(Person.DOG));
 			
 			return result;
-		}
-		return null;
+
 	}
 }

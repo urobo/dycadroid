@@ -4,6 +4,7 @@
 package eu.fbk.dycapo.models;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -117,17 +118,19 @@ public class Trip implements XMLRPCModel {
 		@Override
 		public HashMap<String, Object> toHashMap() {
 			HashMap<String,Object> result = new HashMap<String,Object>();
-			if (this.destination instanceof eu.fbk.dycapo.models.Location)result.putAll(this.destination.toHashMap());
-			if (this.mode instanceof eu.fbk.dycapo.models.Mode)result.putAll(this.mode.toHashMap());
-			if (this.origin instanceof eu.fbk.dycapo.models.Location)result.putAll(this.origin.toHashMap());
-			if (this.preferences instanceof eu.fbk.dycapo.models.Preferences)result.putAll(this.preferences.toHashMap());
+			ArrayList<HashMap<String,Object>> locations = new ArrayList<HashMap<String,Object>>();
+			if (this.origin instanceof eu.fbk.dycapo.models.Location)locations.add(this.origin.toHashMap());
+			if (this.destination instanceof eu.fbk.dycapo.models.Location)locations.add(this.destination.toHashMap());
+			if (this.mode instanceof eu.fbk.dycapo.models.Mode)result.put(Trip.Content.MODE, this.mode.toHashMap());
+			if (this.preferences instanceof eu.fbk.dycapo.models.Preferences)result.put(Trip.Content.PREFERENCES,this.preferences.toHashMap());
 		    if (this.waypoints instanceof ArrayList<?>){
 		    	int size= this.waypoints.size();
-		    	ArrayList<HashMap<String,Object>> locations = new ArrayList<HashMap<String,Object>>();
+		    	
 		    	for (int i = 0 ; i< size ; i++)
-		    		locations.get(i).putAll(this.waypoints.get(i).toHashMap());
-		    	result.put(Trip.Content.LOCATIONS, locations.toArray());
+		    		locations.add(this.waypoints.get(i).toHashMap());
+		    	
 		    }
+		    result.put(Trip.Content.LOCATIONS, locations.toArray());
 			return result;
 		}
 	}
@@ -273,11 +276,15 @@ public class Trip implements XMLRPCModel {
 	
 	public HashMap<String,Object> toHashMap(){
 		HashMap<String,Object> result = new HashMap<String,Object>();
-		if (this.author instanceof eu.fbk.dycapo.models.Person)result.put(Trip.AUTHOR,this.author);
-		if (this.content instanceof eu.fbk.dycapo.models.Trip.Content)result.putAll(this.content.toHashMap());
-		if (this.expires instanceof java.util.Date)result.put(Trip.EXPIRES,this.expires.toString());
-		if (this.published instanceof java.util.Date)result.put(Trip.PUBLISHED,this.published.toString());
-		if (this.updated instanceof java.util.Date)result.put(Trip.UPDATED, this.updated.toString());
+		if (this.author instanceof eu.fbk.dycapo.models.Person)result.put(Trip.AUTHOR,this.author.toHashMap());
+		if (this.content instanceof eu.fbk.dycapo.models.Trip.Content)result.put(Trip.CONTENT,this.content.toHashMap());
+		
+		SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+		
+		
+		if (this.expires instanceof java.util.Date)result.put(Trip.EXPIRES,formatter.format(this.expires));
+		if (this.published instanceof java.util.Date)result.put(Trip.PUBLISHED,formatter.format(this.published));
+		if (this.updated instanceof java.util.Date)result.put(Trip.UPDATED, formatter.format(this.updated));
 		return result;
 	}
 }

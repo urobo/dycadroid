@@ -289,7 +289,7 @@ public class Person implements XMLRPCModel{
 		if (this.gender instanceof java.lang.String)result.put(Person.GENDER,this.gender);
 		if (this.last_name instanceof java.lang.String)result.put(Person.LAST_NAME,this.last_name);
 		if (this.phone instanceof java.lang.String)result.put(Person.PHONE,this.phone);
-		result.putAll(this.position.toHashMap());
+		result.put(Person.POSITION,this.position.toHashMap());
 		result.put(Person.SMOKER,this.smoker);
 		if (this.uri instanceof java.lang.String)result.put(Person.URI,this.uri);
 		if (this.username instanceof java.lang.String)result.put(Person.USERNAME,this.username);

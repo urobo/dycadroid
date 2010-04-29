@@ -14,7 +14,7 @@ import eu.fbk.dycapo.models.Mode;
  */
 public class ModeFetcher {
 	public static Mode fetchMode(HashMap<String,Object> value) throws DycapoException{
-		if(value instanceof HashMap<?,?>){
+
 			Mode result = new Mode();
 			
 			if(value.containsKey(Mode.CAPACITY))
@@ -55,7 +55,6 @@ public class ModeFetcher {
 				result.setYear((Integer)value.get(Mode.YEAR));
 			
 			return result;
-		}
-		return null;
+
 	}
 }
