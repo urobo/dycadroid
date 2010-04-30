@@ -21,10 +21,10 @@ public class LocationFetcher {
 			
 			if (value.containsKey(Location.POINT)){
 				String point = (String)value.get(Location.POINT);
-				if (point==Location.POINT_TYPE[0])result.setPoint(0);
-				else if (point==Location.POINT_TYPE[1])result.setPoint(1);
-				else if (point==Location.POINT_TYPE[2])result.setPoint(2);
-				else if (point==Location.POINT_TYPE[3])result.setPoint(3);
+				if (point.equals(Location.POINT_TYPE[0]))result.setPoint(0);
+				else if (point.equals(Location.POINT_TYPE[1]))result.setPoint(1);
+				else if (point.equals(Location.POINT_TYPE[2]))result.setPoint(2);
+				else if (point.equals(Location.POINT_TYPE[3]))result.setPoint(3);
 			} else new DycapoException(message + Location.POINT);
 			
 			if (value.containsKey(Location.LEAVES))

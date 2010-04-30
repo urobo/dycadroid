@@ -30,7 +30,7 @@ public class Location implements XMLRPCModel {
 	public static final String RECURS="recurs";
 	public static final String DAYS="days";
 	public static final String LEAVES="leaves";
-	public static final String[] POINT_TYPE = {	"orig",
+	public static final String[] POINT_TYPE = {		"orig",
 													"dest",
 													"wayp",
 													"posi"
@@ -230,7 +230,7 @@ public class Location implements XMLRPCModel {
 	/**
 	 * @param leaves the leaves to set
 	 */
-	//FIXME
+
 	public void setLeaves(Date leaves) {
 		this.leaves = leaves;
 	}

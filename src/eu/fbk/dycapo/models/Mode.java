@@ -38,6 +38,41 @@ public class Mode implements XMLRPCModel {
 	private Double cost;			//should
 	
 	/**
+	 * @param kind
+	 * @param capacity
+	 * @param vacancy
+	 * @param make
+	 * @param model
+	 */
+	public Mode(String kind, Integer capacity, Integer vacancy, String make,
+			String model) {
+		this.kind = kind;
+		this.capacity = capacity;
+		this.vacancy = vacancy;
+		this.make = make;
+		this.model = model;
+		
+	}
+	
+	/**
+	 * @param kind
+	 * @param capacity
+	 * @param vacancy
+	 * @param make
+	 * @param model
+	 * @param year
+	 */
+	public Mode(String kind, Integer capacity, Integer vacancy, String make,
+			String model,Integer year) {
+		this.kind = kind;
+		this.capacity = capacity;
+		this.vacancy = vacancy;
+		this.make = make;
+		this.model = model;
+		this.year = year;
+	}
+
+	/**
 	 * 
 	 */
 	public Mode(){
@@ -172,15 +207,37 @@ public class Mode implements XMLRPCModel {
 	
 	public HashMap<String,Object> toHashMap(){
 		HashMap<String,Object> result = new HashMap<String,Object>();
-		if (this.capacity >= 2)result.put(Mode.CAPACITY,this.capacity);
-		if (this.color instanceof java.lang.String)result.put(Mode.COLOR,this.color);
-		if (this.cost > 0)result.put(Mode.COST,this.cost);
-		if (this.kind instanceof java.lang.String)result.put(Mode.KIND,this.kind);
-		if (this.lic instanceof java.lang.String)result.put(Mode.LIC,this.lic);
-		if (this.make instanceof java.lang.String)result.put(Mode.MAKE,this.make);
-		if (this.model instanceof java.lang.String)result.put(Mode.MODEL,this.model);
-		if (this.vacancy >=0 && this.vacancy < this.capacity)result.put(Mode.VACANCY,this.vacancy);
-		if (this.year >= 0)result.put(Mode.YEAR,this.year);
+		
+		if (this.capacity instanceof Integer)
+			if (this.capacity >= 2)
+				result.put(Mode.CAPACITY,this.capacity);
+		
+		if (this.color instanceof java.lang.String)
+			result.put(Mode.COLOR,this.color);
+		
+		if (this.cost instanceof java.lang.Double)
+			if (this.cost > 0)
+				result.put(Mode.COST,this.cost);
+		if (this.kind instanceof java.lang.String)
+			result.put(Mode.KIND,this.kind);
+		
+		if (this.lic instanceof java.lang.String)
+			result.put(Mode.LIC,this.lic);
+		
+		if (this.make instanceof java.lang.String)
+			result.put(Mode.MAKE,this.make);
+		
+		if (this.model instanceof java.lang.String)
+			result.put(Mode.MODEL,this.model);
+		
+		if (this.vacancy instanceof java.lang.Integer)	
+			if (this.vacancy >=0 && this.vacancy < this.capacity)
+				result.put(Mode.VACANCY,this.vacancy);
+	
+		if (this.year instanceof java.lang.Integer)
+			if (this.year >= 0)
+				result.put(Mode.YEAR,this.year);
+		
 		return result;
 	}
 }

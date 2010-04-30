@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import android.util.Log;
+
 import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
 
@@ -19,22 +21,41 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
 
 public class Trip implements XMLRPCModel {
+	public static final String ID="id";
 	public static final String PUBLISHED="published";
 	public static final String UPDATED="updated";
 	public static final String EXPIRES="expires";
 	public static final String CONTENT="content";
 	public static final String AUTHOR="author";
 
-	
+	private Integer id;
 	private Date published;			//may
 	private Date updated;			//should
 	private Date expires;			//must
 	private Person author;			//must
 	private Content content;		//must
+
+	/**
+	 * @param expires
+	 * @param author
+	 * @param content
+	 */
+	public Trip(Date expires, Person author,Mode mode, Preferences preferences, Location origin,Location destination) {
+		this.expires = expires;
+		this.author = author;
+		this.content= new Content();
+		this.content.setDestination(destination);
+		this.content.setOrigin(origin);
+		this.content.setMode(mode);
+		this.content.setPreferences(preferences);
+	}
+	public void createContent(){
+		this.content= new Content();
+	}
 	
 	public class Content implements XMLRPCModel{
 		public static final String MODE="mode";
-		public static final String PREFERENCES="preferences";
+		public static final String PREFERENCES="prefs";
 		public static final String LOCATIONS="locations";
 		
 		private Mode mode;					//must
@@ -43,6 +64,9 @@ public class Trip implements XMLRPCModel {
 		private Location destination;		//must
 		private ArrayList<Location> waypoints;  //may
 
+		public Content(){
+			
+		}
 		
 		/**
 		 * @return the mode
@@ -274,15 +298,34 @@ public class Trip implements XMLRPCModel {
 		this.content.preferences = preferences;
 	}
 	
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
+
 	public HashMap<String,Object> toHashMap(){
 		HashMap<String,Object> result = new HashMap<String,Object>();
+		if (this.id instanceof Integer) result.put(Trip.ID, this.id);
 		if (this.author instanceof eu.fbk.dycapo.models.Person)result.put(Trip.AUTHOR,this.author.toHashMap());
 		if (this.content instanceof eu.fbk.dycapo.models.Trip.Content)result.put(Trip.CONTENT,this.content.toHashMap());
 		
 		SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
 		
 		
-		if (this.expires instanceof java.util.Date)result.put(Trip.EXPIRES,formatter.format(this.expires));
+		if (this.expires instanceof java.util.Date){
+			result.put(Trip.EXPIRES,formatter.format(this.expires));
+			Log.i(Trip.EXPIRES, formatter.format(this.expires));
+		}
+			
 		if (this.published instanceof java.util.Date)result.put(Trip.PUBLISHED,formatter.format(this.published));
 		if (this.updated instanceof java.util.Date)result.put(Trip.UPDATED, formatter.format(this.updated));
 		return result;

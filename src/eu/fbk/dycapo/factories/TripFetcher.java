@@ -6,10 +6,10 @@ package eu.fbk.dycapo.factories;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
-
+import android.util.Log;
 import eu.fbk.dycapo.exceptions.DycapoException;
+import eu.fbk.dycapo.exceptions.Tag;
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Trip;
 
@@ -23,6 +23,11 @@ public class TripFetcher {
 		
 			Trip result= new Trip();
 			String message = "error TripFetcher.fetchTrip : not enough parameters are given to define a Trip: missing ";
+			
+			if (value.containsKey(Trip.ID))
+				result.setId((Integer)value.get(Trip.ID));
+			else throw new DycapoException (message + Trip.ID);
+			
 			if(value.containsKey(Trip.EXPIRES))
 				result.setExpires((Date)value.get(Trip.EXPIRES));
 			else throw new DycapoException (message + Trip.EXPIRES);
@@ -46,14 +51,21 @@ public class TripFetcher {
 	@SuppressWarnings("unchecked")
 	public static void fetchContent(HashMap<String,Object> value,Trip result) throws DycapoException{
 		String message = "error TripFetcher.fetchContent : not enough parameters are given to define a Trip.Content: missing ";
-		
-			if(value.containsKey(Trip.Content.MODE))
-				result.setMode(ModeFetcher.fetchMode((HashMap<String,Object>) value.get(Trip.Content.MODE)));
-			else throw new DycapoException(message + Trip.Content.MODE);
+			result.createContent();
 			
-			if (value.containsKey(Trip.Content.PREFERENCES))
+			
+			if(value.containsKey(Trip.Content.MODE)){
+				Log.d(Tag.DYCAPOFACTORIES +"."+ Tag.DYCAPOMODE, Tag.DYCAPOMODE + " present");
+				result.setMode(ModeFetcher.fetchMode((HashMap<String,Object>) value.get(Trip.Content.MODE)));
+				Log.d(Tag.DYCAPOFACTORIES +"."+ Tag.DYCAPOMODE, Tag.DYCAPOMODE + " fetched");
+			}else throw new DycapoException(message + Trip.Content.MODE);
+			
+			
+			if (value.containsKey(Trip.Content.PREFERENCES)){
+				Log.d(Tag.DYCAPOFACTORIES +"."+ Tag.DYCAPOPREFERENCES, Tag.DYCAPOPREFERENCES + " present");
 				result.setPreferences(PreferencesFetcher.fetchPreferences((HashMap<String,Object>)value.get(Trip.Content.PREFERENCES)));
-			else throw new DycapoException(message + Trip.Content.PREFERENCES);
+				Log.d(Tag.DYCAPOFACTORIES +"."+ Tag.DYCAPOPREFERENCES, Tag.DYCAPOPREFERENCES + " fetched");
+			}else throw new DycapoException(message + Trip.Content.PREFERENCES);
 			
 			if (value.containsKey(Trip.Content.LOCATIONS)){				
 				Object[] rawlocs= (Object[])value.get(Trip.Content.LOCATIONS);

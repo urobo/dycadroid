@@ -192,11 +192,11 @@ AuthScope.ANY_REALM),
 	
 			HttpResponse response = client.execute(postMethod);
 
-			//Log.d(Tag.LOG, "ros HTTP POSTed");
-
+			Log.d(Tag.LOG, "ros HTTP POSTed");
+			
 			// check status code
 			int statusCode = response.getStatusLine().getStatusCode();
-			//Log.d(Tag.LOG, "ros status code:" + statusCode);
+			Log.d(Tag.LOG, "ros status code:" + statusCode);
 			if (statusCode != HttpStatus.SC_OK) {
 				throw new XMLRPCException("HTTP status code: " + statusCode + " != " + HttpStatus.SC_OK);
 			}
@@ -206,11 +206,13 @@ AuthScope.ANY_REALM),
 			// setup pull parser
 			XmlPullParser pullParser = XmlPullParserFactory.newInstance().newPullParser();
 			entity = response.getEntity();
-			Reader reader = new InputStreamReader(new BufferedInputStream(entity.getContent()));
+		
+				Reader reader = new InputStreamReader(new BufferedInputStream(entity.getContent()));
+
 // for testing purposes only
 // reader = new StringReader("<?xml version='1.0'?><methodResponse><params><param><value>\n\n\n</value></param></params></methodResponse>");
 			pullParser.setInput(reader);
-			
+
 			// lets start pulling...
 			pullParser.nextTag();
 			pullParser.require(XmlPullParser.START_TAG, null, Tag.METHOD_RESPONSE);

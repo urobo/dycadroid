@@ -20,13 +20,29 @@ public class Preferences implements XMLRPCModel {
 	public static final String RIDE="ride";
 	
 	private String age;				//may
-	private boolean nonsmoking;		//may
-	private boolean gender;			//may
-	private boolean drive;			//may
-	private boolean ride;			//may
+	private Boolean nonsmoking;		//may
+	private Boolean gender;			//may
+	private Boolean drive;			//may
+	private Boolean ride;			//may
 	
 	public Preferences(){
 		
+	}
+	
+	/**
+	 * @param age
+	 * @param nonsmoking
+	 * @param gender
+	 * @param drive
+	 * @param ride
+	 */
+	public Preferences(String age, Boolean nonsmoking, Boolean gender,
+			Boolean drive, Boolean ride) {
+		this.age = age;
+		this.nonsmoking = nonsmoking;
+		this.gender = gender;
+		this.drive = drive;
+		this.ride = ride;
 	}
 
 	/**
@@ -36,6 +52,7 @@ public class Preferences implements XMLRPCModel {
 		return age;
 	}
 
+
 	/**
 	 * @param age the age to set
 	 */
@@ -43,69 +60,80 @@ public class Preferences implements XMLRPCModel {
 		this.age = age;
 	}
 
+
 	/**
 	 * @return the nonsmoking
 	 */
-	public boolean isNonsmoking() {
+	public Boolean getNonsmoking() {
 		return nonsmoking;
 	}
+
 
 	/**
 	 * @param nonsmoking the nonsmoking to set
 	 */
-	public void setNonsmoking(boolean nonsmoking) {
+	public void setNonsmoking(Boolean nonsmoking) {
 		this.nonsmoking = nonsmoking;
 	}
+
 
 	/**
 	 * @return the gender
 	 */
-	public boolean getGender() {
+	public Boolean getGender() {
 		return gender;
 	}
+
 
 	/**
 	 * @param gender the gender to set
 	 */
-	public void setGender(boolean gender) {
+	public void setGender(Boolean gender) {
 		this.gender = gender;
 	}
+
 
 	/**
 	 * @return the drive
 	 */
-	public boolean isDrive() {
+	public Boolean getDrive() {
 		return drive;
 	}
+
 
 	/**
 	 * @param drive the drive to set
 	 */
-	public void setDrive(boolean drive) {
+	public void setDrive(Boolean drive) {
 		this.drive = drive;
 	}
+
 
 	/**
 	 * @return the ride
 	 */
-	public boolean isRide() {
+	public Boolean getRide() {
 		return ride;
 	}
+
 
 	/**
 	 * @param ride the ride to set
 	 */
-	public void setRide(boolean ride) {
+	public void setRide(Boolean ride) {
 		this.ride = ride;
 	}
-	
+
+
+
+
 	public HashMap<String,Object> toHashMap(){
 		HashMap<String,Object> result= new HashMap<String,Object>();
 		if (this.age instanceof java.lang.String)result.put(Preferences.AGE, this.age);
-		result.put(Preferences.DRIVE, this.drive);
-		result.put(Preferences.GENDER, this.gender);
-		result.put(Preferences.NONSMOKING, this.nonsmoking);
-		result.put(Preferences.RIDE, this.ride);
+		if (this.drive instanceof java.lang.Boolean)result.put(Preferences.DRIVE, this.drive);
+		if (this.gender instanceof java.lang.Boolean)result.put(Preferences.GENDER, this.gender);
+		if (this.nonsmoking instanceof java.lang.Boolean)result.put(Preferences.NONSMOKING, this.nonsmoking);
+		if (this.ride instanceof java.lang.Boolean)result.put(Preferences.RIDE, this.ride);
 		return result;
 	}
 }

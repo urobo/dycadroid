@@ -28,10 +28,13 @@ public class test extends Activity implements OnClickListener{
         	testadd.setOnClickListener((OnClickListener)this);
         	Button testsearch = (Button) findViewById (R.id.Button04);
         	testsearch.setOnClickListener((OnClickListener)this);
-        	Button testrequest = (Button) findViewById (R.id.Button05);
+        	Button teststart = (Button) findViewById (R.id.Button05);
+        	teststart.setOnClickListener((OnClickListener)this);
+        	Button testrequest = (Button) findViewById (R.id.Button06);
         	testrequest.setOnClickListener((OnClickListener)this);
-        	Button testcheck = (Button) findViewById (R.id.Button06);
+        	Button testcheck = (Button) findViewById (R.id.Button07);
         	testcheck.setOnClickListener((OnClickListener)this);
+
         	}catch (Exception e){
         		Log.e("exception", e.getMessage());
         	}
@@ -69,6 +72,11 @@ public class test extends Activity implements OnClickListener{
     			launchTest.start();
     			break;
     		case R.id.Button06:
+    			xmlrpc = new Test(Test.METHODS[5]);
+    			launchTest = new Thread(xmlrpc);
+    			launchTest.start();
+    			break;
+    		case R.id.Button07:
     			xmlrpc = new Test(Test.METHODS[5]);
     			launchTest = new Thread(xmlrpc);
     			launchTest.start();
