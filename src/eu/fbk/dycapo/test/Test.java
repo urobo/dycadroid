@@ -31,7 +31,8 @@ public class Test implements Runnable {
 											"dycapo.search_trip",
 											"dycapo.start_trip",
 											"dycapo.request_ride",
-											"dycapo.check_ride_requests"
+											"dycapo.check_ride_requests",
+											"dycapo.accept_ride_request"
 											};
 	
 	private String method;
@@ -139,17 +140,17 @@ public class Test implements Runnable {
 		    		Object p= new Object();
 		    		
 		    		//dycapo.get_position
-		    		if (this.method== Test.METHODS[0]){
+		    		if (this.method.equals(Test.METHODS[0])){
 		    			p= (Object) client.call(this.method,user.toHashMap());
 		    			
 		    			
 		    		}//dycapo.update_position
-		    		else if (this.method== Test.METHODS[1]){
+		    		else if (this.method.equals(Test.METHODS[1])){
 		    			p= (Object) client.call(this.method,this.fbk.toHashMap());
 		    		
 		    		
 		    		}//dycapo.add_trip ( Trip trip , Mode mode , Prefs preferences , Location source , Location destination )
-		    		else if (this.method== Test.METHODS[2]){
+		    		else if (this.method.equals(Test.METHODS[2])){
 		    			p= (Object) client.call( 	this.method,
 		    										Test.trip.toHashMap(), 
 		    										Test.trip.getMode().toHashMap(),
@@ -159,24 +160,31 @@ public class Test implements Runnable {
 		    										);
 		    			
 		    		}//dycapo.search_trip
-		    		else if (this.method== Test.METHODS[3]){
+		    		else if (this.method.equals(Test.METHODS[3])){
 		    			p= (Object) client.call( 	this.method,
 		    										Test.trip.getOrigin().toHashMap(),
 		    										Test.trip.getDestination().toHashMap());
 		    			
 		    		}//dycapo.start_trip
-		    		else if (this.method== Test.METHODS[4]){
+		    		else if (this.method.equals(Test.METHODS[4])){
 		    			p= (Object) client.call( 	this.method,
 		    										Test.trip.toHashMap());
 		    			
 		    		}//dycapo.request_ride
-		    		else if (this.method== Test.METHODS[5]){
+		    		else if (this.method.equals(Test.METHODS[5])){
 		    			p= (Object) client.call( 	this.method,
 													Test.trip.toHashMap());
 	
-		    		}else if (this.method== Test.METHODS[6]){
+		    		}else if (this.method.equals(Test.METHODS[6])){
 		    			p= (Object) client.call( 	this.method,
 													Test.trip.toHashMap());
+
+		    		}else if (this.method.equals(Test.METHODS[7])){
+		    		
+		    			p= (Object) client.call(	this.method,
+		    										Test.trip.toHashMap(),
+		    										this.user.toHashMap());
+		    		return;
 	
 		    		}else throw new DycapoException("Invalid method passed");
 		    		

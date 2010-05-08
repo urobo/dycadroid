@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+   <LinearLayout
+       xmlns:android="http://schemas.android.com/apk/res/android"
+  		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:orientation="vertical"
+
+ 	 	>
+  		<TextView
+  			android:id="@+id/personalPreferencesTextView"
+  			android:text="Personal Preferences : "
+ 	 		android:layout_width="wrap_content"
+ 			android:layout_height="wrap_content"
+  		/>
+  		<LinearLayout
+  			android:orientation="vertical"
+  			android:layout_width="wrap_content"
+  			android:layout_height="wrap_content">
+  			<LinearLayout 
+  				android:layout_width="fill_parent"
+  				android:layout_height="wrap_content"
+  				android:orientation="horizontal">
+  			<CheckBox
+  				android:id="@+id/checkBlind"
+  				android:text="Blind "
+  				android:layout_height="wrap_content"
+  				android:layout_width="wrap_content"
+  				/>
+  			<CheckBox
+  				android:id="@+id/checkDeaf"
+  				android:text="Deaf "
+  				android:layout_width="wrap_content"
+  				android:layout_height="wrap_content"
+  				/>
+  				</LinearLayout>
+  				<LinearLayout
+  				android:orientation="horizontal"
+  				android:layout_width="fill_parent"
+  				android:layout_height="wrap_content">
+  			<CheckBox
+  				android:id="@+id/checkDog"
+  				android:text="Dog "
+  				android:layout_width="wrap_content"
+  				android:layout_height="wrap_content"
+  				/>
+  			<CheckBox
+  				android:id="@+id/checkSmoker"
+  				android:text="Smoker "
+  				android:layout_width="wrap_content"
+  				android:layout_height="wrap_content"
+  				/>
+  		</LinearLayout>
+  		</LinearLayout>
+  		<TextView
+  			android:id="@+id/matchingPreferencesView"
+  			android:text="Matching Preferences : "
+  			android:layout_width="wrap_content"
+  			android:layout_height="wrap_content"/>
+  		
+  			<LinearLayout
+  				android:orientation="horizontal"
+  				android:layout_width="wrap_content"
+  				android:layout_height="wrap_content"
+  			><CheckBox
+  				android:id="@+id/checkNonSmoking"
+  				android:text="NonSmoking "
+  				android:layout_width="wrap_content"
+  				android:layout_height="wrap_content"/>
+  			 <CheckBox
+  			 	android:id="@+id/checkPet"
+  			 	android:text="Pet "
+  			 	android:layout_width="wrap_content"
+  			 	android:layout_height="wrap_content"
+  			 	/>	
+  			</LinearLayout>
+  			
+  			<LinearLayout
+  				android:orientation="horizontal"
+  				android:layout_width="wrap_content"
+  				android:layout_height="wrap_content"
+  			><CheckBox
+  				android:id="@+id/checkDrive"
+  				android:text="Drive"
+  				android:layout_width="wrap_content"
+  				android:layout_height="wrap_content"/>
+  			 <CheckBox
+  			 	android:id="@+id/checkRide"
+  			 	android:text="Ride "
+  			 	android:layout_width="wrap_content"
+  			 	android:layout_height="wrap_content"
+  			 	/>	
+  			</LinearLayout>
+  			<LinearLayout 
+  				android:orientation="horizontal"
+  				android:layout_width="fill_parent"
+  				android:layout_height="wrap_content"
+  				>
+  				<TextView
+  					android:id="@+id/ageMatchingTextView"
+  					android:text="Age : "
+  					android:layout_width="wrap_content"
+  					android:layout_height="wrap_content"
+  					/>
+  				<EditText	
+  					android:id="@+id/ageRightBound"
+  					android:maxLength="2"
+  					android:inputType="number"
+  					android:layout_width="wrap_content"
+  					android:layout_height="wrap_content"
+  					android:minWidth="60px"
+  					android:maxLines="1"/>
+  				</LinearLayout>
+  	</LinearLayout>
+
+

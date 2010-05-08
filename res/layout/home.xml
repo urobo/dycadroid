@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content">
+ 
+  <LinearLayout
+  	android:id="@+id/RelativeLayout01"
+  	android:layout_width="fill_parent"
+  	android:layout_height="fill_parent"
+  	android:orientation="vertical"
+  	android:layout_gravity="center_vertical"
+  	
+  	>
+  <ImageView
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:id="@+id/Home_Logo"
+  android:src="@drawable/dycadroid"
+  android:layout_gravity="center_vertical"
+  
+  />
+
+ <LinearLayout
+  android:id="@+id/Driver_Rider"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  android:layout_gravity="center_horizontal"
+  >
+  	
+    <Button android:id="@+id/DriverButton" android:text="@string/driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    <Button android:id="@+id/RiderButton" android:text="@string/rider" android:layout_width="fill_parent" android:layout_height="wrap_content" /> 
+  
+  </LinearLayout>
+    <TextView
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:id="@+id/Home_Link"
+  android:text="@string/dycapohome"
+  android:autoLink="web"
+  android:layout_gravity="bottom"
+  android:gravity="center"
+  />
+</LinearLayout>
+
+</LinearLayout>

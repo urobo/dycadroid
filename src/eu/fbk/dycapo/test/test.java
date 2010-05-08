@@ -1,7 +1,7 @@
 package eu.fbk.dycapo.test;
 
 
-import eu.fbk.dycapo.test.R;
+import eu.fbk.dycapo.activities.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +34,8 @@ public class test extends Activity implements OnClickListener{
         	testrequest.setOnClickListener((OnClickListener)this);
         	Button testcheck = (Button) findViewById (R.id.Button07);
         	testcheck.setOnClickListener((OnClickListener)this);
+        	Button testaccept = (Button) findViewById (R.id.Button08);
+        	testaccept.setOnClickListener((OnClickListener)this);
 
         	}catch (Exception e){
         		Log.e("exception", e.getMessage());
@@ -77,7 +79,12 @@ public class test extends Activity implements OnClickListener{
     			launchTest.start();
     			break;
     		case R.id.Button07:
-    			xmlrpc = new Test(Test.METHODS[5]);
+    			xmlrpc = new Test(Test.METHODS[6]);
+    			launchTest = new Thread(xmlrpc);
+    			launchTest.start();
+    			break;
+    		case R.id.Button08:
+    			xmlrpc = new Test(Test.METHODS[7]);
     			launchTest = new Thread(xmlrpc);
     			launchTest.start();
     			break;

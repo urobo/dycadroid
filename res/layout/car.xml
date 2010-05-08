@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+ 
+  <LinearLayout
+  	  android:orientation="horizontal"
+  	  android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
+      <TextView
+      	android:id="@+id/licensePlateTextView"
+      	android:text="License Plate : "
+      	android:layout_width="wrap_content"
+  		android:layout_height="wrap_content" />
+  		<EditText
+  		android:id="@+id/getLic"
+  		android:layout_width="wrap_content"
+  		android:layout_height="wrap_content"
+  		android:minWidth="150px" 
+  		android:maxLines="1"/>
+      </LinearLayout>
+        <LinearLayout
+  	  android:orientation="horizontal"
+  	  android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
+      <TextView
+      	android:id="@+id/makerTextView"
+      	android:text="Maker : "
+      	android:layout_width="wrap_content"
+  		android:layout_height="wrap_content" />
+  		<EditText
+  		android:id="@+id/getMaker"
+  		android:layout_width="wrap_content"
+  		android:layout_height="wrap_content"
+  		android:minWidth="200px"
+  		android:maxLines="1" />
+      </LinearLayout>
+      
+        <LinearLayout
+  	  android:orientation="horizontal"
+  	  android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
+      <TextView
+      	android:id="@+id/modelTextView"
+      	android:text="Model : "
+      	android:layout_width="wrap_content"
+  		android:layout_height="wrap_content" />
+  		<EditText
+  		android:id="@+id/getModel"
+  		android:layout_width="wrap_content"
+  		android:layout_height="wrap_content"
+  		android:minWidth="200px" 
+  		android:maxLines="1"/>
+      </LinearLayout>
+        <LinearLayout
+  	  android:orientation="horizontal"
+  	  android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
+      <TextView
+      	android:id="@+id/colorTextView"
+      	android:text="Color : "
+      	android:layout_width="wrap_content"
+  		android:layout_height="wrap_content" />
+  		<EditText
+  		android:id="@+id/getColor"
+  		android:layout_width="wrap_content"
+  		android:layout_height="wrap_content"
+  		android:minWidth="100px" 
+  		android:maxLines="1"/>
+      </LinearLayout>
+</LinearLayout>
