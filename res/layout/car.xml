@@ -69,5 +69,26 @@
   		android:layout_height="wrap_content"
   		android:minWidth="100px" 
   		android:maxLines="1"/>
+  		
+  		<TextView
+  		android:id="@+id/capacityTextView"
+  		android:text=" Capacity : "
+  		android:layout_width="wrap_content"
+  		android:layout_height="wrap_content"
+  		/>
+  		<EditText
+  		android:id="@+id/getCapacity"
+  		android:inputType="number"
+  		android:maxLength="2"
+  		android:width="60px"
+  		android:layout_height="wrap_content"
+  		android:maxLines="1"/>
+  		
       </LinearLayout>
+      <Button
+      	android:id="@+id/saveCarButton"
+      	android:text="Save"
+      	android:layout_width="fill_parent"
+      	android:layout_height="wrap_content" />
+      	
 </LinearLayout>

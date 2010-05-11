@@ -18,4 +18,5 @@ public class Tag {
 	public static final String DYCAPOPREFERENCES = "Preferences";
 	public static final String DYCAPOPERSON = "Person";
 	public static final String DYCAPORESPONSE = "Response";
+	public static final String DYCAPOACTIVITIES = "Activity";
 }

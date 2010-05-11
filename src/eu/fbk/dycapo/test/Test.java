@@ -104,7 +104,7 @@ public class Test implements Runnable {
     			new Preferences(
     					"",
 					false,
-					false,
+					Preferences.BOTH,
 					true,
 					true),
 				this.bodomsHome,

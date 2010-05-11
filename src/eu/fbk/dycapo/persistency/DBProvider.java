@@ -19,18 +19,23 @@ import eu.fbk.dycapo.models.Trip;
  */
 public class DBProvider {
 
-		
-		private static ObjectContainer database;
-		private static Context applicationContext;
-		private static Configuration dbConfiguration;
-		
+	   private static ObjectContainer database;
+	   private static Context applicationContext;
+	   private static Configuration dbConfiguration;
+	   
 		private static String db4oDBFullPath() {
-		      return applicationContext.getDir("data", 0) + "/" + "DyCaPo.db4o"; //
+		      return applicationContext.getDir("data", 0) + "/" + "dycadroid.db4o"; //
 		}
 		
 		@SuppressWarnings("deprecation")
-		private static ObjectContainer provideDB(){
-			return Db4o.openFile(dbConfiguration, db4oDBFullPath());
+		public static ObjectContainer provideDB(){
+			
+			return Db4o.openFile(DBProvider.configure(), DBProvider.db4oDBFullPath());
+		}
+		
+		public static ObjectContainer getDatabase(){
+			if (database == null) database= DBProvider.provideDB();
+			return database;
 		}
 		
 		public static void configureProvider(Context ctx){
@@ -40,8 +45,8 @@ public class DBProvider {
 		}
 		
 		 @SuppressWarnings("deprecation")
-		private static void configure(){
-			 	dbConfiguration=Db4o.newConfiguration();
+		private static Configuration configure(){
+			 	dbConfiguration =Db4o.newConfiguration();
 			    
 			 	dbConfiguration.objectClass(Trip.class).objectField(Trip.PUBLISHED).indexed(true);
 			    dbConfiguration.objectClass(Trip.class).cascadeOnUpdate(true);
@@ -62,37 +67,30 @@ public class DBProvider {
 			    dbConfiguration.objectClass(Mode.class).objectField(Mode.LIC).indexed(true);
 			    dbConfiguration.objectClass(Mode.class).cascadeOnDelete(true);
 			    dbConfiguration.objectClass(Mode.class).cascadeOnUpdate(true);
+			    
+			    dbConfiguration.objectClass(User.class).objectField(Person.USERNAME).indexed(true);
+			    dbConfiguration.objectClass(User.class).cascadeOnUpdate(true);
+			    dbConfiguration.objectClass(User.class).cascadeOnDelete(true);
 			    			    
 			 	dbConfiguration.lockDatabaseFile(false);
 			    dbConfiguration.messageLevel(2);
-			     
+			    return dbConfiguration;
 		 }
-		
-		public static ObjectContainer getDatabase(){
-			if(database==null)database=provideDB();
-			return database;
-		}
 		
 		public static Configuration getdbConfiguration(){
 			return dbConfiguration;
+		}
+		public static void setdbConfiguraiton(Configuration configuration){
+			dbConfiguration = configuration;
 		}
 		
 		public static Context getContext(){
 			return applicationContext;
 		}
-		
-		public static void setDatabase(ObjectContainer db){
-			database=db;
-		}
-		
-		public static void setdbConfiguration(Configuration config){
-			if(config!=null)
-				dbConfiguration=config;
-		}
-		
 		public static void setContext(Context ctx){
-			applicationContext=ctx;
+			applicationContext = ctx;
 		}
+		
 		
 }
 

@@ -109,7 +109,39 @@
   					android:layout_height="wrap_content"
   					android:minWidth="60px"
   					android:maxLines="1"/>
+  				<EditText
+  				android:id="@+id/ageLeftBound"
+  					android:maxLength="2"
+  					android:inputType="number"
+  					android:layout_width="wrap_content"
+  					android:layout_height="wrap_content"
+  					android:minWidth="60px"
+  					android:maxLines="1"/>
   				</LinearLayout>
+  				<LinearLayout
+  					android:orientation="horizontal"
+  					android:layout_width="fill_parent"
+  					android:layout_height="wrap_content"
+  					>
+  					<CheckBox
+  						android:id="@+id/checkMale"
+  						android:text="Male"
+  						android:layout_width="wrap_content"
+  						android:layout_height="wrap_content"
+  						/>
+  					<CheckBox
+  						android:id="@+id/checkFemale"
+  						android:text="Female"
+  						android:layout_width="wrap_content"
+  						android:layout_height="wrap_content"
+  						/>
+  					</LinearLayout>
+  			<Button
+  				android:id="@+id/savePrefsButton"
+  				android:text="Save"
+  				android:layout_width="fill_parent"
+  				android:layout_height="wrap_content"/>
+  				
   	</LinearLayout>
 
 

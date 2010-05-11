@@ -13,6 +13,11 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  */
 public class Preferences implements XMLRPCModel {
 	
+	public static final String[] GENDER_PREFS={"male","female","both"};
+	public static final int MALE=0;
+	public static final int FEMALE=1;
+	public static final int BOTH=2;
+	
 	public static final String AGE="age";
 	public static final String NONSMOKING="nonsmoking";
 	public static final String GENDER="gender";
@@ -21,7 +26,7 @@ public class Preferences implements XMLRPCModel {
 	
 	private String age;				//may
 	private Boolean nonsmoking;		//may
-	private Boolean gender;			//may
+	private Integer gender;			//may
 	private Boolean drive;			//may
 	private Boolean ride;			//may
 	
@@ -36,7 +41,7 @@ public class Preferences implements XMLRPCModel {
 	 * @param drive
 	 * @param ride
 	 */
-	public Preferences(String age, Boolean nonsmoking, Boolean gender,
+	public Preferences(String age, Boolean nonsmoking, Integer gender,
 			Boolean drive, Boolean ride) {
 		this.age = age;
 		this.nonsmoking = nonsmoking;
@@ -45,13 +50,14 @@ public class Preferences implements XMLRPCModel {
 		this.ride = ride;
 	}
 
+
+
 	/**
 	 * @return the age
 	 */
 	public String getAge() {
 		return age;
 	}
-
 
 	/**
 	 * @param age the age to set
@@ -60,14 +66,12 @@ public class Preferences implements XMLRPCModel {
 		this.age = age;
 	}
 
-
 	/**
 	 * @return the nonsmoking
 	 */
 	public Boolean getNonsmoking() {
 		return nonsmoking;
 	}
-
 
 	/**
 	 * @param nonsmoking the nonsmoking to set
@@ -76,22 +80,19 @@ public class Preferences implements XMLRPCModel {
 		this.nonsmoking = nonsmoking;
 	}
 
-
 	/**
 	 * @return the gender
 	 */
-	public Boolean getGender() {
+	public Integer getGender() {
 		return gender;
 	}
-
 
 	/**
 	 * @param gender the gender to set
 	 */
-	public void setGender(Boolean gender) {
+	public void setGender(Integer gender) {
 		this.gender = gender;
 	}
-
 
 	/**
 	 * @return the drive
@@ -100,14 +101,12 @@ public class Preferences implements XMLRPCModel {
 		return drive;
 	}
 
-
 	/**
 	 * @param drive the drive to set
 	 */
 	public void setDrive(Boolean drive) {
 		this.drive = drive;
 	}
-
 
 	/**
 	 * @return the ride
@@ -116,7 +115,6 @@ public class Preferences implements XMLRPCModel {
 		return ride;
 	}
 
-
 	/**
 	 * @param ride the ride to set
 	 */
@@ -124,14 +122,12 @@ public class Preferences implements XMLRPCModel {
 		this.ride = ride;
 	}
 
-
-
-
 	public HashMap<String,Object> toHashMap(){
 		HashMap<String,Object> result= new HashMap<String,Object>();
 		if (this.age instanceof java.lang.String)result.put(Preferences.AGE, this.age);
 		if (this.drive instanceof java.lang.Boolean)result.put(Preferences.DRIVE, this.drive);
-		if (this.gender instanceof java.lang.Boolean)result.put(Preferences.GENDER, this.gender);
+		if (this.gender instanceof java.lang.Integer)
+			result.put(Preferences.GENDER, Preferences.GENDER_PREFS[this.gender]);
 		if (this.nonsmoking instanceof java.lang.Boolean)result.put(Preferences.NONSMOKING, this.nonsmoking);
 		if (this.ride instanceof java.lang.Boolean)result.put(Preferences.RIDE, this.ride);
 		return result;

@@ -21,7 +21,12 @@ public class PreferencesFetcher {
 		
 		if (value.containsKey(Preferences.DRIVE))result.setDrive(((Integer)value.get(Preferences.DRIVE)==1)?Boolean.TRUE:Boolean.FALSE);
 		
-		if (value.containsKey(Preferences.GENDER))result.setGender(((String)value.get(Preferences.GENDER)).equals("1")?Boolean.TRUE:Boolean.FALSE);
+		if (value.containsKey(Preferences.GENDER)){
+			int i = 0;
+			while (i<Preferences.GENDER_PREFS.length)
+				if (value.get(Preferences.GENDER).equals(Preferences.GENDER_PREFS[i]))
+					result.setGender(i);
+		}
 		
 		if (value.containsKey(Preferences.NONSMOKING))result.setNonsmoking(((Integer)value.get(Preferences.NONSMOKING)==1)?Boolean.TRUE:Boolean.FALSE);
 		

@@ -4,22 +4,15 @@
 package eu.fbk.dycapo.activities;
 
 
-import java.net.URI;
-
-import eu.fbk.dycapo.models.Trip.Content;
+import eu.fbk.dycapo.persistency.DBProvider;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.Toast;
 
 /**
  * @author riccardo
@@ -34,6 +27,7 @@ public class Home extends Activity implements OnClickListener{
 		
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.home);
+		DBProvider.configureProvider(this.getApplicationContext());
 		Button driver = (Button) findViewById(R.id.DriverButton);
 		driver.setOnClickListener((OnClickListener)this);
 		Button rider = (Button) findViewById(R.id.RiderButton);

@@ -32,8 +32,8 @@ public class PersonFetcher {
 				result.setFirst_name((String)value.get(Person.FIRST_NAME));
 			if (value.containsKey(Person.LAST_NAME))
 				result.setLast_name((String)value.get(Person.LAST_NAME));
-			if (value.containsKey(Person.URI))
-				result.setUri((String)value.get(Person.URI));
+			if (value.containsKey(Person.URL))
+				result.setUrl((String)value.get(Person.URL));
 			if (value.containsKey(Person.PHONE))
 				result.setPhone((String)value.get(Person.PHONE));
 			if (value.containsKey(Person.POSITION))

@@ -18,7 +18,7 @@ public class Person implements XMLRPCModel{
 	public static final String PASSWORD="password";
 	public static final String FIRST_NAME="first_name";
 	public static final String LAST_NAME="last_name";
-	public static final String URI="uri";
+	public static final String URL="url";
 	public static final String PHONE="phone";
 	public static final String POSITION="position";
 	public static final String AGE="age";
@@ -33,7 +33,7 @@ public class Person implements XMLRPCModel{
 	private String password;	
 	private String first_name;	//should
 	private String last_name;	//should
-	private String uri;			//may
+	private String url;			//may
 	private String phone;		//should
 	private Location position;	//may
 	private Integer age;			//should
@@ -85,7 +85,7 @@ public class Person implements XMLRPCModel{
 	 * @param dog
 	 */
 	public Person(String username, String email, String password,
-			String firstName, String lastName, String uri, String phone,
+			String firstName, String lastName, String url, String phone,
 			Location position, int age, String gender, boolean smoker,
 			boolean blind, boolean deaf, boolean dog) {
 		this.username = username;
@@ -93,7 +93,7 @@ public class Person implements XMLRPCModel{
 		this.password = password;
 		this.first_name = firstName;
 		this.last_name = lastName;
-		this.uri = uri;
+		this.url = url;
 		this.phone = phone;
 		this.position = position;
 		this.age = age;
@@ -170,14 +170,14 @@ public class Person implements XMLRPCModel{
 	/**
 	 * @return the uri
 	 */
-	public String getUri() {
-		return uri;
+	public String getUrl() {
+		return url;
 	}
 	/**
 	 * @param uri the uri to set
 	 */
-	public void setUri(String uri) {
-		this.uri = uri;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 	/**
 	 * @return the phone
@@ -202,6 +202,9 @@ public class Person implements XMLRPCModel{
 	 */
 	public void setPosition(Location position) {
 		this.position = position;
+	}
+	public Integer getIAge(){
+		return age;
 	}
 	/**
 	 * @return the age
@@ -291,7 +294,7 @@ public class Person implements XMLRPCModel{
 		if (this.phone instanceof java.lang.String)result.put(Person.PHONE,this.phone);
 		result.put(Person.POSITION,this.position.toHashMap());
 		result.put(Person.SMOKER,this.smoker);
-		if (this.uri instanceof java.lang.String)result.put(Person.URI,this.uri);
+		if (this.url instanceof java.lang.String)result.put(Person.URL,this.url);
 		if (this.username instanceof java.lang.String)result.put(Person.USERNAME,this.username);
 		return result;
 	}

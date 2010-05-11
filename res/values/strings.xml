@@ -8,7 +8,7 @@
     <string name="test6">test request_ride :</string>
     <string name="test7">test check_ride_requests :</string>
     <string name="test8">test accept_ride_request :</string>
-    <string name="app_name">dycapo client</string>
+    <string name="app_name">dycadroid</string>
     <string name="button">start test</string>
  
 </resources>
