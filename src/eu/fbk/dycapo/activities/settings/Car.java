@@ -12,6 +12,8 @@ import android.widget.EditText;
 import eu.fbk.dycapo.activities.R;
 import eu.fbk.dycapo.models.Mode;
 import eu.fbk.dycapo.persistency.DBMode;
+import eu.fbk.dycapo.persistency.DBPerson;
+import eu.fbk.dycapo.persistency.User;
 
 /**
  * @author riccardo
@@ -25,8 +27,24 @@ public class Car extends Activity implements OnClickListener{
         this.setContentView(R.layout.car);
         Button save= (Button) this.findViewById(R.id.saveCarButton);
         save.setOnClickListener((OnClickListener)this);
+        
+        update();
     }
-
+	public void update()
+	{
+		User user= DBPerson.getUser();
+		Mode car=user.getCar();
+		
+		//if(car.getCapacity() instanceof Integer)((EditText)this.findViewById(R.id.getCapacity)).setText(car.getCapacity(), );
+		if(car.getColor() instanceof String)((EditText)this.findViewById(R.id.getColor)).setText(car.getColor());
+		if(car.getModel()instanceof String) ((EditText)this.findViewById(R.id.getModel)).setText(car.getModel());
+		if(car.getLic() instanceof String) ((EditText)this.findViewById(R.id.getLic)).setText(car.getLic());
+		if(car.getMake() instanceof String) ((EditText)this.findViewById(R.id.getMaker)).setText(car.getMake());
+		
+		car=null;
+		user=null;
+		
+	}
 	@Override
 	public void onClick(View v) {
 		Mode car= new Mode();

@@ -13,7 +13,7 @@ import eu.fbk.dycapo.models.Preferences;
  *
  */
 public class User extends Person {
-	
+	private String password;
 	private Mode car;
 	private Preferences prefs;
 	
@@ -42,8 +42,9 @@ public class User extends Person {
 	public User(String username, String email, String password,
 			String firstName, String lastName, int age, String gender,
 			boolean smoker, boolean blind, boolean deaf, boolean dog) {
-		super(username, email, password, firstName, lastName, age, gender, smoker,
+		super(username, email, firstName, lastName, age, gender, smoker,
 				blind, deaf, dog);
+		this.password=password;
 		// TODO Auto-generated constructor stub
 	}
 	/**
@@ -66,9 +67,21 @@ public class User extends Person {
 			String firstName, String lastName, String url, String phone,
 			Location position, int age, String gender, boolean smoker,
 			boolean blind, boolean deaf, boolean dog) {
-		super(username, email, password, firstName, lastName, url, phone, position,
+		super(username, email, firstName, lastName, url, phone, position,
 				age, gender, smoker, blind, deaf, dog);
-		// TODO Auto-generated constructor stub
+		this.password=password;
+	}
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	/**
 	 * @return the car

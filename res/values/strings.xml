@@ -11,4 +11,7 @@
     <string name="app_name">dycadroid</string>
     <string name="button">start test</string>
  
+ 	
+ 	<string name="gender_prompt">set gender preferences</string>
+ 		
 </resources>

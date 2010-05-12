@@ -29,6 +29,7 @@ public class Preferences implements XMLRPCModel {
 	private Integer gender;			//may
 	private Boolean drive;			//may
 	private Boolean ride;			//may
+	private Boolean pet;
 	
 	public Preferences(){
 		
@@ -121,7 +122,13 @@ public class Preferences implements XMLRPCModel {
 	public void setRide(Boolean ride) {
 		this.ride = ride;
 	}
-
+	
+	public void setPet(Boolean pet){
+		this.pet=pet;
+	}
+	public Boolean hasPet(){
+		return this.pet;
+	}
 	public HashMap<String,Object> toHashMap(){
 		HashMap<String,Object> result= new HashMap<String,Object>();
 		if (this.age instanceof java.lang.String)result.put(Preferences.AGE, this.age);

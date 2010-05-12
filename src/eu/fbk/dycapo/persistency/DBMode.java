@@ -4,6 +4,7 @@
 package eu.fbk.dycapo.persistency;
 
 import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
 
 import eu.fbk.dycapo.models.Mode;
 
@@ -14,8 +15,14 @@ import eu.fbk.dycapo.models.Mode;
 public final class DBMode {
 	public static boolean saveMode(Mode car){
 		ObjectContainer db= DBProvider.getDatabase();
-		db.store(car);
-		db.commit();
-		return true;
+		ObjectSet<User> found = db.queryByExample(User.class);
+		if (!found.isEmpty()){
+			User user=found.next();
+			user.setCar(car);
+			db.delete(User.class);
+			db.store(user);
+			db.commit();
+		}
+		return false;
 	}
 }	

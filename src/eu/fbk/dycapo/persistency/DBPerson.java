@@ -9,7 +9,6 @@ import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 
 import eu.fbk.dycapo.exceptions.DycapoException;
-import eu.fbk.dycapo.exceptions.Tag;
 import eu.fbk.dycapo.models.Person;
 
 /**
@@ -17,33 +16,26 @@ import eu.fbk.dycapo.models.Person;
  *
  */
 public final class DBPerson {
-	public static boolean saveMe(Person person){
+	public static boolean saveMe(User person){
 		ObjectContainer db=DBProvider.getDatabase();
-		Person qbe = new Person();
-		qbe.setUsername(person.getUsername());
 		
-		ObjectSet<Person> result = db.queryByExample(qbe);
-		Person found;
+		
+		ObjectSet<User> result = db.queryByExample(User.class);
+		User found;
 		
 		if (result.isEmpty()){
-			
-			found = new Person();
+			found = new User();
 			found.setUsername(person.getUsername());
-			ObjectSet<Person> test= db.queryByExample(Person.class);
-			
-			if (!test.isEmpty()){
-				Person user= (Person)test.next();
-				db.delete(Person.class);
-				found.setBlind(user.isBlind());
-				found.setSmoker(user.isSmoker());
-				found.setDog(user.hasDog());
-				found.setDeaf(user.isDeaf());
-			}
 		}
-		else found = result.next();
+		else {
+			found = result.next();
+		    db.delete(User.class);
+		}
+		
+		//check only different params
 		found.setPassword(person.getPassword());
 		found.setGender(person.getGender());
-		if (person.getIAge() instanceof Integer)found.setAge(person.getAge());
+		if (person.getAge() instanceof Integer)found.setAge(person.getAge());
 		if(person.getEmail() instanceof String)found.setEmail(person.getEmail());
 		if(person.getFirst_name() instanceof String)found.setFirst_name(person.getFirst_name());
 		if(person.getLast_name() instanceof String)found.setLast_name(person.getLast_name());
@@ -54,25 +46,26 @@ public final class DBPerson {
 		return true;
 	}
 	
-	public static boolean savePersonalPrefs(Person person) throws DycapoException{
+	public static boolean savePersonalPrefs(User person) throws DycapoException{
 		ObjectContainer db = DBProvider.getDatabase();
-		Person qbe = new Person();
-		qbe.setUsername(person.getUsername());
-		ObjectSet<Person> result= db.queryByExample(qbe);
-		Person found = (Person) result.next();
-		if(!(found instanceof Person))throw new DycapoException (Tag.LOG + "user does not exists");
-		found.setBlind(person.isBlind());
-		found.setDeaf(person.isDeaf());
-		found.setDog(person.hasDog());
-		found.setSmoker(person.isSmoker());
-		db.store(found);
-		db.commit();
-		return true;
+
+		ObjectSet<User> result= db.queryByExample(User.class);
+		if (!result.isEmpty()){
+			User found = result.next();
+			found.setBlind(person.getBlind());
+			found.setDeaf(person.getDeaf());
+			found.setDog(person.getDog());
+			found.setSmoker(person.getSmoker());
+			db.delete(User.class);
+			db.store(found);
+			db.commit();
+			return true;
+		}return false;
 	}
 	
-	public static Person getUser(){
+	public static User getUser(){
 		ObjectContainer db = DBProvider.getDatabase();
-		List<Person> user = db.queryByExample(Person.class);
+		List<User> user = db.queryByExample(User.class);
 		if (user.isEmpty())return null;
 		return user.get(0);
 	}

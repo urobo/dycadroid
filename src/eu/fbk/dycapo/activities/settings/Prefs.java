@@ -8,22 +8,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+//import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+//import android.widget.Spinner;
 import eu.fbk.dycapo.activities.R;
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.exceptions.Tag;
-import eu.fbk.dycapo.models.Person;
 import eu.fbk.dycapo.models.Preferences;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBPrefs;
+import eu.fbk.dycapo.persistency.User;
 
 /**
  * @author riccardo
  *
  */
 public class Prefs extends Activity implements OnClickListener{
+//	@SuppressWarnings("unchecked")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,12 +34,46 @@ public class Prefs extends Activity implements OnClickListener{
         this.setContentView(R.layout.prefs);
         Button save = (Button)this.findViewById(R.id.savePrefsButton);
         save.setOnClickListener((OnClickListener) this);
+        this.update();
+        
+//        Spinner s = (Spinner) findViewById(R.id.spinner);
+//        ArrayAdapter adapter = ArrayAdapter.createFromResource(
+//                this, R.array.genders, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        s.setAdapter(adapter);
     }
-
+	
+	public void update(){
+		User user= DBPerson.getUser();
+		
+		if( user.getBlind() instanceof Boolean) ((CheckBox)this.findViewById(R.id.checkBlind)).setChecked(user.getBlind());
+		if(user.getDeaf() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkDeaf)).setChecked(user.getDeaf());
+		if(user.getSmoker() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkSmoker)).setChecked(user.getSmoker());
+		if(user.getDog() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkDog)).setChecked(user.getDog());
+		
+		Preferences prefs= user.getPrefs();
+		if(prefs.getDrive() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkDrive)).setChecked(prefs.getDrive());
+		if(prefs.getRide() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkRide)).setChecked(prefs.getRide());
+		if(prefs.getNonsmoking() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkNonSmoking)).setChecked(prefs.getNonsmoking());
+		if(prefs.hasPet() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkPet)).setChecked(prefs.hasPet());
+		
+		Integer gender = prefs.getGender();
+		if(gender instanceof Integer) {
+			if (gender.intValue()==Preferences.MALE)
+				((CheckBox)this.findViewById(R.id.checkMale)).setChecked(true);
+			else if (gender.intValue()==Preferences.FEMALE)
+				((CheckBox)this.findViewById(R.id.checkFemale)).setChecked(true);
+			else{
+				((CheckBox)this.findViewById(R.id.checkFemale)).setChecked(true);
+				((CheckBox)this.findViewById(R.id.checkMale)).setChecked(true);
+			}
+				
+		}
+	}
 	@Override
 	public void onClick(View v) {
 		Preferences prefs= new Preferences();
-		Person user = DBPerson.getUser();
+		User user = DBPerson.getUser();
 		
 				
 		user.setBlind( ((CheckBox)this.findViewById(R.id.checkBlind)).isChecked());

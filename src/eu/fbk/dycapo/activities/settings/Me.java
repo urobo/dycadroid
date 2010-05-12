@@ -11,8 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import eu.fbk.dycapo.activities.R;
-import eu.fbk.dycapo.models.Person;
+import eu.fbk.dycapo.models.Preferences;
 import eu.fbk.dycapo.persistency.DBPerson;
+import eu.fbk.dycapo.persistency.User;
 
 /**
  * @author riccardo
@@ -49,12 +50,31 @@ public class Me extends Activity implements OnClickListener {
         
         female.setOnClickListener(gender_listener);
         male.setOnClickListener(gender_listener);
-
+        
+        
+        
+        this.update();
     }
-
+	
+	public void update(){
+		
+		User user= DBPerson.getUser();
+		((EditText)this.findViewById(R.id.getUsername)).setText(user.getUsername());
+		((EditText)this.findViewById(R.id.getPassword)).setText(user.getPassword());
+		((EditText)this.findViewById(R.id.getFirst_Name)).setText(user.getFirst_name());
+		((EditText)this.findViewById(R.id.getLast_Name)).setText(user.getLast_name());
+		((EditText)this.findViewById(R.id.getEmail)).setText(user.getEmail());
+		//((EditText)this.findViewById(R.id.getAge)).setText(user.getAge());
+		
+		if(user.getGender().equals(Preferences.GENDER_PREFS[Preferences.MALE])){
+			((RadioButton)this.findViewById(R.id.maleGender)).setChecked(true);
+		}else
+			((RadioButton)this.findViewById(R.id.femaleGender)).setChecked(true);
+		
+	}
 	@Override
 	public void onClick(View v) {
-		Person readForm= new Person();
+		User readForm= new User();
 		String input;
 		
 		input= ((EditText)this.findViewById(R.id.getAge)).getText().toString();

@@ -79,6 +79,7 @@ public class Mode implements XMLRPCModel {
 		
 	}
 
+	
 	/**
 	 * @return the kind
 	 */
@@ -96,28 +97,28 @@ public class Mode implements XMLRPCModel {
 	/**
 	 * @return the capacity
 	 */
-	public int getCapacity() {
+	public Integer getCapacity() {
 		return capacity;
 	}
 
 	/**
 	 * @param capacity the capacity to set
 	 */
-	public void setCapacity(int capacity) {
+	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
 	}
 
 	/**
 	 * @return the vacancy
 	 */
-	public int getVacancy() {
+	public Integer getVacancy() {
 		return vacancy;
 	}
 
 	/**
 	 * @param vacancy the vacancy to set
 	 */
-	public void setVacancy(int vacancy) {
+	public void setVacancy(Integer vacancy) {
 		this.vacancy = vacancy;
 	}
 
@@ -152,14 +153,14 @@ public class Mode implements XMLRPCModel {
 	/**
 	 * @return the year
 	 */
-	public int getYear() {
+	public Integer getYear() {
 		return year;
 	}
 
 	/**
 	 * @param year the year to set
 	 */
-	public void setYear(int year) {
+	public void setYear(Integer year) {
 		this.year = year;
 	}
 
@@ -204,7 +205,7 @@ public class Mode implements XMLRPCModel {
 	public void setCost(Double cost) {
 		this.cost = cost;
 	}
-	
+
 	public HashMap<String,Object> toHashMap(){
 		HashMap<String,Object> result = new HashMap<String,Object>();
 		

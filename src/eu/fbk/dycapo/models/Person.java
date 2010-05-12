@@ -15,7 +15,6 @@ public class Person implements XMLRPCModel{
 	
 	public static final String USERNAME="username";
 	public static final String EMAIL="email";
-	public static final String PASSWORD="password";
 	public static final String FIRST_NAME="first_name";
 	public static final String LAST_NAME="last_name";
 	public static final String URL="url";
@@ -29,8 +28,7 @@ public class Person implements XMLRPCModel{
 	public static final String DOG="dog";
 	
 	private String username;	//must
-	private String email;		//may
-	private String password;	
+	private String email;		//may	
 	private String first_name;	//should
 	private String last_name;	//should
 	private String url;			//may
@@ -50,12 +48,10 @@ public class Person implements XMLRPCModel{
 	}
 	
 	
-	public Person(String username, String email, String password,
-			String firstName, String lastName, int age, String gender,
+	public Person(String username, String email, String firstName, String lastName, int age, String gender,
 			boolean smoker, boolean blind, boolean deaf, boolean dog) {
 		this.username = username;
 		this.email = email;
-		this.password = password;
 		this.first_name = firstName;
 		this.last_name = lastName;
 		this.age = age;
@@ -71,7 +67,7 @@ public class Person implements XMLRPCModel{
 	/**
 	 * @param username
 	 * @param email
-	 * @param password
+	 
 	 * @param firstName
 	 * @param lastName
 	 * @param uri
@@ -84,13 +80,12 @@ public class Person implements XMLRPCModel{
 	 * @param deaf
 	 * @param dog
 	 */
-	public Person(String username, String email, String password,
+	public Person(String username, String email,
 			String firstName, String lastName, String url, String phone,
 			Location position, int age, String gender, boolean smoker,
 			boolean blind, boolean deaf, boolean dog) {
 		this.username = username;
 		this.email = email;
-		this.password = password;
 		this.first_name = firstName;
 		this.last_name = lastName;
 		this.url = url;
@@ -105,177 +100,212 @@ public class Person implements XMLRPCModel{
 	}
 
 
+
+
 	/**
 	 * @return the username
 	 */
 	public String getUsername() {
 		return username;
 	}
+
+
 	/**
 	 * @param username the username to set
 	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+
 	/**
 	 * @return the email
 	 */
 	public String getEmail() {
 		return email;
 	}
+
+
 	/**
 	 * @param email the email to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
+
+
 	/**
 	 * @return the first_name
 	 */
 	public String getFirst_name() {
 		return first_name;
 	}
+
+
 	/**
 	 * @param firstName the first_name to set
 	 */
 	public void setFirst_name(String firstName) {
 		first_name = firstName;
 	}
+
+
 	/**
 	 * @return the last_name
 	 */
 	public String getLast_name() {
 		return last_name;
 	}
+
+
 	/**
 	 * @param lastName the last_name to set
 	 */
 	public void setLast_name(String lastName) {
 		last_name = lastName;
 	}
-	
+
 
 	/**
-	 * @return the uri
+	 * @return the url
 	 */
 	public String getUrl() {
 		return url;
 	}
+
+
 	/**
-	 * @param uri the uri to set
+	 * @param url the url to set
 	 */
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+
 	/**
 	 * @return the phone
 	 */
 	public String getPhone() {
 		return phone;
 	}
+
+
 	/**
 	 * @param phone the phone to set
 	 */
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
+
 	/**
 	 * @return the position
 	 */
 	public Location getPosition() {
 		return position;
 	}
+
+
 	/**
 	 * @param position the position to set
 	 */
 	public void setPosition(Location position) {
 		this.position = position;
 	}
-	public Integer getIAge(){
-		return age;
-	}
+
+
 	/**
 	 * @return the age
 	 */
-	public int getAge() {
+	public Integer getAge() {
 		return age;
 	}
+
+
 	/**
 	 * @param age the age to set
 	 */
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
+
+
 	/**
 	 * @return the gender
 	 */
 	public String getGender() {
 		return gender;
 	}
+
+
 	/**
 	 * @param gender the gender to set
 	 */
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
+
 	/**
 	 * @return the smoker
 	 */
-	public boolean isSmoker() {
+	public Boolean getSmoker() {
 		return smoker;
 	}
+
+
 	/**
 	 * @param smoker the smoker to set
 	 */
-	public void setSmoker(boolean smoker) {
+	public void setSmoker(Boolean smoker) {
 		this.smoker = smoker;
 	}
+
+
 	/**
 	 * @return the blind
 	 */
-	public boolean isBlind() {
+	public Boolean getBlind() {
 		return blind;
 	}
+
+
 	/**
 	 * @param blind the blind to set
 	 */
-	public void setBlind(boolean blind) {
+	public void setBlind(Boolean blind) {
 		this.blind = blind;
 	}
+
+
 	/**
 	 * @return the deaf
 	 */
-	public boolean isDeaf() {
+	public Boolean getDeaf() {
 		return deaf;
 	}
+
+
 	/**
 	 * @param deaf the deaf to set
 	 */
-	public void setDeaf(boolean deaf) {
+	public void setDeaf(Boolean deaf) {
 		this.deaf = deaf;
 	}
+
+
 	/**
 	 * @return the dog
 	 */
-	public boolean hasDog() {
+	public Boolean getDog() {
 		return dog;
 	}
+
+
 	/**
 	 * @param dog the dog to set
 	 */
-	public void setDog(boolean dog) {
+	public void setDog(Boolean dog) {
 		this.dog = dog;
 	}
 
@@ -284,16 +314,16 @@ public class Person implements XMLRPCModel{
 	public HashMap<String, Object> toHashMap() {
 		HashMap<String,Object> result = new HashMap<String,Object>();
 		if (this.age > 0 && this.age < 100)result.put(Person.AGE,this.age);
-		result.put(Person.BLIND,this.blind);
-		result.put(Person.DEAF,this.deaf);
-		result.put(Person.DOG,this.dog);
+		if (this.blind instanceof Boolean)result.put(Person.BLIND,this.blind);
+		if (this.deaf instanceof Boolean)result.put(Person.DEAF,this.deaf);
+		if (this.dog instanceof Boolean)result.put(Person.DOG,this.dog);
 		if (this.email instanceof java.lang.String)result.put(Person.EMAIL,this.email);
 		if (this.first_name instanceof java.lang.String)result.put(Person.FIRST_NAME,this.first_name);
 		if (this.gender instanceof java.lang.String)result.put(Person.GENDER,this.gender);
 		if (this.last_name instanceof java.lang.String)result.put(Person.LAST_NAME,this.last_name);
 		if (this.phone instanceof java.lang.String)result.put(Person.PHONE,this.phone);
-		result.put(Person.POSITION,this.position.toHashMap());
-		result.put(Person.SMOKER,this.smoker);
+		if (this.position instanceof Location)result.put(Person.POSITION,this.position.toHashMap());
+		if (this.smoker instanceof Boolean)result.put(Person.SMOKER,this.smoker);
 		if (this.url instanceof java.lang.String)result.put(Person.URL,this.url);
 		if (this.username instanceof java.lang.String)result.put(Person.USERNAME,this.username);
 		return result;

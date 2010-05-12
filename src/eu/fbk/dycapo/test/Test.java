@@ -11,9 +11,9 @@ import eu.fbk.dycapo.exceptions.Tag;
 import eu.fbk.dycapo.factories.DycapoObjectsFetcher;
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Mode;
-import eu.fbk.dycapo.models.Person;
 import eu.fbk.dycapo.models.Preferences;
 import eu.fbk.dycapo.models.Trip;
+import eu.fbk.dycapo.persistency.User;
 import eu.fbk.dycapo.xmlrpc.XMLRPCClient;
 import eu.fbk.dycapo.xmlrpc.XMLRPCException;
 
@@ -39,7 +39,7 @@ public class Test implements Runnable {
 	private Location fbk;
 	private Location fbk1;
 	private Location bodomsHome;
-	private Person user;
+	private User user;
 	private static Trip trip;
 	private Date now;
 	
@@ -76,7 +76,7 @@ public class Test implements Runnable {
 										this.now
 										);
     	
-    	this.user = new Person(
+    	this.user = new User(
     								"rider1", 
     								"rico.sleeps@gmail.com",
     								"password",

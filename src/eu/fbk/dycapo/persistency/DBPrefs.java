@@ -37,10 +37,14 @@ public final class DBPrefs {
 	
 	public static boolean savePrefs(Preferences prefs){
 		
-		if (DBPrefs.findPrefs(prefs))return true;
-		if(DBPrefs.deletePrefs()){
-			ObjectContainer db=DBProvider.getDatabase();
-			db.store(prefs);
+		ObjectContainer db=DBProvider.getDatabase();
+	
+		ObjectSet<User> result = db.queryByExample(User.class);
+		if(!result.isEmpty()){
+			User user= result.next();
+			user.setPrefs(prefs);
+			db.delete(User.class);
+			db.store(user);
 			db.commit();
 			return true;
 		}
