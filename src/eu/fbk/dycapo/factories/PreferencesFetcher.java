@@ -17,7 +17,7 @@ public class PreferencesFetcher {
 		
 		
 		//FIXME WHAT THE FUCK!?
-		if (value.containsKey(Preferences.AGE))result.setAge((String)value.get(Preferences.AGE));
+//		if (value.containsKey(Preferences.AGE))result.setAge((String)value.get(Preferences.AGE));
 		
 		if (value.containsKey(Preferences.DRIVE))result.setDrive(((Integer)value.get(Preferences.DRIVE)==1)?Boolean.TRUE:Boolean.FALSE);
 		

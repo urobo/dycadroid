@@ -35,7 +35,7 @@ public class Car extends Activity implements OnClickListener{
 		User user= DBPerson.getUser();
 		Mode car=user.getCar();
 		
-		//if(car.getCapacity() instanceof Integer)((EditText)this.findViewById(R.id.getCapacity)).setText(car.getCapacity(), );
+		if(car.getCapacity() instanceof Integer)((EditText)this.findViewById(R.id.getCapacity)).setText(car.getCapacity().toString());
 		if(car.getColor() instanceof String)((EditText)this.findViewById(R.id.getColor)).setText(car.getColor());
 		if(car.getModel()instanceof String) ((EditText)this.findViewById(R.id.getModel)).setText(car.getModel());
 		if(car.getLic() instanceof String) ((EditText)this.findViewById(R.id.getLic)).setText(car.getLic());

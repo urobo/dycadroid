@@ -13,60 +13,6 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  */
 public class Preferences implements XMLRPCModel {
 	
-	public static final String[] GENDER_PREFS={"male","female","both"};
-	public static final int MALE=0;
-	public static final int FEMALE=1;
-	public static final int BOTH=2;
-	
-	public static final String AGE="age";
-	public static final String NONSMOKING="nonsmoking";
-	public static final String GENDER="gender";
-	public static final String DRIVE="drive";
-	public static final String RIDE="ride";
-	
-	private String age;				//may
-	private Boolean nonsmoking;		//may
-	private Integer gender;			//may
-	private Boolean drive;			//may
-	private Boolean ride;			//may
-	private Boolean pet;
-	
-	public Preferences(){
-		
-	}
-	
-	/**
-	 * @param age
-	 * @param nonsmoking
-	 * @param gender
-	 * @param drive
-	 * @param ride
-	 */
-	public Preferences(String age, Boolean nonsmoking, Integer gender,
-			Boolean drive, Boolean ride) {
-		this.age = age;
-		this.nonsmoking = nonsmoking;
-		this.gender = gender;
-		this.drive = drive;
-		this.ride = ride;
-	}
-
-
-
-	/**
-	 * @return the age
-	 */
-	public String getAge() {
-		return age;
-	}
-
-	/**
-	 * @param age the age to set
-	 */
-	public void setAge(String age) {
-		this.age = age;
-	}
-
 	/**
 	 * @return the nonsmoking
 	 */
@@ -122,13 +68,65 @@ public class Preferences implements XMLRPCModel {
 	public void setRide(Boolean ride) {
 		this.ride = ride;
 	}
+
+	/**
+	 * @return the pet
+	 */
+	public Boolean getPet() {
+		return pet;
+	}
+
+	/**
+	 * @param pet the pet to set
+	 */
+	public void setPet(Boolean pet) {
+		this.pet = pet;
+	}
+
+
+
+
+	public static final String[] GENDER_PREFS={"male","female","both"};
+	public static final int MALE=0;
+	public static final int FEMALE=1;
+	public static final int BOTH=2;
 	
-	public void setPet(Boolean pet){
-		this.pet=pet;
+	public static final String AGE="age";
+	public static final String NONSMOKING="nonsmoking";
+	public static final String GENDER="gender";
+	public static final String DRIVE="drive";
+	public static final String RIDE="ride";
+	
+	private String age;				//may
+	private Boolean nonsmoking;		//may
+	private Integer gender;			//may
+	private Boolean drive;			//may
+	private Boolean ride;			//may
+	private Boolean pet;
+	
+	public Preferences(){
+		
 	}
-	public Boolean hasPet(){
-		return this.pet;
+	
+	/**
+	 * @param age
+	 * @param nonsmoking
+	 * @param gender
+	 * @param drive
+	 * @param ride
+	 */
+	public Preferences(String age, Boolean nonsmoking, Integer gender,
+			Boolean drive, Boolean ride) {
+		this.age = age;
+		this.nonsmoking = nonsmoking;
+		this.gender = gender;
+		this.drive = drive;
+		this.ride = ride;
 	}
+
+
+
+	
 	public HashMap<String,Object> toHashMap(){
 		HashMap<String,Object> result= new HashMap<String,Object>();
 		if (this.age instanceof java.lang.String)result.put(Preferences.AGE, this.age);

@@ -8,11 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-//import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
-//import android.widget.Spinner;
 import eu.fbk.dycapo.activities.R;
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.exceptions.Tag;
@@ -55,7 +52,7 @@ public class Prefs extends Activity implements OnClickListener{
 		if(prefs.getDrive() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkDrive)).setChecked(prefs.getDrive());
 		if(prefs.getRide() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkRide)).setChecked(prefs.getRide());
 		if(prefs.getNonsmoking() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkNonSmoking)).setChecked(prefs.getNonsmoking());
-		if(prefs.hasPet() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkPet)).setChecked(prefs.hasPet());
+		if(prefs.getPet() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkPet)).setChecked(prefs.getPet());
 		
 		Integer gender = prefs.getGender();
 		if(gender instanceof Integer) {
@@ -67,8 +64,18 @@ public class Prefs extends Activity implements OnClickListener{
 				((CheckBox)this.findViewById(R.id.checkFemale)).setChecked(true);
 				((CheckBox)this.findViewById(R.id.checkMale)).setChecked(true);
 			}
-				
+			
 		}
+		
+//		String ageRange= prefs.getAge();
+//		int i=0;
+//			
+//		if (ageRange instanceof String){
+//			while(ageRange.charAt(i)!='-')i++;
+//			((EditText)this.findViewById(R.id.ageLeftBound)).setText(ageRange.subSequence(0, i));
+//			((EditText)this.findViewById(R.id.ageRightBound)).setText(ageRange.subSequence(i+1, ageRange.length()));
+//		}
+		
 	}
 	@Override
 	public void onClick(View v) {
@@ -103,9 +110,9 @@ public class Prefs extends Activity implements OnClickListener{
 		
 			
 		try{
-		int left = Integer.parseInt(((EditText)this.findViewById(R.id.ageLeftBound)).getText().toString());
-		int right = Integer.parseInt(((EditText)this.findViewById(R.id.ageRightBound)).getText().toString());
-		if (left<=right)prefs.setAge(left + "-"+ right);
+		//int left = Integer.parseInt(((EditText)this.findViewById(R.id.ageLeftBound)).getText().toString());
+		//int right = Integer.parseInt(((EditText)this.findViewById(R.id.ageRightBound)).getText().toString());
+		//if (left<=right)prefs.setAge(String.valueOf(left) + "-"+ String.valueOf(right));
 		DBPrefs.savePrefs(prefs);
 		}catch (Exception e){
 			Log.d(Tag.LOG +".SavePrefs.parseInt", e.getMessage());

@@ -49,17 +49,14 @@ public final class R {
         public static final int TextView06=0x7f060021;
         public static final int TextView07=0x7f060024;
         public static final int TextView08=0x7f060027;
-        public static final int ageLeftBound=0x7f060045;
-        public static final int ageMatchingTextView=0x7f060043;
-        public static final int ageRightBound=0x7f060044;
         public static final int ageTextView=0x7f060036;
         public static final int capacityTextView=0x7f060008;
         public static final int checkBlind=0x7f06003a;
         public static final int checkDeaf=0x7f06003b;
         public static final int checkDog=0x7f06003c;
         public static final int checkDrive=0x7f060041;
-        public static final int checkFemale=0x7f060047;
-        public static final int checkMale=0x7f060046;
+        public static final int checkFemale=0x7f060044;
+        public static final int checkMale=0x7f060043;
         public static final int checkNonSmoking=0x7f06003f;
         public static final int checkPet=0x7f060040;
         public static final int checkRide=0x7f060042;
@@ -90,7 +87,7 @@ public final class R {
         public static final int personalPreferencesTextView=0x7f060039;
         public static final int saveCarButton=0x7f06000a;
         public static final int saveMeButton=0x7f060038;
-        public static final int savePrefsButton=0x7f060048;
+        public static final int savePrefsButton=0x7f060045;
         public static final int usernameTextView=0x7f060029;
     }
     public static final class layout {

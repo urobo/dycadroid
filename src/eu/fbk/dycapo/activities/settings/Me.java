@@ -64,7 +64,7 @@ public class Me extends Activity implements OnClickListener {
 		((EditText)this.findViewById(R.id.getFirst_Name)).setText(user.getFirst_name());
 		((EditText)this.findViewById(R.id.getLast_Name)).setText(user.getLast_name());
 		((EditText)this.findViewById(R.id.getEmail)).setText(user.getEmail());
-		//((EditText)this.findViewById(R.id.getAge)).setText(user.getAge());
+		((EditText)this.findViewById(R.id.getAge)).setText(user.getAge().toString());
 		
 		if(user.getGender().equals(Preferences.GENDER_PREFS[Preferences.MALE])){
 			((RadioButton)this.findViewById(R.id.maleGender)).setChecked(true);
