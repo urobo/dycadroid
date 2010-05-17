@@ -30,7 +30,7 @@
   >
   	
     <Button android:id="@+id/DriverButton" android:text="@string/driver" android:layout_width="fill_parent" android:layout_height="wrap_content" />
-    <Button android:id="@+id/RiderButton" android:text="@string/rider" android:layout_width="fill_parent" android:layout_height="wrap_content" /> 
+    <Button android:id="@+id/RiderButton" android:text="@string/rider" android:layout_width="fill_parent" android:layout_height="wrap_content"/> 
   
   </LinearLayout>
     <TextView

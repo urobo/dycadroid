@@ -3,9 +3,9 @@
  */
 package eu.fbk.dycapo.activities.settings;
 
+import eu.fbk.dycapo.activities.R;
 import android.app.Activity;
 import android.os.Bundle;
-import eu.fbk.dycapo.activities.R;
 
 /**
  * @author riccardo

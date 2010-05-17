@@ -4,7 +4,6 @@
 package eu.fbk.dycapo.activities;
 
 
-import eu.fbk.dycapo.persistency.DBProvider;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import eu.fbk.dycapo.persistency.DBProvider;
 
 /**
  * @author riccardo
@@ -29,9 +29,9 @@ public class Home extends Activity implements OnClickListener{
 		this.setContentView(R.layout.home);
 		DBProvider.configureProvider(this.getApplicationContext());
 		Button driver = (Button) findViewById(R.id.DriverButton);
-		driver.setOnClickListener((OnClickListener)this);
+		driver.setOnClickListener(this);
 		Button rider = (Button) findViewById(R.id.RiderButton);
-		rider.setOnClickListener((OnClickListener)this);
+		rider.setOnClickListener(this);
 	}
 	
 	
@@ -58,15 +58,23 @@ public class Home extends Activity implements OnClickListener{
 
 
 	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
+	public void onClick(View v) {	
+		String role= null;
 		switch(v.getId()){
 		case R.id.DriverButton:
+			role="driver";
 			break;
 		case R.id.RiderButton:
+			role="rider";
 			break;
-
+			
 		}
+		Intent intent=new Intent();
+		intent.setClass(this,FastChoice.class);
+		Bundle bundle=new Bundle();
+		bundle.putString("role", role);
+		intent.putExtras(bundle);
+		this.startActivity(intent);
 	}
 	
 	
@@ -81,7 +89,7 @@ public class Home extends Activity implements OnClickListener{
 			
 		}else if (selected==2){
 			i = new Intent();
-			i.setClass(this.getApplicationContext(),eu.fbk.dycapo.activities.Settings.class);
+			i.setClass(this,Settings.class);
 			this.startActivity(i);
 		}else if (selected==3){
 			

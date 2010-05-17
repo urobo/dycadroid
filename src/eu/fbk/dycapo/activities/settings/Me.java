@@ -59,6 +59,7 @@ public class Me extends Activity implements OnClickListener {
 	public void update(){
 		
 		User user= DBPerson.getUser();
+		if (user instanceof User){
 		((EditText)this.findViewById(R.id.getUsername)).setText(user.getUsername());
 		((EditText)this.findViewById(R.id.getPassword)).setText(user.getPassword());
 		((EditText)this.findViewById(R.id.getFirst_Name)).setText(user.getFirst_name());
@@ -70,7 +71,7 @@ public class Me extends Activity implements OnClickListener {
 			((RadioButton)this.findViewById(R.id.maleGender)).setChecked(true);
 		}else
 			((RadioButton)this.findViewById(R.id.femaleGender)).setChecked(true);
-		
+		}
 	}
 	@Override
 	public void onClick(View v) {

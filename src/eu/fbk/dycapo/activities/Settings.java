@@ -8,6 +8,10 @@ package eu.fbk.dycapo.activities;
 
 
 
+import eu.fbk.dycapo.activities.settings.Car;
+import eu.fbk.dycapo.activities.settings.Me;
+import eu.fbk.dycapo.activities.settings.Prefs;
+import eu.fbk.dycapo.activities.settings.Social;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,13 +51,13 @@ public class Settings extends TabActivity implements OnClickListener{
 		
 		    tabHost = getTabHost();  
 		    
-		    tabHost.addTab(tabHost.newTabSpec(eu.fbk.dycapo.activities.Settings.TAB_TAGS[0]).setContent(new Intent(Settings.this, eu.fbk.dycapo.activities.settings.Me.class)).
+		    tabHost.addTab(tabHost.newTabSpec(eu.fbk.dycapo.activities.Settings.TAB_TAGS[0]).setContent(new Intent(this, Me.class)).
 		    		 setIndicator(eu.fbk.dycapo.activities.Settings.TAB_TAGS[0], getResources().getDrawable(android.R.drawable.ic_menu_info_details))); 
-		    tabHost.addTab(tabHost.newTabSpec(eu.fbk.dycapo.activities.Settings.TAB_TAGS[1]).setContent(new Intent(Settings.this, eu.fbk.dycapo.activities.settings.Prefs.class)).
+		    tabHost.addTab(tabHost.newTabSpec(eu.fbk.dycapo.activities.Settings.TAB_TAGS[1]).setContent(new Intent(this, Prefs.class)).
 		    		 setIndicator(eu.fbk.dycapo.activities.Settings.TAB_TAGS[1], getResources().getDrawable(android.R.drawable.ic_menu_preferences)));
-		    tabHost.addTab(tabHost.newTabSpec(eu.fbk.dycapo.activities.Settings.TAB_TAGS[2]).setContent(new Intent(Settings.this, eu.fbk.dycapo.activities.settings.Car.class)).
+		    tabHost.addTab(tabHost.newTabSpec(eu.fbk.dycapo.activities.Settings.TAB_TAGS[2]).setContent(new Intent(this, Car.class)).
 		    		 setIndicator(eu.fbk.dycapo.activities.Settings.TAB_TAGS[2], getResources().getDrawable(android.R.drawable.ic_menu_compass)));
-		    tabHost.addTab(tabHost.newTabSpec(eu.fbk.dycapo.activities.Settings.TAB_TAGS[3]).setContent(new Intent(Settings.this, eu.fbk.dycapo.activities.settings.Social.class)).
+		    tabHost.addTab(tabHost.newTabSpec(eu.fbk.dycapo.activities.Settings.TAB_TAGS[3]).setContent(new Intent(this, Social.class)).
 		    		 setIndicator(eu.fbk.dycapo.activities.Settings.TAB_TAGS[3], getResources().getDrawable(android.R.drawable.ic_menu_send)));
 
 		}

@@ -33,6 +33,7 @@ public class Car extends Activity implements OnClickListener{
 	public void update()
 	{
 		User user= DBPerson.getUser();
+		if (user instanceof User){
 		Mode car=user.getCar();
 		
 		if(car.getCapacity() instanceof Integer)((EditText)this.findViewById(R.id.getCapacity)).setText(car.getCapacity().toString());
@@ -43,7 +44,7 @@ public class Car extends Activity implements OnClickListener{
 		
 		car=null;
 		user=null;
-		
+		}
 	}
 	@Override
 	public void onClick(View v) {

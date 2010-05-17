@@ -27,6 +27,7 @@ public final class R {
         public static final int Button06=0x7f060022;
         public static final int Button07=0x7f060025;
         public static final int Button08=0x7f060028;
+        public static final int DatePicker01=0x7f06004d;
         public static final int DriverButton=0x7f06000e;
         public static final int Driver_Rider=0x7f06000d;
         public static final int Home_Link=0x7f060010;
@@ -49,6 +50,7 @@ public final class R {
         public static final int TextView06=0x7f060021;
         public static final int TextView07=0x7f060024;
         public static final int TextView08=0x7f060027;
+        public static final int TimePicker01=0x7f06004f;
         public static final int ageTextView=0x7f060036;
         public static final int capacityTextView=0x7f060008;
         public static final int checkBlind=0x7f06003a;
@@ -62,41 +64,56 @@ public final class R {
         public static final int checkRide=0x7f060042;
         public static final int checkSmoker=0x7f06003d;
         public static final int colorTextView=0x7f060006;
+        public static final int dateTextView=0x7f06004c;
+        public static final int destinationTextView=0x7f060049;
         public static final int emailTextView=0x7f060031;
         public static final int femaleGender=0x7f060035;
+        public static final int findDestination=0x7f06004b;
+        public static final int findOrigin=0x7f060048;
         public static final int first_nameTextView=0x7f06002d;
         public static final int genderTextView=0x7f060033;
         public static final int getAge=0x7f060037;
         public static final int getCapacity=0x7f060009;
         public static final int getColor=0x7f060007;
+        public static final int getDestination=0x7f06004a;
         public static final int getEmail=0x7f060032;
         public static final int getFirst_Name=0x7f06002e;
         public static final int getLast_Name=0x7f060030;
         public static final int getLic=0x7f060001;
         public static final int getMaker=0x7f060003;
         public static final int getModel=0x7f060005;
+        public static final int getOrigin=0x7f060047;
         public static final int getPassword=0x7f06002c;
         public static final int getUsername=0x7f06002a;
+        public static final int historyTripButton=0x7f060053;
         public static final int last_nameTextView=0x7f06002f;
         public static final int licensePlateTextView=0x7f060000;
         public static final int makerTextView=0x7f060002;
         public static final int maleGender=0x7f060034;
         public static final int matchingPreferencesView=0x7f06003e;
         public static final int modelTextView=0x7f060004;
+        public static final int mostTripButton=0x7f060051;
+        public static final int newTripButton=0x7f060050;
+        public static final int originTextView=0x7f060046;
         public static final int passwordTextView=0x7f06002b;
         public static final int personalPreferencesTextView=0x7f060039;
+        public static final int recentTripButton=0x7f060052;
         public static final int saveCarButton=0x7f06000a;
         public static final int saveMeButton=0x7f060038;
         public static final int savePrefsButton=0x7f060045;
+        public static final int timeTextView=0x7f06004e;
         public static final int usernameTextView=0x7f060029;
     }
     public static final class layout {
         public static final int car=0x7f030000;
-        public static final int home=0x7f030001;
-        public static final int main=0x7f030002;
-        public static final int me=0x7f030003;
-        public static final int prefs=0x7f030004;
-        public static final int social=0x7f030005;
+        public static final int driver_trip=0x7f030001;
+        public static final int home=0x7f030002;
+        public static final int main=0x7f030003;
+        public static final int me=0x7f030004;
+        public static final int prefs=0x7f030005;
+        public static final int rider_trip=0x7f030006;
+        public static final int social=0x7f030007;
+        public static final int trip=0x7f030008;
     }
     public static final class string {
         public static final int app_name=0x7f05000d;

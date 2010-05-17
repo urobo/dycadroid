@@ -42,7 +42,7 @@ public class Prefs extends Activity implements OnClickListener{
 	
 	public void update(){
 		User user= DBPerson.getUser();
-		
+		if(user instanceof User){
 		if( user.getBlind() instanceof Boolean) ((CheckBox)this.findViewById(R.id.checkBlind)).setChecked(user.getBlind());
 		if(user.getDeaf() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkDeaf)).setChecked(user.getDeaf());
 		if(user.getSmoker() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkSmoker)).setChecked(user.getSmoker());
@@ -75,7 +75,7 @@ public class Prefs extends Activity implements OnClickListener{
 //			((EditText)this.findViewById(R.id.ageLeftBound)).setText(ageRange.subSequence(0, i));
 //			((EditText)this.findViewById(R.id.ageRightBound)).setText(ageRange.subSequence(i+1, ageRange.length()));
 //		}
-		
+	}
 	}
 	@Override
 	public void onClick(View v) {
