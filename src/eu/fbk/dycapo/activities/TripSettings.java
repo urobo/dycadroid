@@ -16,7 +16,7 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
+//import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -46,8 +46,10 @@ public class TripSettings extends Activity implements OnClickListener {
 	private Menu myMenu=null;
 	private Context ctx;
 	private int id;
-	
+	private Address Origin=null;
+	private Address Destination=null;
 	private Dialog pd;
+	
     private TextView mDateDisplay;
     private Button mPickDate;
     private int mYear;
@@ -102,16 +104,7 @@ public class TripSettings extends Activity implements OnClickListener {
 			pd.dismiss();
 			Log.d("thr","message received");
 			showOptions(msg.what);
-			switch(msg.what){
-			case R.id.getDestination:
-				
-				
-				break;
-			case R.id.getOrigin:
-				
-				
-				break;
-			}
+			
 		}
 	};
 	
@@ -136,7 +129,16 @@ public class TripSettings extends Activity implements OnClickListener {
 					new DialogInterface.OnClickListener() {
 				public void onClick(
 						DialogInterface dialoginterface, int i) {
-
+					switch(id){
+					case R.id.getOrigin:
+						setOrigin(foundAddresses.get(i));
+						Log.d("Origin", foundAddresses.get(i).getAddressLine(0) + ", " +foundAddresses.get(i).getAddressLine(1));
+						break;
+					case R.id.getDestination:
+						setDestination(foundAddresses.get(i));
+						Log.d("Destination", foundAddresses.get(i).getAddressLine(0) + ", " +foundAddresses.get(i).getAddressLine(1));
+						break;
+					}
 					EditText set = (EditText)findViewById(id);
 					set.setText(foundAddresses.get(i).getAddressLine(0) + ", " +foundAddresses.get(i).getAddressLine(1));
 				}
@@ -164,7 +166,7 @@ public class TripSettings extends Activity implements OnClickListener {
 			
 			thr= new Thread(){
 				public void run(){
-						Geocoder gc = new Geocoder(ctx, Locale.ITALY);
+						Geocoder gc = new Geocoder(ctx, Locale.ENGLISH);
 						try {
 							foundAddresses= gc.getFromLocationName(location, 3);					
 							Log.d("Looking for :", location);
@@ -198,7 +200,7 @@ public class TripSettings extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		this.role = this.getIntent().getExtras().getString("role");
+		this.setRole(this.getIntent().getExtras().getString("role"));
 		this.setContentView(R.layout.trip_settings);
 		
 		this.ctx=this;
@@ -280,14 +282,14 @@ public class TripSettings extends Activity implements OnClickListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		this.myMenu=menu;
+		this.setMyMenu(menu);
 		addRegularMenuItems(menu);
 		return true;
 	}
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int selected= item.getItemId();
 		String role=this.getIntent().getExtras().getString("role");
-		Intent i;
+		//Intent i;
 		if(selected==1){
 			if (role.equals("driver")){
 				String location= ((EditText)this.findViewById(R.id.getOrigin)).getText().toString();
@@ -336,4 +338,60 @@ public class TripSettings extends Activity implements OnClickListener {
         }
         return null;
     }
+
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	/**
+	 * @return the role
+	 */
+	public String getRole() {
+		return role;
+	}
+
+	/**
+	 * @param myMenu the myMenu to set
+	 */
+	public void setMyMenu(Menu myMenu) {
+		this.myMenu = myMenu;
+	}
+
+	/**
+	 * @return the myMenu
+	 */
+	public Menu getMyMenu() {
+		return myMenu;
+	}
+
+	/**
+	 * @param origin the origin to set
+	 */
+	public void setOrigin(Address origin) {
+		Origin = origin;
+	}
+
+	/**
+	 * @return the origin
+	 */
+	public Address getOrigin() {
+		return Origin;
+	}
+
+	/**
+	 * @param destination the destination to set
+	 */
+	public void setDestination(Address destination) {
+		Destination = destination;
+	}
+
+	/**
+	 * @return the destination
+	 */
+	public Address getDestination() {
+		return Destination;
+	}
 }

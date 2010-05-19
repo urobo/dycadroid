@@ -72,14 +72,14 @@
          android:layout_width="fill_parent"
          android:layout_height="wrap_content"
          android:gravity="left"
-         android:layout_marginLeft="20px"
+         android:layout_marginLeft="30px"
+         android:textSize="30px"
          android:text=""/>
   	   <Button android:id="@+id/pickDate"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:text="Change the date"
          android:layout_alignRight="@id/dateDisplay"
-         android:layout_alignBaseline="@id/dateDisplay"
          />
        </RelativeLayout>
      
@@ -91,15 +91,16 @@
         <TextView android:id="@+id/timeDisplay"
           android:layout_width="fill_parent"
      	  android:layout_height="wrap_content"
-     	  android:layout_marginLeft="20px"
+     	  android:layout_marginLeft="40px"
      	  android:gravity="left"
+     	  android:textSize="30px"
           android:text=""/>
     	<Button android:id="@+id/pickTime"
       	  android:layout_width="wrap_content"
       	  android:layout_height="wrap_content"
       	  android:text="Change the time"
          android:layout_alignRight="@id/timeDisplay"
-         android:layout_alignBaseline="@id/timeDisplay"
+        
       	 />
    </RelativeLayout>
 </LinearLayout>
