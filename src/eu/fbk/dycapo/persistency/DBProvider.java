@@ -48,7 +48,7 @@ public class DBProvider {
 		private static Configuration configure(){
 			 	dbConfiguration =Db4o.newConfiguration();
 			    
-			 	dbConfiguration.objectClass(Trip.class).objectField(Trip.PUBLISHED).indexed(true);
+			 	dbConfiguration.objectClass(Trip.class).objectField(Trip.ID).indexed(true);
 			    dbConfiguration.objectClass(Trip.class).cascadeOnUpdate(true);
 			    dbConfiguration.objectClass(Trip.class).cascadeOnDelete(true);
 			     

@@ -49,8 +49,6 @@ public class Prefs extends Activity implements OnClickListener{
 		if(user.getDog() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkDog)).setChecked(user.getDog());
 		
 		Preferences prefs= user.getPrefs();
-		if(prefs.getDrive() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkDrive)).setChecked(prefs.getDrive());
-		if(prefs.getRide() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkRide)).setChecked(prefs.getRide());
 		if(prefs.getNonsmoking() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkNonSmoking)).setChecked(prefs.getNonsmoking());
 		if(prefs.getPet() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkPet)).setChecked(prefs.getPet());
 		
@@ -93,11 +91,8 @@ public class Prefs extends Activity implements OnClickListener{
 		} catch (DycapoException e) {
 			Log.d(Tag.LOG + ".SavePersonalPrefs", e.getMessage());
 		}
-		
-		prefs.setDrive(((CheckBox)this.findViewById(R.id.checkDrive)).isChecked());
+
 		prefs.setNonsmoking(((CheckBox)this.findViewById(R.id.checkNonSmoking)).isChecked());
-		prefs.setRide(((CheckBox)this.findViewById(R.id.checkRide)).isChecked());
-		
 		
 		boolean male=((CheckBox)this.findViewById(R.id.checkMale)).isChecked();
 		boolean female=((CheckBox)this.findViewById(R.id.checkFemale)).isChecked();
@@ -110,12 +105,10 @@ public class Prefs extends Activity implements OnClickListener{
 		
 			
 		try{
-		//int left = Integer.parseInt(((EditText)this.findViewById(R.id.ageLeftBound)).getText().toString());
-		//int right = Integer.parseInt(((EditText)this.findViewById(R.id.ageRightBound)).getText().toString());
-		//if (left<=right)prefs.setAge(String.valueOf(left) + "-"+ String.valueOf(right));
+		
 		DBPrefs.savePrefs(prefs);
 		}catch (Exception e){
-			Log.d(Tag.LOG +".SavePrefs.parseInt", e.getMessage());
+			Log.d(Tag.LOG +".SavePrefs", e.getMessage());
 		}
 		
 	}

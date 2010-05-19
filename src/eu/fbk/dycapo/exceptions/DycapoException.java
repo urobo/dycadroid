@@ -6,6 +6,9 @@ package eu.fbk.dycapo.exceptions;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
+import android.content.Context;
+import android.widget.Toast;
+
 /**
  * @author riccardo
  *
@@ -189,5 +192,18 @@ public class DycapoException extends Exception{
 	public int hashCode() {
 		// TODO Auto-generated method stub
 		return super.hashCode();
-	}	
+	}
+
+	public void alertUser(Context context){
+		Toast.makeText(context, this.getMessage(), Toast.LENGTH_LONG).show();
+	}
+
+	public void alertUser(Context context, String title){
+		Toast.makeText(context, title+": "+this.getMessage(), Toast.LENGTH_LONG).show();
+	}
+	
+
+	public static void createAlert(Context context, String title, String message){
+		Toast.makeText(context, title+": "+ message, Toast.LENGTH_LONG).show();
+	}
 }

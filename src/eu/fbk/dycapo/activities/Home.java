@@ -6,6 +6,7 @@ package eu.fbk.dycapo.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -87,6 +88,10 @@ public class Home extends Activity implements OnClickListener{
 		Intent i;
 		if(selected==1){
 			
+				  i = new Intent(Intent.ACTION_VIEW);
+				  i.setData(Uri.parse("http://test.dycapo.org/"));
+				  this.startActivity(i);
+				
 		}else if (selected==2){
 			i = new Intent();
 			i.setClass(this,Settings.class);
