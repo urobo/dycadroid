@@ -39,18 +39,32 @@ public final class DBPrefs {
 		
 		ObjectContainer db=DBProvider.getDatabase();
 	
-		ObjectSet<User> result = db.queryByExample(User.class);
+		ObjectSet<Preferences> result = db.queryByExample(Preferences.class);
+		Preferences p_prefs;
 		if(!result.isEmpty()){
-			User user= result.next();
-			user.setPrefs(prefs);
-			db.delete(User.class);
-			db.store(user);
+			p_prefs= result.next();
+			db.delete(Preferences.class);
+			}
+		else p_prefs = new Preferences();
+			p_prefs.setNonsmoking(prefs.getNonsmoking());
+			p_prefs.setPet(prefs.getPet());
+			p_prefs.setGender(prefs.getGender());			
+			db.store(p_prefs);
 			db.commit();
 			return true;
-		}
 		
-		return false;
+		
+		
 	}
-	
+	public static Preferences getPrefs(){
+		ObjectContainer db=DBProvider.getDatabase();
+		
+		ObjectSet<Preferences> result = db.queryByExample(Preferences.class);
+		if(result.hasNext()){
+			Preferences prefs = result.next();
+			return prefs;
+			}
+		return null;
+	}
 
 }

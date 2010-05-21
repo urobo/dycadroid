@@ -43,38 +43,36 @@ public class Prefs extends Activity implements OnClickListener{
 	public void update(){
 		User user= DBPerson.getUser();
 		if(user instanceof User){
-		if( user.getBlind() instanceof Boolean) ((CheckBox)this.findViewById(R.id.checkBlind)).setChecked(user.getBlind());
+		if(user.getBlind() instanceof Boolean) ((CheckBox)this.findViewById(R.id.checkBlind)).setChecked(user.getBlind());
 		if(user.getDeaf() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkDeaf)).setChecked(user.getDeaf());
 		if(user.getSmoker() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkSmoker)).setChecked(user.getSmoker());
 		if(user.getDog() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkDog)).setChecked(user.getDog());
-		
-		Preferences prefs= user.getPrefs();
-		if(prefs.getNonsmoking() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkNonSmoking)).setChecked(prefs.getNonsmoking());
-		if(prefs.getPet() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkPet)).setChecked(prefs.getPet());
-		
-		Integer gender = prefs.getGender();
-		if(gender instanceof Integer) {
-			if (gender.intValue()==Preferences.MALE)
-				((CheckBox)this.findViewById(R.id.checkMale)).setChecked(true);
-			else if (gender.intValue()==Preferences.FEMALE)
-				((CheckBox)this.findViewById(R.id.checkFemale)).setChecked(true);
-			else{
-				((CheckBox)this.findViewById(R.id.checkFemale)).setChecked(true);
-				((CheckBox)this.findViewById(R.id.checkMale)).setChecked(true);
-			}
-			
+	
 		}
 		
-//		String ageRange= prefs.getAge();
-//		int i=0;
-//			
-//		if (ageRange instanceof String){
-//			while(ageRange.charAt(i)!='-')i++;
-//			((EditText)this.findViewById(R.id.ageLeftBound)).setText(ageRange.subSequence(0, i));
-//			((EditText)this.findViewById(R.id.ageRightBound)).setText(ageRange.subSequence(i+1, ageRange.length()));
-//		}
+		Preferences prefs= DBPrefs.getPrefs();
+		if (prefs instanceof Preferences){
+			if(prefs.getNonsmoking() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkNonSmoking)).setChecked(prefs.getNonsmoking());
+			if(prefs.getPet() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkPet)).setChecked(prefs.getPet());
+		
+			Integer gender = prefs.getGender();
+			if(gender instanceof Integer) {
+				if (gender.intValue()==Preferences.MALE)
+					((CheckBox)this.findViewById(R.id.checkMale)).setChecked(true);
+				else if (gender.intValue()==Preferences.FEMALE)
+					((CheckBox)this.findViewById(R.id.checkFemale)).setChecked(true);
+				else{
+					((CheckBox)this.findViewById(R.id.checkFemale)).setChecked(true);
+					((CheckBox)this.findViewById(R.id.checkMale)).setChecked(true);
+				}
+			
+			}
+		
+
+		
+	 }
 	}
-	}
+	
 	@Override
 	public void onClick(View v) {
 		Preferences prefs= new Preferences();

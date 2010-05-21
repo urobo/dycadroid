@@ -4,9 +4,7 @@
 package eu.fbk.dycapo.persistency;
 
 import eu.fbk.dycapo.models.Location;
-import eu.fbk.dycapo.models.Mode;
 import eu.fbk.dycapo.models.Person;
-import eu.fbk.dycapo.models.Preferences;
 
 /**
  * @author riccardo
@@ -14,8 +12,6 @@ import eu.fbk.dycapo.models.Preferences;
  */
 public class User extends Person {
 	private String password;
-	private Mode car;
-	private Preferences prefs;
 	
 	
 	
@@ -82,30 +78,5 @@ public class User extends Person {
 	 */
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	/**
-	 * @return the car
-	 */
-	public Mode getCar() {
-		return car;
-	}
-	/**
-	 * @param car the car to set
-	 */
-	public void setCar(Mode car) {
-		this.car = car;
-	}
-	/**
-	 * @return the prefs
-	 */
-	public Preferences getPrefs() {
-		return prefs;
-	}
-	/**
-	 * @param prefs the prefs to set
-	 */
-	public void setPrefs(Preferences prefs) {
-		this.prefs = prefs;
-	}
-		
+	}		
 }

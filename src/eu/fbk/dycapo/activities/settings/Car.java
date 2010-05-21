@@ -12,8 +12,6 @@ import android.widget.EditText;
 import eu.fbk.dycapo.activities.R;
 import eu.fbk.dycapo.models.Mode;
 import eu.fbk.dycapo.persistency.DBMode;
-import eu.fbk.dycapo.persistency.DBPerson;
-import eu.fbk.dycapo.persistency.User;
 
 /**
  * @author riccardo
@@ -32,20 +30,19 @@ public class Car extends Activity implements OnClickListener{
     }
 	public void update()
 	{
-		User user= DBPerson.getUser();
-		if (user instanceof User){
-		Mode car=user.getCar();
 		
-		if(car.getCapacity() instanceof Integer)((EditText)this.findViewById(R.id.getCapacity)).setText(car.getCapacity().toString());
-		if(car.getColor() instanceof String)((EditText)this.findViewById(R.id.getColor)).setText(car.getColor());
-		if(car.getModel()instanceof String) ((EditText)this.findViewById(R.id.getModel)).setText(car.getModel());
-		if(car.getLic() instanceof String) ((EditText)this.findViewById(R.id.getLic)).setText(car.getLic());
-		if(car.getMake() instanceof String) ((EditText)this.findViewById(R.id.getMaker)).setText(car.getMake());
-		
-		car=null;
-		user=null;
+		Mode car=DBMode.getMode();
+		if (car instanceof Mode){
+			if(car.getCapacity() instanceof Integer)((EditText)this.findViewById(R.id.getCapacity)).setText(car.getCapacity().toString());
+			if(car.getColor() instanceof String)((EditText)this.findViewById(R.id.getColor)).setText(car.getColor());
+			if(car.getModel()instanceof String) ((EditText)this.findViewById(R.id.getModel)).setText(car.getModel());
+			if(car.getLic() instanceof String) ((EditText)this.findViewById(R.id.getLic)).setText(car.getLic());
+			if(car.getMake() instanceof String) ((EditText)this.findViewById(R.id.getMaker)).setText(car.getMake());
 		}
-	}
+		car=null;
+
+		}
+	
 	@Override
 	public void onClick(View v) {
 		Mode car= new Mode();
