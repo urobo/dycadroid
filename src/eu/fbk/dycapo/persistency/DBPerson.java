@@ -9,7 +9,7 @@ import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 
 import eu.fbk.dycapo.exceptions.DycapoException;
-import eu.fbk.dycapo.models.Person;
+import eu.fbk.dycapo.models.Location;
 
 /**
  * @author riccardo
@@ -70,7 +70,47 @@ public final class DBPerson {
 		return user.get(0);
 	}
 	
-	public static Person updateMe(){
-		return null;
+	public static boolean updateMe(User user){
+		ObjectContainer db = DBProvider.getDatabase();
+		List<User> usr = db.queryByExample(User.class);
+		if (!usr.isEmpty()){
+			User dbuser= usr.get(0);
+			if (user.getAge() instanceof Integer)
+				dbuser.setAge(user.getAge());
+			
+			if (user.getEmail() instanceof String)
+				dbuser.setEmail(user.getEmail());
+			
+			if (user.getFirst_name() instanceof String)
+				dbuser.setFirst_name(user.getFirst_name());
+			
+			if (user.getGender() instanceof String)
+				dbuser.setGender(user.getGender());
+			
+			if (user.getLast_name()instanceof String)
+				dbuser.setLast_name(user.getLast_name());
+			
+			if (user.getPassword() instanceof String)
+				dbuser.setPassword(user.getPassword());
+			
+			if (user.getPhone() instanceof String)
+				dbuser.setPhone(user.getPhone());
+			
+			if (user.getPosition() instanceof Location)
+				dbuser.setPosition(user.getPosition());
+			
+			if (user.getUrl() instanceof String)
+				dbuser.setUrl(user.getUrl());
+			
+			if (user.getUsername() instanceof String)
+				dbuser.setUsername(user.getUsername());
+			
+			db.delete(User.class);
+			db.store(dbuser);
+			db.commit();
+		
+			return true;
+		}
+		else return false;
 	}
 }

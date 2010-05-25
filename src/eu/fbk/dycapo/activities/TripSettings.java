@@ -5,6 +5,7 @@ package eu.fbk.dycapo.activities;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -16,7 +17,6 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-//import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -33,6 +33,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import eu.fbk.dycapo.exceptions.DycapoException;
+import eu.fbk.dycapo.models.Location;
+import eu.fbk.dycapo.models.Trip;
+import eu.fbk.dycapo.persistency.DBPerson;
+import eu.fbk.dycapo.persistency.DBTrip;
+import eu.fbk.dycapo.persistency.User;
 
 
 /**
@@ -292,9 +297,10 @@ public class TripSettings extends Activity implements OnClickListener {
 		//Intent i;
 		if(selected==1){
 			if (role.equals("driver")){
-				String location= ((EditText)this.findViewById(R.id.getOrigin)).getText().toString();
-				if ((location instanceof String) && location!=""){}
-				
+				pd=ProgressDialog.show(TripSettings.this, "Processing...", "Creating Trip...Waiting for DyCaPo Server", true, false);
+				Trip trip =this.getTrip();
+				DBTrip.saveTrip(trip);
+				pd.dismiss();
 			}else {
 				
 			}
@@ -337,6 +343,42 @@ public class TripSettings extends Activity implements OnClickListener {
                     mTimeSetListener, mHour, mMinute, false);
         }
         return null;
+    }
+    
+    
+    public Trip getTrip(){
+    	//TODO : complete implementation of this method
+    	Trip trip = new Trip();
+    	Location loc = new Location();
+    	String geoRssPoint = "";
+    	Date leaves = new Date();
+    	if (this.Origin instanceof Address){
+    		geoRssPoint = String.valueOf(Origin.getLatitude()) + ", " + String.valueOf(Origin.getLongitude());
+    		if (!geoRssPoint.equals(", ")) loc.setGeorss_point(geoRssPoint);
+    	}
+    	leaves.setYear(mYear);
+    	leaves.setMonth(mMonth);
+    	leaves.setDate(mDay);
+    	leaves.setHours(mHour);
+    	leaves.setMinutes(mMinute);
+    	leaves.setSeconds(0);
+    	
+    	loc.setLeaves(leaves);
+    	loc.setPoint(Location.ORIG);
+    	trip.setOrigin(loc);
+    	leaves.setDate(++mDay);
+    	trip.setExpires(leaves);
+    	
+    	
+    	
+    	User usr = DBPerson.getUser();
+    	trip.setAuthor(usr);
+    	
+    	
+    	if (this.Destination instanceof Address){
+    		geoRssPoint = String.valueOf(Destination.getLatitude()) + ", " + String.valueOf(Destination.getLongitude());
+    	}
+    	return trip;
     }
 
 	/**

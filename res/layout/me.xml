@@ -5,47 +5,6 @@
 		android:layout_height="wrap_content"
 		android:orientation="vertical">
 	
-	 <LinearLayout
-  	android:layout_width="fill_parent"
-  	android:layout_height="wrap_content"
-  	android:orientation="horizontal"
-
-  	>
-  		<TextView
-  			android:id="@+id/usernameTextView"
-  			android:text="Username : "
- 	 		android:layout_width="wrap_content"
- 			android:layout_height="wrap_content"
-  		/>
-  		<EditText
-  			android:id="@+id/getUsername"
-  			android:layout_width="wrap_content"
-  			android:layout_height="wrap_content"
-  			android:minWidth="250px"
-  			android:maxLines="1"
-  		/>
-  	</LinearLayout>	
-  	  <LinearLayout
-  	android:layout_width="fill_parent"
-  	android:layout_height="wrap_content"
-  	android:orientation="horizontal"
-
-  	>
-  		<TextView
-  			android:id="@+id/passwordTextView"
-  			android:text="Password : "
- 	 		android:layout_width="wrap_content"
- 			android:layout_height="wrap_content"
-  		/>
-  		<EditText
-  			android:id="@+id/getPassword"
-  			android:password="true"
-  			android:layout_width="wrap_content"
-  			android:layout_height="wrap_content"
-  			android:minWidth="300px"
-  			android:maxLines="1"
-  		/>
-  	</LinearLayout>
   	  	  <LinearLayout
   	android:layout_width="fill_parent"
   	android:layout_height="wrap_content"
@@ -157,11 +116,28 @@
   			android:maxLines="1"
   		/>
   	</LinearLayout>
+	<RelativeLayout
+		android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		>
+	<LinearLayout
+		android:layout_centerHorizontal="true"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
 	<Button
 		android:id="@+id/saveMeButton"
 		android:text="Save"
-		android:layout_width="fill_parent"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		/>
-  	
+	<Button
+		android:id="@+id/changeLogin"
+		android:text="change Login"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/saveMeButton"
+		/>
+	</LinearLayout>
+  	</RelativeLayout>
   	</LinearLayout>

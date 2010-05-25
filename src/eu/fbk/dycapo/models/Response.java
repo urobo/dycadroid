@@ -3,7 +3,6 @@
  */
 package eu.fbk.dycapo.models;
 
-import java.util.HashMap;
 
 /**
  * @author riccardo
@@ -22,10 +21,10 @@ public class Response{
 											"trip",
 											};
 	
-	private int code;						//must
+	private Integer code;						//must
 	private String message;					//must
 	private String type;					//must
-	private HashMap<String,Object> value;	//must
+	private Object value;	//must
 	
 	/**
 	 * 
@@ -37,14 +36,14 @@ public class Response{
 	/**
 	 * @return the code
 	 */
-	public int getCode() {
+	public Integer getCode() {
 		return code;
 	}
 
 	/**
 	 * @param code the code to set
 	 */
-	public void setCode(int code) {
+	public void setCode(Integer code) {
 		this.code = code;
 	}
 
@@ -79,14 +78,14 @@ public class Response{
 	/**
 	 * @return the value
 	 */
-	public HashMap<String,Object> getValue() {
+	public Object getValue() {
 		return value;
 	}
 
 	/**
 	 * @param value the value to set
 	 */
-	public void setValue(HashMap<String,Object> value) {
+	public void setValue(Object value) {
 		this.value = value;
 	}
 	

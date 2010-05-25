@@ -4,13 +4,21 @@
 package eu.fbk.dycapo.activities.settings;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import eu.fbk.dycapo.activities.R;
+import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.models.Preferences;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.User;
@@ -20,6 +28,10 @@ import eu.fbk.dycapo.persistency.User;
  *
  */
 public class Me extends Activity implements OnClickListener {
+	
+	static final int DIALOG_CHANGE_LOGIN = 0;
+	
+	private View layoutLogin=null;
 	private String gender=null;
 	private OnClickListener gender_listener = new OnClickListener() {
         public void onClick(View v) {
@@ -52,7 +64,12 @@ public class Me extends Activity implements OnClickListener {
         male.setOnClickListener(gender_listener);
         
         
-        
+        LayoutInflater inflater = (LayoutInflater) Me.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+		layoutLogin = inflater.inflate(R.layout.login,(ViewGroup) findViewById(R.id.rl));
+		
+		Button changeLogin = ((Button)this.findViewById(R.id.changeLogin));
+		changeLogin.setOnClickListener(this);
+		
         this.update();
     }
 	
@@ -60,48 +77,127 @@ public class Me extends Activity implements OnClickListener {
 		
 		User user= DBPerson.getUser();
 		if (user instanceof User){
-		((EditText)this.findViewById(R.id.getUsername)).setText(user.getUsername());
-		((EditText)this.findViewById(R.id.getPassword)).setText(user.getPassword());
-		((EditText)this.findViewById(R.id.getFirst_Name)).setText(user.getFirst_name());
-		((EditText)this.findViewById(R.id.getLast_Name)).setText(user.getLast_name());
-		((EditText)this.findViewById(R.id.getEmail)).setText(user.getEmail());
-		((EditText)this.findViewById(R.id.getAge)).setText(user.getAge().toString());
 		
-		if(user.getGender().equals(Preferences.GENDER_PREFS[Preferences.MALE])){
-			((RadioButton)this.findViewById(R.id.maleGender)).setChecked(true);
-		}else
-			((RadioButton)this.findViewById(R.id.femaleGender)).setChecked(true);
+		String readDB=user.getFirst_name();
+		if (readDB instanceof String)
+		((EditText)this.findViewById(R.id.getFirst_Name)).setText(readDB);
+		
+		readDB=user.getLast_name();
+		if (readDB instanceof String)
+		((EditText)this.findViewById(R.id.getLast_Name)).setText(readDB);
+		
+		readDB=user.getEmail();
+		if (readDB instanceof String)
+		((EditText)this.findViewById(R.id.getEmail)).setText(readDB);
+		
+		Integer ageDB = user.getAge();
+		if (ageDB instanceof Integer)
+		((EditText)this.findViewById(R.id.getAge)).setText(ageDB.toString());
+		ageDB=null;
+		
+		readDB = user.getGender();
+		if (readDB instanceof String){
+			if(readDB.equals(Preferences.GENDER_PREFS[Preferences.MALE])){
+				((RadioButton)this.findViewById(R.id.maleGender)).setChecked(true);
+			}else
+				((RadioButton)this.findViewById(R.id.femaleGender)).setChecked(true);
+			}
 		}
 	}
 	@Override
 	public void onClick(View v) {
-		User readForm= new User();
-		String input;
+		switch(v.getId()){
+		case R.id.saveMeButton:
+			User readForm= new User();
+			String input;
 		
-		input= ((EditText)this.findViewById(R.id.getAge)).getText().toString();
-		if (input instanceof String)readForm.setAge(Integer.parseInt(input));
 		
-		input= ((EditText)this.findViewById(R.id.getEmail)).getText().toString();
-		if (input instanceof String)readForm.setEmail(input);
+			input= ((EditText)this.findViewById(R.id.getAge)).getText().toString();
+			if (input instanceof String && !(input.equals("")))readForm.setAge(Integer.parseInt(input));
+	
+			input= ((EditText)this.findViewById(R.id.getEmail)).getText().toString();
+			if (input instanceof String && !input.equals(""))readForm.setEmail(input);
 		
-		input=((EditText)this.findViewById(R.id.getFirst_Name)).getText().toString();
-		if (input instanceof String)readForm.setFirst_name(input);
+			input=((EditText)this.findViewById(R.id.getFirst_Name)).getText().toString();
+			if (input instanceof String && !input.equals(""))readForm.setFirst_name(input);
+	
+			readForm.setGender(this.gender);
 		
-		readForm.setGender(this.gender);
+			input=((EditText)this.findViewById(R.id.getLast_Name)).getText().toString();
+			if (input instanceof String && !input.equals(""))readForm.setLast_name(input);
+
+			DBPerson.updateMe(readForm);
 		
-		input=((EditText)this.findViewById(R.id.getLast_Name)).getText().toString();
-		if (input instanceof String)readForm.setLast_name(input);
-		
-		input=((EditText)this.findViewById(R.id.getPassword)).getText().toString();
-		if (input instanceof String)readForm.setPassword(input);
-		
-		input=((EditText)this.findViewById(R.id.getUsername)).getText().toString();
-		if (input instanceof String)readForm.setUsername(input);
-		
-		DBPerson.saveMe(readForm);
-		
-		input=null;
-		readForm=null;
+			input=null;
+			readForm=null;
+			break;
+		case R.id.changeLogin:
+			showDialog(Me.DIALOG_CHANGE_LOGIN);
+			break;
+		}
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreateDialog(int)
+	 */
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(Me.this);
+		AlertDialog d =  null;
+		switch(id){
+		case Me.DIALOG_CHANGE_LOGIN:
+			builder.setView(layoutLogin);
+			builder.setCancelable(true);
+			d=builder.create();
+			d.setTitle("Login");
+			d.setMessage("Insert new DyCaPo Login credentials");
+			d.setButton("Save",new android.content.DialogInterface.OnClickListener(){
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					String usernameIn = ((EditText)layoutLogin.findViewById(R.id.getNewUsername)).getText().toString();
+					String passwordIn = ((EditText)layoutLogin.findViewById(R.id.getNewPassword)).getText().toString();
+					User usr = new User();
+					try {
+						
+						if (usernameIn instanceof String && !usernameIn.equals("")){
+						usr.setUsername(usernameIn);
+						}	else throw new DycapoException ("Invalid Username");
+					
+						if (passwordIn instanceof String && !passwordIn.equals("")){
+						
+						} 	else throw new DycapoException ("Invalid Password");
+												
+						DBPerson.saveMe(usr);
+						
+					} catch (DycapoException e) {
+						e.alertUser(getBaseContext());
+						Message msg = new Message();
+						msg.what=Me.DIALOG_CHANGE_LOGIN;
+						msg.setTarget(handleFailure);
+						msg.sendToTarget();
+					}	
+					
+				}
+				});
+			break;
+		}
+		return d;
+	}
+	
+	private Handler handleFailure= new Handler(){
+
+	/* (non-Javadoc)
+	 * @see android.os.Handler#handleMessage(android.os.Message)
+	 */
+	@Override
+	public void handleMessage(Message msg) {
+
+		switch (msg.what){
+		case Me.DIALOG_CHANGE_LOGIN:
+			showDialog(Me.DIALOG_CHANGE_LOGIN);
+			break;
+			}
+		}
+	};
 }

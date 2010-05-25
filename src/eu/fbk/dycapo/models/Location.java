@@ -35,17 +35,21 @@ public class Location implements XMLRPCModel {
 													"wayp",
 													"posi"
 													};
+	public static final int ORIG = 0;
+	public static final int DEST = 1;
+	public static final int WAYP = 2;
+	public static final int POSI = 3;
 	
 	private String label;			//may
 	private String street;			//should*
-	private int point;				//must
+	private Integer point;				//must
 	private String country;			//may
 	private String region;			//may
 	private String town;			//should*
-	private int postcode;			//should*
+	private Integer postcode;			//should*
 	private String subregion;		//may
 	private String georss_point;	//should*
-	private int offset;				//should
+	private Integer offset;				//should
 	private String recurs;			//may
 	private String days;			//may
 	private Date leaves; 			//must
@@ -72,96 +76,114 @@ public class Location implements XMLRPCModel {
 		this.leaves = leaves;
 	}
 
+	
+
 	/**
 	 * @return the label
 	 */
 	public String getLabel() {
 		return label;
 	}
+
 	/**
 	 * @param label the label to set
 	 */
 	public void setLabel(String label) {
 		this.label = label;
 	}
+
 	/**
 	 * @return the street
 	 */
 	public String getStreet() {
 		return street;
 	}
+
 	/**
 	 * @param street the street to set
 	 */
 	public void setStreet(String street) {
 		this.street = street;
 	}
+
 	/**
 	 * @return the point
 	 */
-	public int getPoint() {
+	public Integer getPoint() {
 		return point;
 	}
+
 	/**
 	 * @param point the point to set
 	 */
-	public void setPoint(int point) {
+	public void setPoint(Integer point) {
+		if (point >= 0 && point < Location.POINT_TYPE.length)
 		this.point = point;
 	}
+
 	/**
 	 * @return the country
 	 */
 	public String getCountry() {
 		return country;
 	}
+
 	/**
 	 * @param country the country to set
 	 */
 	public void setCountry(String country) {
 		this.country = country;
 	}
+
 	/**
 	 * @return the region
 	 */
 	public String getRegion() {
 		return region;
 	}
+
 	/**
 	 * @param region the region to set
 	 */
 	public void setRegion(String region) {
 		this.region = region;
 	}
+
 	/**
 	 * @return the town
 	 */
 	public String getTown() {
 		return town;
 	}
+
 	/**
 	 * @param town the town to set
 	 */
 	public void setTown(String town) {
 		this.town = town;
 	}
+
 	/**
 	 * @return the postcode
 	 */
-	public int getPostcode() {
+	public Integer getPostcode() {
 		return postcode;
 	}
+
 	/**
 	 * @param postcode the postcode to set
 	 */
-	public void setPostcode(int postcode) {
+	public void setPostcode(Integer postcode) {
 		this.postcode = postcode;
 	}
+
 	/**
 	 * @return the subregion
 	 */
 	public String getSubregion() {
 		return subregion;
 	}
+
 	/**
 	 * @param subregion the subregion to set
 	 */
@@ -175,62 +197,66 @@ public class Location implements XMLRPCModel {
 	public String getGeorss_point() {
 		return georss_point;
 	}
+
 	/**
 	 * @param georssPoint the georss_point to set
 	 */
 	public void setGeorss_point(String georssPoint) {
 		georss_point = georssPoint;
 	}
-	/**
-	 * @return the georss_latitude
-	 */
-	
+
 	/**
 	 * @return the offset
 	 */
-	public int getOffset() {
+	public Integer getOffset() {
 		return offset;
 	}
+
 	/**
 	 * @param offset the offset to set
 	 */
-	public void setOffset(int offset) {
+	public void setOffset(Integer offset) {
 		this.offset = offset;
 	}
+
 	/**
 	 * @return the recurs
 	 */
 	public String getRecurs() {
 		return recurs;
 	}
+
 	/**
 	 * @param recurs the recurs to set
 	 */
 	public void setRecurs(String recurs) {
 		this.recurs = recurs;
 	}
+
 	/**
 	 * @return the days
 	 */
 	public String getDays() {
 		return days;
 	}
+
 	/**
 	 * @param days the days to set
 	 */
 	public void setDays(String days) {
 		this.days = days;
 	}
+
 	/**
 	 * @return the leaves
 	 */
 	public Date getLeaves() {
 		return leaves;
 	}
+
 	/**
 	 * @param leaves the leaves to set
 	 */
-
 	public void setLeaves(Date leaves) {
 		this.leaves = leaves;
 	}
@@ -249,9 +275,9 @@ public class Location implements XMLRPCModel {
 		}
 		Log.i("date",this.leaves.toString());
 		//if (this.leaves instanceof java.util.Date)result.put(Location.LEAVES,this.leaves);
-		if (this.offset > 0)result.put(Location.OFFSET,this.offset);
-		if (this.point >= 0 && this.point <4)result.put(Location.POINT,Location.POINT_TYPE[this.point]);
-		if (this.postcode >= 0)result.put(Location.POSTCODE,this.postcode);
+		if (this.offset instanceof Integer)result.put(Location.OFFSET,this.offset);
+		if (this.point instanceof Integer)result.put(Location.POINT,Location.POINT_TYPE[this.point]);
+		if (this.postcode instanceof Integer)result.put(Location.POSTCODE,this.postcode);
 		if (this.recurs instanceof java.lang.String)result.put(Location.RECURS,this.recurs);
 		if (this.region instanceof java.lang.String)result.put(Location.REGION,this.region);
 		if (this.street instanceof java.lang.String)result.put(Location.STREET,this.street);

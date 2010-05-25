@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/rl"
+
+  android:layout_width="250px"
+  android:layout_height="250px"
+  android:orientation="vertical">
+  <TextView
+  	android:text="Username : "
+  	android:id="@+id/userNameTextView"
+  	android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+  	android:layout_marginLeft="15px"/>
+  <EditText
+  	android:id="@+id/getNewUsername"
+  	android:layout_width="200px"
+  	android:layout_height="wrap_content"
+  	android:layout_centerHorizontal="true"
+  	android:layout_below="@id/userNameTextView"
+  	/>
+  <TextView
+  	android:text="Password : "
+  	android:id="@+id/passwordTextView"
+  	android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+  	android:layout_below="@id/getNewUsername"
+  	android:layout_marginLeft="15px"/>
+  <EditText
+  	android:id="@+id/getNewPassword"
+  	android:layout_width="200px"
+  	android:password="true"
+  	android:layout_height="wrap_content"
+  	android:layout_centerHorizontal="true"
+  	android:layout_below="@id/passwordTextView"
+  	 /> 
+  	
+</RelativeLayout>

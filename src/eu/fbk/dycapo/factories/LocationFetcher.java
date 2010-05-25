@@ -49,6 +49,9 @@ public class LocationFetcher {
 			if (value.containsKey(Location.DAYS))
 				result.setDays((String)value.get(Location.DAYS));
 			
+			if (value.containsKey(Location.OFFSET))
+				result.setOffset((Integer)value.get(Location.OFFSET));
+			
 			// if location defined via georss_point
 			if (value.containsKey(Location.GEORSS_POINT)){
 				result.setGeorss_point((String) value.get(Location.GEORSS_POINT));
@@ -59,7 +62,7 @@ public class LocationFetcher {
 				if (value.containsKey(Location.STREET)&&value.containsKey(Location.TOWN)&&value.containsKey(Location.POSTCODE)){
 					result.setStreet((String)value.get(Location.STREET));
 					result.setTown((String)value.get(Location.TOWN));
-					result.setPostcode(Integer.parseInt(value.get(Location.POSTCODE).toString()));
+					result.setPostcode((Integer)(value.get(Location.POSTCODE)));
 				}else{ 
 					//else if one is missing error message composed and an exception will be raised
 					if (!value.containsKey(Location.STREET))

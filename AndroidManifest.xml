@@ -32,13 +32,15 @@
 					android:label="Social">
 					</activity>		
 
-
 			
-<activity android:name="FastChoice" android:label="quick"></activity>
-<activity android:name="TripSettings" android:label="settings"></activity>
-</application>
-<uses-library android:name="com.google.android.maps" />
+		<activity android:name="FastChoice" android:label="quick"></activity>
+		<activity android:name="TripSettings" android:label="settings"></activity>
+
+		<activity android:label="Navigation" android:name="eu.fbk.dycapo.services.GeoService"></activity>
+	</application>
+	<uses-library android:name="com.google.android.maps" />
 	<uses-permission android:name="android.permission.INTERNET"/>
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-library android:name="com.google.android.maps" />
 </manifest> 

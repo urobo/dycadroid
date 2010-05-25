@@ -48,7 +48,7 @@ public class Settings extends TabActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		    super.onCreate(savedInstanceState);
-		
+		    
 		    tabHost = getTabHost();  
 		    
 		    tabHost.addTab(tabHost.newTabSpec(eu.fbk.dycapo.activities.Settings.TAB_TAGS[0]).setContent(new Intent(this, Me.class)).
@@ -59,7 +59,7 @@ public class Settings extends TabActivity implements OnClickListener{
 		    		 setIndicator(eu.fbk.dycapo.activities.Settings.TAB_TAGS[2], getResources().getDrawable(android.R.drawable.ic_menu_compass)));
 		    tabHost.addTab(tabHost.newTabSpec(eu.fbk.dycapo.activities.Settings.TAB_TAGS[3]).setContent(new Intent(this, Social.class)).
 		    		 setIndicator(eu.fbk.dycapo.activities.Settings.TAB_TAGS[3], getResources().getDrawable(android.R.drawable.ic_menu_send)));
-
+		    
 		}
 	
 }
