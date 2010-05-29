@@ -40,19 +40,19 @@ public class Location implements XMLRPCModel {
 	public static final int WAYP = 2;
 	public static final int POSI = 3;
 	
-	private String label;			//may
-	private String street;			//should*
-	private Integer point;				//must
-	private String country;			//may
-	private String region;			//may
-	private String town;			//should*
-	private Integer postcode;			//should*
-	private String subregion;		//may
-	private String georss_point;	//should*
-	private Integer offset;				//should
-	private String recurs;			//may
-	private String days;			//may
-	private Date leaves; 			//must
+	protected String label;			//may
+	protected String street;			//should*
+	protected Integer point;				//must
+	protected String country;			//may
+	protected String region;			//may
+	protected String town;			//should*
+	protected Integer postcode;			//should*
+	protected String subregion;		//may
+	protected String georss_point;	//should*
+	protected Integer offset;				//should
+	protected String recurs;			//may
+	protected String days;			//may
+	protected Date leaves; 			//must
 	/**
 	 * 
 	 */

@@ -1,4 +1,4 @@
-package eu.fbk.dycapo.services;
+package eu.fbk.dycapo.maputils;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

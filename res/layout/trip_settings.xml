@@ -31,6 +31,14 @@
         android:layout_alignRight="@id/getOrigin"
         android:text="find Location"
         />
+     <Button
+     	android:id="@+id/Here"
+     	android:layout_width="wrap_content"
+     	android:layout_height="wrap_content"
+     	android:layout_toLeftOf="@id/findOrigin"
+     	android:layout_below="@id/getOrigin"
+     	android:text="Here"/>
+     	  
 
 	</RelativeLayout>
 	

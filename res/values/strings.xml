@@ -14,4 +14,6 @@
  	
  	<string name="gender_prompt">set gender preferences</string>
  		
+<string name="service">PositionUpdater</string>
+<string name="app_notification_id">notification_id</string>
 </resources>

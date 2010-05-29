@@ -15,8 +15,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -33,10 +33,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import eu.fbk.dycapo.exceptions.DycapoException;
+import eu.fbk.dycapo.maputils.GeoService;
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Trip;
 import eu.fbk.dycapo.persistency.DBPerson;
-import eu.fbk.dycapo.persistency.DBTrip;
 import eu.fbk.dycapo.persistency.User;
 
 
@@ -49,7 +49,7 @@ public class TripSettings extends Activity implements OnClickListener {
 	private String location =null;
 	private List<Address> foundAddresses;
 	private Menu myMenu=null;
-	private Context ctx;
+
 	private int id;
 	private Address Origin=null;
 	private Address Destination=null;
@@ -171,7 +171,7 @@ public class TripSettings extends Activity implements OnClickListener {
 			
 			thr= new Thread(){
 				public void run(){
-						Geocoder gc = new Geocoder(ctx, Locale.ENGLISH);
+						Geocoder gc = new Geocoder(TripSettings.this, Locale.ENGLISH);
 						try {
 							foundAddresses= gc.getFromLocationName(location, 3);					
 							Log.d("Looking for :", location);
@@ -186,7 +186,7 @@ public class TripSettings extends Activity implements OnClickListener {
 							try {
 								throw new DycapoException ("GeoCoder.getLocation : "+e.getMessage());
 							} catch (DycapoException e1) {
-								e1.alertUser(ctx);
+								Log.e("WTF", e.getMessage());
 							}
 						}
 						
@@ -208,7 +208,7 @@ public class TripSettings extends Activity implements OnClickListener {
 		this.setRole(this.getIntent().getExtras().getString("role"));
 		this.setContentView(R.layout.trip_settings);
 		
-		this.ctx=this;
+		
 		
 		EditText getOrigin = ((EditText)this.findViewById(R.id.getOrigin));
 		getOrigin.setHint("Insert Origin Here");
@@ -297,10 +297,17 @@ public class TripSettings extends Activity implements OnClickListener {
 		//Intent i;
 		if(selected==1){
 			if (role.equals("driver")){
-				pd=ProgressDialog.show(TripSettings.this, "Processing...", "Creating Trip...Waiting for DyCaPo Server", true, false);
-				Trip trip =this.getTrip();
-				DBTrip.saveTrip(trip);
-				pd.dismiss();
+				
+				Intent i = new Intent();
+				Bundle data = new Bundle();
+		
+				data.putParcelable("origin", this.Origin);
+				data.putParcelable("destination", this.Destination);
+				i.putExtras(data);
+				i.setClass(getBaseContext(), GeoService.class);
+				
+				this.startActivity(i);
+				
 			}else {
 				
 			}

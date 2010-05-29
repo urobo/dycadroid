@@ -4,21 +4,13 @@
 package eu.fbk.dycapo.activities.settings;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import eu.fbk.dycapo.activities.R;
-import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.models.Preferences;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.User;
@@ -29,9 +21,9 @@ import eu.fbk.dycapo.persistency.User;
  */
 public class Me extends Activity implements OnClickListener {
 	
-	static final int DIALOG_CHANGE_LOGIN = 0;
 	
-	private View layoutLogin=null;
+	
+	
 	private String gender=null;
 	private OnClickListener gender_listener = new OnClickListener() {
         public void onClick(View v) {
@@ -64,11 +56,9 @@ public class Me extends Activity implements OnClickListener {
         male.setOnClickListener(gender_listener);
         
         
-        LayoutInflater inflater = (LayoutInflater) Me.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-		layoutLogin = inflater.inflate(R.layout.login,(ViewGroup) findViewById(R.id.rl));
+       
 		
-		Button changeLogin = ((Button)this.findViewById(R.id.changeLogin));
-		changeLogin.setOnClickListener(this);
+		
 		
         this.update();
     }
@@ -130,74 +120,10 @@ public class Me extends Activity implements OnClickListener {
 		
 			input=null;
 			readForm=null;
-			break;
-		case R.id.changeLogin:
-			showDialog(Me.DIALOG_CHANGE_LOGIN);
+			
 			break;
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onCreateDialog(int)
-	 */
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(Me.this);
-		AlertDialog d =  null;
-		switch(id){
-		case Me.DIALOG_CHANGE_LOGIN:
-			builder.setView(layoutLogin);
-			builder.setCancelable(true);
-			d=builder.create();
-			d.setTitle("Login");
-			d.setMessage("Insert new DyCaPo Login credentials");
-			d.setButton("Save",new android.content.DialogInterface.OnClickListener(){
 
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					String usernameIn = ((EditText)layoutLogin.findViewById(R.id.getNewUsername)).getText().toString();
-					String passwordIn = ((EditText)layoutLogin.findViewById(R.id.getNewPassword)).getText().toString();
-					User usr = new User();
-					try {
-						
-						if (usernameIn instanceof String && !usernameIn.equals("")){
-						usr.setUsername(usernameIn);
-						}	else throw new DycapoException ("Invalid Username");
-					
-						if (passwordIn instanceof String && !passwordIn.equals("")){
-						
-						} 	else throw new DycapoException ("Invalid Password");
-												
-						DBPerson.saveMe(usr);
-						
-					} catch (DycapoException e) {
-						e.alertUser(getBaseContext());
-						Message msg = new Message();
-						msg.what=Me.DIALOG_CHANGE_LOGIN;
-						msg.setTarget(handleFailure);
-						msg.sendToTarget();
-					}	
-					
-				}
-				});
-			break;
-		}
-		return d;
-	}
-	
-	private Handler handleFailure= new Handler(){
-
-	/* (non-Javadoc)
-	 * @see android.os.Handler#handleMessage(android.os.Message)
-	 */
-	@Override
-	public void handleMessage(Message msg) {
-
-		switch (msg.what){
-		case Me.DIALOG_CHANGE_LOGIN:
-			showDialog(Me.DIALOG_CHANGE_LOGIN);
-			break;
-			}
-		}
-	};
 }
