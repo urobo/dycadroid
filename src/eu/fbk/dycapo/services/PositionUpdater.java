@@ -35,9 +35,7 @@ public class PositionUpdater extends Service {
 	class ServiceWorker implements Runnable
 	{
 	    public void run() {
-	        // do background processing here...
-	        // stop the service when done...
-	        // BackgroundService.this.stopSelf();
+
 	    }
 	}
 	@Override

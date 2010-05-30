@@ -44,9 +44,6 @@
 		<activity android:label="Navigation" 
 			android:name="eu.fbk.dycapo.maputils.GeoService"
 			android:theme="@android:style/Theme.NoTitleBar">
-			<intent-filter>
-                <action android:name="eu.fbk.services.PositionUpdater.UPDATE" />
-            </intent-filter>
 		</activity>
 		<uses-library android:name="com.google.android.maps" />
 	</application>

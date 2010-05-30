@@ -1,7 +1,7 @@
 /**
  * 
  */
-package eu.fbk.dycapo.parcelable;
+package eu.fbk.dycapo.services;
 
 import android.os.Bundle;
 
