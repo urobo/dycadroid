@@ -1,7 +1,7 @@
 /**
  * 
  */
-package eu.fbk.dycapo.services;
+package eu.fbk.dycapo.bundles;
 
 import android.os.Bundle;
 

@@ -5,16 +5,13 @@ package eu.fbk.dycapo.models;
 
 import java.util.HashMap;
 
-import android.os.Bundle;
-
-import eu.fbk.dycapo.services.BundleModel;
 import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
 /**
  * @author riccardo
  *
  */
-public class Preferences implements XMLRPCModel,BundleModel {
+public class Preferences implements XMLRPCModel {
 	public static final String TAG = "Preferences";
 	/**
 	 * @return the nonsmoking
@@ -108,6 +105,20 @@ public class Preferences implements XMLRPCModel,BundleModel {
 	private Boolean ride;			//may
 	private Boolean pet;			//may
 	
+	/**
+	 * @return the age
+	 */
+	public String getAge() {
+		return age;
+	}
+
+	/**
+	 * @param age the age to set
+	 */
+	public void setAge(String age) {
+		this.age = age;
+	}
+
 	public Preferences(){
 		
 	}
@@ -143,50 +154,50 @@ public class Preferences implements XMLRPCModel,BundleModel {
 		return result;
 	}
 
-	@Override
-	public void fromBundle(Bundle data) {
-	
-		if (data.containsKey(Preferences.AGE))
-			this.age = data.getString(Preferences.AGE);
-		
-		if (data.containsKey(Preferences.DRIVE))
-			this.drive = data.getBoolean(Preferences.DRIVE);
-		
-		if (data.containsKey(Preferences.GENDER))
-			this.gender = data.getInt(Preferences.GENDER);
-		
-		if (data.containsKey(Preferences.NONSMOKING))
-			this.nonsmoking = data.getBoolean(Preferences.NONSMOKING);
-		
-		if (data.containsKey(Preferences.PET))
-			this.pet = data.getBoolean(Preferences.PET);
-		
-		if (data.containsKey(Preferences.RIDE))
-			this.ride = data.getBoolean(Preferences.RIDE);
-	}
-
-	@Override
-	public Bundle toBundle() {
-		Bundle result = new Bundle();
-		
-		if (this.age instanceof String)
-			result.putString(Preferences.AGE, this.age);
-		
-		if (this.drive instanceof Boolean)
-			result.putBoolean(Preferences.DRIVE, this.drive);
-		
-		if (this.gender instanceof Integer)
-			result.putInt(Preferences.GENDER, this.gender);
-		
-		if (this.nonsmoking instanceof Boolean)
-			result.putBoolean(Preferences.NONSMOKING, this.nonsmoking);
-		
-		if (this.pet instanceof Boolean)
-			result.putBoolean(Preferences.PET, this.pet);
-		
-		if (this.ride instanceof Boolean)
-			result.putBoolean(Preferences.RIDE, this.ride);
-		
-		return result;
-	}
+//	@Override
+//	public void fromBundle(Bundle data) {
+//	
+//		if (data.containsKey(Preferences.AGE))
+//			this.age = data.getString(Preferences.AGE);
+//		
+//		if (data.containsKey(Preferences.DRIVE))
+//			this.drive = data.getBoolean(Preferences.DRIVE);
+//		
+//		if (data.containsKey(Preferences.GENDER))
+//			this.gender = data.getInt(Preferences.GENDER);
+//		
+//		if (data.containsKey(Preferences.NONSMOKING))
+//			this.nonsmoking = data.getBoolean(Preferences.NONSMOKING);
+//		
+//		if (data.containsKey(Preferences.PET))
+//			this.pet = data.getBoolean(Preferences.PET);
+//		
+//		if (data.containsKey(Preferences.RIDE))
+//			this.ride = data.getBoolean(Preferences.RIDE);
+//	}
+//
+//	@Override
+//	public Bundle toBundle() {
+//		Bundle result = new Bundle();
+//		
+//		if (this.age instanceof String)
+//			result.putString(Preferences.AGE, this.age);
+//		
+//		if (this.drive instanceof Boolean)
+//			result.putBoolean(Preferences.DRIVE, this.drive);
+//		
+//		if (this.gender instanceof Integer)
+//			result.putInt(Preferences.GENDER, this.gender);
+//		
+//		if (this.nonsmoking instanceof Boolean)
+//			result.putBoolean(Preferences.NONSMOKING, this.nonsmoking);
+//		
+//		if (this.pet instanceof Boolean)
+//			result.putBoolean(Preferences.PET, this.pet);
+//		
+//		if (this.ride instanceof Boolean)
+//			result.putBoolean(Preferences.RIDE, this.ride);
+//		
+//		return result;
+//	}
 }
