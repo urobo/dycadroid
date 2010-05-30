@@ -4,6 +4,7 @@
 package eu.fbk.dycapo.models;
 
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -164,14 +165,58 @@ public class Trip implements XMLRPCModel,BundleModel {
 
 		@Override
 		public void fromBundle(Bundle data) {
-			// TODO Auto-generated method stub
+			
+			if (data.containsKey(Trip.Content.LOCATIONS)){
+				Bundle locations = data.getBundle(Trip.Content.LOCATIONS);
+				
+				if (locations.containsKey(Location.POINT_TYPE[Location.ORIG]))
+					this.origin.fromBundle((locations.getBundle(Location.POINT_TYPE[Location.ORIG])));
+			
+				if (locations.containsKey(Location.POINT_TYPE[Location.DEST]))
+					this.destination.fromBundle((locations.getBundle(Location.POINT_TYPE[Location.DEST])));
+				
+				int i = 0;
+				while (locations.containsKey(Location.POINT_TYPE[Location.WAYP] + String.valueOf(i))){
+					Location wayp  = new Location();
+					wayp.fromBundle(locations.getBundle(Location.POINT_TYPE[Location.WAYP] + String.valueOf(i)));
+					this.waypoints.add(wayp);
+				}
+								
+				if (data.containsKey(Trip.Content.PREFERENCES))
+					this.preferences.fromBundle(data.getBundle(Trip.Content.PREFERENCES));
+				
+				if (data.containsKey(Trip.Content.MODE))
+					this.mode.fromBundle(data.getBundle(Trip.Content.MODE));
+				
+			}
 			
 		}
 
 		@Override
 		public Bundle toBundle() {
-			// TODO Auto-generated method stub
-			return null;
+			Bundle result = new Bundle();
+			Bundle locations = new Bundle();
+			
+			if (this.origin instanceof Location)
+				locations.putBundle(Location.POINT_TYPE[Location.ORIG], this.origin.toBundle());
+			
+			if (this.destination instanceof Location)
+				locations.putBundle(Location.POINT_TYPE[Location.DEST], this.destination.toBundle());
+			
+			int size = this.waypoints.size();
+			for (int i = 0 ; i< size; i++)
+				locations.putBundle(Location.POINT_TYPE[Location.WAYP]+ String.valueOf(i), this.waypoints.get(i).toBundle());
+			
+			if(!locations.isEmpty())
+				result.putBundle(Trip.Content.LOCATIONS, locations);
+			
+			if (result.containsKey(Trip.Content.MODE))
+				result.putBundle(Trip.Content.MODE, this.mode.toBundle());
+			
+			if (result.containsKey(Trip.Content.PREFERENCES))
+					result.putBundle(Trip.Content.PREFERENCES, this.preferences.toBundle());
+						
+			return result;
 		}
 	}
 	
@@ -348,12 +393,66 @@ public class Trip implements XMLRPCModel,BundleModel {
 	}
 	@Override
 	public void fromBundle(Bundle data) {
-		// TODO Auto-generated method stub
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		
+		if (data.containsKey(Trip.AUTHOR))
+			this.author.fromBundle(data.getBundle(Trip.AUTHOR));
+		
+		if (data.containsKey(Trip.CONTENT))
+			this.content.fromBundle(data.getBundle(Trip.CONTENT));
+		
+		if (data.containsKey(Trip.EXPIRES)){	
+			try {
+				this.expires = sdf.parse(data.getString(Trip.EXPIRES));
+			} catch (ParseException e) {
+				Log.e(TAG, e.getMessage());
+			}
+		}
+		
+		if (data.containsKey(Trip.ID))
+			this.id = data.getInt(Trip.ID);
+		
+		if (data.containsKey(Trip.PUBLISHED)){
+			try {
+				this.published = sdf.parse(data.getString(Trip.PUBLISHED));
+			} catch (ParseException e) {
+				Log.e(TAG, e.getMessage());
+			}
+		}
+		
+		if (data.containsKey(Trip.UPDATED)){
+			try {
+				this.updated = sdf.parse(data.getString(Trip.UPDATED));
+			} catch (ParseException e) {
+				Log.e(TAG, e.getMessage());
+			}
+		}
+			
 	}
 	@Override
 	public Bundle toBundle() {
-		// TODO Auto-generated method stub
-		return null;
+		Bundle result = new Bundle();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		
+		if (this.author instanceof Person)
+			result.putBundle(Trip.AUTHOR, this.author.toBundle());
+		
+		if (this.content instanceof Trip.Content)
+			result.putBundle(Trip.CONTENT, this.content.toBundle());
+		
+		if (this.expires instanceof Date)
+			result.putString(Trip.EXPIRES, sdf.format(this.expires));
+		
+		if (this.id instanceof Integer)
+			result.putInt(Trip.ID, this.id);
+		
+		if (this.published instanceof Date)
+			result.putString(Trip.PUBLISHED, sdf.format(this.published));
+		
+		if (this.updated instanceof Date)
+			result.putString(Trip.UPDATED, sdf.format(this.updated));
+			
+		return result;
 	}
 }

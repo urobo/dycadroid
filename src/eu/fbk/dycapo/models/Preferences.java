@@ -99,13 +99,14 @@ public class Preferences implements XMLRPCModel,BundleModel {
 	public static final String GENDER="gender";
 	public static final String DRIVE="drive";
 	public static final String RIDE="ride";
+	public static final String PET="pet";
 	
 	private String age;				//may
 	private Boolean nonsmoking;		//may
 	private Integer gender;			//may
 	private Boolean drive;			//may
 	private Boolean ride;			//may
-	private Boolean pet;
+	private Boolean pet;			//may
 	
 	public Preferences(){
 		
@@ -138,18 +139,54 @@ public class Preferences implements XMLRPCModel,BundleModel {
 			result.put(Preferences.GENDER, Preferences.GENDER_PREFS[this.gender]);
 		if (this.nonsmoking instanceof java.lang.Boolean)result.put(Preferences.NONSMOKING, this.nonsmoking);
 		if (this.ride instanceof java.lang.Boolean)result.put(Preferences.RIDE, this.ride);
+		if (this.pet instanceof Boolean) result.put(Preferences.PET, this.pet);
 		return result;
 	}
 
 	@Override
 	public void fromBundle(Bundle data) {
-		// TODO Auto-generated method stub
+	
+		if (data.containsKey(Preferences.AGE))
+			this.age = data.getString(Preferences.AGE);
 		
+		if (data.containsKey(Preferences.DRIVE))
+			this.drive = data.getBoolean(Preferences.DRIVE);
+		
+		if (data.containsKey(Preferences.GENDER))
+			this.gender = data.getInt(Preferences.GENDER);
+		
+		if (data.containsKey(Preferences.NONSMOKING))
+			this.nonsmoking = data.getBoolean(Preferences.NONSMOKING);
+		
+		if (data.containsKey(Preferences.PET))
+			this.pet = data.getBoolean(Preferences.PET);
+		
+		if (data.containsKey(Preferences.RIDE))
+			this.ride = data.getBoolean(Preferences.RIDE);
 	}
 
 	@Override
 	public Bundle toBundle() {
-		// TODO Auto-generated method stub
-		return null;
+		Bundle result = new Bundle();
+		
+		if (this.age instanceof String)
+			result.putString(Preferences.AGE, this.age);
+		
+		if (this.drive instanceof Boolean)
+			result.putBoolean(Preferences.DRIVE, this.drive);
+		
+		if (this.gender instanceof Integer)
+			result.putInt(Preferences.GENDER, this.gender);
+		
+		if (this.nonsmoking instanceof Boolean)
+			result.putBoolean(Preferences.NONSMOKING, this.nonsmoking);
+		
+		if (this.pet instanceof Boolean)
+			result.putBoolean(Preferences.PET, this.pet);
+		
+		if (this.ride instanceof Boolean)
+			result.putBoolean(Preferences.RIDE, this.ride);
+		
+		return result;
 	}
 }

@@ -248,13 +248,67 @@ public class Mode implements XMLRPCModel,BundleModel {
 
 	@Override
 	public void fromBundle(Bundle data) {
-		// TODO Auto-generated method stub
+		
+		if (data.containsKey(Mode.CAPACITY))
+			this.capacity = data.getInt(Mode.CAPACITY);
+		
+		if (data.containsKey(Mode.COLOR))
+			this.color = data.getString(Mode.COLOR);
+		
+		if (data.containsKey(Mode.COST))
+			this.cost = data.getDouble(Mode.COST);
+		
+		if (data.containsKey(Mode.KIND))
+			this.kind = data.getString(Mode.KIND);
+		
+		if (data.containsKey(Mode.LIC))
+			this.lic = data.getString(Mode.LIC);
+		
+		if (data.containsKey(Mode.MAKE))
+			this.make = data.getString(Mode.MAKE);
+			
+		if (data.containsKey(Mode.MODEL))
+			this.model = data.getString(Mode.MODEL);
+		
+		if (data.containsKey(Mode.VACANCY))
+			this.vacancy = data.getInt(Mode.VACANCY);
+		
+		if (data.containsKey(Mode.YEAR))
+			this.year = data.getInt(Mode.YEAR);
 		
 	}
 
 	@Override
 	public Bundle toBundle() {
-		// TODO Auto-generated method stub
-		return null;
+		Bundle result = new Bundle();
+		
+		if (this.capacity instanceof Integer)
+			result.putInt(Mode.CAPACITY, this.capacity);
+		
+		if (this.color instanceof String)
+			result.putString(Mode.COLOR, this.color);
+		
+		if (this.cost instanceof Double)
+			result.putDouble(Mode.COST, this.cost);
+		
+		if (this.kind instanceof String)
+			result.putString(Mode.KIND, this.kind);
+		
+		if (this.lic instanceof String)
+			result.putString(Mode.LIC, this.lic);
+		
+		if (this.make instanceof String)
+			result.putString(Mode.MAKE, this.make);
+		
+		if (this.model instanceof String)
+			result.putString(Mode.MODEL, this.model);
+		
+		if (this.vacancy instanceof Integer)
+			result.putInt(Mode.VACANCY, this.vacancy);
+		
+		if (this.year instanceof Integer)
+			result.putInt(Mode.YEAR, this.year);
+					
+		return result;
 	}
 }
