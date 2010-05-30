@@ -5,14 +5,17 @@ package eu.fbk.dycapo.models;
 
 import java.util.HashMap;
 
+import android.os.Bundle;
+
+import eu.fbk.dycapo.services.BundleModel;
 import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
 /**
  * @author riccardo
  *
  */
-public class Preferences implements XMLRPCModel {
-	
+public class Preferences implements XMLRPCModel,BundleModel {
+	public static final String TAG = "Preferences";
 	/**
 	 * @return the nonsmoking
 	 */
@@ -136,5 +139,17 @@ public class Preferences implements XMLRPCModel {
 		if (this.nonsmoking instanceof java.lang.Boolean)result.put(Preferences.NONSMOKING, this.nonsmoking);
 		if (this.ride instanceof java.lang.Boolean)result.put(Preferences.RIDE, this.ride);
 		return result;
+	}
+
+	@Override
+	public void fromBundle(Bundle data) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Bundle toBundle() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

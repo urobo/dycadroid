@@ -5,13 +5,17 @@ package eu.fbk.dycapo.models;
 
 import java.util.HashMap;
 
+import android.os.Bundle;
+
+import eu.fbk.dycapo.services.BundleModel;
 import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
 /**
  * @author riccardo
  *
  */
-public class Person implements XMLRPCModel{
+public class Person implements XMLRPCModel,BundleModel{
+	public static final String TAG = "Person";
 	
 	public static final String USERNAME="username";
 	public static final String EMAIL="email";
@@ -327,6 +331,20 @@ public class Person implements XMLRPCModel{
 		if (this.url instanceof java.lang.String)result.put(Person.URL,this.url);
 		if (this.username instanceof java.lang.String)result.put(Person.USERNAME,this.username);
 		return result;
+	}
+
+
+	@Override
+	public void fromBundle(Bundle data) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public Bundle toBundle() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

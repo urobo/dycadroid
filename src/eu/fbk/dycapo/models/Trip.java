@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import android.os.Bundle;
 import android.util.Log;
 
+import eu.fbk.dycapo.services.BundleModel;
 import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
 
@@ -20,7 +22,9 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  */
 
 
-public class Trip implements XMLRPCModel {
+public class Trip implements XMLRPCModel,BundleModel {
+	public static final String TAG = "Trip";
+	
 	public static final String ID="id";
 	public static final String PUBLISHED="published";
 	public static final String UPDATED="updated";
@@ -53,7 +57,7 @@ public class Trip implements XMLRPCModel {
 		this.content= new Content();
 	}
 	
-	public class Content implements XMLRPCModel{
+	public class Content implements XMLRPCModel,BundleModel{
 		public static final String MODE="mode";
 		public static final String PREFERENCES="prefs";
 		public static final String LOCATIONS="locations";
@@ -156,6 +160,18 @@ public class Trip implements XMLRPCModel {
 		    }
 		    result.put(Trip.Content.LOCATIONS, locations.toArray());
 			return result;
+		}
+
+		@Override
+		public void fromBundle(Bundle data) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public Bundle toBundle() {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 	
@@ -329,5 +345,15 @@ public class Trip implements XMLRPCModel {
 		if (this.published instanceof java.util.Date)result.put(Trip.PUBLISHED,formatter.format(this.published));
 		if (this.updated instanceof java.util.Date)result.put(Trip.UPDATED, formatter.format(this.updated));
 		return result;
+	}
+	@Override
+	public void fromBundle(Bundle data) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public Bundle toBundle() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

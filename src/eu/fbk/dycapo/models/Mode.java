@@ -5,6 +5,9 @@ package eu.fbk.dycapo.models;
 
 import java.util.HashMap;
 
+import android.os.Bundle;
+
+import eu.fbk.dycapo.services.BundleModel;
 import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
 /**
@@ -15,7 +18,8 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  * @author riccardo
  *
  */
-public class Mode implements XMLRPCModel {
+public class Mode implements XMLRPCModel,BundleModel {
+	public static final String TAG = "Mode";
 	
 	public static final String KIND="kind";
 	public static final String CAPACITY="capacity";
@@ -240,5 +244,17 @@ public class Mode implements XMLRPCModel {
 				result.put(Mode.YEAR,this.year);
 		
 		return result;
+	}
+
+	@Override
+	public void fromBundle(Bundle data) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Bundle toBundle() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
