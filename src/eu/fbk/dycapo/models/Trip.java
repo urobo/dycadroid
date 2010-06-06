@@ -29,13 +29,15 @@ public class Trip implements XMLRPCModel {
 	public static final String CONTENT="content";
 	public static final String AUTHOR="author";
 
-	private Integer id;
-	private Date published;			//may
-	private Date updated;			//should
-	private Date expires;			//must
-	private Person author;			//must
-	private Content content;		//must
-
+	protected Integer id;
+	protected Date published;			//may
+	protected Date updated;			//should
+	protected Date expires;			//must
+	protected Person author;			//must
+	protected Content content;		//must
+	public Trip(){
+		this.createContent();
+	}
 	/**
 	 * @param expires
 	 * @param author
@@ -234,12 +236,6 @@ public class Trip implements XMLRPCModel {
 	
 	
 
-	/**
-	 * 
-	 */
-	public Trip(){
-		
-	}
 
 	/**
 	 * @return the published
@@ -302,13 +298,13 @@ public class Trip implements XMLRPCModel {
 	 * @return the origin
 	 */
 	public Location getOrigin() {
-		return content.origin;
+		return content.getOrigin();
 	}
 	/**
 	 * @param origin the origin to set
 	 */
 	public void setOrigin(Location origin) {
-		this.content.origin = origin;
+		this.content.setOrigin(origin);
 	}
 	
 
@@ -318,41 +314,41 @@ public class Trip implements XMLRPCModel {
 	 * @return the destination
 	 */
 	public Location getDestination() {
-		return this.content.destination;
+		return this.content.getDestination();
 	}
 
 	/**
 	 * @param destination the destination to set
 	 */
 	public void setDestination(Location destination) {
-		this.content.destination = destination;
+		this.content.setDestination(destination);
 	}
 	/**
 	 * @return the mode
 	 */
 	public Mode getMode() {
-		return this.content.mode;
+		return this.content.getMode();
 	}
 
 	/**
 	 * @param mode the mode to set
 	 */
 	public void setMode(Mode mode) {
-		this.content.mode = mode;
+		this.content.setMode(mode);
 	}
 
 	/**
 	 * @return the preferences
 	 */
 	public Preferences getPreferences() {
-		return this.content.preferences;
+		return this.content.getPreferences();
 	}
 
 	/**
 	 * @param preferences the preferences to set
 	 */
 	public void setPreferences(Preferences preferences) {
-		this.content.preferences = preferences;
+		this.content.setPreferences(preferences);
 	}
 	
 	/**

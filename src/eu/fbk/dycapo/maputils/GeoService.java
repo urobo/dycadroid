@@ -20,6 +20,7 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 
 import eu.fbk.dycapo.activities.R;
+import eu.fbk.dycapo.exceptions.DycapoException;
 
 /**
  * 
@@ -34,10 +35,11 @@ public class GeoService extends MapActivity implements LocationListener{
 	private static double dest_lat = 46.4685468; // the testing destination
 	private static double dest_long = 11.3269901;
 	private static LocationManager locationManager;    
-
+	
 //	private static String morigin ="";
 //	private static String mdestination =""; 
-
+	private static Address origAdd = null;
+	private static Address destAdd = null;
 
 	private static GeoPoint srcGeoPoint = null;
 
@@ -82,9 +84,9 @@ public class GeoService extends MapActivity implements LocationListener{
 //  	}
 //  	dest_lat=destination.get(0).getLatitude();
 //  	dest_long=destination.get(0).getLongitude();
-		Address dest= this.getIntent().getExtras().getParcelable("origin"); 
-		dest_lat = dest.getLatitude();
-		dest_long = dest.getLongitude();
+		destAdd= this.getIntent().getExtras().getParcelable("origin"); 
+		dest_lat = destAdd.getLatitude();
+		dest_long = destAdd.getLongitude();
 		destGeoPoint = new GeoPoint((int) (dest_lat * 1E6),
 				(int) (dest_long * 1E6));
 //		if(location.getLatitude()==0.0||location.getLongitude()==0.0)
@@ -96,9 +98,9 @@ public class GeoService extends MapActivity implements LocationListener{
 //		src_lat = origin.get(0).getLatitude();
 //		src_long = origin.get(0).getLongitude();
 		
-		Address orig = this.getIntent().getExtras().getParcelable("destination");
-		src_lat = orig.getLatitude();
-		src_long = orig.getLongitude();
+		origAdd = this.getIntent().getExtras().getParcelable("destination");
+		src_lat = origAdd.getLatitude();
+		src_long = origAdd.getLongitude();
 		srcGeoPoint = new GeoPoint((int) (src_lat * 1E6),
 				(int) (src_long * 1E6));
 				
@@ -150,7 +152,11 @@ public class GeoService extends MapActivity implements LocationListener{
 	 */
     private void DrawPath(GeoPoint src,GeoPoint dest, int color, MapView mMapView01)
     {
-    	Directions.drawPath(src, dest, color, mMapView01);
+    		try {
+			Directions.drawPath(color, mMapView01);
+		} catch (DycapoException e) {
+			e.alertUser(GeoService.this);
+		}
     }
 
     

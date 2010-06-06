@@ -19,8 +19,8 @@ import eu.fbk.dycapo.models.Trip;
  *
  */
 
-public class DycapoObjectsFetcher {
-	
+public final class DycapoObjectsFetcher {
+	private static final String TAG ="DycapoObjectsFetcher";
 	/* (non-Javadoc)
 	 * @see eu.fbk.dycapo.factories.DycapoObjectsFactory#fetchXMLRPCResponse(java.lang.Object)
 	 */
@@ -110,5 +110,10 @@ public class DycapoObjectsFetcher {
 		return ModeFetcher.fetchMode(value);
 	}
 
-
+	
+	public static void logResponse(Response response){
+		Log.d(TAG, "Response status code : " + String.valueOf(response.getCode()));
+		Log.d(TAG, "Response message : " + ((response.getMessage() instanceof String)?response.getMessage():"No Message Provided!"));
+		Log.d(TAG, "Response of Type : " + ((response.getType() instanceof String)?response.getType(): "No Type Provided!" ));
+	}
 }

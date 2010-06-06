@@ -19,9 +19,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Layout.Directions;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,7 +38,10 @@ import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.maputils.GeoService;
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Trip;
+import eu.fbk.dycapo.persistency.DBMode;
 import eu.fbk.dycapo.persistency.DBPerson;
+import eu.fbk.dycapo.persistency.DBPrefs;
+import eu.fbk.dycapo.persistency.DBTrip;
 import eu.fbk.dycapo.persistency.User;
 
 
@@ -45,6 +50,7 @@ import eu.fbk.dycapo.persistency.User;
  *
  */
 public class TripSettings extends Activity implements OnClickListener {
+	private static final String TAG = "TripSettings";
 	private String role = null;
 	private String location =null;
 	private List<Address> foundAddresses;
@@ -300,13 +306,27 @@ public class TripSettings extends Activity implements OnClickListener {
 				
 				Intent i = new Intent();
 				Bundle data = new Bundle();
-		
-				data.putParcelable("origin", this.Origin);
-				data.putParcelable("destination", this.Destination);
-				i.putExtras(data);
-				i.setClass(getBaseContext(), GeoService.class);
-				
-				this.startActivity(i);
+				getTrip();
+				pd = ProgressDialog.show(TripSettings.this, "Processing...", "Retrieving the Route", true, false);
+				new Thread(){
+
+					/* (non-Javadoc)
+					 * @see java.lang.Thread#run()
+					 */
+					@Override
+					public void run() {
+						
+						eu.fbk.dycapo.maputils.Directions.getRoute(Origin, Destination, TripSettings.this);
+					}
+					
+				}.start();
+				pd.dismiss();
+//				data.putParcelable("origin", this.Origin);
+//				data.putParcelable("destination", this.Destination);
+//				i.putExtras(data);
+//				i.setClass(getBaseContext(), GeoService.class);
+//				
+//				this.startActivity(i);
 				
 			}else {
 				
@@ -353,7 +373,7 @@ public class TripSettings extends Activity implements OnClickListener {
     }
     
     
-    public Trip getTrip(){
+    public void getTrip(){
     	//TODO : complete implementation of this method
     	Trip trip = new Trip();
     	Location loc = new Location();
@@ -373,19 +393,27 @@ public class TripSettings extends Activity implements OnClickListener {
     	loc.setLeaves(leaves);
     	loc.setPoint(Location.ORIG);
     	trip.setOrigin(loc);
-    	leaves.setDate(++mDay);
-    	trip.setExpires(leaves);
     	
-    	
-    	
-    	User usr = DBPerson.getUser();
-    	trip.setAuthor(usr);
-    	
+    	loc = new Location();
     	
     	if (this.Destination instanceof Address){
     		geoRssPoint = String.valueOf(Destination.getLatitude()) + ", " + String.valueOf(Destination.getLongitude());
+    		if (!geoRssPoint.equals(", ")) loc.setGeorss_point(geoRssPoint);
     	}
-    	return trip;
+    	
+    	loc.setLeaves(leaves);
+    	loc.setPoint(Location.DEST);
+    	trip.setDestination(loc);
+    	
+    	trip.setExpires(leaves);
+    	
+    	trip.setAuthor(DBPerson.getUser());
+    	trip.setPreferences(DBPrefs.getPrefs());
+    	trip.setMode(DBMode.getMode());
+    	Log.d(TAG, "saving");
+    	DBTrip.saveActiveTrip(trip,true);
+    	DBTrip.saveTrip(trip);
+
     }
 
 	/**
