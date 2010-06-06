@@ -7,8 +7,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,7 +15,6 @@ import android.util.Log;
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.persistency.ActiveTrip;
 import eu.fbk.dycapo.persistency.DBTrip;
-import eu.fbk.dycapo.persistency.Leg;
 import eu.fbk.dycapo.persistency.Route;
 
 /**
@@ -77,6 +74,7 @@ public final class DirectionsResponseParser {
 	private static final int POINTS = 4;
 	private static final int VALUE = 5;
 	private static final int LEGS = 6;
+	@SuppressWarnings("unused")
 	private static final int STEPS = 7;
 	
 	
@@ -94,7 +92,7 @@ public final class DirectionsResponseParser {
 	}
 	
 	public static void parseDirections(InputStream is) throws DycapoException{
-		String encoded= null;
+
 		String directionsResponse = DirectionsResponseParser.convertStreamToString(is);
 		JSONObject json;
 		try {
@@ -108,31 +106,27 @@ public final class DirectionsResponseParser {
 				JSONArray routes = json.getJSONArray(getKey(ROUTES));
 				JSONObject mainRoute = routes.getJSONObject(0);
 				JSONObject overviewPolyline = mainRoute.getJSONObject(getKey(OVERVIEW_POLYLINE)); // getting the polyline
-				encoded = overviewPolyline.getString(getKey(POINTS)); //saving the polyline
+				
 				
 				
 				JSONArray legs = mainRoute.getJSONArray(getKey(LEGS));
 				int size = legs.length();
-				ArrayList<Leg> tLegs = new ArrayList<Leg>();
+				
 				int totalDurationSecs = 0;
-				for (int i = 0 ; i < size ; i++){
-					JSONObject leg =  legs.getJSONObject(i);
-					tLegs.add(new Leg(leg.toString(),leg.getJSONObject(getKey(DURATION)).getInt(getKey(VALUE))));
-					totalDurationSecs += leg.getJSONObject(getKey(DURATION)).getInt(getKey(VALUE)); // getting total duration
+				for (int i = 0 ; i < size ; i++){	
+					totalDurationSecs += legs.getJSONObject(i).getJSONObject(getKey(DURATION)).getInt(getKey(VALUE)); // getting total duration
 				}
 				
 				ActiveTrip aTrip = DBTrip.getActiveTrip();
 				Route mRoute = new Route();
-				mRoute.setLegs(tLegs);
+			
+				mRoute.setmDecodedPolyline(PolylineDecoder.decodePolyline(overviewPolyline.getString(getKey(POINTS))));
 				mRoute.setmDurationSecs(totalDurationSecs);
-				mRoute.setmPolyline(encoded);
-				mRoute.setmDirections(mainRoute.toString());
-				mRoute.setmStatus(status);
+				mRoute.setmStatusCode(status);
 				
 				aTrip.setRoute(mRoute);
 				DBTrip.saveActiveTrip(aTrip);
 				
-				tLegs = null;
 				json = null;
 				mRoute = null;
 				

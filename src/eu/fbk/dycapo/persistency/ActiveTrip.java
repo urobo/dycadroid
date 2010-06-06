@@ -29,7 +29,7 @@ public class ActiveTrip extends Trip {
 		
 		super();
 		this.mParticipants = new ArrayList<Participation>();
-		this.setActive(null);
+		this.setActive(true);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class ActiveTrip extends Trip {
 		
 		super(expires, author, mode, preferences, origin, destination);
 		this.mParticipants = new ArrayList<Participation>();
-		this.setActive(false);
+		this.setActive(true);
 		
 	}
 	
@@ -55,6 +55,9 @@ public class ActiveTrip extends Trip {
 		this.expires = trip.getExpires();
 		this.published = trip.getPublished();
 		this.updated =	trip.getUpdated();
+		this.mParticipants = new ArrayList<Participation>();
+		this.setActive(true);
+		this.mRoute = null;
 	}
 
 	/**
@@ -86,33 +89,7 @@ public class ActiveTrip extends Trip {
 	public Boolean getActive() {
 		return mActive;
 	}
-	
-	public void addParticipant(Participation participant){
-		if (this.mActive instanceof Boolean)
-			if (!this.mActive)this.mActive = true;
-		if (this.mParticipants == null) this.mParticipants = new ArrayList<Participation>();
-		this.mParticipants.add(participant);
-	}
-	
-	public void addParticipant(String mRole, Person mParticipant, Date mTime){
-		if (this.mActive instanceof Boolean)
-			if (!this.mActive)this.mActive = true;
-		if (this.mParticipants == null) this.mParticipants = new ArrayList<Participation>();
-		this.mParticipants.add(new Participation(mRole,mParticipant,mTime));
-	}
-	
-	public void removeParticipant(String username){
-		Person fetch;
-		int size = this.mParticipants.size();
-			for (int i = 0 ; i<size ; i++){
-				fetch = this.mParticipants.get(i).getmParticipant();
-				if (fetch instanceof Person)
-					if (username instanceof String)
-						if(fetch.getUsername().equals(username))
-							this.mParticipants.remove(i);	
-			}
-	
-	}
+
 
 	/**
 	 * @return the route

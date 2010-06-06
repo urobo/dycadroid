@@ -6,6 +6,8 @@ package eu.fbk.dycapo.maputils;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
+
 import com.google.android.maps.GeoPoint;
 
 /**
@@ -13,10 +15,15 @@ import com.google.android.maps.GeoPoint;
  *
  */
 public final class PolylineDecoder {
+	
+	private static final String TAG ="PolylineDecoder";
 	public static List<GeoPoint> decodePolyline(String encoded) {
-
+			
+		  Log.d(TAG, "decoding : "+ encoded);
 		  List<GeoPoint> poly = new ArrayList<GeoPoint>();
-		  int index = 0, len = encoded.length();
+		  int index = 0, 
+		  
+		  len = encoded.length();
 		  int lat = 0, lng = 0;
 
 		  while (index < len) {
@@ -41,6 +48,8 @@ public final class PolylineDecoder {
 
 		      GeoPoint p = new GeoPoint((int) (((double) lat / 1E5) * 1E6),
 		           (int) (((double) lng / 1E5) * 1E6));
+		      
+		      Log.d(TAG, p.toString());
 		      poly.add(p);
 		  }
 

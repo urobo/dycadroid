@@ -18,24 +18,31 @@ import eu.fbk.dycapo.models.Trip;
  */
 public final class DBTrip {
 	private static final String TAG = "DBTrip";
-	public static void saveTrip(Trip trip){
+	public static void saveTrip(Trip trip) throws DycapoException{
 		ObjectContainer db=DBProvider.getDatabase();
 		Trip checkDuplicate= new Trip();
-		checkDuplicate.setId(trip.getId());
-		List<Trip> duplicate = db.queryByExample(checkDuplicate);
-		if (duplicate.isEmpty())db.store(trip);
-		else {
-			for (int i=0; i < duplicate.size();i++)
-				db.delete(duplicate.get(i));
-			db.store(trip);
-		}
-		checkDuplicate=null;
+		if (trip.getId() instanceof Integer){
+			checkDuplicate.setId(trip.getId());
+			List<Trip> duplicate = db.queryByExample(checkDuplicate);
+			if (duplicate.isEmpty())db.store(trip);
+			else {
+				for (int i=0; i < duplicate.size();i++)
+					db.delete(duplicate.get(i));
+				db.store(trip);
+			}
+			checkDuplicate=null;
+		}else throw new DycapoException ("Trip doesn't contain any Id");
+		
 	}
 	
 	public static void saveActiveTrip (Trip trip,boolean asd){
 		 
 		ActiveTrip aTrip = new ActiveTrip(trip);
-		DBTrip.saveTrip(trip);
+		try {
+			DBTrip.saveTrip(trip);
+		} catch (DycapoException e) {
+			Log.e(TAG, e.getMessage());
+		}
 		aTrip.setActive(true);
 		
 		ObjectContainer db=DBProvider.getDatabase();

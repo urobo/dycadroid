@@ -82,10 +82,7 @@ public class DBProvider {
 			    
 			    dbConfiguration.objectClass(Route.class).cascadeOnUpdate(true);
 			    dbConfiguration.objectClass(Route.class).cascadeOnDelete(true);
-			    
-			    dbConfiguration.objectClass(Leg.class).cascadeOnUpdate(true);
-			    dbConfiguration.objectClass(Leg.class).cascadeOnDelete(true);
-			   
+			  			   
 			 	dbConfiguration.lockDatabaseFile(false);
 			    dbConfiguration.messageLevel(2);
 			    return dbConfiguration;

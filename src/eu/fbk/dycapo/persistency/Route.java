@@ -3,30 +3,30 @@
  */
 package eu.fbk.dycapo.persistency;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import com.google.android.maps.GeoPoint;
 
 /**
  * @author riccardo
  *
  */
 public class Route {
-	private String mDirections;
+	private List<GeoPoint> mDecodedPolyline;
 	private Integer mDurationSecs;
-	private List<Leg> mLegs;
-	private String mStatus;
-	private String mPolyline;
+	private String mStatusCode;
+
 	/**
-	 * @return the mDiretions
+	 * @return the mDecodedPolyline
 	 */
-	public String getmDirections() {
-		return mDirections;
+	public List<GeoPoint> getmDecodedPolyline() {
+		return mDecodedPolyline;
 	}
 	/**
-	 * @param mDiretions the mDiretions to set
+	 * @param mDecodedPolyline the mDecodedPolyline to set
 	 */
-	public void setmDirections(String mDiretions) {
-		this.mDirections = mDiretions;
+	public void setmDecodedPolyline(List<GeoPoint> mDecodedPolyline) {
+		this.mDecodedPolyline = mDecodedPolyline;
 	}
 	/**
 	 * @return the mDurationSecs
@@ -41,44 +41,17 @@ public class Route {
 		this.mDurationSecs = mDurationSecs;
 	}
 	/**
-	 * @return the legs
+	 * @return the mStatusCode
 	 */
-	public List<Leg> getLegs() {
-		return mLegs;
+	public String getmStatusCode() {
+		return mStatusCode;
 	}
 	/**
-	 * @param legs the legs to set
+	 * @param mStatusCode the mStatusCode to set
 	 */
-	public void setLegs(ArrayList<Leg> legs) {
-		this.mLegs = legs;
+	public void setmStatusCode(String mStatusCode) {
+		this.mStatusCode = mStatusCode;
 	}
-	/**
-	 * @return the mStatus
-	 */
-	public String getmStatus() {
-		return mStatus;
-	}
-	/**
-	 * @param mStatus the mStatus to set
-	 */
-	public void setmStatus(String mStatus) {
-		this.mStatus = mStatus;
-	}
-	/**
-	 * @return the mPolyline
-	 */
-	public String getmPolyline() {
-		return mPolyline;
-	}
-	/**
-	 * @param mPolyline the mPolyline to set
-	 */
-	public void setmPolyline(String mPolyline) {
-		this.mPolyline = mPolyline;
-	}
-	
-	public void addLeg(Leg leg){
-		this.mLegs.add(leg);
-	}
+
 	
 }

@@ -5,7 +5,6 @@ package eu.fbk.dycapo.maputils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -18,7 +17,6 @@ import android.content.Context;
 import android.location.Address;
 import android.util.Log;
 
-import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 
 import eu.fbk.dycapo.exceptions.DycapoException;
@@ -121,17 +119,16 @@ public final class Directions{
 			Log.e(TAG, e.getMessage());
 			e.printStackTrace();
 		} catch (DycapoException e) {
-			e.alertUser(ctx);
+			Log.e(TAG, e.getMessage());
 		}
     }
 	
 	public static void drawPath(int color, MapView mMapView01) throws DycapoException{
 		ActiveTrip aTrip = DBTrip.getActiveTrip();
 		Route mRoute = aTrip.getRoute();
-		List<GeoPoint> path = PolylineDecoder.decodePolyline(mRoute.getmPolyline());
-		int size = path.size();
+		int size = mRoute.getmDecodedPolyline().size();
 		for (int i = 0 ; i < size ; i++){
-			Log.d(TAG, path.get(i).toString());
+			Log.d(TAG, mRoute.getmDecodedPolyline().get(i).toString());
 		}
 	}
 	

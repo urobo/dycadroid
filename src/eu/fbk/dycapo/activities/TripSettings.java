@@ -16,14 +16,11 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Layout.Directions;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,14 +32,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import eu.fbk.dycapo.exceptions.DycapoException;
-import eu.fbk.dycapo.maputils.GeoService;
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Trip;
 import eu.fbk.dycapo.persistency.DBMode;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBPrefs;
 import eu.fbk.dycapo.persistency.DBTrip;
-import eu.fbk.dycapo.persistency.User;
 
 
 /**
@@ -303,12 +298,10 @@ public class TripSettings extends Activity implements OnClickListener {
 		//Intent i;
 		if(selected==1){
 			if (role.equals("driver")){
-				
-				Intent i = new Intent();
-				Bundle data = new Bundle();
+				pd =ProgressDialog.show(TripSettings.this, "Processing...", "Retrieving the Route", true, false);
 				getTrip();
-				pd = ProgressDialog.show(TripSettings.this, "Processing...", "Retrieving the Route", true, false);
-				new Thread(){
+				
+				Thread thr = new Thread(){
 
 					/* (non-Javadoc)
 					 * @see java.lang.Thread#run()
@@ -317,17 +310,11 @@ public class TripSettings extends Activity implements OnClickListener {
 					public void run() {
 						
 						eu.fbk.dycapo.maputils.Directions.getRoute(Origin, Destination, TripSettings.this);
-					}
+						handleRoute.sendEmptyMessage(0);
+					} 
 					
-				}.start();
-				pd.dismiss();
-//				data.putParcelable("origin", this.Origin);
-//				data.putParcelable("destination", this.Destination);
-//				i.putExtras(data);
-//				i.setClass(getBaseContext(), GeoService.class);
-//				
-//				this.startActivity(i);
-				
+				};
+				thr.start();
 			}else {
 				
 			}
@@ -338,6 +325,17 @@ public class TripSettings extends Activity implements OnClickListener {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	private Handler handleRoute= new Handler(){
+
+		/* (non-Javadoc)
+		 * @see android.os.Handler#handleMessage(android.os.Message)
+		 */
+		@Override
+		public void handleMessage(Message msg) {
+			pd.dismiss();
+		}
+		
+	};
 	 // updates the date in the TextView
     private void updateDisplay() {
         mDateDisplay.setText(
@@ -374,7 +372,7 @@ public class TripSettings extends Activity implements OnClickListener {
     
     
     public void getTrip(){
-    	//TODO : complete implementation of this method
+    
     	Trip trip = new Trip();
     	Location loc = new Location();
     	String geoRssPoint = "";
@@ -411,8 +409,12 @@ public class TripSettings extends Activity implements OnClickListener {
     	trip.setPreferences(DBPrefs.getPrefs());
     	trip.setMode(DBMode.getMode());
     	Log.d(TAG, "saving");
+    	
+    	
+    	
     	DBTrip.saveActiveTrip(trip,true);
-    	DBTrip.saveTrip(trip);
+   
+    	Log.d(TAG,"Trip Saved");
 
     }
 
