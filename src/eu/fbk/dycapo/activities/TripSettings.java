@@ -50,7 +50,8 @@ public class TripSettings extends Activity implements OnClickListener {
 	private String location =null;
 	private List<Address> foundAddresses;
 	private Menu myMenu=null;
-
+	private static EditText capacity = null;
+	
 	private int id;
 	private Address Origin=null;
 	private Address Destination=null;
@@ -251,11 +252,10 @@ public class TripSettings extends Activity implements OnClickListener {
 
         // display the current date (this method is below)
         updateDisplay();
-//		if (role.equals("rider")) {
-//			this.setContentView(R.layout.rider_trip);
-//		}else {
-//			this.setContentView(R.layout.driver_trip);
-//		}
+        
+        if (this.role.equals("driver")){
+        	//TODO:inflate layout for Capacity
+        }
 	}
 
 	/* (non-Javadoc)

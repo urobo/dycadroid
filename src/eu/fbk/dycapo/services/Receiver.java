@@ -24,9 +24,11 @@ import eu.fbk.dycapo.models.Person;
 public class Receiver extends BroadcastReceiver {
 	
 	private MapView mMapView;
+	private Context ctx;
 	
-	public Receiver (MapView mMapView){
+	public Receiver (MapView mMapView, Context ctx){
 		this.mMapView = mMapView;
+		this.ctx = ctx;
 	}
 	/* (non-Javadoc)
 	 * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)

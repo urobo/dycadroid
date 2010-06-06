@@ -16,6 +16,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -42,7 +43,7 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCException;
  * @author riccardo
  *
  */
-public class PositionUpdater extends Service {
+public class PositionUpdater extends Service implements LocationListener{
 	private static final String TAG = "PositionUpdater";
 	private NotificationManager notificationMgr = null;
 	private static AlarmManager alarmGetPositionsMgr = null;
@@ -239,6 +240,30 @@ public class PositionUpdater extends Service {
 	    		 	contentIntent);
 	     notificationMgr.notify(R.string.app_notification_id, notification);
 	  }
+
+	@Override
+	public void onLocationChanged(android.location.Location location) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 }
