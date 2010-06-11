@@ -21,6 +21,21 @@ public class Response{
 											"trip",
 											};
 	
+	public static final int	BOOLEAN = 0;
+
+	public static final int LOCATION = 1;
+	
+	public static final int MODE = 2;
+	
+	public static final int PERSON = 3;
+	
+	public static final int TRIP = 4;
+	
+	public static final String resolveType(int type){
+		if(type >= 0 && type < TYPES.length)return TYPES[type];
+		return null;
+	}
+	
 	private Integer code;						//must
 	private String message;					//must
 	private String type;					//must

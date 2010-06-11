@@ -42,10 +42,13 @@
 			</activity>
 
 		<activity android:label="Navigation" 
-			android:name="eu.fbk.dycapo.maputils.GeoService"
+			android:name="Navigation"
 			android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
 		<uses-library android:name="com.google.android.maps" />
+		<service android:name="eu.fbk.dycapo.services.PositionUpdater"></service>
+		<service android:name="eu.fbk.dycapo.services.RiderInquirer"></service>
+		<service android:name="eu.fbk.dycapo.services.DriverInquirer"></service>
 	</application>
 	<uses-sdk android:minSdkVersion="4" />
 	<uses-permission android:name="android.permission.INTERNET"/>

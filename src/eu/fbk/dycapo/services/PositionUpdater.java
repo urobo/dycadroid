@@ -21,12 +21,12 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import eu.fbk.dycapo.activities.Navigation;
 import eu.fbk.dycapo.activities.R;
 import eu.fbk.dycapo.bundles.LocationBundle;
 import eu.fbk.dycapo.bundles.PersonBundle;
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.factories.DycapoObjectsFetcher;
-import eu.fbk.dycapo.maputils.GeoService;
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Person;
 import eu.fbk.dycapo.models.Response;
@@ -46,8 +46,7 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCException;
 public class PositionUpdater extends Service implements LocationListener{
 	private static final String TAG = "PositionUpdater";
 	private NotificationManager notificationMgr = null;
-	private static AlarmManager alarmGetPositionsMgr = null;
-	private static AlarmManager alarmUpdatePositionMgr = null;
+	private static AlarmManager alarmMgr = null;
 	private static LocationManager locationMgr = null;
 	private Timer mGetPositionsTimer = new Timer();
 	private Timer mUpdatePositionTimer = new Timer();
@@ -93,9 +92,8 @@ public class PositionUpdater extends Service implements LocationListener{
 		    
 		    
 		    
-		    alarmGetPositionsMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-		    alarmUpdatePositionMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-		    
+		    alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+		 
 		    displayNotificationMessage("starting Background Service");
 		   
 		    mGetPositionsTimer.scheduleAtFixedRate(
@@ -142,6 +140,8 @@ public class PositionUpdater extends Service implements LocationListener{
 				if (response.getType().equals(Location.TAG.toLowerCase())){
 					fetcher.setPosition((Location)response.getValue());
 					getPositionsExtras.putBundle("participant"+ String.valueOf(index), PersonBundle.toBundle(fetcher));
+				}else if (response.getType().equals("boolean")){
+					participants.remove(index);
 				}
 			}
 			intentGetPositions = null;
@@ -149,7 +149,7 @@ public class PositionUpdater extends Service implements LocationListener{
 			intentGetPositions.putExtras(getPositionsExtras);
 			sendGetPositions = null;
 			sendGetPositions = PendingIntent.getBroadcast(getApplicationContext(), 666, intentGetPositions, PendingIntent.FLAG_ONE_SHOT);
-			alarmGetPositionsMgr.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), sendGetPositions);				
+			alarmMgr.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), sendGetPositions);				
 		} catch (XMLRPCException e) {
 			Log.e(TAG, e.getMessage());
 		} catch (DycapoException e) {
@@ -179,7 +179,7 @@ public class PositionUpdater extends Service implements LocationListener{
 		
 		try {
 			client.call(Dycapo.getMethod(Dycapo.UPDATE_POSITION),position);
-			alarmUpdatePositionMgr.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), sendUpdatePosition );
+			alarmMgr.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), sendUpdatePosition );
 			locationMgr=null;
 		} catch (XMLRPCException e) {
 			Log.e(TAG, e.getMessage());
@@ -235,7 +235,7 @@ public class PositionUpdater extends Service implements LocationListener{
    	 Notification notification = new Notification(android.R.drawable.ic_menu_preferences,
    			 message,System.currentTimeMillis());
 	     PendingIntent contentIntent =
-	    	 PendingIntent.getActivity(this, 0,new Intent(this, GeoService.class), 0);
+	    	 PendingIntent.getActivity(this, 0,new Intent(this, Navigation.class), 0);
 	     notification.setLatestEventInfo(this, "Background Service",message,
 	    		 	contentIntent);
 	     notificationMgr.notify(R.string.app_notification_id, notification);

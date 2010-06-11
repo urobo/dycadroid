@@ -11,6 +11,8 @@ import eu.fbk.dycapo.models.Person;
  *
  */
 public class User extends Person {
+	public static final String PASSWORD = "password";
+	
 	private String password;
 	
 	

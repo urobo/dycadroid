@@ -123,13 +123,10 @@ public final class Directions{
 		}
     }
 	
-	public static void drawPath(int color, MapView mMapView01) throws DycapoException{
+	public static void drawPath(MapView mMapView01) throws DycapoException{
 		ActiveTrip aTrip = DBTrip.getActiveTrip();
-		Route mRoute = aTrip.getRoute();
-		int size = mRoute.getmDecodedPolyline().size();
-		for (int i = 0 ; i < size ; i++){
-			Log.d(TAG, mRoute.getmDecodedPolyline().get(i).toString());
-		}
+		if (aTrip.getRoute().getmDecodedPolyline() != null)
+		mMapView01.getOverlays().add(new DycapoOverlay(aTrip.getRoute().getmDecodedPolyline()));
 	}
 	
 

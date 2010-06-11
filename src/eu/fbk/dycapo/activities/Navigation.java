@@ -32,7 +32,6 @@ public class Navigation extends MapActivity{
 	setContentView(R.layout.navigation);
 
 	
-	
 	//First Extract the bundle from intent
 	
 	//morigin = bundle.getString("origin");
@@ -60,7 +59,7 @@ public class Navigation extends MapActivity{
 			 */
 			@Override
 			public void run() {
-				DrawPath(Color.GREEN,mapView);
+				DrawPath(mapView);
 			}
 		}.start();
   
@@ -95,10 +94,10 @@ public class Navigation extends MapActivity{
 	 * @param color is the Color of the overlay
 	 * @param mMapView01
 	 */
-    private void DrawPath(int color, MapView mMapView01)
+    private void DrawPath(MapView mMapView01)
     {
     		try {
-			Directions.drawPath(color, mMapView01);
+			Directions.drawPath(mMapView01);
 		} catch (DycapoException e) {
 			e.alertUser(Navigation.this);
 		}

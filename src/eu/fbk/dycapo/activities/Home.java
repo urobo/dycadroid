@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,15 +22,21 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import eu.fbk.dycapo.exceptions.DycapoException;
+import eu.fbk.dycapo.factories.DycapoObjectsFetcher;
+import eu.fbk.dycapo.factories.UserMapper;
+import eu.fbk.dycapo.models.Response;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBProvider;
 import eu.fbk.dycapo.persistency.User;
+import eu.fbk.dycapo.services.Dycapo;
+import eu.fbk.dycapo.xmlrpc.XMLRPCClient;
+import eu.fbk.dycapo.xmlrpc.XMLRPCException;
 
 /**
  * @author riccardo
  */
 public class Home extends Activity implements OnClickListener{
-	
+	static final String TAG = "Home";
 	static final int DIALOG_CHOOSER = 0;
 	static final int DIALOG_REGISTER = 1;
 	static final int DIALOG_LOGIN= 2;
@@ -116,7 +123,7 @@ public class Home extends Activity implements OnClickListener{
 						if (passwordIn instanceof String && !passwordIn.equals("")){
 						
 						} 	else throw new DycapoException ("Invalid Password");
-												
+						//TODO test user credentials			
 						DBPerson.saveMe(usr);
 						
 					} catch (DycapoException e) {
@@ -167,7 +174,20 @@ public class Home extends Activity implements OnClickListener{
 							usr.setEmail(emailIn);
 						}	else throw new DycapoException ("Invalid Email");	
 						
-						DBPerson.saveMe(usr);
+						XMLRPCClient client = new XMLRPCClient(Dycapo.DYCAPO_URL,Dycapo.DYCAPO_REGISTRATION_USERNAME, Dycapo.DYCAPO_REGISTRATION_USERNAME);
+						try {
+							Object value = client.call(Dycapo.getMethod(Dycapo.REGISTER), UserMapper.fromUserToHashMap(usr));
+							Response response = DycapoObjectsFetcher.fetchXMLRPCResponse(value);
+							DycapoObjectsFetcher.logResponse(response);
+							if (response.getType().equals(Response.resolveType(Response.BOOLEAN))){
+								if (((Boolean)response.getValue()).booleanValue() == true)
+								DBPerson.saveMe(usr);
+							}
+						} catch (XMLRPCException e) {
+							Log.e(TAG, e.getMessage());
+							throw new DycapoException(e.getMessage());
+						}
+						
 						
 					} catch (DycapoException e) {
 						e.alertUser(getBaseContext());
@@ -175,7 +195,7 @@ public class Home extends Activity implements OnClickListener{
 						msg.what=Home.DIALOG_REGISTER;
 						msg.setTarget(handleFailure);
 						msg.sendToTarget();
-					}	
+					} 	
 					
 				}
 			});

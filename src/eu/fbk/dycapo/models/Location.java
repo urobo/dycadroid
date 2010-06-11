@@ -41,6 +41,11 @@ public class Location implements XMLRPCModel{
 	public static final int WAYP = 2;
 	public static final int POSI = 3;
 	
+	public static final String getPointType(int point){
+		if (point >= 0 && point < POINT_TYPE.length)return POINT_TYPE[point];
+		return null;
+	}
+	
 	protected String label;			//may
 	protected String street;			//should*
 	protected Integer point;				//must

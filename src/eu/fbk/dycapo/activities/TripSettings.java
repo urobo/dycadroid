@@ -16,6 +16,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -32,12 +33,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import eu.fbk.dycapo.exceptions.DycapoException;
+import eu.fbk.dycapo.factories.DycapoObjectsFetcher;
 import eu.fbk.dycapo.models.Location;
+import eu.fbk.dycapo.models.Response;
 import eu.fbk.dycapo.models.Trip;
+import eu.fbk.dycapo.persistency.ActiveTrip;
 import eu.fbk.dycapo.persistency.DBMode;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBPrefs;
 import eu.fbk.dycapo.persistency.DBTrip;
+import eu.fbk.dycapo.services.Dycapo;
+import eu.fbk.dycapo.xmlrpc.XMLRPCClient;
+import eu.fbk.dycapo.xmlrpc.XMLRPCException;
 
 
 /**
@@ -315,6 +322,9 @@ public class TripSettings extends Activity implements OnClickListener {
 					
 				};
 				thr.start();
+				
+				
+			
 			}else {
 				
 			}
@@ -325,6 +335,21 @@ public class TripSettings extends Activity implements OnClickListener {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	
+	private Handler dialogDismiss = new Handler(){
+
+		/* (non-Javadoc)
+		 * @see android.os.Handler#handleMessage(android.os.Message)
+		 */
+		@Override
+		public void handleMessage(Message msg) {
+			pd.dismiss();
+			Intent intent = new Intent();
+			intent.setClass(TripSettings.this, Navigation.class);
+			TripSettings.this.startActivity(intent);
+		}
+		
+	};
 	private Handler handleRoute= new Handler(){
 
 		/* (non-Javadoc)
@@ -333,9 +358,41 @@ public class TripSettings extends Activity implements OnClickListener {
 		@Override
 		public void handleMessage(Message msg) {
 			pd.dismiss();
-		}
-		
-	};
+			pd = ProgressDialog.show(TripSettings.this, "Processing...", "Publishing the Trip", true, false);
+			try {
+				ActiveTrip aTrip = DBTrip.getActiveTrip();
+				Calendar c = Calendar.getInstance();
+				c.setTime(aTrip.getOrigin().getLeaves());
+				c.setTimeInMillis(c.getTimeInMillis() + (aTrip.getRoute().getmDurationSecs()*1000));
+				aTrip.getDestination().setLeaves(new Date(c.getTimeInMillis()));
+				
+				XMLRPCClient client = new XMLRPCClient(Dycapo.DYCAPO_URL,DBPerson.getUser().getUsername(), DBPerson.getUser().getPassword());
+				try {
+					Object value = client.call(Dycapo.getMethod(Dycapo.ADD_TRIP_EXP), aTrip.toHashMap());
+					Response response = DycapoObjectsFetcher.fetchXMLRPCResponse(value);
+					DycapoObjectsFetcher.logResponse(response);
+					if (response.getType().equals(Response.resolveType(Response.TRIP)) 
+							&& ((Trip)response.getValue()).getId() instanceof Integer){
+						aTrip.setId(((Trip)response.getValue()).getId());
+						Trip trip = aTrip;
+						Log.d(TAG, "Saving Dycapo Trip as Active");
+						DBTrip.saveActiveTrip(aTrip);
+						Log.d(TAG, "Saving Dycapo Trip as Normal");
+						DBTrip.saveTrip(trip);
+						
+						dialogDismiss.sendEmptyMessage(0);
+					}
+				} catch (XMLRPCException e) {
+					Log.e(TAG,e.getMessage());
+					throw new DycapoException(e.getMessage());
+				}
+		}catch (DycapoException e){
+				pd.dismiss();
+				Log.e(TAG, e.getMessage());
+				e.alertUser(TripSettings.this);
+		} 
+	
+	}};
 	 // updates the date in the TextView
     private void updateDisplay() {
         mDateDisplay.setText(
