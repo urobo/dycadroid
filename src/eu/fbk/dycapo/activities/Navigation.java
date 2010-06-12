@@ -98,6 +98,7 @@ public class Navigation extends MapActivity{
     {
     		try {
 			Directions.drawPath(mMapView01);
+			myProgressDialog.dismiss();
 		} catch (DycapoException e) {
 			e.alertUser(Navigation.this);
 		}

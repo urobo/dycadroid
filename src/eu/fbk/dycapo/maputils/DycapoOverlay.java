@@ -70,6 +70,8 @@ public class DycapoOverlay extends Overlay {
 			/* ending point */
 			paint.setColor(Color.BLUE);
 			canvas.drawOval(ovalDest, paint);
+			
+			mapView.getController().setCenter(mRoute.get(0));
 		}
 		return super.draw(canvas, mapView, shadow, when);
 		

@@ -46,8 +46,8 @@ public final class PolylineDecoder {
 		      int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
 		      lng += dlng;
 
-		      GeoPoint p = new GeoPoint((int) (((double) lat / 1E5) * 1E6),
-		           (int) (((double) lng / 1E5) * 1E6));
+		      GeoPoint p = new GeoPoint((int) (((double) lat / 1E5) *1E6),
+		           (int) (((double) lng / 1E5) * 1E6 ));
 		      
 		      Log.d(TAG, p.toString());
 		      poly.add(p);

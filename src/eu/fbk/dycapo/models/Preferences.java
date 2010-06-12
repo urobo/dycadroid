@@ -13,6 +13,7 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  */
 public class Preferences implements XMLRPCModel {
 	public static final String TAG = "Preferences";
+	
 	/**
 	 * @return the nonsmoking
 	 */
@@ -87,6 +88,7 @@ public class Preferences implements XMLRPCModel {
 
 
 	public static final String[] GENDER_PREFS={"male","female","both"};
+	public static final String[] GENDER_TO={"m","f","b"};
 	public static final int MALE=0;
 	public static final int FEMALE=1;
 	public static final int BOTH=2;
@@ -147,7 +149,7 @@ public class Preferences implements XMLRPCModel {
 		if (this.age instanceof java.lang.String)result.put(Preferences.AGE, this.age);
 		if (this.drive instanceof java.lang.Boolean)result.put(Preferences.DRIVE, this.drive);
 		if (this.gender instanceof java.lang.Integer)
-			result.put(Preferences.GENDER, Preferences.GENDER_PREFS[this.gender]);
+			result.put(Preferences.GENDER, Preferences.GENDER_TO[this.gender]);
 		if (this.nonsmoking instanceof java.lang.Boolean)result.put(Preferences.NONSMOKING, this.nonsmoking);
 		if (this.ride instanceof java.lang.Boolean)result.put(Preferences.RIDE, this.ride);
 		if (this.pet instanceof Boolean) result.put(Preferences.PET, this.pet);

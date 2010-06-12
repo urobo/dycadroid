@@ -19,19 +19,25 @@ public class PreferencesFetcher {
 		//FIXME WHAT THE FUCK!?
 //		if (value.containsKey(Preferences.AGE))result.setAge((String)value.get(Preferences.AGE));
 		
-		if (value.containsKey(Preferences.DRIVE))result.setDrive(((Integer)value.get(Preferences.DRIVE)==1)?Boolean.TRUE:Boolean.FALSE);
+		if (value.containsKey(Preferences.DRIVE))
+			result.setDrive((Boolean)value.get(Preferences.DRIVE));
 		
 		if (value.containsKey(Preferences.GENDER)){
 			int i = 0;
-			while (i<Preferences.GENDER_PREFS.length)
-				if (value.get(Preferences.GENDER).equals(Preferences.GENDER_PREFS[i]))
+			while (i<Preferences.GENDER_PREFS.length){
+				if (((String)value.get(Preferences.GENDER)).toLowerCase().equals(Preferences.GENDER_TO[i]))
 					result.setGender(i);
+				i++;
+			}
 		}
 		
-		if (value.containsKey(Preferences.NONSMOKING))result.setNonsmoking(((Integer)value.get(Preferences.NONSMOKING)==1)?Boolean.TRUE:Boolean.FALSE);
+		if (value.containsKey(Preferences.NONSMOKING))
+			//result.setNonsmoking(((Integer)value.get(Preferences.NONSMOKING)==1)?Boolean.TRUE:Boolean.FALSE);
+			result.setNonsmoking((Boolean)value.get(Preferences.NONSMOKING));
 		
-		if (value.containsKey(Preferences.RIDE))result.setRide(((Integer)value.get(Preferences.RIDE)==1)?Boolean.TRUE:Boolean.FALSE);
-		
+		if (value.containsKey(Preferences.RIDE))
+			//result.setRide(((Integer)value.get(Preferences.RIDE)==1)?Boolean.TRUE:Boolean.FALSE);
+			result.setRide((Boolean)value.get(Preferences.RIDE));
 		return result;
 	}
 }

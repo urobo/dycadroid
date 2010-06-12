@@ -3,8 +3,12 @@
  */
 package eu.fbk.dycapo.factories;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+
+import android.util.Log;
 
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.models.Location;
@@ -14,6 +18,7 @@ import eu.fbk.dycapo.models.Location;
  *
  */
 public class LocationFetcher {
+	private static final String TAG ="LocationFetcher";
 	public static Location fetchLocation(HashMap<String,Object> value) throws DycapoException{
 			
 			String message="error LocationFetcher.fetchLocation : not enough parameters are given to define a location: missing ";
@@ -27,8 +32,16 @@ public class LocationFetcher {
 				else if (point.equals(Location.POINT_TYPE[3]))result.setPoint(3);
 			} else new DycapoException(message + Location.POINT);
 			
+//			SimpleDateFormat parser = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+
 			if (value.containsKey(Location.LEAVES))
-				result.setLeaves((Date)(value.get(Location.LEAVES)));
+//				try {
+//					result.setLeaves(parser.parse((String)(value.get(Location.LEAVES))));
+//				} catch (ParseException e) {
+//					Log.e(TAG, e.getMessage());
+//					throw new DycapoException(e.getMessage());
+//				}
+				result.setLeaves((Date)value.get(Location.LEAVES));
 			else new DycapoException(message + Location.LEAVES);
 			
 			if(value.containsKey(Location.LABEL))

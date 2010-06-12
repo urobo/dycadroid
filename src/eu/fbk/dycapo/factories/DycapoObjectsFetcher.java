@@ -53,19 +53,19 @@ public final class DycapoObjectsFetcher {
 						response.setValue(((Boolean)responseValue));	
 				
 					}else if(type.equals(Response.TYPES[1])){
-						Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES +"."+Tag.DYCAPOLOCATION, "type.equals(Response.TYPES[1]) " + Response.TYPES[1]);
+						Log.d(Tag.LOG +"."+TAG +"."+Location.TAG, "type.equals(Response.TYPES[1]) == " + Response.resolveType(Response.LOCATION));
 						response.setValue(DycapoObjectsFetcher.buildLocation((HashMap<String,Object>)responseValue));
 					
 					}else if(type.equals(Response.TYPES[2])){
-						Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES +"."+Tag.DYCAPOMODE, "type.equals(Response.TYPES[2]) " + Response.TYPES[2]);
+						Log.d(Tag.LOG +"."+TAG +"."+Mode.TAG, "type.equals(Response.TYPES[2]) == "+ Response.resolveType(Response.MODE));
 						response.setValue(DycapoObjectsFetcher.buildMode((HashMap<String,Object>)responseValue));
 					
 					}else if(type.equals(Response.TYPES[3])){
-						Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES +"."+Tag.DYCAPOPERSON, "type.equals(Response.TYPES[3]) " + Response.TYPES[3]);
+						Log.d(Tag.LOG +"."+TAG+"."+Person.TAG, "type.equals(+ Response.TYPES[3]) == " + Response.resolveType(Response.PERSON));
 						response.setValue(DycapoObjectsFetcher.buildPerson((HashMap<String,Object>)responseValue));
 					
 					}else if(type.equals(Response.TYPES[4])){
-						Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES +"."+Tag.DYCAPOTRIP, "type.equals(Response.TYPES[4]) " + Response.TYPES[4]);
+						Log.d(Tag.LOG +"."+TAG+"."+Trip.TAG, "type.equals(Response.TYPES[4]) == " + Response.resolveType(Response.TRIP));
 						response.setValue(DycapoObjectsFetcher.buildTrip((HashMap<String,Object>)responseValue));
 					}
 				}

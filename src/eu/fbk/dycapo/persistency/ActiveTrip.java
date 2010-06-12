@@ -50,6 +50,8 @@ public class ActiveTrip extends Trip {
 	}
 	
 	public ActiveTrip (Trip trip){
+		if (trip.getId() instanceof Integer)
+			this.id = trip.getId();
 		this.author = trip.getAuthor();
 		this.content = trip.getContent();
 		this.expires = trip.getExpires();

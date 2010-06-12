@@ -336,20 +336,6 @@ public class TripSettings extends Activity implements OnClickListener {
 	}
 	
 	
-	private Handler dialogDismiss = new Handler(){
-
-		/* (non-Javadoc)
-		 * @see android.os.Handler#handleMessage(android.os.Message)
-		 */
-		@Override
-		public void handleMessage(Message msg) {
-			pd.dismiss();
-			Intent intent = new Intent();
-			intent.setClass(TripSettings.this, Navigation.class);
-			TripSettings.this.startActivity(intent);
-		}
-		
-	};
 	private Handler handleRoute= new Handler(){
 
 		/* (non-Javadoc)
@@ -358,21 +344,23 @@ public class TripSettings extends Activity implements OnClickListener {
 		@Override
 		public void handleMessage(Message msg) {
 			pd.dismiss();
-			pd = ProgressDialog.show(TripSettings.this, "Processing...", "Publishing the Trip", true, false);
+			
 			try {
 				ActiveTrip aTrip = DBTrip.getActiveTrip();
 				Calendar c = Calendar.getInstance();
 				c.setTime(aTrip.getOrigin().getLeaves());
 				c.setTimeInMillis(c.getTimeInMillis() + (aTrip.getRoute().getmDurationSecs()*1000));
 				aTrip.getDestination().setLeaves(new Date(c.getTimeInMillis()));
-				
+				aTrip.getMode().setVacancy(aTrip.getMode().getCapacity()-1);
+				aTrip.getMode().setKind("car");
+				aTrip.getPreferences().setAge("18-30");
 				XMLRPCClient client = new XMLRPCClient(Dycapo.DYCAPO_URL,DBPerson.getUser().getUsername(), DBPerson.getUser().getPassword());
 				try {
-					Object value = client.call(Dycapo.getMethod(Dycapo.ADD_TRIP_EXP), aTrip.toHashMap());
+					Object value = client.call(Dycapo.getMethod(Dycapo.ADD_TRIP), aTrip.toHashMap());
 					Response response = DycapoObjectsFetcher.fetchXMLRPCResponse(value);
 					DycapoObjectsFetcher.logResponse(response);
-					if (response.getType().equals(Response.resolveType(Response.TRIP)) 
-							&& ((Trip)response.getValue()).getId() instanceof Integer){
+					if (response.getType().toLowerCase().equals(Response.resolveType(Response.TRIP))){
+						Log.d(TAG, "Trip type");
 						aTrip.setId(((Trip)response.getValue()).getId());
 						Trip trip = aTrip;
 						Log.d(TAG, "Saving Dycapo Trip as Active");
@@ -380,10 +368,12 @@ public class TripSettings extends Activity implements OnClickListener {
 						Log.d(TAG, "Saving Dycapo Trip as Normal");
 						DBTrip.saveTrip(trip);
 						
-						dialogDismiss.sendEmptyMessage(0);
+						Intent intent = new Intent();
+						intent.setClass(TripSettings.this, Navigation.class);
+						TripSettings.this.startActivity(intent);
 					}
 				} catch (XMLRPCException e) {
-					Log.e(TAG,e.getMessage());
+					Log.e(TAG + "XMLRPCException",e.getMessage());
 					throw new DycapoException(e.getMessage());
 				}
 		}catch (DycapoException e){
