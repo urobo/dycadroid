@@ -58,7 +58,8 @@ public class TripSettings extends Activity implements OnClickListener {
 	private List<Address> foundAddresses;
 	private Menu myMenu=null;
 	private static EditText capacity = null;
-	
+	private static XMLRPCClient client = new XMLRPCClient(Dycapo.DYCAPO_URL,DBPerson.getUser().getUsername(), DBPerson.getUser().getPassword());
+
 	private int id;
 	private Address Origin=null;
 	private Address Destination=null;
@@ -354,8 +355,8 @@ public class TripSettings extends Activity implements OnClickListener {
 				aTrip.getMode().setVacancy(aTrip.getMode().getCapacity()-1);
 				aTrip.getMode().setKind("car");
 				aTrip.getPreferences().setAge("18-30");
-				XMLRPCClient client = new XMLRPCClient(Dycapo.DYCAPO_URL,DBPerson.getUser().getUsername(), DBPerson.getUser().getPassword());
 				try {
+					Log.d(TAG,"user: "+ DBPerson.getUser().getUsername() + " , passwd:"+ DBPerson.getUser().getPassword());
 					Object value = client.call(Dycapo.getMethod(Dycapo.ADD_TRIP), aTrip.toHashMap());
 					Response response = DycapoObjectsFetcher.fetchXMLRPCResponse(value);
 					DycapoObjectsFetcher.logResponse(response);
@@ -376,11 +377,16 @@ public class TripSettings extends Activity implements OnClickListener {
 					Log.e(TAG + "XMLRPCException",e.getMessage());
 					throw new DycapoException(e.getMessage());
 				}
+				
 		}catch (DycapoException e){
 				pd.dismiss();
 				Log.e(TAG, e.getMessage());
 				e.alertUser(TripSettings.this);
-		} 
+		} finally{
+			Intent intent = new Intent();
+			intent.setClass(TripSettings.this, Navigation.class);
+			TripSettings.this.startActivity(intent);
+		}
 	
 	}};
 	 // updates the date in the TextView

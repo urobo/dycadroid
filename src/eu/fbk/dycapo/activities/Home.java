@@ -121,7 +121,7 @@ public class Home extends Activity implements OnClickListener{
 						}	else throw new DycapoException ("Invalid Username");
 					
 						if (passwordIn instanceof String && !passwordIn.equals("")){
-						
+						usr.setPassword(passwordIn);
 						} 	else throw new DycapoException ("Invalid Password");
 						//TODO test user credentials			
 						DBPerson.saveMe(usr);

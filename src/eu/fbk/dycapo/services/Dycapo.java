@@ -8,8 +8,9 @@ package eu.fbk.dycapo.services;
  *
  */
 public final class Dycapo {
-	//public static final String DYCAPO_URL="http://test.dycapo.org/RPC2";
-	public static final String DYCAPO_URL = "http://172.10.0.2/RPC2";
+	public static final String DYCAPO_URL="http://test.dycapo.org/RPC2";
+	//public static final String DYCAPO_URL = "http://172.10.0.2/RPC2";
+	//public static final String DYCAPO_URL="http://10.7.199.77/RPC2";
 	
 	public static final String DYCAPO_REGISTRATION_USERNAME = "register";
 	public static final String DYCAPO_REGISTRATION_PASSWORD = "register";

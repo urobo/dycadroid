@@ -22,7 +22,7 @@ import com.google.android.maps.Projection;
  */
 public class DycapoOverlay extends Overlay {
 	private List<GeoPoint> mRoute;
-	private int mRadius=6;
+	private static final int RADIUS=4;
 	public DycapoOverlay (List<GeoPoint> route){
 		this.mRoute = route;
 	}
@@ -57,10 +57,10 @@ public class DycapoOverlay extends Overlay {
 			projection.toPixels(mRoute.get((size-1)), point2);
 			
 			
-			RectF ovalOrig = new RectF(point1.x - mRadius,point1.y - mRadius,
-					point1.x + mRadius,point1.y + mRadius);
-			RectF ovalDest = new RectF(point2.x - mRadius,point2.y - mRadius,
-					point2.x + mRadius,point2.y + mRadius);
+			RectF ovalOrig = new RectF(point1.x - RADIUS,point1.y - RADIUS,
+					point1.x + RADIUS,point1.y + RADIUS);
+			RectF ovalDest = new RectF(point2.x - RADIUS,point2.y - RADIUS,
+					point2.x + RADIUS,point2.y + RADIUS);
 	
 			paint.setAlpha(255);
 			
