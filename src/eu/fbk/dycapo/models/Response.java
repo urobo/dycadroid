@@ -19,6 +19,7 @@ public class Response{
 											"mode",
 											"person",
 											"trip",
+											"person[]"
 											};
 	
 	public static final int	BOOLEAN = 0;
@@ -30,6 +31,8 @@ public class Response{
 	public static final int PERSON = 3;
 	
 	public static final int TRIP = 4;
+	
+	public static final int PERSONS = 5;
 	
 	public static final String resolveType(int type){
 		if(type >= 0 && type < TYPES.length)return TYPES[type];

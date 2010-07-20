@@ -31,7 +31,7 @@ import android.util.Log;
  * @author riccardo
  *
  */
-public class RiderInquirer extends Service {
+public class RiderInquirer extends Service implements Inquirer{
 	private static final String TAG = "RiderInquirer";
 	public static final String TASK = "task";
 	private static final String[] TASKS = {
@@ -54,7 +54,7 @@ public class RiderInquirer extends Service {
  	
 	private static int UPDATE_INTERVAL = 60000;
 	private static AlarmManager alarmMgr = null;
-	private Timer mTripFinder = new Timer();
+	private Timer mTimerTask = new Timer();
 	private int taskId;
 	
 	/* (non-Javadoc)
@@ -87,18 +87,18 @@ public class RiderInquirer extends Service {
 		super.onStart(intent, startId);
 		this.mReceivedData = intent.getExtras();
 		this._unpackBundle();
-		mTripFinder.scheduleAtFixedRate(
+		mTimerTask.scheduleAtFixedRate(
 				new TimerTask() {
 					@Override
 					public void run() {
-						_taskPerformer();
+						inquire();
 					}
 				},
 				0,
 				UPDATE_INTERVAL);
 	}
 	
-	private void _unpackBundle(){
+	public void _unpackBundle(){
 		if (this.mReceivedData.containsKey(TASK))
 			switch (this.mReceivedData.getInt(TASK)){
 			case RiderInquirer.SEARCH_TRIP:
@@ -114,14 +114,6 @@ public class RiderInquirer extends Service {
 											Location.DEST)));
 				break;
 			}
-	}
-	
-	private void _taskPerformer(){
-		switch(this.taskId){
-		case RiderInquirer.SEARCH_TRIP:
-			_findTrip();
-			break;
-		}
 	}
 	
 	private void _findTrip(){
@@ -147,6 +139,15 @@ public class RiderInquirer extends Service {
 			Log.e(TAG, e.getMessage());
 		} catch (DycapoException e) {
 			Log.e(TAG, e.getMessage());
+		}
+	}
+
+	@Override
+	public void inquire() {
+		switch(this.taskId){
+		case RiderInquirer.SEARCH_TRIP:
+			_findTrip();
+			break;
 		}
 	}
 	

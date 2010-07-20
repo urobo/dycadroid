@@ -19,6 +19,7 @@ import eu.fbk.dycapo.models.Trip;
  *
  */
 
+
 public final class DycapoObjectsFetcher {
 	private static final String TAG ="DycapoObjectsFetcher";
 	/* (non-Javadoc)
@@ -67,6 +68,9 @@ public final class DycapoObjectsFetcher {
 					}else if(type.equals(Response.TYPES[4])){
 						Log.d(Tag.LOG +"."+TAG+"."+Trip.TAG, "type.equals(Response.TYPES[4]) == " + Response.resolveType(Response.TRIP));
 						response.setValue(DycapoObjectsFetcher.buildTrip((HashMap<String,Object>)responseValue));
+					}else if (type.equals(Response.TYPES[5])){
+						Log.d(Tag.LOG +"+"+TAG+"."+Response.resolveType(Response.PERSONS), "type.equals(Response.TYPES[5]) == "+Response.resolveType(Response.PERSONS));
+						response.setValue(DycapoObjectsFetcher.extractPersons((Object[])responseValue));
 					}
 				}
 			}
@@ -74,6 +78,15 @@ public final class DycapoObjectsFetcher {
 		return response;
 	}
 	
+	/**
+	 * @param value
+	 * @return
+	 * @throws DycapoException
+	 */
+	private static Person[] extractPersons(Object[] value) throws DycapoException {
+		return PersonFetcher.fetchPersons(value);
+	}
+
 	/**
 	 * @param value
 	 * @return

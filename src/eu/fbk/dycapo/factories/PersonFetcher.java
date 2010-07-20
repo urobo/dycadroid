@@ -54,4 +54,15 @@ public class PersonFetcher {
 			return result;
 
 	}
+
+	@SuppressWarnings("unchecked")
+	public static Person[] fetchPersons(Object[] value) throws DycapoException {
+		
+		int size = value.length;
+		Person[] persons = new Person[size];
+		for (int i = 0; i< size; i++ ){
+			persons[i] = PersonFetcher.fetchPerson((HashMap<String,Object>)(value[i]));
+		}
+		return persons;
+	}
 }

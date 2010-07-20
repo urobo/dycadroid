@@ -3,12 +3,8 @@
  */
 package eu.fbk.dycapo.factories;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-
-import android.util.Log;
 
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.models.Location;
@@ -18,6 +14,7 @@ import eu.fbk.dycapo.models.Location;
  *
  */
 public class LocationFetcher {
+	@SuppressWarnings("unused")
 	private static final String TAG ="LocationFetcher";
 	public static Location fetchLocation(HashMap<String,Object> value) throws DycapoException{
 			
