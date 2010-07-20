@@ -1,12 +1,17 @@
-/**
- * 
- */
 package eu.fbk.dycapo.services;
 
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.util.Log;
 import eu.fbk.dycapo.bundles.LocationBundle;
 import eu.fbk.dycapo.bundles.TripBundle;
 import eu.fbk.dycapo.exceptions.DycapoException;
@@ -18,24 +23,12 @@ import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.xmlrpc.XMLRPCClient;
 import eu.fbk.dycapo.xmlrpc.XMLRPCException;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.IBinder;
-import android.util.Log;
-
-/**
- * @author riccardo
- *
- */
-public class RiderInquirer extends Service implements Inquirer{
-	private static final String TAG = "RiderInquirer";
+public class ServiceInquirer extends Service{
+	private static final String TAG = "ServiceInquirer";
 	public static final String TASK = "task";
 	private static final String[] TASKS = {
-		"search_trip"
+		"search_trip",
+		"check_ride_requests"
 	};
 	
 	private XMLRPCClient client = new XMLRPCClient(Dycapo.DYCAPO_URL,DBPerson.getUser().getUsername(), DBPerson.getUser().getPassword());
@@ -44,6 +37,7 @@ public class RiderInquirer extends Service implements Inquirer{
 	private Location orig = null;
 	private Location dest = null;
 	private static final int SEARCH_TRIP = 0;
+	private static final int CHECK_RIDE_REQUESTS = 1;
 	
 	private Bundle mReceivedData = null;
 	
@@ -101,7 +95,8 @@ public class RiderInquirer extends Service implements Inquirer{
 	public void _unpackBundle(){
 		if (this.mReceivedData.containsKey(TASK))
 			switch (this.mReceivedData.getInt(TASK)){
-			case RiderInquirer.SEARCH_TRIP:
+			case ServiceInquirer.SEARCH_TRIP:
+				this.taskId = ServiceInquirer.SEARCH_TRIP;
 				if (this.mReceivedData.containsKey(Location.getPointType(Location.ORIG)))
 					this.orig = LocationBundle.fromBundle(
 							this.mReceivedData.getBundle(
@@ -113,9 +108,15 @@ public class RiderInquirer extends Service implements Inquirer{
 									Location.getPointType(
 											Location.DEST)));
 				break;
+			case ServiceInquirer.CHECK_RIDE_REQUESTS:
+				this.taskId = ServiceInquirer.CHECK_RIDE_REQUESTS;
+				break;
 			}
 	}
 	
+	private void _checkRideRequests(){
+		
+	}
 	private void _findTrip(){
 		
 		Object value;
@@ -128,7 +129,7 @@ public class RiderInquirer extends Service implements Inquirer{
 			if (response.getType().equals(Response.resolveType(Response.TRIP))){
 				Bundle data = new Bundle();
 			
-				data.putBundle(RiderInquirer.getTask(SEARCH_TRIP), TripBundle.toBundle((Trip)response.getValue()));
+				data.putBundle(ServiceInquirer.getTask(SEARCH_TRIP), TripBundle.toBundle((Trip)response.getValue()));
 				Intent intent = new Intent(getApplicationContext(),Notifier.class);
 				intent.putExtras(data);
 			
@@ -142,13 +143,16 @@ public class RiderInquirer extends Service implements Inquirer{
 		}
 	}
 
-	@Override
 	public void inquire() {
 		switch(this.taskId){
-		case RiderInquirer.SEARCH_TRIP:
+		
+		case ServiceInquirer.SEARCH_TRIP:
 			_findTrip();
+			break;
+
+		case ServiceInquirer.CHECK_RIDE_REQUESTS:
+			_checkRideRequests();
 			break;
 		}
 	}
-	
 }
