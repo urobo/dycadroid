@@ -13,10 +13,10 @@ import eu.fbk.dycapo.models.Location;
  * @author riccardo
  *
  */
-public class LocationFetcher {
+public abstract class LocationFetcher {
 	@SuppressWarnings("unused")
 	private static final String TAG ="LocationFetcher";
-	public static Location fetchLocation(HashMap<String,Object> value) throws DycapoException{
+	public static final Location fetchLocation(HashMap<String,Object> value) throws DycapoException{
 			
 			String message="error LocationFetcher.fetchLocation : not enough parameters are given to define a location: missing ";
 			Location result= new Location();

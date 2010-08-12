@@ -19,10 +19,10 @@ import eu.fbk.dycapo.models.Trip;
  * @author riccardo
  *
  */
-public class TripFetcher {
+public abstract class TripFetcher {
 	private static final String TAG ="TripFetcher";
 	@SuppressWarnings("unchecked")
-	public static Trip fetchTrip(HashMap<String,Object> value) throws DycapoException{
+	public static final Trip fetchTrip(HashMap<String,Object> value) throws DycapoException{
 			
 			SimpleDateFormat parser = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
 			
@@ -72,7 +72,7 @@ public class TripFetcher {
 }
 	
 	@SuppressWarnings("unchecked")
-	public static void fetchContent(HashMap<String,Object> value,Trip result) throws DycapoException{
+	public static final void fetchContent(HashMap<String,Object> value,Trip result) throws DycapoException{
 		String message = "error TripFetcher.fetchContent : not enough parameters are given to define a Trip.Content: missing ";
 			result.createContent();
 			

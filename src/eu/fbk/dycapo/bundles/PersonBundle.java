@@ -11,8 +11,8 @@ import eu.fbk.dycapo.models.Person;
  * @author riccardo
  *
  */
-public final class PersonBundle {
-	public static Bundle toBundle (Person person){
+public abstract class PersonBundle {
+	public static final Bundle toBundle (Person person){
 		Bundle result = new Bundle();
 		
 		if (person.getAge() instanceof Integer)
@@ -54,7 +54,7 @@ public final class PersonBundle {
 		return result;
 	}
 	
-	public static Person fromBundle (Bundle data){
+	public static final Person fromBundle (Bundle data){
 		Person result = new Person ();
 		
 		if (data.containsKey(Person.AGE))

@@ -78,5 +78,9 @@ public final class Directions{
 		if (aTrip.getRoute().getmDecodedPolyline() != null)
 		mMapView01.getOverlays().add(new DycapoOverlay(aTrip.getRoute().getmDecodedPolyline()));
 	}
+	
+	public static void getComplexRoute(Address source,Address dest, Address wayps,Context ctx){
+		
+	}
 
 }

@@ -10,10 +10,14 @@
     <string name="test8">test accept_ride_request :</string>
     <string name="app_name">dycadroid</string>
     <string name="button">start test</string>
- 
- 	
- 	<string name="gender_prompt">set gender preferences</string>
- 		
-<string name="service">PositionUpdater</string>
-<string name="app_notification_id">notification_id</string>
+ 	<string name="gender_prompt">set gender preferences</string>	
+	<string name="service">PositionUpdater</string>
+	<string name="app_notification_id">notification_id</string>
+	
+	<string name="cancel_requested_ride">Your request is going to be canceled. Are you sure?</string>
+	<string name="finish_ride">Do you confirm your trip participation is over?</string>
+	<string name="start_ride">Do you confirm your trip participation is starting?</string>
+	
+	<string name="finish_trip">Do you confirm your trip is over?</string>
+	<string name="start_trip">Do you confirm you are starting your trip? e.g.: In this way you will set your trip as active</string>
 </resources>

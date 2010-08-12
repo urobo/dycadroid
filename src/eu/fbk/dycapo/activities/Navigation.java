@@ -5,7 +5,6 @@ package eu.fbk.dycapo.activities;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.maps.MapActivity;
@@ -13,7 +12,7 @@ import com.google.android.maps.MapView;
 
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.maputils.Directions;
-import eu.fbk.dycapo.services.Receiver;
+import eu.fbk.dycapo.services.MapReceiver;
 
 /**
  * 
@@ -24,7 +23,7 @@ public class Navigation extends MapActivity{
 
 	private static MapView mapView;
 	private static ProgressDialog myProgressDialog;
-	private static Receiver br= null;
+	private static MapReceiver br= null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,7 @@ public class Navigation extends MapActivity{
 	mapView.setStreetView(true);
 	//Now try to find destination adress
 	
-	br  = new Receiver(mapView,Navigation.this);
+	br  = new MapReceiver(mapView,Navigation.this);
 	
 	try {
 

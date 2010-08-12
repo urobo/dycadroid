@@ -5,28 +5,26 @@ package eu.fbk.dycapo.services;
 
 import java.util.ArrayList;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-
 import com.google.android.maps.MapView;
 
 import eu.fbk.dycapo.bundles.LocationBundle;
 import eu.fbk.dycapo.bundles.PersonBundle;
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Person;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 
 /**
  * @author riccardo
  *
  */
-public class Receiver extends BroadcastReceiver {
-	
+public class MapReceiver extends BroadcastReceiver {
 	private MapView mMapView;
 	private Context ctx;
 	
-	public Receiver (MapView mMapView, Context ctx){
+	public MapReceiver (MapView mMapView, Context ctx){
 		this.mMapView = mMapView;
 		this.ctx = ctx;
 	}
@@ -59,5 +57,4 @@ public class Receiver extends BroadcastReceiver {
 	private void updateParticipationPositions(ArrayList<Person> participants){
 		
 	}
-
 }

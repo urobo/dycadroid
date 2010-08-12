@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+  <Button
+  	android:id="@+id/testHome"
+  	android:text="Test Home"
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  />
+  <Button
+  	android:id="@+id/testNavigation"
+  	android:text="Test Navigation"
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  />
+  <Button
+  	android:id="@+id/testSettings"
+  	android:text="Test Settings"
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  />
+  <Button
+  	android:id="@+id/testTripSettings"
+  	android:text="Test Trip Settings"
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  />
+  <Button
+  	android:id="@+id/testFastChoice"
+  	android:text="Test FastChoice"
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  />
+  
+</LinearLayout>

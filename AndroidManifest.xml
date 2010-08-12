@@ -44,11 +44,14 @@
 		<activity android:label="Navigation" 
 			android:name="Navigation"
 			android:theme="@android:style/Theme.NoTitleBar">
-		</activity>
+			</activity>
+		<activity android:name=".TestingActivity"
+					android:label="Testing">
+					</activity>		
+		
 		<uses-library android:name="com.google.android.maps" />
 		<service android:name="eu.fbk.dycapo.services.PositionUpdater"></service>
-		<service android:name="eu.fbk.dycapo.services.RiderInquirer"></service>
-		<service android:name="eu.fbk.dycapo.services.DriverInquirer"></service>
+		<service android:name="eu.fbk.dycapo.services.ServiceInquirer"></service>
 	</application>
 	<uses-sdk android:minSdkVersion="4" />
 	<uses-permission android:name="android.permission.INTERNET"/>

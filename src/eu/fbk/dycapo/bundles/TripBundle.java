@@ -17,10 +17,10 @@ import eu.fbk.dycapo.models.Trip;
  * @author riccardo
  *
  */
-public final class TripBundle {
+public abstract class TripBundle {
 	public static final String TAG = "TripBundle";
 	
-	private static Bundle toContentBundle (Trip.Content content){
+	private static final Bundle toContentBundle (Trip.Content content){
 		Bundle result = new Bundle();
 		Bundle locations = new Bundle();
 		
@@ -46,7 +46,7 @@ public final class TripBundle {
 		return result;
 	}
 	
-	private static void fromContentBundle(Trip trip,Bundle data){
+	private static final void fromContentBundle(Trip trip,Bundle data){
 		Trip.Content content = trip.getContent();
 		if (data.containsKey(Trip.Content.LOCATIONS)){
 			Bundle locations = data.getBundle(Trip.Content.LOCATIONS);
@@ -73,7 +73,7 @@ public final class TripBundle {
 			trip.setContent(content);
 	}
 	
-	public static Bundle toBundle (Trip trip){
+	public static final Bundle toBundle (Trip trip){
 		Bundle result = new Bundle();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		
@@ -98,7 +98,7 @@ public final class TripBundle {
 		return result;
 	}
 	
-	public static Trip fromBundle (Bundle data){
+	public static final Trip fromBundle (Bundle data){
 		
 		Trip trip = new Trip();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");

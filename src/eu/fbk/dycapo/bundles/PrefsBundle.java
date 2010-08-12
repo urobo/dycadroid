@@ -10,8 +10,8 @@ import eu.fbk.dycapo.models.Preferences;
  * @author riccardo
  *
  */
-public final class PrefsBundle {
-	public static Bundle toBundle (Preferences prefs){
+public abstract class PrefsBundle {
+	public static final Bundle toBundle (Preferences prefs){
 		Bundle result = new Bundle();
 		
 		if (prefs.getAge() instanceof String)
@@ -35,7 +35,7 @@ public final class PrefsBundle {
 		return result;
 	}
 	
-	public static Preferences fromBundle (Bundle data){
+	public static final Preferences fromBundle (Bundle data){
 		Preferences prefs = new Preferences ();
 		
 		if (data.containsKey(Preferences.AGE))

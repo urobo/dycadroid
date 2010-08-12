@@ -228,6 +228,7 @@ public class Home extends Activity implements OnClickListener{
 		int base=Menu.FIRST; // value is 1
 		menu.add(base,base,base,"Settings");
 		menu.add(base,base+1,base+1,"Stats");
+		menu.add(base,base+2,base+2,"Test");
 	}
 	
 
@@ -271,15 +272,18 @@ public class Home extends Activity implements OnClickListener{
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int selected= item.getItemId();
-		Intent i;
+		Intent i = new Intent();
 		if(selected==1){
-			i = new Intent();
+			
 			i.setClass(this,Settings.class);
 			this.startActivity(i);
 			
 		}else if (selected==2){
 		
 			
+		}else if (selected==3){
+			i.setClass(this, TestingActivity.class);
+			this.startActivity(i);
 		}
 		return super.onOptionsItemSelected(item);
 	}

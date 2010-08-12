@@ -11,8 +11,8 @@ import eu.fbk.dycapo.models.Preferences;
  * @author riccardo
  *
  */
-public class PreferencesFetcher {
-	public static Preferences fetchPreferences (HashMap<String,Object> value){
+public abstract class PreferencesFetcher {
+	public final static Preferences fetchPreferences (HashMap<String,Object> value){
 		Preferences result = new Preferences();
 		
 		

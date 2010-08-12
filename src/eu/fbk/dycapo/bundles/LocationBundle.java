@@ -15,10 +15,10 @@ import eu.fbk.dycapo.models.Location;
  * @author riccardo
  *
  */
-public final class LocationBundle {
+public abstract class LocationBundle {
 	public static final String TAG = "LocationBundle";
 	
-	public static Bundle toBundle (Location location){
+	public static final Bundle toBundle (Location location){
 		
 		Bundle result = new Bundle();
 		
@@ -66,7 +66,7 @@ public final class LocationBundle {
 		return result;
 	}
 	
-	public static Location fromBundle (Bundle data){
+	public static final Location fromBundle (Bundle data){
 		
 		Location location = new Location ();
 		

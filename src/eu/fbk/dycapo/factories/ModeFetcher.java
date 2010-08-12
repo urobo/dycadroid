@@ -12,8 +12,8 @@ import eu.fbk.dycapo.models.Mode;
  * @author riccardo
  *
  */
-public class ModeFetcher {
-	public static Mode fetchMode(HashMap<String,Object> value) throws DycapoException{
+public abstract class ModeFetcher {
+	public static final Mode fetchMode(HashMap<String,Object> value) throws DycapoException{
 
 			Mode result = new Mode();
 			

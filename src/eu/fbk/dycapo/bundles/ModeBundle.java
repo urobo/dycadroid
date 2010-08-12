@@ -10,8 +10,8 @@ import android.os.Bundle;
  * @author riccardo
  *
  */
-public final class ModeBundle {
-	public static Bundle toBundle (Mode mode){
+public abstract class ModeBundle {
+	public static final Bundle toBundle (Mode mode){
 		Bundle result = new Bundle();
 		
 		if (mode.getCapacity() instanceof Integer)
@@ -44,7 +44,7 @@ public final class ModeBundle {
 		return result;
 	}
 	
-	public static Mode fromBundle (Bundle data){
+	public static final Mode fromBundle (Bundle data){
 		Mode mode = new Mode();
 		
 		if (data.containsKey(Mode.CAPACITY))

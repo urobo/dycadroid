@@ -20,13 +20,13 @@ import eu.fbk.dycapo.models.Trip;
  */
 
 
-public final class DycapoObjectsFetcher {
+public abstract class DycapoObjectsFetcher {
 	private static final String TAG ="DycapoObjectsFetcher";
 	/* (non-Javadoc)
 	 * @see eu.fbk.dycapo.factories.DycapoObjectsFactory#fetchXMLRPCResponse(java.lang.Object)
 	 */
 	@SuppressWarnings("unchecked")
-	public static Response fetchXMLRPCResponse(Object value) throws DycapoException {
+	public static final Response fetchXMLRPCResponse(Object value) throws DycapoException {
 			Response response = new Response();
 			Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES, "is instance of hashmap");
 			
@@ -83,7 +83,7 @@ public final class DycapoObjectsFetcher {
 	 * @return
 	 * @throws DycapoException
 	 */
-	private static Person[] extractPersons(Object[] value) throws DycapoException {
+	private static final Person[] extractPersons(Object[] value) throws DycapoException {
 		return PersonFetcher.fetchPersons(value);
 	}
 
@@ -92,7 +92,7 @@ public final class DycapoObjectsFetcher {
 	 * @return
 	 * @throws DycapoException 
 	 */
-	public static Trip buildTrip(HashMap<String,Object> value) throws DycapoException{
+	public static final Trip buildTrip(HashMap<String,Object> value) throws DycapoException{
 		return TripFetcher.fetchTrip(value);
 	}
 	
@@ -101,7 +101,7 @@ public final class DycapoObjectsFetcher {
 	 * @return
 	 * @throws DycapoException 
 	 */
-	public static Location buildLocation (HashMap<String,Object> value) throws DycapoException{
+	public static final Location buildLocation (HashMap<String,Object> value) throws DycapoException{
 		return LocationFetcher.fetchLocation(value);
 	}
 	
@@ -110,7 +110,7 @@ public final class DycapoObjectsFetcher {
 	 * @return
 	 * @throws DycapoException 
 	 */
-	public static Person buildPerson (HashMap<String,Object> value) throws DycapoException{
+	public static final Person buildPerson (HashMap<String,Object> value) throws DycapoException{
 		return PersonFetcher.fetchPerson(value);
 	}
 	
@@ -119,12 +119,12 @@ public final class DycapoObjectsFetcher {
 	 * @return
 	 * @throws DycapoException 
 	 */
-	public static Mode buildMode (HashMap<String,Object> value) throws DycapoException{
+	public static final Mode buildMode (HashMap<String,Object> value) throws DycapoException{
 		return ModeFetcher.fetchMode(value);
 	}
 
 	
-	public static void logResponse(Response response){
+	public static final void logResponse(Response response){
 		Log.d(TAG, "Response status code : " + String.valueOf(response.getCode()));
 		Log.d(TAG, "Response message : " + ((response.getMessage() instanceof String)?response.getMessage():"No Message Provided!"));
 		Log.d(TAG, "Response of Type : " + ((response.getType() instanceof String)?response.getType(): "No Type Provided!" ));

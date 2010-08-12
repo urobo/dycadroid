@@ -145,7 +145,7 @@ public class PositionUpdater extends Service implements LocationListener{
 				}
 			}
 			intentGetPositions = null;
-			intentGetPositions = new Intent(getApplicationContext(),Receiver.class);
+			intentGetPositions = new Intent(getApplicationContext(),MapReceiver.class);
 			intentGetPositions.putExtras(getPositionsExtras);
 			sendGetPositions = null;
 			sendGetPositions = PendingIntent.getBroadcast(getApplicationContext(), 666, intentGetPositions, PendingIntent.FLAG_ONE_SHOT);
@@ -171,7 +171,7 @@ public class PositionUpdater extends Service implements LocationListener{
 		updatePositionExtras.putString(PositionUpdater.TASK,PositionUpdater.getTask(UPDATE_POSITION));
 		updatePositionExtras.putBundle(Location.TAG, LocationBundle.toBundle(position));
 		intentUpdatePosition = null;
-		intentUpdatePosition = new Intent(getApplicationContext(),Receiver.class);
+		intentUpdatePosition = new Intent(getApplicationContext(),MapReceiver.class);
 		intentUpdatePosition.putExtras(updatePositionExtras);
 		sendUpdatePosition = null;
 		sendUpdatePosition = PendingIntent.getBroadcast(getApplicationContext(), 666, intentUpdatePosition, PendingIntent.FLAG_ONE_SHOT);		

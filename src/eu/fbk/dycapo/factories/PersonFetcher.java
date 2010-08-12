@@ -12,9 +12,9 @@ import eu.fbk.dycapo.models.Person;
  * @author riccardo
  *
  */
-public class PersonFetcher {
+public abstract class PersonFetcher {
 	@SuppressWarnings("unchecked")
-	public static Person fetchPerson(HashMap<String,Object> value) throws DycapoException{
+	public static final Person fetchPerson(HashMap<String,Object> value) throws DycapoException{
 		
 			Person result = new Person();
 			String message = "error PersonFetcher.fetchPerson : not enough parameters are given to define a person: missing ";
@@ -56,7 +56,7 @@ public class PersonFetcher {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static Person[] fetchPersons(Object[] value) throws DycapoException {
+	public static final Person[] fetchPersons(Object[] value) throws DycapoException {
 		
 		int size = value.length;
 		Person[] persons = new Person[size];
