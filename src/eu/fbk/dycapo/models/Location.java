@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
@@ -298,6 +299,58 @@ public class Location extends DycapoObject implements DycapoJSONObjects,XMLRPCMo
 
 	@Override
 	public JSONObject toJSONObject() {
+		JSONObject result = new JSONObject();
+		try {
+			if (this.country instanceof java.lang.String)
+	    		result.put(COUNTRY, this.country);
+			
+			if (this.days instanceof java.lang.String)
+				result.put(Location.DAYS,this.days);
+		
+			if (this.georss_point instanceof java.lang.String)
+				result.put(Location.GEORSS_POINT,this.georss_point);
+		
+			if (this.label instanceof java.lang.String)
+				result.put(Location.LABEL,this.label);
+		
+			if (this.leaves instanceof java.util.Date){
+				SimpleDateFormat formatter
+				= new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+				result.put(Location.LEAVES,formatter.format(this.leaves));
+				Log.i("sdf",formatter.format(this.leaves));
+				}
+			
+			Log.i("date",this.leaves.toString());
+			
+			if (this.offset instanceof Integer)
+				result.put(Location.OFFSET,this.offset.intValue());
+			
+			if (this.point instanceof Integer)
+				result.put(Location.POINT,Location.POINT_TYPE[this.point]);
+			
+			if (this.postcode instanceof Integer)
+				result.put(Location.POSTCODE,this.postcode.intValue());
+			
+			if (this.recurs instanceof java.lang.String)
+				result.put(Location.RECURS,this.recurs);
+			
+			if (this.region instanceof java.lang.String)
+				result.put(Location.REGION,this.region);
+			
+			if (this.street instanceof java.lang.String)
+				result.put(Location.STREET,this.street);
+			
+			if (this.subregion instanceof java.lang.String)
+				result.put(Location.SUBREGION,this.subregion);
+			
+			if (this.town instanceof java.lang.String)
+				result.put(Location.TOWN, this.town);
+			
+			return result;
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 }

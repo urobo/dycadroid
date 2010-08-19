@@ -5,6 +5,7 @@ package eu.fbk.dycapo.models;
 
 import java.util.HashMap;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import eu.fbk.dycapo.factories.DycapoObject;
@@ -162,7 +163,32 @@ public class Preferences extends DycapoObject implements DycapoJSONObjects,XMLRP
 
 	@Override
 	public JSONObject toJSONObject() {
-		// TODO Auto-generated method stub
+		
+		JSONObject result = new JSONObject();
+		try{
+			if (this.age instanceof java.lang.String)
+				result.put(Preferences.AGE, this.age);
+			
+			if (this.drive instanceof java.lang.Boolean)
+				result.put(Preferences.DRIVE, this.drive.booleanValue());
+			
+			if (this.gender instanceof java.lang.Integer)
+				result.put(Preferences.GENDER, Preferences.GENDER_TO[this.gender]);
+			
+			if (this.nonsmoking instanceof java.lang.Boolean)
+				result.put(Preferences.NONSMOKING, this.nonsmoking.booleanValue());
+			
+			if (this.ride instanceof java.lang.Boolean)
+				result.put(Preferences.RIDE, this.ride.booleanValue());
+			
+			if (this.pet instanceof Boolean) 
+				result.put(Preferences.PET, this.pet.booleanValue());
+			
+			return result;
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 

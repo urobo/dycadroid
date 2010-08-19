@@ -5,6 +5,7 @@ package eu.fbk.dycapo.models;
 
 import java.util.HashMap;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import eu.fbk.dycapo.factories.DycapoObject;
@@ -337,97 +338,43 @@ public class Person extends DycapoObject implements DycapoJSONObjects,XMLRPCMode
 
 	@Override
 	public JSONObject toJSONObject() {
-		// TODO Auto-generated method stub
+		JSONObject result = new JSONObject();
+		
+			try {
+				if (this.age > 0 && this.age < 100)
+					result.put(Person.AGE, this.age.intValue());
+				if (this.blind instanceof Boolean)
+					result.put(Person.BLIND, this.blind.booleanValue());
+				if (this.deaf instanceof Boolean)
+					result.put(Person.DEAF, this.deaf.booleanValue());
+				if (this.dog instanceof Boolean)
+					result.put(Person.DOG, this.dog.booleanValue());
+				if (this.email instanceof java.lang.String)
+					result.put(Person.EMAIL, this.email);
+				if (this.first_name instanceof java.lang.String)
+					result.put(Person.FIRST_NAME, this.first_name);
+				if (this.gender instanceof java.lang.String)
+					result.put(Person.GENDER, this.gender);
+				if (this.last_name instanceof java.lang.String)
+					result.put(Person.LAST_NAME, this.last_name);
+				if (this.phone instanceof java.lang.String)
+					result.put(Person.PHONE, this.phone);
+				if (this.position instanceof Location)
+					result.put(Person.POSITION, this.position.toJSONObject());
+				if (this.smoker instanceof Boolean)
+					result.put(Person.SMOKER, this.smoker.booleanValue());
+				if (this.url instanceof java.lang.String)
+					result.put(Person.URL, this.url);
+				if (this.username instanceof java.lang.String)
+					result.put(Person.USERNAME, this.username);
+				return result;	
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				
 		return null;
 	}
 
 
-//	@Override
-//	public void fromBundle(Bundle data) {
-//		
-//		if (data.containsKey(Person.AGE))
-//			this.age = data.getInt(Person.AGE);
-//		
-//		if (data.containsKey(Person.BLIND))
-//			this.blind = data.getBoolean(Person.BLIND);
-//		
-//		if (data.containsKey(Person.DEAF))
-//			this.deaf = data.getBoolean(Person.DEAF);
-//		
-//		if (data.containsKey(Person.DOG))
-//			this.dog = data.getBoolean(Person.DOG);
-//		
-//		if (data.containsKey(Person.EMAIL))
-//			this.email = data.getString(Person.EMAIL);
-//		
-//		if (data.containsKey(Person.FIRST_NAME))
-//			this.first_name = data.getString(Person.FIRST_NAME);
-//		
-//		if (data.containsKey(Person.GENDER))
-//			this.gender = data.getString(Person.GENDER);
-//		
-//		if (data.containsKey(Person.LAST_NAME))
-//			this.last_name = data.getString(Person.LAST_NAME);
-//		
-//		if (data.containsKey(Person.PHONE))
-//			this.phone = data.getString(Person.PHONE);
-//		
-//		if (data.containsKey(Person.POSITION))
-//			this.position.fromBundle(data.getBundle(Person.POSITION));
-//		
-//		if (data.containsKey(Person.SMOKER))
-//			this.smoker = data.getBoolean(Person.SMOKER);
-//		
-//		if (data.containsKey(Person.URL))
-//			this.url = data.getString(Person.URL);
-//		
-//		if (data.containsKey(Person.USERNAME))
-//			this.username = data.getString(Person.USERNAME);
-//		
-//	}
-//
-//
-//	@Override
-//	public Bundle toBundle() {
-//		Bundle result = new Bundle();
-//		
-//		if (this.age instanceof Integer)
-//			result.putInt(Person.AGE, this.age);
-//		
-//		if (this.blind instanceof Boolean)
-//			result.putBoolean(Person.BLIND, this.blind);
-//		
-//		if (this.deaf instanceof Boolean)
-//			result.putBoolean(Person.DEAF, this.deaf);
-//		
-//		if (this.dog instanceof Boolean)
-//			result.putBoolean(Person.DOG, this.dog);
-//		
-//		if (this.email instanceof String)
-//			result.putString(Person.EMAIL, this.email);
-//		
-//		if (this.first_name instanceof String)
-//			result.putString(Person.FIRST_NAME, this.first_name);
-//		
-//		if (this.gender instanceof String)
-//			result.putString(Person.GENDER, this.gender);
-//		
-//		if (this.last_name instanceof String)
-//			result.putString(Person.LAST_NAME, this.last_name);
-//		
-//		if (this.phone instanceof String)
-//			result.putString(Person.PHONE, this.phone);
-//		
-//		if (this.position instanceof Location)
-//			result.putBundle(Person.POSITION, this.position.toBundle());
-//		
-//		if (this.url instanceof String)
-//			result.putString(Person.URL, this.url);
-//		
-//		if (this.username instanceof String)
-//			result.putString(Person.USERNAME, this.username);
-//		
-//		return result;
-//	}
-	
 }

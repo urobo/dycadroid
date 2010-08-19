@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
@@ -261,7 +263,57 @@ public class Trip extends DycapoObject implements XMLRPCModel,DycapoJSONObjects 
 
 	@Override
 	public JSONObject toJSONObject() {
-		// TODO Auto-generated method stub
+		JSONObject result = new JSONObject();
+		try{
+			if (this.id instanceof Integer) 
+				result.put(Trip.ID, this.id.intValue());
+			
+			if (this.author instanceof eu.fbk.dycapo.models.Person)
+				result.put(Trip.AUTHOR,this.author.toJSONObject());
+			
+			JSONArray locations = new JSONArray();
+			
+			if (this.origin instanceof eu.fbk.dycapo.models.Location)
+				locations.put(this.origin.toJSONObject());
+			
+			if (this.destination instanceof eu.fbk.dycapo.models.Location)
+				locations.put(this.destination.toJSONObject());
+			
+			if (this.mode instanceof eu.fbk.dycapo.models.Mode)
+				result.put(Trip.MODE, this.mode.toJSONObject());
+			
+			if (this.preferences instanceof eu.fbk.dycapo.models.Preferences)
+				result.put(Trip.PREFERENCES,this.preferences.toJSONObject());
+			
+		    if (this.waypoints instanceof ArrayList<?>){
+		    	int size= this.waypoints.size();
+		    	
+		    	for (int i = 0 ; i< size ; i++)
+		    		locations.put(this.waypoints.get(i).toJSONObject());
+		    	
+		    }
+		    result.put(Trip.LOCATIONS, locations);
+			
+			SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+			
+			
+			if (this.expires instanceof java.util.Date){
+				result.put(Trip.EXPIRES,formatter.format(this.expires));
+				Log.i(Trip.EXPIRES, formatter.format(this.expires));
+			}
+				
+			if (this.published instanceof java.util.Date)
+				result.put(Trip.PUBLISHED,formatter.format(this.published));
+			
+			if (this.updated instanceof java.util.Date)
+				result.put(Trip.UPDATED, formatter.format(this.updated));
+			
+			return result;
+	
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 }
