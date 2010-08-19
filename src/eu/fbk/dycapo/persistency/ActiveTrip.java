@@ -53,7 +53,13 @@ public class ActiveTrip extends Trip {
 		if (trip.getId() instanceof Integer)
 			this.id = trip.getId();
 		this.author = trip.getAuthor();
-		this.content = trip.getContent();
+		
+		this.destination = trip.getDestination();
+		this.origin = trip.getOrigin();
+		this.preferences = trip.getPreferences();
+		this.mode = trip.getMode();
+		this.waypoints = trip.getWaypoints();
+		
 		this.expires = trip.getExpires();
 		this.published = trip.getPublished();
 		this.updated =	trip.getUpdated();

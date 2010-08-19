@@ -1,7 +1,7 @@
 /**
  * 
  */
-package eu.fbk.dycapo.factories;
+package eu.fbk.dycapo.factories.json;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -64,34 +64,21 @@ public abstract class TripFetcher {
 				result.setAuthor(PersonFetcher.fetchPerson((HashMap<String,Object>)value.get(Trip.AUTHOR)));
 			else throw new DycapoException (message + Trip.AUTHOR);
 			
-			if(value.containsKey(Trip.CONTENT))
-				TripFetcher.fetchContent((HashMap<String,Object>)(value.get(Trip.CONTENT)),result);
-			else throw new DycapoException(message + Trip.CONTENT);
-			
-			return result;	
-}
-	
-	@SuppressWarnings("unchecked")
-	public static final void fetchContent(HashMap<String,Object> value,Trip result) throws DycapoException{
-		String message = "error TripFetcher.fetchContent : not enough parameters are given to define a Trip.Content: missing ";
-			result.createContent();
-			
-			
-			if(value.containsKey(Trip.Content.MODE)){
+			if(value.containsKey(Trip.MODE)){
 				Log.d(Tag.DYCAPOFACTORIES +"."+ Tag.DYCAPOMODE, Tag.DYCAPOMODE + " present");
-				result.setMode(ModeFetcher.fetchMode((HashMap<String,Object>) value.get(Trip.Content.MODE)));
+				result.setMode(ModeFetcher.fetchMode((HashMap<String,Object>) value.get(Trip.MODE)));
 				Log.d(Tag.DYCAPOFACTORIES +"."+ Tag.DYCAPOMODE, Tag.DYCAPOMODE + " fetched");
-			}else throw new DycapoException(message + Trip.Content.MODE);
+			}else throw new DycapoException(message + Trip.MODE);
 			
 			
-			if (value.containsKey(Trip.Content.PREFERENCES)){
+			if (value.containsKey(Trip.PREFERENCES)){
 				Log.d(Tag.DYCAPOFACTORIES +"."+ Tag.DYCAPOPREFERENCES, Tag.DYCAPOPREFERENCES + " present");
-				result.setPreferences(PreferencesFetcher.fetchPreferences((HashMap<String,Object>)value.get(Trip.Content.PREFERENCES)));
+				result.setPreferences(PreferencesFetcher.fetchPreferences((HashMap<String,Object>)value.get(Trip.PREFERENCES)));
 				Log.d(Tag.DYCAPOFACTORIES +"."+ Tag.DYCAPOPREFERENCES, Tag.DYCAPOPREFERENCES + " fetched");
-			}else throw new DycapoException(message + Trip.Content.PREFERENCES);
+			}else throw new DycapoException(message + Trip.PREFERENCES);
 			
-			if (value.containsKey(Trip.Content.LOCATIONS)){				
-				Object[] rawlocs= (Object[])value.get(Trip.Content.LOCATIONS);
+			if (value.containsKey(Trip.LOCATIONS)){				
+				Object[] rawlocs= (Object[])value.get(Trip.LOCATIONS);
 				
 				int length= rawlocs.length;
 				
@@ -113,9 +100,11 @@ public abstract class TripFetcher {
 					}
 					else waypoints.add(res);
 				 }
-				if (! waypoints.isEmpty())result.getContent().setWaypoints(waypoints);
+				if (! waypoints.isEmpty())result.setWaypoints(waypoints);
 				if (! (result.getOrigin() instanceof Location)) throw new DycapoException(message + Location.POINT_TYPE[0]);
 				if (! (result.getDestination() instanceof Location)) throw new DycapoException(message + Location.POINT_TYPE[1]);
 			}	
+			
+			return result;	
 	}
 }

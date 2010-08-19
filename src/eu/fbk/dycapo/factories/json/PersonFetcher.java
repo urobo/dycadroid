@@ -1,7 +1,7 @@
 /**
  * 
  */
-package eu.fbk.dycapo.factories;
+package eu.fbk.dycapo.factories.json;
 
 import java.util.HashMap;
 
