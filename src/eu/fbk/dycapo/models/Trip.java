@@ -9,8 +9,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.json.JSONObject;
+
 import android.util.Log;
 import eu.fbk.dycapo.factories.DycapoObject;
+import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
 import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
 
@@ -20,7 +23,7 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  */
 
 
-public class Trip extends DycapoObject implements XMLRPCModel {
+public class Trip extends DycapoObject implements XMLRPCModel,DycapoJSONObjects {
 	public static final String TAG = "Trip";
 	
 	public static final String ID="id";
@@ -253,5 +256,12 @@ public class Trip extends DycapoObject implements XMLRPCModel {
 		if (this.published instanceof java.util.Date)result.put(Trip.PUBLISHED,formatter.format(this.published));
 		if (this.updated instanceof java.util.Date)result.put(Trip.UPDATED, formatter.format(this.updated));
 		return result;
+	}
+
+
+	@Override
+	public JSONObject toJSONObject() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

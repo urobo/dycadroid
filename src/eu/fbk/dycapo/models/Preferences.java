@@ -5,14 +5,17 @@ package eu.fbk.dycapo.models;
 
 import java.util.HashMap;
 
+import org.json.JSONObject;
+
 import eu.fbk.dycapo.factories.DycapoObject;
+import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
 import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
 /**
  * @author riccardo
  *
  */
-public class Preferences extends DycapoObject implements XMLRPCModel {
+public class Preferences extends DycapoObject implements DycapoJSONObjects,XMLRPCModel {
 	public static final String TAG = "Preferences";
 	
 	/**
@@ -155,6 +158,12 @@ public class Preferences extends DycapoObject implements XMLRPCModel {
 		if (this.ride instanceof java.lang.Boolean)result.put(Preferences.RIDE, this.ride);
 		if (this.pet instanceof Boolean) result.put(Preferences.PET, this.pet);
 		return result;
+	}
+
+	@Override
+	public JSONObject toJSONObject() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

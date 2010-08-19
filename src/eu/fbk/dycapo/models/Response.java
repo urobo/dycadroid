@@ -21,7 +21,8 @@ public class Response extends DycapoObject{
 											"mode",
 											"person",
 											"trip",
-											"person[]"
+											"person[]",
+											"message"
 											};
 	
 	public static final int	BOOLEAN = 0;

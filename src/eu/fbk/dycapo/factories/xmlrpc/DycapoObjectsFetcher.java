@@ -4,6 +4,9 @@
 package eu.fbk.dycapo.factories.xmlrpc;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import android.util.Log;
 import eu.fbk.dycapo.exceptions.DycapoException;
@@ -68,9 +71,24 @@ public abstract class DycapoObjectsFetcher {
 					}else if(type.equals(Response.TYPES[4])){
 						Log.d(Tag.LOG +"."+TAG+"."+Trip.TAG, "type.equals(Response.TYPES[4]) == " + Response.resolveType(Response.TRIP));
 						response.setValue(DycapoObjectsFetcher.buildTrip((HashMap<String,Object>)responseValue));
+					
 					}else if (type.equals(Response.TYPES[5])){
 						Log.d(Tag.LOG +"+"+TAG+"."+Response.resolveType(Response.PERSONS), "type.equals(Response.TYPES[5]) == "+Response.resolveType(Response.PERSONS));
 						response.setValue(DycapoObjectsFetcher.extractPersons((Object[])responseValue));
+					
+					}else if (type.equals(Response.TYPES[6])){
+						Log.d(Tag.LOG +"+"+TAG+"."+Response.resolveType(Response.PERSONS), "type.equals(Response.TYPES[5]) == "+Response.resolveType(Response.PERSONS));
+						HashMap<String,String> errorMap = (HashMap<String,String>)responseValue;
+						if (!errorMap.isEmpty()){
+							Set<String> keys = errorMap.keySet();
+							Iterator<String> i =  keys.iterator();
+							String errorMsg = "";
+							while(i.hasNext()){
+								errorMsg = errorMap.get(i.next());
+							}
+							throw new DycapoException (errorMsg);
+						}
+						
 					}
 				}
 			}
