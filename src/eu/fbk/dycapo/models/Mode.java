@@ -5,6 +5,7 @@ package eu.fbk.dycapo.models;
 
 import java.util.HashMap;
 
+import eu.fbk.dycapo.factories.DycapoObject;
 import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
 /**
@@ -15,7 +16,7 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  * @author riccardo
  *
  */
-public class Mode implements XMLRPCModel {
+public class Mode extends DycapoObject implements XMLRPCModel {
 	public static final String TAG = "Mode";
 	
 	public static final String KIND="kind";

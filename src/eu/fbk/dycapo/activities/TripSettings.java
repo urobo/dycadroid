@@ -33,7 +33,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import eu.fbk.dycapo.exceptions.DycapoException;
-import eu.fbk.dycapo.factories.DycapoObjectsFetcher;
+import eu.fbk.dycapo.factories.DycapoObjectsFactory;
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Response;
 import eu.fbk.dycapo.models.Trip;
@@ -358,8 +358,7 @@ public class TripSettings extends Activity implements OnClickListener {
 				try {
 					Log.d(TAG,"user: "+ DBPerson.getUser().getUsername() + " , passwd:"+ DBPerson.getUser().getPassword());
 					Object value = client.call(Dycapo.getMethod(Dycapo.ADD_TRIP), aTrip.toHashMap());
-					Response response = DycapoObjectsFetcher.fetchXMLRPCResponse(value);
-					DycapoObjectsFetcher.logResponse(response);
+					Response response = (Response) DycapoObjectsFactory.getDycapoObject(DycapoObjectsFactory.XMLRPC, value, true);
 					if (response.getType().toLowerCase().equals(Response.resolveType(Response.TRIP))){
 						Log.d(TAG, "Trip type");
 						aTrip.setId(((Trip)response.getValue()).getId());

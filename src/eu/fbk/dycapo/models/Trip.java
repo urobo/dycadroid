@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import android.util.Log;
+import eu.fbk.dycapo.factories.DycapoObject;
 import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
 
@@ -19,7 +20,7 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  */
 
 
-public class Trip implements XMLRPCModel {
+public class Trip extends DycapoObject implements XMLRPCModel {
 	public static final String TAG = "Trip";
 	
 	public static final String ID="id";

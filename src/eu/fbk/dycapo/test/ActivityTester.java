@@ -5,7 +5,6 @@ package eu.fbk.dycapo.test;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import eu.fbk.dycapo.activities.FastChoice;
 import eu.fbk.dycapo.activities.Home;
 import eu.fbk.dycapo.activities.Navigation;

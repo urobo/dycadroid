@@ -5,13 +5,14 @@ package eu.fbk.dycapo.models;
 
 import java.util.HashMap;
 
+import eu.fbk.dycapo.factories.DycapoObject;
 import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
 /**
  * @author riccardo
  *
  */
-public class Preferences implements XMLRPCModel {
+public class Preferences extends DycapoObject implements XMLRPCModel {
 	public static final String TAG = "Preferences";
 	
 	/**

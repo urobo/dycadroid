@@ -15,7 +15,7 @@ import android.util.Log;
 import eu.fbk.dycapo.bundles.LocationBundle;
 import eu.fbk.dycapo.bundles.TripBundle;
 import eu.fbk.dycapo.exceptions.DycapoException;
-import eu.fbk.dycapo.factories.DycapoObjectsFetcher;
+import eu.fbk.dycapo.factories.DycapoObjectsFactory;
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Response;
 import eu.fbk.dycapo.models.Trip;
@@ -123,8 +123,7 @@ public class ServiceInquirer extends Service{
 		try {
 			value = client.call(Dycapo.getMethod(Dycapo.SEARCH_TRIP), this.orig.toHashMap() , this.dest.toHashMap());
 		
-			Response response = DycapoObjectsFetcher.fetchXMLRPCResponse(value);
-			DycapoObjectsFetcher.logResponse(response);
+			Response response = (Response) DycapoObjectsFactory.getDycapoObject(DycapoObjectsFactory.XMLRPC, value, true);
 		
 			if (response.getType().equals(Response.resolveType(Response.TRIP))){
 				Bundle data = new Bundle();

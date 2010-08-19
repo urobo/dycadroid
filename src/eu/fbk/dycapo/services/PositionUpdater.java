@@ -26,7 +26,7 @@ import eu.fbk.dycapo.activities.R;
 import eu.fbk.dycapo.bundles.LocationBundle;
 import eu.fbk.dycapo.bundles.PersonBundle;
 import eu.fbk.dycapo.exceptions.DycapoException;
-import eu.fbk.dycapo.factories.DycapoObjectsFetcher;
+import eu.fbk.dycapo.factories.DycapoObjectsFactory;
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Person;
 import eu.fbk.dycapo.models.Response;
@@ -135,8 +135,7 @@ public class PositionUpdater extends Service implements LocationListener{
 			for (int index = 0 ; index < size ; index++){
 				Person fetcher = participants.get(index).getmParticipant();
 				Object value = client.call(Dycapo.getMethod(Dycapo.GET_POSITION), fetcher.toHashMap());
-				Response response = DycapoObjectsFetcher.fetchXMLRPCResponse(value);
-				DycapoObjectsFetcher.logResponse(response);
+				Response response = (Response) DycapoObjectsFactory.getDycapoObject(DycapoObjectsFactory.XMLRPC, value, true);
 				if (response.getType().equals(Location.TAG.toLowerCase())){
 					fetcher.setPosition((Location)response.getValue());
 					getPositionsExtras.putBundle("participant"+ String.valueOf(index), PersonBundle.toBundle(fetcher));

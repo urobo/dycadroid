@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import android.util.Log;
+import eu.fbk.dycapo.factories.DycapoObject;
 import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
 
@@ -15,7 +16,7 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  * @author riccardo
  *
  */
-public class Location implements XMLRPCModel{
+public class Location extends DycapoObject implements XMLRPCModel{
 	public static final String TAG = "Location";
 	
 	public static final String LABEL="label";

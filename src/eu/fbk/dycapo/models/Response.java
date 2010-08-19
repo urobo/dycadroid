@@ -3,12 +3,14 @@
  */
 package eu.fbk.dycapo.models;
 
+import eu.fbk.dycapo.factories.DycapoObject;
+
 
 /**
  * @author riccardo
  *
  */
-public class Response{
+public class Response extends DycapoObject{
 	
 	public static final String CODE = "code";
 	public static final String MESSAGE = "message";

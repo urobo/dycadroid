@@ -22,8 +22,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import eu.fbk.dycapo.exceptions.DycapoException;
-import eu.fbk.dycapo.factories.DycapoObjectsFetcher;
-import eu.fbk.dycapo.factories.UserMapper;
+import eu.fbk.dycapo.factories.DycapoObjectsFactory;
 import eu.fbk.dycapo.models.Response;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBProvider;
@@ -176,9 +175,8 @@ public class Home extends Activity implements OnClickListener{
 						
 						XMLRPCClient client = new XMLRPCClient(Dycapo.DYCAPO_URL,Dycapo.DYCAPO_REGISTRATION_USERNAME, Dycapo.DYCAPO_REGISTRATION_USERNAME);
 						try {
-							Object value = client.call(Dycapo.getMethod(Dycapo.REGISTER), UserMapper.fromUserToHashMap(usr));
-							Response response = DycapoObjectsFetcher.fetchXMLRPCResponse(value);
-							DycapoObjectsFetcher.logResponse(response);
+							Object value = client.call(Dycapo.getMethod(Dycapo.REGISTER), eu.fbk.dycapo.factories.xmlrpc.UserMapper.fromUserToHashMap(usr));
+							Response response = (Response) DycapoObjectsFactory.getDycapoObject(DycapoObjectsFactory.XMLRPC, value, true);
 							if (response.getType().equals(Response.resolveType(Response.BOOLEAN))){
 								if (((Boolean)response.getValue()).booleanValue() == true)
 								DBPerson.saveMe(usr);
