@@ -32,7 +32,7 @@ public abstract class DycapoObjectsFetcher {
 			JSONObject jsonValue = (JSONObject)value;
 			try {
 				if(jsonValue.has(Response.CODE))				
-				response.setCode((Integer)(jsonValue).get(Response.CODE));
+				response.setCode(jsonValue.getInt(Response.CODE));
 									
 				if(jsonValue.has(Response.TYPE)){
 					response.setType(jsonValue.getString(Response.TYPE));
