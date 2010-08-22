@@ -35,9 +35,7 @@ public abstract class DycapoObjectsFetcher {
 			if(((HashMap)value).containsKey(Response.CODE))
 				response.setCode((Integer)((HashMap)value).get(Response.CODE));
 			
-			if(((HashMap)value).containsKey(Response.MESSAGE))
-				response.setMessage((String)((HashMap)value).get(Response.MESSAGE));
-			
+					
 			if(((HashMap)value).containsKey(Response.TYPE)){
 				response.setType((String)((HashMap)value).get(Response.TYPE));
 				Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES, "contains type");
@@ -143,7 +141,7 @@ public abstract class DycapoObjectsFetcher {
 	
 	public static final void logResponse(Response response){
 		Log.d(TAG, "Response status code : " + String.valueOf(response.getCode()));
-		Log.d(TAG, "Response message : " + ((response.getMessage() instanceof String)?response.getMessage():"No Message Provided!"));
+		Log.d(TAG, "Response message : " + ((response.getValue() instanceof String)?(String)response.getValue():"No Message Provided!"));
 		Log.d(TAG, "Response of Type : " + ((response.getType() instanceof String)?response.getType(): "No Type Provided!" ));
 	}
 }

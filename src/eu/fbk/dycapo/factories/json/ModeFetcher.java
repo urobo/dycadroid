@@ -3,7 +3,8 @@
  */
 package eu.fbk.dycapo.factories.json;
 
-import java.util.HashMap;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.models.Mode;
@@ -13,48 +14,51 @@ import eu.fbk.dycapo.models.Mode;
  *
  */
 public abstract class ModeFetcher {
-	public static final Mode fetchMode(HashMap<String,Object> value) throws DycapoException{
+	public static final Mode fetchMode(JSONObject responseValue) throws DycapoException{
 
-			Mode result = new Mode();
-			
-			if(value.containsKey(Mode.CAPACITY))
-				result.setCapacity((Integer)value.get(Mode.CAPACITY));
+		Mode result = new Mode();
+		try{	
+			if(responseValue.has(Mode.CAPACITY))
+				result.setCapacity(responseValue.getInt(Mode.CAPACITY));
 			else 
 				throw new DycapoException("error ModeFetcher.fetchMode : Mode.CAPACITY is compulsory");
 			
-			if(value.containsKey(Mode.COLOR))
-				result.setColor((String)value.get(Mode.COLOR));
+			if(responseValue.has(Mode.COLOR))
+				result.setColor(responseValue.getString(Mode.COLOR));
 		
-			if (value.containsKey(Mode.COST))
-				result.setCost((Double)value.get(Mode.COST));
+			if (responseValue.has(Mode.COST))
+				result.setCost(responseValue.getDouble(Mode.COST));
 			
-			if (value.containsKey(Mode.KIND))
-				result.setKind((String)value.get(Mode.KIND));
+			if (responseValue.has(Mode.KIND))
+				result.setKind(responseValue.getString(Mode.KIND));
 			else
 				throw new DycapoException("error ModeFetcher.fetchMode : Mode.KIND is compulsory");
 			
-			if (value.containsKey(Mode.LIC))
-				result.setLic((String)value.get(Mode.LIC));
+			if (responseValue.has(Mode.LIC))
+				result.setLic(responseValue.getString(Mode.LIC));
 			
-			if (value.containsKey(Mode.MAKE))
-				result.setMake((String)value.get(Mode.MAKE));
+			if (responseValue.has(Mode.MAKE))
+				result.setMake(responseValue.getString(Mode.MAKE));
 			else
 				throw new DycapoException("error ModeFetcher.fetchMode : Mode.MAKE is compulsory");
 				
-			if (value.containsKey(Mode.MODEL))	
-				result.setModel((String)value.get(Mode.MODEL));
+			if (responseValue.has(Mode.MODEL))	
+				result.setModel(responseValue.getString(Mode.MODEL));
 			else
 				throw new DycapoException("error ModeFetcher.fetchMode : Mode.MODEL is compulsory");
 			
-			if(value.containsKey(Mode.VACANCY))	
-				result.setVacancy((Integer)value.get(Mode.VACANCY));
+			if(responseValue.has(Mode.VACANCY))	
+				result.setVacancy(responseValue.getInt(Mode.VACANCY));
 			else
 				throw new DycapoException("error ModeFetcher.fetchMode : Mode.VACANCY is compulsory");
 			
-			if (value.containsKey(Mode.YEAR))
-				result.setYear((Integer)value.get(Mode.YEAR));
+			if (responseValue.has(Mode.YEAR))
+				result.setYear(responseValue.getInt(Mode.YEAR));
 			
 			return result;
-
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

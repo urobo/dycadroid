@@ -8,7 +8,6 @@ import java.util.HashMap;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import eu.fbk.dycapo.factories.DycapoObject;
 import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
 import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
@@ -20,7 +19,7 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  * @author riccardo
  *
  */
-public class Mode extends DycapoObject implements DycapoJSONObjects,XMLRPCModel {
+public class Mode implements DycapoJSONObjects,XMLRPCModel {
 	public static final String TAG = "Mode";
 	
 	public static final String KIND="kind";

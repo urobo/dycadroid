@@ -14,7 +14,7 @@ public abstract class DycapoObjectsFactory {
 	public static final int XMLRPC = 1;
 	public static final int REST = 2;
 	
-	public static final DycapoObject getDycapoObject (int method, Object value, boolean log) throws DycapoException{
+	public static final Object getDycapoObject (int method, Object value, boolean log) throws DycapoException{
 		switch (method){
 		case XMLRPC:
 			return eu.fbk.dycapo.factories.xmlrpc.DycapoObjectsFetcher.fetchXMLRPCResponse(value,log);

@@ -3,7 +3,9 @@
  */
 package eu.fbk.dycapo.factories.json;
 
-import java.util.HashMap;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.util.Log;
 import eu.fbk.dycapo.exceptions.DycapoException;
@@ -25,108 +27,108 @@ public abstract class DycapoObjectsFetcher {
 	/* (non-Javadoc)
 	 * @see eu.fbk.dycapo.factories.DycapoObjectsFactory#fetchXMLRPCResponse(java.lang.Object)
 	 */
-	@SuppressWarnings("unchecked")
 	public static final Response fetchJSONResponse(Object value, boolean log) throws DycapoException {
 			Response response = new Response();
-			Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES, "is instance of hashmap");
-			
-			if(((HashMap)value).containsKey(Response.CODE))
-				response.setCode((Integer)((HashMap)value).get(Response.CODE));
-			
-			if(((HashMap)value).containsKey(Response.MESSAGE))
-				response.setMessage((String)((HashMap)value).get(Response.MESSAGE));
-			
-			if(((HashMap)value).containsKey(Response.TYPE)){
-				response.setType((String)((HashMap)value).get(Response.TYPE));
-				Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES, "contains type");
-				if(((HashMap<String,Object>)value).containsKey(Response.VALUE)){
-					Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES, "contains value");
+			JSONObject jsonValue = (JSONObject)value;
+			try {
+				if(jsonValue.has(Response.CODE))				
+				response.setCode((Integer)(jsonValue).get(Response.CODE));
+									
+				if(jsonValue.has(Response.TYPE)){
+					response.setType(jsonValue.getString(Response.TYPE));
+					Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES, "contains type");
+					
+					if(jsonValue.has(Response.VALUE)){
+						Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES, "contains value");
 				
-					String type = (String)((HashMap<String,Object>)value).get(Response.TYPE);
-					type = type.toLowerCase();
-					Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES, "type is :" + type);
-					Object responseValue=((HashMap<String,Object>)value).get(Response.VALUE);
+						String type = jsonValue.getString(Response.TYPE);
+						type = type.toLowerCase();
+						Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES, "type is :" + type);
+						
+						JSONObject responseValue=jsonValue.getJSONObject(Response.VALUE);
 					
-					if (type.equals(Response.TYPES[0])){
-						Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES, "type.equals(Response.TYPES[0]) " + Response.TYPES[0]);
-						if(!((Boolean)responseValue))
-							Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES,"DyCaPo.status_code : " +(String)((HashMap<String,Object>)value).get(Response.CODE).toString() + " DyCaPo.message : " +((HashMap<String,Object>)value).get(Response.MESSAGE));
-						response.setValue(((Boolean)responseValue));	
+						if (type.equals(Response.TYPES[0])){
+							Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES, "type.equals(Response.TYPES[0]) " + Response.TYPES[0]);
+							response.setValue(jsonValue.getBoolean(Response.VALUE));	
 				
-					}else if(type.equals(Response.TYPES[1])){
-						Log.d(Tag.LOG +"."+TAG +"."+Location.TAG, "type.equals(Response.TYPES[1]) == " + Response.resolveType(Response.LOCATION));
-						response.setValue(DycapoObjectsFetcher.buildLocation((HashMap<String,Object>)responseValue));
+						}else if(type.equals(Response.TYPES[1])){
+							Log.d(Tag.LOG +"."+TAG +"."+Location.TAG, "type.equals(Response.TYPES[1]) == " + Response.resolveType(Response.LOCATION));
+							response.setValue(DycapoObjectsFetcher.buildLocation(responseValue));
 					
-					}else if(type.equals(Response.TYPES[2])){
-						Log.d(Tag.LOG +"."+TAG +"."+Mode.TAG, "type.equals(Response.TYPES[2]) == "+ Response.resolveType(Response.MODE));
-						response.setValue(DycapoObjectsFetcher.buildMode((HashMap<String,Object>)responseValue));
+						}else if(type.equals(Response.TYPES[2])){
+							Log.d(Tag.LOG +"."+TAG +"."+Mode.TAG, "type.equals(Response.TYPES[2]) == "+ Response.resolveType(Response.MODE));
+							response.setValue(DycapoObjectsFetcher.buildMode(responseValue));
 					
-					}else if(type.equals(Response.TYPES[3])){
-						Log.d(Tag.LOG +"."+TAG+"."+Person.TAG, "type.equals(+ Response.TYPES[3]) == " + Response.resolveType(Response.PERSON));
-						response.setValue(DycapoObjectsFetcher.buildPerson((HashMap<String,Object>)responseValue));
+						}else if(type.equals(Response.TYPES[3])){
+							Log.d(Tag.LOG +"."+TAG+"."+Person.TAG, "type.equals(+ Response.TYPES[3]) == " + Response.resolveType(Response.PERSON));
+							response.setValue(DycapoObjectsFetcher.buildPerson(responseValue));
 					
-					}else if(type.equals(Response.TYPES[4])){
-						Log.d(Tag.LOG +"."+TAG+"."+Trip.TAG, "type.equals(Response.TYPES[4]) == " + Response.resolveType(Response.TRIP));
-						response.setValue(DycapoObjectsFetcher.buildTrip((HashMap<String,Object>)responseValue));
-					}else if (type.equals(Response.TYPES[5])){
-						Log.d(Tag.LOG +"+"+TAG+"."+Response.resolveType(Response.PERSONS), "type.equals(Response.TYPES[5]) == "+Response.resolveType(Response.PERSONS));
-						response.setValue(DycapoObjectsFetcher.extractPersons((Object[])responseValue));
+						}else if(type.equals(Response.TYPES[4])){
+							Log.d(Tag.LOG +"."+TAG+"."+Trip.TAG, "type.equals(Response.TYPES[4]) == " + Response.resolveType(Response.TRIP));
+							response.setValue(DycapoObjectsFetcher.buildTrip(responseValue));
+						}else if (type.equals(Response.TYPES[5])){
+							Log.d(Tag.LOG +"+"+TAG+"."+Response.resolveType(Response.PERSONS), "type.equals(Response.TYPES[5]) == "+Response.resolveType(Response.PERSONS));
+							response.setValue(DycapoObjectsFetcher.extractPersons(jsonValue.getJSONArray(Response.VALUE)));
+						}
 					}
 				}
-			}
-		if (log==true)DycapoObjectsFetcher.logResponse(response);
-		return response;
+			if (log==true)DycapoObjectsFetcher.logResponse(response);
+			return response;
+		} catch (JSONException e) {
+				e.printStackTrace();
+		}
+		return null;
 	}
 	
 	/**
-	 * @param value
+	 * @param jsonArray
 	 * @return
 	 * @throws DycapoException
 	 */
-	private static final Person[] extractPersons(Object[] value) throws DycapoException {
-		return PersonFetcher.fetchPersons(value);
+	private static final Person[] extractPersons(JSONArray jsonArray) throws DycapoException {
+		return PersonFetcher.fetchPersons(jsonArray);
 	}
 
 	/**
-	 * @param value
+	 * @param responseValue
 	 * @return
 	 * @throws DycapoException 
 	 */
-	public static final Trip buildTrip(HashMap<String,Object> value) throws DycapoException{
-		return TripFetcher.fetchTrip(value);
+	public static final Trip buildTrip(JSONObject responseValue) throws DycapoException{
+		return TripFetcher.fetchTrip(responseValue);
 	}
 	
 	/**
-	 * @param value
+	 * @param responseValue
 	 * @return
 	 * @throws DycapoException 
 	 */
-	public static final Location buildLocation (HashMap<String,Object> value) throws DycapoException{
-		return LocationFetcher.fetchLocation(value);
+	public static final Location buildLocation (JSONObject responseValue) throws DycapoException{
+		return LocationFetcher.fetchLocation(responseValue);
 	}
 	
 	/**
-	 * @param value
+	 * @param responseValue
 	 * @return
 	 * @throws DycapoException 
 	 */
-	public static final Person buildPerson (HashMap<String,Object> value) throws DycapoException{
-		return PersonFetcher.fetchPerson(value);
+	public static final Person buildPerson (JSONObject responseValue) throws DycapoException{
+		return PersonFetcher.fetchPerson(responseValue);
 	}
 	
 	/**
-	 * @param value
+	 * @param responseValue
 	 * @return
 	 * @throws DycapoException 
 	 */
-	public static final Mode buildMode (HashMap<String,Object> value) throws DycapoException{
-		return ModeFetcher.fetchMode(value);
+	public static final Mode buildMode (JSONObject responseValue) throws DycapoException{
+		return ModeFetcher.fetchMode(responseValue);
 	}
 
 	
 	public static final void logResponse(Response response){
 		Log.d(TAG, "Response status code : " + String.valueOf(response.getCode()));
-		Log.d(TAG, "Response message : " + ((response.getMessage() instanceof String)?response.getMessage():"No Message Provided!"));
+		Log.d(TAG, "Response message : " + ((response.getValue() instanceof String)?(String)response.getValue():"No Message Provided!"));
 		Log.d(TAG, "Response of Type : " + ((response.getType() instanceof String)?response.getType(): "No Type Provided!" ));
 	}
 }

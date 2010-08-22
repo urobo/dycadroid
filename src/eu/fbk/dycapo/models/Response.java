@@ -3,17 +3,14 @@
  */
 package eu.fbk.dycapo.models;
 
-import eu.fbk.dycapo.factories.DycapoObject;
-
 
 /**
  * @author riccardo
  *
  */
-public class Response extends DycapoObject{
+public class Response {
 	
 	public static final String CODE = "code";
-	public static final String MESSAGE = "message";
 	public static final String TYPE = "type";
 	public static final String VALUE = "value";
 	public static final String[] TYPES = {  "boolean",
@@ -37,13 +34,14 @@ public class Response extends DycapoObject{
 	
 	public static final int PERSONS = 5;
 	
+	public static final int MESSAGE = 6;
+	
 	public static final String resolveType(int type){
 		if(type >= 0 && type < TYPES.length)return TYPES[type];
 		return null;
 	}
 	
 	private Integer code;						//must
-	private String message;					//must
 	private String type;					//must
 	private Object value;	//must
 	
@@ -66,20 +64,6 @@ public class Response extends DycapoObject{
 	 */
 	public void setCode(Integer code) {
 		this.code = code;
-	}
-
-	/**
-	 * @return the message
-	 */
-	public String getMessage() {
-		return message;
-	}
-
-	/**
-	 * @param message the message to set
-	 */
-	public void setMessage(String message) {
-		this.message = message;
 	}
 
 	/**

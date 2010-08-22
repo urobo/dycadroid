@@ -6,8 +6,10 @@ package eu.fbk.dycapo.factories.json;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.util.Log;
 import eu.fbk.dycapo.exceptions.DycapoException;
@@ -21,73 +23,70 @@ import eu.fbk.dycapo.models.Trip;
  */
 public abstract class TripFetcher {
 	private static final String TAG ="TripFetcher";
-	@SuppressWarnings("unchecked")
-	public static final Trip fetchTrip(HashMap<String,Object> value) throws DycapoException{
-			
+	public static final Trip fetchTrip(JSONObject responseValue) throws DycapoException{
+		try{
 			SimpleDateFormat parser = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
 			
 			Trip result= new Trip();
 			String message = "error TripFetcher.fetchTrip : not enough parameters are given to define a Trip: missing ";
 			
-			if (value.containsKey(Trip.ID))
-				result.setId((Integer)value.get(Trip.ID));
+			if (responseValue.has(Trip.ID))
+				result.setId(responseValue.getInt(Trip.ID));
 			else throw new DycapoException (message + Trip.ID);
 			
-			if(value.containsKey(Trip.EXPIRES))
+			if(responseValue.has(Trip.EXPIRES))
 				try {
-					result.setExpires(parser.parse((String)value.get(Trip.EXPIRES)));
+					result.setExpires(parser.parse(responseValue.getString(Trip.EXPIRES)));
 				} catch (ParseException e) {
 					Log.e(TAG, e.getMessage());
 					throw new DycapoException(e.getMessage());
 				}
 			else throw new DycapoException (message + Trip.EXPIRES);
 			
-			if(value.containsKey(Trip.PUBLISHED))
-//				try {
-					//result.setPublished(parser.parse((String)value.get(Trip.PUBLISHED)));
-					result.setPublished((Date)value.get(Trip.PUBLISHED));
-//				} catch (ParseException e) {
-//					Log.e(TAG, e.getMessage());
-//					throw new DycapoException(e.getMessage());
-//				}
+			if(responseValue.has(Trip.PUBLISHED))
+				try {
+					result.setPublished(parser.parse(responseValue.getString(Trip.PUBLISHED)));
+				} catch (ParseException e) {
+					Log.e(TAG, e.getMessage());
+					throw new DycapoException(e.getMessage());
+				}
 				
-			if(value.containsKey(Trip.UPDATED))
-//				try {
-//					result.setUpdated(parser.parse((String)value.get(Trip.UPDATED)));
-					result.setUpdated((Date)value.get(Trip.UPDATED));
-//				} catch (ParseException e) {
-//					Log.e(TAG, e.getMessage());
-//					throw new DycapoException(e.getMessage());
-//				}
+			if(responseValue.has(Trip.UPDATED))
+				try {
+					result.setUpdated(parser.parse(responseValue.getString(Trip.UPDATED)));
+				} catch (ParseException e) {
+					Log.e(TAG, e.getMessage());
+					throw new DycapoException(e.getMessage());
+				}
 			
-			if(value.containsKey(Trip.AUTHOR))
-				result.setAuthor(PersonFetcher.fetchPerson((HashMap<String,Object>)value.get(Trip.AUTHOR)));
+			if(responseValue.has(Trip.AUTHOR))
+				result.setAuthor(PersonFetcher.fetchPerson(responseValue.getJSONObject(Trip.AUTHOR)));
 			else throw new DycapoException (message + Trip.AUTHOR);
 			
-			if(value.containsKey(Trip.MODE)){
+			if(responseValue.has(Trip.MODE)){
 				Log.d(Tag.DYCAPOFACTORIES +"."+ Tag.DYCAPOMODE, Tag.DYCAPOMODE + " present");
-				result.setMode(ModeFetcher.fetchMode((HashMap<String,Object>) value.get(Trip.MODE)));
+				result.setMode(ModeFetcher.fetchMode(responseValue.getJSONObject(Trip.MODE)));
 				Log.d(Tag.DYCAPOFACTORIES +"."+ Tag.DYCAPOMODE, Tag.DYCAPOMODE + " fetched");
 			}else throw new DycapoException(message + Trip.MODE);
 			
 			
-			if (value.containsKey(Trip.PREFERENCES)){
+			if (responseValue.has(Trip.PREFERENCES)){
 				Log.d(Tag.DYCAPOFACTORIES +"."+ Tag.DYCAPOPREFERENCES, Tag.DYCAPOPREFERENCES + " present");
-				result.setPreferences(PreferencesFetcher.fetchPreferences((HashMap<String,Object>)value.get(Trip.PREFERENCES)));
+				result.setPreferences(PreferencesFetcher.fetchPreferences(responseValue.getJSONObject(Trip.PREFERENCES)));
 				Log.d(Tag.DYCAPOFACTORIES +"."+ Tag.DYCAPOPREFERENCES, Tag.DYCAPOPREFERENCES + " fetched");
 			}else throw new DycapoException(message + Trip.PREFERENCES);
 			
-			if (value.containsKey(Trip.LOCATIONS)){				
-				Object[] rawlocs= (Object[])value.get(Trip.LOCATIONS);
+			if (responseValue.has(Trip.LOCATIONS)){				
+				JSONArray rawlocs= responseValue.getJSONArray(Trip.LOCATIONS);
 				
-				int length= rawlocs.length;
+				int length= rawlocs.length();
 				
 				ArrayList<Location> waypoints = new ArrayList<Location>();
 				
 				for (int i = 0; i < length;i++)
 				 {
 					Log.d(TAG, "starting fetching location " + String.valueOf(i) + " of " + String.valueOf(length) + " locations");
-					Location res = LocationFetcher.fetchLocation((HashMap<String,Object>)(rawlocs[i]));
+					Location res = LocationFetcher.fetchLocation(rawlocs.getJSONObject(i));
 					Log.d(TAG, "ending fetching location " + String.valueOf(i) + " of " + String.valueOf(length) + " locations");
 					
 					if (res.getPoint()==Location.ORIG){
@@ -105,6 +104,11 @@ public abstract class TripFetcher {
 				if (! (result.getDestination() instanceof Location)) throw new DycapoException(message + Location.POINT_TYPE[1]);
 			}	
 			
-			return result;	
+			return result;
+		}catch(JSONException e){
+			e.printStackTrace();
+			
+		}
+		return null;
 	}
 }

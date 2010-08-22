@@ -14,7 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
-import eu.fbk.dycapo.factories.DycapoObject;
 import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
 import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
@@ -25,7 +24,7 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  */
 
 
-public class Trip extends DycapoObject implements XMLRPCModel,DycapoJSONObjects {
+public class Trip implements XMLRPCModel,DycapoJSONObjects {
 	public static final String TAG = "Trip";
 	
 	public static final String ID="id";

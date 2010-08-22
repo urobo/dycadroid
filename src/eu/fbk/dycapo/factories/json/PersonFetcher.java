@@ -3,7 +3,9 @@
  */
 package eu.fbk.dycapo.factories.json;
 
-import java.util.HashMap;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.models.Person;
@@ -13,55 +15,60 @@ import eu.fbk.dycapo.models.Person;
  *
  */
 public abstract class PersonFetcher {
-	@SuppressWarnings("unchecked")
-	public static final Person fetchPerson(HashMap<String,Object> value) throws DycapoException{
+	public static final Person fetchPerson(JSONObject responseValue) throws DycapoException{
 		
-			Person result = new Person();
-			String message = "error PersonFetcher.fetchPerson : not enough parameters are given to define a person: missing ";
-			
+		Person result = new Person();
+		String message = "error PersonFetcher.fetchPerson : not enough parameters are given to define a person: missing ";
+		try{	
 			//must
 			//username
-			if (value.containsKey(Person.USERNAME))
-				result.setUsername((String)value.get(Person.USERNAME));
+			if (responseValue.has(Person.USERNAME))
+				result.setUsername(responseValue.getString(Person.USERNAME));
 			else throw new DycapoException (message + Person.USERNAME);
 			
 			//may / should
-			if (value.containsKey(Person.EMAIL))
-				result.setEmail((String)value.get(Person.EMAIL));
-			if (value.containsKey(Person.FIRST_NAME))
-				result.setFirst_name((String)value.get(Person.FIRST_NAME));
-			if (value.containsKey(Person.LAST_NAME))
-				result.setLast_name((String)value.get(Person.LAST_NAME));
-			if (value.containsKey(Person.URL))
-				result.setUrl((String)value.get(Person.URL));
-			if (value.containsKey(Person.PHONE))
-				result.setPhone((String)value.get(Person.PHONE));
-			if (value.containsKey(Person.POSITION))
-				result.setPosition(LocationFetcher.fetchLocation(((HashMap<String,Object>)value.get(Person.POSITION))));
-			if (value.containsKey(Person.AGE))
-				result.setAge((Integer)value.get(Person.AGE));
-			if (value.containsKey(Person.GENDER))
-				result.setGender((String)value.get(Person.GENDER));
-			if (value.containsKey(Person.SMOKER))
-				result.setSmoker((Boolean)value.get(Person.SMOKER));
-			if (value.containsKey(Person.BLIND))
-				result.setBlind((Boolean)value.get(Person.BLIND));
-			if (value.containsKey(Person.DEAF))
-				result.setDeaf((Boolean)value.get(Person.DEAF));
-			if (value.containsKey(Person.DOG))
-				result.setDog((Boolean)value.get(Person.DOG));
+			if (responseValue.has(Person.EMAIL))
+				result.setEmail(responseValue.getString(Person.EMAIL));
+			if (responseValue.has(Person.FIRST_NAME))
+				result.setFirst_name(responseValue.getString(Person.FIRST_NAME));
+			if (responseValue.has(Person.LAST_NAME))
+				result.setLast_name(responseValue.getString(Person.LAST_NAME));
+			if (responseValue.has(Person.URL))
+				result.setUrl(responseValue.getString(Person.URL));
+			if (responseValue.has(Person.PHONE))
+				result.setPhone(responseValue.getString(Person.PHONE));
+			if (responseValue.has(Person.POSITION))
+				result.setPosition(LocationFetcher.fetchLocation(responseValue.getJSONObject(Person.POSITION)));
+			if (responseValue.has(Person.AGE))
+				result.setAge(responseValue.getInt(Person.AGE));
+			if (responseValue.has(Person.GENDER))
+				result.setGender(responseValue.getString(Person.GENDER));
+			if (responseValue.has(Person.SMOKER))
+				result.setSmoker(responseValue.getBoolean(Person.SMOKER));
+			if (responseValue.has(Person.BLIND))
+				result.setBlind(responseValue.getBoolean(Person.BLIND));
+			if (responseValue.has(Person.DEAF))
+				result.setDeaf(responseValue.getBoolean(Person.DEAF));
+			if (responseValue.has(Person.DOG))
+				result.setDog(responseValue.getBoolean(Person.DOG));
 			
 			return result;
-
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static final Person[] fetchPersons(Object[] value) throws DycapoException {
+	public static final Person[] fetchPersons(JSONArray value) throws DycapoException {
 		
-		int size = value.length;
+		int size = value.length();
 		Person[] persons = new Person[size];
 		for (int i = 0; i< size; i++ ){
-			persons[i] = PersonFetcher.fetchPerson((HashMap<String,Object>)(value[i]));
+			try {
+				persons[i] = PersonFetcher.fetchPerson(value.getJSONObject(i));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
 		return persons;
 	}

@@ -11,7 +11,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
-import eu.fbk.dycapo.factories.DycapoObject;
 import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
 import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
@@ -20,7 +19,7 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  * @author riccardo
  *
  */
-public class Location extends DycapoObject implements DycapoJSONObjects,XMLRPCModel{
+public class Location implements DycapoJSONObjects,XMLRPCModel{
 	public static final String TAG = "Location";
 	
 	public static final String LABEL="label";
