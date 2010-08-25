@@ -15,7 +15,12 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import eu.fbk.dycapo.exceptions.DycapoException;
+import eu.fbk.dycapo.factories.DycapoObjectsFactory;
+import eu.fbk.dycapo.maputils.DirectionsResponseParser;
 
 /**
  * @author riccardo
@@ -34,7 +39,22 @@ public abstract class DycapoServiceClient {
 	private static final int PUT = 3;
 	private static final int DELETE = 4;
 	
-	public static final HttpResponse doJSONRequest(int method,String url,JSONObject jsonObject){
+	public static final Object callDycapo(int method,String uri,JSONObject jsonObject) throws DycapoException, JSONException{
+		HttpResponse response = doJSONRequest(method,uri,jsonObject);
+		try {
+			String stringResp = DirectionsResponseParser.convertStreamToString(response.getEntity().getContent());
+			return DycapoObjectsFactory.getDycapoObject(DycapoObjectsFactory.REST, new JSONObject(stringResp), true);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	private static final HttpResponse doJSONRequest(int method,String uri,JSONObject jsonObject){
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		HttpRequestBase request = null;
 		switch(method){
