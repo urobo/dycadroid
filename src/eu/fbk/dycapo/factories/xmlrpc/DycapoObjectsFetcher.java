@@ -28,7 +28,7 @@ public abstract class DycapoObjectsFetcher {
 	 * @see eu.fbk.dycapo.factories.DycapoObjectsFactory#fetchXMLRPCResponse(java.lang.Object)
 	 */
 	@SuppressWarnings("unchecked")
-	public static final Response fetchXMLRPCResponse(Object value, boolean log) throws DycapoException {
+	public static final Response fetchXMLRPCResponse(Object value) throws DycapoException {
 			Response response = new Response();
 			Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES, "is instance of hashmap");
 			
@@ -139,9 +139,5 @@ public abstract class DycapoObjectsFetcher {
 	}
 
 	
-	public static final void logResponse(Response response){
-		Log.d(TAG, "Response status code : " + String.valueOf(response.getCode()));
-		Log.d(TAG, "Response message : " + ((response.getValue() instanceof String)?(String)response.getValue():"No Message Provided!"));
-		Log.d(TAG, "Response of Type : " + ((response.getType() instanceof String)?response.getType(): "No Type Provided!" ));
-	}
+
 }

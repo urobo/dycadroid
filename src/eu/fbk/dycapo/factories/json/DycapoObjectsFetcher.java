@@ -27,7 +27,7 @@ public abstract class DycapoObjectsFetcher {
 	/* (non-Javadoc)
 	 * @see eu.fbk.dycapo.factories.DycapoObjectsFactory#fetchXMLRPCResponse(java.lang.Object)
 	 */
-	public static final Response fetchJSONResponse(Object value, boolean log) throws DycapoException {
+	public static final Response fetchJSONResponse(Object value) throws DycapoException {
 			Response response = new Response();
 			JSONObject jsonValue = (JSONObject)value;
 			try {
@@ -72,7 +72,6 @@ public abstract class DycapoObjectsFetcher {
 						}
 					}
 				}
-			if (log==true)DycapoObjectsFetcher.logResponse(response);
 			return response;
 		} catch (JSONException e) {
 				e.printStackTrace();

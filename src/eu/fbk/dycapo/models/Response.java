@@ -4,6 +4,7 @@
 package eu.fbk.dycapo.models;
 
 
+
 /**
  * @author riccardo
  *
@@ -36,6 +37,27 @@ public class Response {
 	
 	public static final int MESSAGE = 6;
 	
+	public static final String translateStatusCode(int code)
+	{
+		switch(code){
+		case 200:
+			return "Ok";
+		case 201:
+			return "Resource Created";
+		case 204:
+			return "Resource Deleted";
+		case 401:
+			return "Unauthorized! Invalid Credentials";
+		case 403:
+			return "Forbidden";
+		case 404:
+			return "Resource Not Found";
+		case 415:
+			return "Unsupported Media Type";
+		}
+		return null;
+	}
+	
 	public static final String resolveType(int type){
 		if(type >= 0 && type < TYPES.length)return TYPES[type];
 		return null;
@@ -49,7 +71,7 @@ public class Response {
 	 * 
 	 */
 	public Response() {
-		
+	
 	}
 
 	/**
