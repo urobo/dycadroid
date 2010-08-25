@@ -13,6 +13,7 @@ import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
@@ -53,7 +54,7 @@ public abstract class DycapoServiceClient {
 			request = new HttpDelete();
 			break;
 		}
-		//StringEntity se;
+		StringEntity se;
 		//se = new StringEntity(jsonObjSend.toString());
 		try {
 			HttpResponse response = (HttpResponse) httpclient.execute(request);
