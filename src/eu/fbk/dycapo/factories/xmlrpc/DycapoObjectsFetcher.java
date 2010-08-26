@@ -81,7 +81,7 @@ public abstract class DycapoObjectsFetcher {
 							Iterator<String> i =  keys.iterator();
 							String errorMsg = "";
 							while(i.hasNext()){
-								errorMsg = errorMap.get(i.next());
+								errorMsg = i.next() +" "+ errorMap.get(i.next());
 							}
 							throw new DycapoException (errorMsg);
 						}

@@ -3,6 +3,10 @@
  */
 package eu.fbk.dycapo.factories.json;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,28 +51,41 @@ public abstract class DycapoObjectsFetcher {
 						
 						JSONObject responseValue=jsonValue.getJSONObject(Response.VALUE);
 					
-						if (type.equals(Response.TYPES[0])){
+						if (type.equals(Response.resolveType(Response.BOOLEAN))){
 							Log.d(Tag.LOG +"."+Tag.DYCAPOFACTORIES, "type.equals(Response.TYPES[0]) " + Response.TYPES[0]);
 							response.setValue(jsonValue.getBoolean(Response.VALUE));	
 				
-						}else if(type.equals(Response.TYPES[1])){
+						}else if(type.equals(Response.resolveType(Response.LOCATION))){
 							Log.d(Tag.LOG +"."+TAG +"."+Location.TAG, "type.equals(Response.TYPES[1]) == " + Response.resolveType(Response.LOCATION));
 							response.setValue(DycapoObjectsFetcher.buildLocation(responseValue));
 					
-						}else if(type.equals(Response.TYPES[2])){
+						}else if(type.equals(Response.resolveType(Response.MODE))){
 							Log.d(Tag.LOG +"."+TAG +"."+Mode.TAG, "type.equals(Response.TYPES[2]) == "+ Response.resolveType(Response.MODE));
 							response.setValue(DycapoObjectsFetcher.buildMode(responseValue));
 					
-						}else if(type.equals(Response.TYPES[3])){
+						}else if(type.equals(Response.resolveType(Response.PERSON))){
 							Log.d(Tag.LOG +"."+TAG+"."+Person.TAG, "type.equals(+ Response.TYPES[3]) == " + Response.resolveType(Response.PERSON));
 							response.setValue(DycapoObjectsFetcher.buildPerson(responseValue));
 					
-						}else if(type.equals(Response.TYPES[4])){
+						}else if(type.equals(Response.resolveType(Response.TRIP))){
 							Log.d(Tag.LOG +"."+TAG+"."+Trip.TAG, "type.equals(Response.TYPES[4]) == " + Response.resolveType(Response.TRIP));
 							response.setValue(DycapoObjectsFetcher.buildTrip(responseValue));
-						}else if (type.equals(Response.TYPES[5])){
+						
+						}else if (type.equals(Response.resolveType(Response.PERSONS))){
 							Log.d(Tag.LOG +"+"+TAG+"."+Response.resolveType(Response.PERSONS), "type.equals(Response.TYPES[5]) == "+Response.resolveType(Response.PERSONS));
 							response.setValue(DycapoObjectsFetcher.extractPersons(jsonValue.getJSONArray(Response.VALUE)));
+						
+						}else if (type.equals(Response.resolveType(Response.MESSAGE))){
+							Log.d(Tag.LOG + "+" +TAG+"."+Response.resolveType(Response.MESSAGE),"type.equals(Response.TYPES[6]) == "+Response.resolveType(Response.MESSAGE));
+							JSONObject errorMap = responseValue;
+							if (errorMap.length()>0){
+								JSONArray names = errorMap.names();
+								String errorMsg = "";
+								for(int i = 0 ; i< names.length(); i++){
+									errorMsg =names.getString(i) +" "+ errorMap.getString(names.getString(i));
+								}
+								throw new DycapoException (errorMsg);
+							}
 						}
 					}
 				}
