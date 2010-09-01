@@ -3,8 +3,6 @@
  */
 package eu.fbk.dycapo.models;
 
-import java.util.HashMap;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

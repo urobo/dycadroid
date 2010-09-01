@@ -316,8 +316,8 @@ public class Person implements DycapoJSONObjects{
 		JSONObject result = new JSONObject();
 		
 			try {
-				if (this.age > 0 && this.age < 100)
-					result.put(Person.AGE, this.age.intValue());
+				if (this.age instanceof Integer)
+					result.put(Person.AGE, this.age);
 				if (this.blind instanceof Boolean)
 					result.put(Person.BLIND, this.blind.booleanValue());
 				if (this.deaf instanceof Boolean)

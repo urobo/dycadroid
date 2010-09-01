@@ -13,6 +13,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
@@ -20,11 +21,14 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.util.Log;
 
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.factories.DycapoObjectsFactory;
@@ -42,39 +46,46 @@ import eu.fbk.dycapo.persistency.DBPerson;
 public abstract class DycapoServiceClient {
 	public static final String URL_BASIS = "http://test.dycapo.org/api/";
 	
+	private static final String TAG = "DycapoServiceClient";
+	
 	public static final int HEAD = 0;
 	public static final int GET = 1;
 	public static final int POST = 2;
 	public static final int PUT = 3;
 	public static final int DELETE = 4;
 	
-	public static final Object callDycapo(int method,String uri,JSONObject jsonObject) throws DycapoException, JSONException{
-		HttpResponse response = doJSONRequest(method,uri,jsonObject);
+	public static final Object callDycapo(int method,String uri,JSONObject jsonObject,String username,String password) throws DycapoException, JSONException{
+		HttpResponse response = doJSONRequest(method,uri,jsonObject,username,password);
 		try {
 			String stringResp = DirectionsResponseParser.convertStreamToString(response.getEntity().getContent());
+			Log.d(TAG, stringResp);
+			
 			return DycapoObjectsFactory.getDycapoObject(DycapoObjectsFactory.REST, new JSONObject(stringResp), true);
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 		}
 		return null;
 	}
 	
-	private static final HttpResponse doJSONRequest(int method,String uri,JSONObject jsonObject){
+	private static final HttpResponse doJSONRequest(int method,String uri,JSONObject jsonObject,String username,String password){
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		StringBuilder sb =new StringBuilder();
 		sb.append(URL_BASIS);
 		sb.append(uri);
+		sb.append("/");
 		URI uriF;
 		try {
 			uriF = new URI(sb.toString());
-		
-			httpclient.getCredentialsProvider().setCredentials(
-		        new AuthScope(uriF.getHost(), uriF.getPort(),AuthScope.ANY_REALM),
-		        new UsernamePasswordCredentials(DBPerson.getUser().getUsername(), DBPerson.getUser().getPassword()));
+			if (username instanceof String || password instanceof String)
+				httpclient.getCredentialsProvider().setCredentials(
+						new AuthScope(uriF.getHost(), uriF.getPort(),AuthScope.ANY_REALM),
+						new UsernamePasswordCredentials(username, password));
 			HttpResponse response = null;
 
 			switch(method){
@@ -88,10 +99,10 @@ public abstract class DycapoServiceClient {
 				StringEntity se;
 				se = new StringEntity(jsonObject.toString());
 				
-				se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-				HttpEntity e = se;
-				HttpPost requestPost = new HttpPost();
-				requestPost.setEntity(e);
+				HttpPost requestPost = new HttpPost(uriF);
+				requestPost.setHeader("Accept", "application/json");
+				requestPost.setHeader("Content-type", "application/json");
+				requestPost.setEntity(se);
 				response = (HttpResponse) httpclient.execute(requestPost);
 				break;
 			case PUT:
@@ -105,12 +116,15 @@ public abstract class DycapoServiceClient {
 		} catch (ClientProtocolException e) {
 	
 			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 		} catch (IOException e) {
 			
 			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
 		} catch (URISyntaxException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			Log.e(TAG, e1.getMessage());
 		}
 
 		return null;

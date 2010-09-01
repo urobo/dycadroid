@@ -366,7 +366,7 @@ public class TripSettings extends Activity implements OnClickListener {
 						new AlertDialog.Builder(TripSettings.this).setTitle("User List").setPositiveButton("Ok", null)
 						.setCancelable(true).setMessage(aTrip.toJSONObject().toString()).show();
 						
-						Response response = (Response) DycapoServiceClient.callDycapo(DycapoServiceClient.POST, "trips/", aTrip.toJSONObject());
+						Response response = (Response) DycapoServiceClient.callDycapo(DycapoServiceClient.POST, "trips/", aTrip.toJSONObject(),DBPerson.getUser().getUsername(),DBPerson.getUser().getPassword());
 						if (response.getType().toLowerCase().equals(Response.resolveType(Response.TRIP))){
 							Log.d(TAG, "Trip type");
 							aTrip.setId(((Trip)response.getValue()).getId());

@@ -30,7 +30,7 @@ public abstract class DycapoObjectsFactory {
 	
 	public static final void logResponse(Response response){
 		Log.d(TAG, "Response status code : " + String.valueOf(response.getCode()));
-		Log.d(TAG, "Response message : " + ((response.getValue() instanceof String)?(String)response.getValue():Response.resolveType(response.getCode())));
+		Log.d(TAG, "Response message : " + ((response.getValue() instanceof String)?(String)response.getValue():response.getValue().toString()));
 		Log.d(TAG, "Response of Type : " + ((response.getType() instanceof String)?response.getType(): "No Type Provided!" ));
 	}
 

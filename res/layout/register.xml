@@ -64,6 +64,35 @@
   		android:layout_height="wrap_content"
   		android:layout_centerHorizontal="true"
   		android:layout_below="@id/newGetEmailTextView"/>
-
   	
+  	<TextView
+  		android:id="@+id/GenderTextView1"
+  		android:layout_width="wrap_content"
+  		android:layout_height="wrap_content"
+  		android:layout_below="@id/newGetEmail"
+  		android:text="Gender : "
+  		android:layout_marginLeft="15px"
+  	/>
+  	<RadioGroup
+  			android:orientation="horizontal"
+  			android:layout_width="wrap_content"
+  			android:layout_height="wrap_content"
+  			android:id="@+id/radiogroup"
+  			android:layout_toRightOf="@id/GenderTextView1"
+  			android:layout_below="@id/newGetEmail"
+  			>
+  			<RadioButton 
+  				android:id="@+id/setMaleGender"
+  				android:text="Male "
+  				android:layout_width="wrap_content"
+  				android:layout_height="wrap_content"
+  				/>
+  			<RadioButton 
+  				android:id="@+id/setFemaleGender"
+  				android:text="Female "
+  				android:layout_width="wrap_content"
+  				android:layout_height="wrap_content"
+  				/>
+  			</RadioGroup>
+	
 </RelativeLayout>

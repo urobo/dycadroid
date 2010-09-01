@@ -4,14 +4,18 @@
 package eu.fbk.dycapo.activities;
 
 
+import org.json.JSONException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,10 +24,14 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Toast;
 import eu.fbk.dycapo.exceptions.DycapoException;
+import eu.fbk.dycapo.models.Response;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBProvider;
 import eu.fbk.dycapo.persistency.User;
+import eu.fbk.dycapo.services.DycapoServiceClient;
 
 /**
  * @author riccardo
@@ -36,12 +44,29 @@ public class Home extends Activity implements OnClickListener{
 	 
 	private View layoutLogin=null;
 	private View layoutRegister=null;
-	
+	private static String gender = null;
 	
 	Menu myMenu=null;
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
+	
+	private OnClickListener gender_listener = new OnClickListener() {
+        public void onClick(View v) {
+            // Perform action on clicks
+            RadioButton rb = (RadioButton) v;
+            switch(rb.getId()){
+            case R.id.maleGender:
+            	gender = "male";
+            	break;
+            case R.id.femaleGender:
+            	gender = "female";
+            	break;
+            }
+            
+        }
+    };
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -136,6 +161,8 @@ public class Home extends Activity implements OnClickListener{
 			
 			builder.setView(layoutRegister);
 			builder.setCancelable(false);
+			((RadioButton)layoutRegister.findViewById(R.id.setFemaleGender)).setOnClickListener(gender_listener);
+			((RadioButton)layoutRegister.findViewById(R.id.setFemaleGender)).setOnClickListener(gender_listener);
 			d=builder.create();
 			d.setTitle("Register");
 			d.setButton("Register", new android.content.DialogInterface.OnClickListener(){
@@ -145,6 +172,7 @@ public class Home extends Activity implements OnClickListener{
 					String passwordIn = ((EditText)layoutRegister.findViewById(R.id.newgetNewPassword)).getText().toString();
 					String passwordConfirmIn = ((EditText)layoutRegister.findViewById(R.id.newgetConfirmNewPassword)).getText().toString();
 					String emailIn = ((EditText)layoutRegister.findViewById(R.id.newGetEmail)).getText().toString();
+					
 					User usr= new User();
 					try {
 						
@@ -167,7 +195,21 @@ public class Home extends Activity implements OnClickListener{
 							usr.setEmail(emailIn);
 						}	else throw new DycapoException ("Invalid Email");	
 						
-					//TODO connect to dycapo via REST					
+						TelephonyManager tMgr =(TelephonyManager)Home.this.getSystemService(Context.TELEPHONY_SERVICE);
+						String phoneNum = tMgr.getLine1Number();
+						usr.setPhone(phoneNum);
+						if(gender instanceof String)
+							usr.setGender(gender);
+						
+					//TODO connect to dycapo via REST
+						try {
+							Response response = (Response)DycapoServiceClient.callDycapo(DycapoServiceClient.POST, "persons", usr.toJSONObject(),null,null);
+							
+							Toast.makeText(Home.this, Response.resolveType((response.getCode())),Toast.LENGTH_LONG);
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						
 					} catch (DycapoException e) {
 						e.alertUser(getBaseContext());
