@@ -7,7 +7,6 @@ package eu.fbk.dycapo.models;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,7 +14,6 @@ import org.json.JSONObject;
 
 import android.util.Log;
 import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
-import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
 
 /**
@@ -24,7 +22,7 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  */
 
 
-public class Trip implements XMLRPCModel,DycapoJSONObjects {
+public class Trip implements DycapoJSONObjects {
 	public static final String TAG = "Trip";
 	
 	public static final String ID="id";
@@ -226,39 +224,6 @@ public class Trip implements XMLRPCModel,DycapoJSONObjects {
 	public void setWaypoints(ArrayList<Location> waypoints) {
 		this.waypoints = waypoints;
 	}
-
-
-	public HashMap<String,Object> toHashMap(){
-		HashMap<String,Object> result = new HashMap<String,Object>();
-		if (this.id instanceof Integer) result.put(Trip.ID, this.id);
-		if (this.author instanceof eu.fbk.dycapo.models.Person)result.put(Trip.AUTHOR,this.author.toHashMap());
-		ArrayList<HashMap<String,Object>> locations = new ArrayList<HashMap<String,Object>>();
-		if (this.origin instanceof eu.fbk.dycapo.models.Location)locations.add(this.origin.toHashMap());
-		if (this.destination instanceof eu.fbk.dycapo.models.Location)locations.add(this.destination.toHashMap());
-		if (this.mode instanceof eu.fbk.dycapo.models.Mode)result.put(Trip.MODE, this.mode.toHashMap());
-		if (this.preferences instanceof eu.fbk.dycapo.models.Preferences)result.put(Trip.PREFERENCES,this.preferences.toHashMap());
-	    if (this.waypoints instanceof ArrayList<?>){
-	    	int size= this.waypoints.size();
-	    	
-	    	for (int i = 0 ; i< size ; i++)
-	    		locations.add(this.waypoints.get(i).toHashMap());
-	    	
-	    }
-	    result.put(Trip.LOCATIONS, locations.toArray());
-		
-		SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
-		
-		
-		if (this.expires instanceof java.util.Date){
-			result.put(Trip.EXPIRES,formatter.format(this.expires));
-			Log.i(Trip.EXPIRES, formatter.format(this.expires));
-		}
-			
-		if (this.published instanceof java.util.Date)result.put(Trip.PUBLISHED,formatter.format(this.published));
-		if (this.updated instanceof java.util.Date)result.put(Trip.UPDATED, formatter.format(this.updated));
-		return result;
-	}
-
 
 	@Override
 	public JSONObject toJSONObject() {

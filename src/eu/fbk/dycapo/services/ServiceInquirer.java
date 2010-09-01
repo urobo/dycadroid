@@ -19,9 +19,6 @@ import eu.fbk.dycapo.factories.DycapoObjectsFactory;
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Response;
 import eu.fbk.dycapo.models.Trip;
-import eu.fbk.dycapo.persistency.DBPerson;
-import eu.fbk.dycapo.xmlrpc.XMLRPCClient;
-import eu.fbk.dycapo.xmlrpc.XMLRPCException;
 
 public class ServiceInquirer extends Service{
 	private static final String TAG = "ServiceInquirer";
@@ -31,7 +28,6 @@ public class ServiceInquirer extends Service{
 		"check_ride_requests"
 	};
 	
-	private XMLRPCClient client = new XMLRPCClient(Dycapo.DYCAPO_URL,DBPerson.getUser().getUsername(), DBPerson.getUser().getPassword());
 	
 	
 	private Location orig = null;
@@ -120,26 +116,7 @@ public class ServiceInquirer extends Service{
 	private void _findTrip(){
 		
 		Object value;
-		try {
-			value = client.call(Dycapo.getMethod(Dycapo.SEARCH_TRIP), this.orig.toHashMap() , this.dest.toHashMap());
-		
-			Response response = (Response) DycapoObjectsFactory.getDycapoObject(DycapoObjectsFactory.XMLRPC, value, true);
-		
-			if (response.getType().equals(Response.resolveType(Response.TRIP))){
-				Bundle data = new Bundle();
-			
-				data.putBundle(ServiceInquirer.getTask(SEARCH_TRIP), TripBundle.toBundle((Trip)response.getValue()));
-				Intent intent = new Intent(getApplicationContext(),Notifier.class);
-				intent.putExtras(data);
-			
-				PendingIntent sendToNotifier = PendingIntent.getBroadcast(getApplicationContext(), 6666 , intent, PendingIntent.FLAG_ONE_SHOT);
-				alarmMgr.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), sendToNotifier);
-			}
-		} catch (XMLRPCException e) {
-			Log.e(TAG, e.getMessage());
-		} catch (DycapoException e) {
-			Log.e(TAG, e.getMessage());
-		}
+		//TODO look on dycapo
 	}
 
 	public void inquire() {

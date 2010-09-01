@@ -31,11 +31,8 @@ import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Person;
 import eu.fbk.dycapo.models.Response;
 import eu.fbk.dycapo.persistency.ActiveTrip;
-import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBTrip;
 import eu.fbk.dycapo.persistency.Participation;
-import eu.fbk.dycapo.xmlrpc.XMLRPCClient;
-import eu.fbk.dycapo.xmlrpc.XMLRPCException;
 
 
 
@@ -54,7 +51,6 @@ public class PositionUpdater extends Service implements LocationListener{
 	private android.location.Location location = null;
 	public static final String TASK="task";
 	
-	private XMLRPCClient client = new XMLRPCClient(Dycapo.DYCAPO_URL,DBPerson.getUser().getUsername(), DBPerson.getUser().getPassword());
 	
 	private static Intent intentGetPositions = null;
 	private static PendingIntent sendGetPositions = null;
@@ -134,14 +130,7 @@ public class PositionUpdater extends Service implements LocationListener{
 		
 			for (int index = 0 ; index < size ; index++){
 				Person fetcher = participants.get(index).getmParticipant();
-				Object value = client.call(Dycapo.getMethod(Dycapo.GET_POSITION), fetcher.toHashMap());
-				Response response = (Response) DycapoObjectsFactory.getDycapoObject(DycapoObjectsFactory.XMLRPC, value, true);
-				if (response.getType().equals(Location.TAG.toLowerCase())){
-					fetcher.setPosition((Location)response.getValue());
-					getPositionsExtras.putBundle("participant"+ String.valueOf(index), PersonBundle.toBundle(fetcher));
-				}else if (response.getType().equals("boolean")){
-					participants.remove(index);
-				}
+				//TODO request to dycapo
 			}
 			intentGetPositions = null;
 			intentGetPositions = new Intent(getApplicationContext(),MapReceiver.class);
@@ -149,8 +138,6 @@ public class PositionUpdater extends Service implements LocationListener{
 			sendGetPositions = null;
 			sendGetPositions = PendingIntent.getBroadcast(getApplicationContext(), 666, intentGetPositions, PendingIntent.FLAG_ONE_SHOT);
 			alarmMgr.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), sendGetPositions);				
-		} catch (XMLRPCException e) {
-			Log.e(TAG, e.getMessage());
 		} catch (DycapoException e) {
 			Log.e(TAG, e.getMessage());
 		}
@@ -176,13 +163,7 @@ public class PositionUpdater extends Service implements LocationListener{
 		sendUpdatePosition = PendingIntent.getBroadcast(getApplicationContext(), 666, intentUpdatePosition, PendingIntent.FLAG_ONE_SHOT);		
 		
 		
-		try {
-			client.call(Dycapo.getMethod(Dycapo.UPDATE_POSITION),position);
-			alarmMgr.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), sendUpdatePosition );
-			locationMgr=null;
-		} catch (XMLRPCException e) {
-			Log.e(TAG, e.getMessage());
-		}
+		//TODO call dycapo
 	}
 
 	

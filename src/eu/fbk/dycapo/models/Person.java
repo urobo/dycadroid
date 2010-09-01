@@ -3,19 +3,16 @@
  */
 package eu.fbk.dycapo.models;
 
-import java.util.HashMap;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
-import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
 /**
  * @author riccardo
  *
  */
-public class Person implements DycapoJSONObjects,XMLRPCModel{
+public class Person implements DycapoJSONObjects{
 	public static final String TAG = "Person";
 	
 	public static final String USERNAME="username";
@@ -313,27 +310,6 @@ public class Person implements DycapoJSONObjects,XMLRPCModel{
 	public void setDog(Boolean dog) {
 		this.dog = dog;
 	}
-
-
-	@Override
-	public HashMap<String, Object> toHashMap() {
-		HashMap<String,Object> result = new HashMap<String,Object>();
-		if (this.age > 0 && this.age < 100)result.put(Person.AGE,this.age);
-		if (this.blind instanceof Boolean)result.put(Person.BLIND,this.blind);
-		if (this.deaf instanceof Boolean)result.put(Person.DEAF,this.deaf);
-		if (this.dog instanceof Boolean)result.put(Person.DOG,this.dog);
-		if (this.email instanceof java.lang.String)result.put(Person.EMAIL,this.email);
-		if (this.first_name instanceof java.lang.String)result.put(Person.FIRST_NAME,this.first_name);
-		if (this.gender instanceof java.lang.String)result.put(Person.GENDER,this.gender);
-		if (this.last_name instanceof java.lang.String)result.put(Person.LAST_NAME,this.last_name);
-		if (this.phone instanceof java.lang.String)result.put(Person.PHONE,this.phone);
-		if (this.position instanceof Location)result.put(Person.POSITION,this.position.toHashMap());
-		if (this.smoker instanceof Boolean)result.put(Person.SMOKER,this.smoker);
-		if (this.url instanceof java.lang.String)result.put(Person.URL,this.url);
-		if (this.username instanceof java.lang.String)result.put(Person.USERNAME,this.username);
-		return result;
-	}
-
 
 	@Override
 	public JSONObject toJSONObject() {

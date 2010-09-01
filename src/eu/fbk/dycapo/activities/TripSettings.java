@@ -46,8 +46,6 @@ import eu.fbk.dycapo.persistency.DBPrefs;
 import eu.fbk.dycapo.persistency.DBTrip;
 import eu.fbk.dycapo.services.Dycapo;
 import eu.fbk.dycapo.services.DycapoServiceClient;
-import eu.fbk.dycapo.xmlrpc.XMLRPCClient;
-import eu.fbk.dycapo.xmlrpc.XMLRPCException;
 
 
 /**
@@ -61,7 +59,6 @@ public class TripSettings extends Activity implements OnClickListener {
 	private List<Address> foundAddresses;
 	private Menu myMenu=null;
 	private static EditText capacity = null;
-	private static XMLRPCClient client = new XMLRPCClient(Dycapo.DYCAPO_URL,DBPerson.getUser().getUsername(), DBPerson.getUser().getPassword());
 
 	private int id;
 	private Address Origin=null;

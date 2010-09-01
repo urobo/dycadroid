@@ -9,7 +9,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
-import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
 
 /**
  * @author riccardo
@@ -19,7 +18,7 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  * @author riccardo
  *
  */
-public class Mode implements DycapoJSONObjects,XMLRPCModel {
+public class Mode implements DycapoJSONObjects{
 	public static final String TAG = "Modality";
 	
 	public static final String KIND="kind";
@@ -211,41 +210,6 @@ public class Mode implements DycapoJSONObjects,XMLRPCModel {
 		this.cost = cost;
 	}
 
-	public HashMap<String,Object> toHashMap(){
-		HashMap<String,Object> result = new HashMap<String,Object>();
-		
-		if (this.capacity instanceof Integer)
-			if (this.capacity >= 2)
-				result.put(Mode.CAPACITY,this.capacity);
-		
-		if (this.color instanceof java.lang.String)
-			result.put(Mode.COLOR,this.color);
-		
-		if (this.cost instanceof java.lang.Double)
-			if (this.cost > 0)
-				result.put(Mode.COST,this.cost);
-		if (this.kind instanceof java.lang.String)
-			result.put(Mode.KIND,this.kind);
-		
-		if (this.lic instanceof java.lang.String)
-			result.put(Mode.LIC,this.lic);
-		
-		if (this.make instanceof java.lang.String)
-			result.put(Mode.MAKE,this.make);
-		
-		if (this.model instanceof java.lang.String)
-			result.put(Mode.MODEL,this.model);
-		
-		if (this.vacancy instanceof java.lang.Integer)	
-			if (this.vacancy >=0 && this.vacancy < this.capacity)
-				result.put(Mode.VACANCY,this.vacancy);
-	
-		if (this.year instanceof java.lang.Integer)
-			if (this.year >= 0)
-				result.put(Mode.YEAR,this.year);
-		
-		return result;
-	}
 
 	@Override
 	public JSONObject toJSONObject() {

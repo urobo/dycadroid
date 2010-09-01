@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,14 +21,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import eu.fbk.dycapo.exceptions.DycapoException;
-import eu.fbk.dycapo.factories.DycapoObjectsFactory;
-import eu.fbk.dycapo.models.Response;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBProvider;
 import eu.fbk.dycapo.persistency.User;
-import eu.fbk.dycapo.services.Dycapo;
-import eu.fbk.dycapo.xmlrpc.XMLRPCClient;
-import eu.fbk.dycapo.xmlrpc.XMLRPCException;
 
 /**
  * @author riccardo
@@ -173,19 +167,7 @@ public class Home extends Activity implements OnClickListener{
 							usr.setEmail(emailIn);
 						}	else throw new DycapoException ("Invalid Email");	
 						
-						XMLRPCClient client = new XMLRPCClient(Dycapo.DYCAPO_URL,Dycapo.DYCAPO_REGISTRATION_USERNAME, Dycapo.DYCAPO_REGISTRATION_USERNAME);
-						try {
-							Object value = client.call(Dycapo.getMethod(Dycapo.REGISTER), eu.fbk.dycapo.factories.xmlrpc.UserMapper.fromUserToHashMap(usr));
-							Response response = (Response) DycapoObjectsFactory.getDycapoObject(DycapoObjectsFactory.XMLRPC, value, true);
-							if (response.getType().equals(Response.resolveType(Response.BOOLEAN))){
-								if (((Boolean)response.getValue()).booleanValue() == true)
-								DBPerson.saveMe(usr);
-							}
-						} catch (XMLRPCException e) {
-							Log.e(TAG, e.getMessage());
-							throw new DycapoException(e.getMessage());
-						}
-						
+					//TODO connect to dycapo via REST					
 						
 					} catch (DycapoException e) {
 						e.alertUser(getBaseContext());

@@ -13,16 +13,12 @@ import eu.fbk.dycapo.models.Response;
  */
 public abstract class DycapoObjectsFactory {
 	private static final String TAG ="DycapoObjectsFactory";
-	public static final int XMLRPC = 1;
 	public static final int REST = 2;
 	
 	public static final Object getDycapoObject (int method, Object value, boolean log) throws DycapoException{
 		Response response = null;
 		switch (method){
-		case XMLRPC:
-			Log.d(TAG, "xmlrpc call");
-			response =  eu.fbk.dycapo.factories.xmlrpc.DycapoObjectsFetcher.fetchXMLRPCResponse(value);
-			break;
+		
 		case REST:
 			Log.d(TAG, "json call");
 			response =  eu.fbk.dycapo.factories.json.DycapoObjectsFetcher.fetchJSONResponse(value);
