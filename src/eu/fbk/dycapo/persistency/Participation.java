@@ -11,12 +11,12 @@ import eu.fbk.dycapo.models.Person;
  * @author riccardo
  *
  */
-public class Participation {
+public class Participation extends eu.fbk.dycapo.models.Participation{
 	public static final String PARTICIPANT = "mParticipant";
 	
 	
 	private String mRole;
-	private Person mParticipant;
+	
 	private Date mTime;
 	private Date mSarted;
 	private Date mFinished;
@@ -29,7 +29,7 @@ public class Participation {
 	public Participation(String mRole, Person mParticipant, Date mTime) {
 		
 		this.mRole = mRole;
-		this.mParticipant = mParticipant;
+		this.setPerson(mParticipant);
 		this.mTime = mTime;
 	}
 	/**
@@ -48,13 +48,13 @@ public class Participation {
 	 * @return the mParticipant
 	 */
 	public Person getmParticipant() {
-		return mParticipant;
+		return this.getPerson();
 	}
 	/**
 	 * @param mParticipant the mParticipant to set
 	 */
 	public void setmParticipant(Person mParticipant) {
-		this.mParticipant = mParticipant;
+		this.setPerson(mParticipant);
 	}
 	/**
 	 * @return the mTime

@@ -82,6 +82,10 @@ public class DBProvider {
 			    
 			    dbConfiguration.objectClass(Route.class).cascadeOnUpdate(true);
 			    dbConfiguration.objectClass(Route.class).cascadeOnDelete(true);
+			    
+			    dbConfiguration.objectClass(eu.fbk.dycapo.models.Participation.class).objectField(eu.fbk.dycapo.models.Participation.PERSON).indexed(true);
+			    dbConfiguration.objectClass(eu.fbk.dycapo.models.Participation.class).cascadeOnUpdate(true);
+			    dbConfiguration.objectClass(eu.fbk.dycapo.models.Participation.class).cascadeOnDelete(true);
 			  			   
 			 	dbConfiguration.lockDatabaseFile(false);
 			    dbConfiguration.messageLevel(2);

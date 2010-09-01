@@ -3,6 +3,9 @@
  */
 package eu.fbk.dycapo.factories.json;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,13 +62,12 @@ public abstract class PersonFetcher {
 		return null;
 	}
 
-	public static final Person[] fetchPersons(JSONArray value) throws DycapoException {
-		
+	public static final List<Person> fetchPersons(JSONArray value) throws DycapoException {
 		int size = value.length();
-		Person[] persons = new Person[size];
+		List<Person> persons = new ArrayList<Person>();
 		for (int i = 0; i< size; i++ ){
 			try {
-				persons[i] = PersonFetcher.fetchPerson(value.getJSONObject(i));
+				persons.add(PersonFetcher.fetchPerson(value.getJSONObject(i)));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

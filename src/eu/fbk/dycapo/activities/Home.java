@@ -27,7 +27,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 import eu.fbk.dycapo.exceptions.DycapoException;
-import eu.fbk.dycapo.models.Response;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBProvider;
 import eu.fbk.dycapo.persistency.User;
@@ -203,9 +202,9 @@ public class Home extends Activity implements OnClickListener{
 						
 					//TODO connect to dycapo via REST
 						try {
-							Response response = (Response)DycapoServiceClient.callDycapo(DycapoServiceClient.POST, "persons", usr.toJSONObject(),null,null);
+							Object response = DycapoServiceClient.callDycapo(DycapoServiceClient.POST, "persons", usr.toJSONObject(),null,null);
 							
-							Toast.makeText(Home.this, Response.resolveType((response.getCode())),Toast.LENGTH_LONG);
+							Toast.makeText(Home.this, response.getClass().getName(),Toast.LENGTH_LONG);
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

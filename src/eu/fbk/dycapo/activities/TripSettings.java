@@ -35,16 +35,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import eu.fbk.dycapo.exceptions.DycapoException;
-import eu.fbk.dycapo.factories.DycapoObjectsFactory;
 import eu.fbk.dycapo.models.Location;
-import eu.fbk.dycapo.models.Response;
 import eu.fbk.dycapo.models.Trip;
 import eu.fbk.dycapo.persistency.ActiveTrip;
 import eu.fbk.dycapo.persistency.DBMode;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBPrefs;
 import eu.fbk.dycapo.persistency.DBTrip;
-import eu.fbk.dycapo.services.Dycapo;
 import eu.fbk.dycapo.services.DycapoServiceClient;
 
 
@@ -366,10 +363,11 @@ public class TripSettings extends Activity implements OnClickListener {
 						new AlertDialog.Builder(TripSettings.this).setTitle("User List").setPositiveButton("Ok", null)
 						.setCancelable(true).setMessage(aTrip.toJSONObject().toString()).show();
 						
-						Response response = (Response) DycapoServiceClient.callDycapo(DycapoServiceClient.POST, "trips/", aTrip.toJSONObject(),DBPerson.getUser().getUsername(),DBPerson.getUser().getPassword());
-						if (response.getType().toLowerCase().equals(Response.resolveType(Response.TRIP))){
+						Object response = DycapoServiceClient.callDycapo(DycapoServiceClient.POST, "trips", aTrip.toJSONObject(),DBPerson.getUser().getUsername(),DBPerson.getUser().getPassword());
+						if (response instanceof Trip){
+							Trip value = (Trip) response;
 							Log.d(TAG, "Trip type");
-							aTrip.setId(((Trip)response.getValue()).getId());
+							aTrip.setId(value.getId());
 							Trip trip = aTrip;
 							Log.d(TAG, "Saving Dycapo Trip as Active");
 							DBTrip.saveActiveTrip(aTrip);

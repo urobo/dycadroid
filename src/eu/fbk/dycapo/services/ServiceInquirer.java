@@ -1,24 +1,16 @@
 package eu.fbk.dycapo.services;
 
-import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 import eu.fbk.dycapo.bundles.LocationBundle;
-import eu.fbk.dycapo.bundles.TripBundle;
-import eu.fbk.dycapo.exceptions.DycapoException;
-import eu.fbk.dycapo.factories.DycapoObjectsFactory;
 import eu.fbk.dycapo.models.Location;
-import eu.fbk.dycapo.models.Response;
-import eu.fbk.dycapo.models.Trip;
 
 public class ServiceInquirer extends Service{
 	private static final String TAG = "ServiceInquirer";

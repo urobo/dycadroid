@@ -4,36 +4,26 @@
 package eu.fbk.dycapo.services;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
-
 import eu.fbk.dycapo.exceptions.DycapoException;
-import eu.fbk.dycapo.factories.DycapoObjectsFactory;
-import eu.fbk.dycapo.maputils.DirectionsResponseParser;
-import eu.fbk.dycapo.persistency.DBPerson;
+import eu.fbk.dycapo.util.StreamConverter;
 
 /**
  * @author riccardo
@@ -48,25 +38,23 @@ public abstract class DycapoServiceClient {
 	
 	private static final String TAG = "DycapoServiceClient";
 	
+	public static final String MESSAGE = "message";
 	public static final int HEAD = 0;
 	public static final int GET = 1;
 	public static final int POST = 2;
 	public static final int PUT = 3;
 	public static final int DELETE = 4;
-	
-	public static final Object callDycapo(int method,String uri,JSONObject jsonObject,String username,String password) throws DycapoException, JSONException{
+		
+	public static final String callDycapo(int method,String uri,JSONObject jsonObject,String username,String password) throws DycapoException, JSONException{
 		HttpResponse response = doJSONRequest(method,uri,jsonObject,username,password);
 		try {
-			String stringResp = DirectionsResponseParser.convertStreamToString(response.getEntity().getContent());
+			String stringResp = StreamConverter.convertStreamToString(response.getEntity().getContent());
 			Log.d(TAG, stringResp);
-			
-			return DycapoObjectsFactory.getDycapoObject(DycapoObjectsFactory.REST, new JSONObject(stringResp), true);
+			return stringResp;
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Log.e(TAG, e.getMessage());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Log.e(TAG, e.getMessage());
 		}
