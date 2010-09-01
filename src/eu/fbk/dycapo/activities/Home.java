@@ -27,6 +27,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 import eu.fbk.dycapo.exceptions.DycapoException;
+import eu.fbk.dycapo.factories.json.UserMapper;
+import eu.fbk.dycapo.models.Person;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBProvider;
 import eu.fbk.dycapo.persistency.User;
@@ -56,10 +58,10 @@ public class Home extends Activity implements OnClickListener{
             RadioButton rb = (RadioButton) v;
             switch(rb.getId()){
             case R.id.maleGender:
-            	gender = "male";
+            	gender = Person.MALE;
             	break;
             case R.id.femaleGender:
-            	gender = "female";
+            	gender = Person.FEMALE;
             	break;
             }
             
@@ -160,8 +162,6 @@ public class Home extends Activity implements OnClickListener{
 			
 			builder.setView(layoutRegister);
 			builder.setCancelable(false);
-			((RadioButton)layoutRegister.findViewById(R.id.setFemaleGender)).setOnClickListener(gender_listener);
-			((RadioButton)layoutRegister.findViewById(R.id.setFemaleGender)).setOnClickListener(gender_listener);
 			d=builder.create();
 			d.setTitle("Register");
 			d.setButton("Register", new android.content.DialogInterface.OnClickListener(){
@@ -171,7 +171,8 @@ public class Home extends Activity implements OnClickListener{
 					String passwordIn = ((EditText)layoutRegister.findViewById(R.id.newgetNewPassword)).getText().toString();
 					String passwordConfirmIn = ((EditText)layoutRegister.findViewById(R.id.newgetConfirmNewPassword)).getText().toString();
 					String emailIn = ((EditText)layoutRegister.findViewById(R.id.newGetEmail)).getText().toString();
-					
+					RadioButton male = (RadioButton)layoutRegister.findViewById(R.id.setMaleGender);
+					RadioButton female = (RadioButton)layoutRegister.findViewById(R.id.setFemaleGender);
 					User usr= new User();
 					try {
 						
@@ -197,16 +198,18 @@ public class Home extends Activity implements OnClickListener{
 						TelephonyManager tMgr =(TelephonyManager)Home.this.getSystemService(Context.TELEPHONY_SERVICE);
 						String phoneNum = tMgr.getLine1Number();
 						usr.setPhone(phoneNum);
-						if(gender instanceof String)
-							usr.setGender(gender);
-						
+						usr.setGender(Person.MALE);
+						if (male.isChecked())
+							usr.setGender(Person.MALE);
+						else if (female.isChecked())
+							usr.setGender(Person.FEMALE);
 					//TODO connect to dycapo via REST
 						try {
-							Object response = DycapoServiceClient.callDycapo(DycapoServiceClient.POST, "persons", usr.toJSONObject(),null,null);
+							Object response = DycapoServiceClient.callDycapo(DycapoServiceClient.POST, "persons", UserMapper.fromUserToJSONObject(usr),null,null);
 							
 							Toast.makeText(Home.this, response.getClass().getName(),Toast.LENGTH_LONG);
 						} catch (JSONException e) {
-							// TODO Auto-generated catch block
+							Toast.makeText(Home.this, e.getMessage(), Toast.LENGTH_LONG);
 							e.printStackTrace();
 						}
 						

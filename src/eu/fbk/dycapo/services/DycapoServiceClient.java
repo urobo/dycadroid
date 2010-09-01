@@ -46,10 +46,10 @@ public abstract class DycapoServiceClient {
 	public static final int DELETE = 4;
 		
 	public static final String callDycapo(int method,String uri,JSONObject jsonObject,String username,String password) throws DycapoException, JSONException{
+		Log.d(TAG, jsonObject.toString());
 		HttpResponse response = doJSONRequest(method,uri,jsonObject,username,password);
 		try {
 			String stringResp = StreamConverter.convertStreamToString(response.getEntity().getContent());
-			Log.d(TAG, stringResp);
 			return stringResp;
 		} catch (IllegalStateException e) {
 			e.printStackTrace();

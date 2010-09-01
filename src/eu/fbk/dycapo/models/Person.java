@@ -14,7 +14,6 @@ import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
  */
 public class Person implements DycapoJSONObjects{
 	public static final String TAG = "Person";
-	
 	public static final String USERNAME="username";
 	public static final String EMAIL="email";
 	public static final String FIRST_NAME="first_name";
@@ -28,6 +27,9 @@ public class Person implements DycapoJSONObjects{
 	public static final String BLIND="blind";
 	public static final String DEAF="deaf";
 	public static final String DOG="dog";
+	
+	public static final String MALE = "M";
+	public static final String FEMALE = "F";
 	
 	private String username;	//must
 	private String email;		//may	
