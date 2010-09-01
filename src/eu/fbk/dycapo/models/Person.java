@@ -24,7 +24,7 @@ public class Person implements DycapoJSONObjects,XMLRPCModel{
 	public static final String LAST_NAME="last_name";
 	public static final String URL="url";
 	public static final String PHONE="phone";
-	public static final String POSITION="position";
+	public static final String POSITION="location";
 	public static final String AGE="age";
 	public static final String GENDER="gender";
 	public static final String SMOKER="smoker";

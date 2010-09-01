@@ -33,8 +33,8 @@ public class Trip implements XMLRPCModel,DycapoJSONObjects {
 	public static final String EXPIRES="expires";
 	public static final String CONTENT="content";
 	public static final String AUTHOR="author";
-	public static final String MODE="mode";
-	public static final String PREFERENCES="prefs";
+	public static final String MODE="modality";
+	public static final String PREFERENCES="preferences";
 	public static final String LOCATIONS="locations";
 	
 	protected Integer id;

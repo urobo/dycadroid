@@ -3,10 +3,6 @@
  */
 package eu.fbk.dycapo.factories.json;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

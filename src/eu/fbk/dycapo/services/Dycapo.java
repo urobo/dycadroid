@@ -8,8 +8,8 @@ package eu.fbk.dycapo.services;
  *
  */
 public final class Dycapo {
-	//public static final String DYCAPO_URL="http://test.dycapo.org/RPC2";
-	public static final String DYCAPO_URL = "http://172.10.0.2/RPC2";
+	public static final String DYCAPO_URL="http://test.dycapo.org/RPC2";
+	//public static final String DYCAPO_URL = "http://172.10.0.2/RPC2";
 	//public static final String DYCAPO_URL="http://10.7.199.77/RPC2";
 	
 	public static final String DYCAPO_REGISTRATION_USERNAME = "register";
@@ -17,25 +17,25 @@ public final class Dycapo {
 	
 	public static final String[] DYCAPO_METHODS={
 		
-		"dycapo.accept_ride_request",	//	dycapo.accept_ride_request ( Trip trip , Person person )
-		"dycapo.add_trip",				//	dycapo.add_trip ( Trip trip , Mode mode , Prefs preferences , Location source , Location destination )
-		"dycapo.cancel_requested_ride",	//	dycapo.cancel_requested_ride ( Trip trip )
-		"dycapo.change_password",		//	dycapo.change_password ( Person person )
+		"dycapo.acceptRide",	//	dycapo.accept_ride_request ( Trip trip , Person person )
+		"dycapo.insertTrip",				//	dycapo.add_trip ( Trip trip , Mode mode , Prefs preferences , Location source , Location destination )
+		"dycapo.cancelRide",	//	dycapo.cancel_requested_ride ( Trip trip )
+		"dycapo.changePassword",		//	dycapo.change_password ( Person person )
 		
-		"dycapo.check_requested_ride",	//	dycapo.check_requested_ride ( Trip trip )
-		"dycapo.check_ride_requests",	//	dycapo.check_ride_requests ( Trip trip )
-		"dycapo.finish_ride",			//	dycapo.finish_ride ( Trip trip )
-		"dycapo.finish_trip",			//	dycapo.finish_trip ( Trip trip )
-		"dycapo.get_position",			//	dycapo.get_position ( Person person )
+		"dycapo.statusRequestedRide",	//	dycapo.check_requested_ride ( Trip trip )
+		"dycapo.getRides",	//	dycapo.check_ride_requests ( Trip trip )
+		"dycapo.finishRide",			//	dycapo.finish_ride ( Trip trip )
+		"dycapo.finishTrip",			//	dycapo.finish_trip ( Trip trip )
+		"dycapo.getPosition",			//	dycapo.get_position ( Person person )
 		
-		"dycapo.refuse_ride_request",	//	dycapo.refuse_ride_request ( Trip trip , Person person )
+		"dycapo.refuseRide",	//	dycapo.refuse_ride_request ( Trip trip , Person person )
 		"dycapo.register",				//	dycapo.register ( Person person )
-		"dycapo.request_ride",			//	dycapo.request_ride ( Trip trip )
-		"dycapo.search_trip",			//	dycapo.search_trip ( Location source , Location destination )
-		"dycapo.start_ride",			//	dycapo.start_ride ( Trip trip )
+		"dycapo.requestRide",			//	dycapo.request_ride ( Trip trip )
+		"dycapo.searchRide",			//	dycapo.search_trip ( Location source , Location destination )
+		"dycapo.startRide",			//	dycapo.start_ride ( Trip trip )
 		
-		"dycapo.start_trip",			//	dycapo.start_trip ( Trip trip )
-		"dycapo.update_position"		//	dycapo.update_position ( Location position )
+		"dycapo.startTrip",			//	dycapo.start_trip ( Trip trip )
+		"dycapo.setPosition"		//	dycapo.update_position ( Location position )
 		};
 	
 	public static final int ACCEPT_RIDE_REQUEST = 0;

@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.json.JSONException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -43,6 +45,7 @@ import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBPrefs;
 import eu.fbk.dycapo.persistency.DBTrip;
 import eu.fbk.dycapo.services.Dycapo;
+import eu.fbk.dycapo.services.DycapoServiceClient;
 import eu.fbk.dycapo.xmlrpc.XMLRPCClient;
 import eu.fbk.dycapo.xmlrpc.XMLRPCException;
 
@@ -349,42 +352,48 @@ public class TripSettings extends Activity implements OnClickListener {
 			try {
 				ActiveTrip aTrip = DBTrip.getActiveTrip();
 				Calendar c = Calendar.getInstance();
-				c.setTime(aTrip.getOrigin().getLeaves());
-				c.setTimeInMillis(c.getTimeInMillis() + (aTrip.getRoute().getmDurationSecs()*1000));
-				aTrip.getDestination().setLeaves(new Date(c.getTimeInMillis()));
-				aTrip.getMode().setVacancy(aTrip.getMode().getCapacity()-1);
-				aTrip.getMode().setKind("car");
-				aTrip.getPreferences().setAge("18-30");
-				try {
-					Log.d(TAG,"user: "+ DBPerson.getUser().getUsername() + " , passwd:"+ DBPerson.getUser().getPassword());
-					Object value = client.call(Dycapo.getMethod(Dycapo.ADD_TRIP), aTrip.toHashMap());
-					Response response = (Response) DycapoObjectsFactory.getDycapoObject(DycapoObjectsFactory.XMLRPC, value, true);
-					if (response.getType().toLowerCase().equals(Response.resolveType(Response.TRIP))){
-						Log.d(TAG, "Trip type");
-						aTrip.setId(((Trip)response.getValue()).getId());
-						Trip trip = aTrip;
-						Log.d(TAG, "Saving Dycapo Trip as Active");
-						DBTrip.saveActiveTrip(aTrip);
-						Log.d(TAG, "Saving Dycapo Trip as Normal");
-						DBTrip.saveTrip(trip);
-						
-						Intent intent = new Intent();
-						intent.setClass(TripSettings.this, Navigation.class);
-						TripSettings.this.startActivity(intent);
-					}
-				} catch (XMLRPCException e) {
-					Log.e(TAG + "XMLRPCException",e.getMessage());
-					throw new DycapoException(e.getMessage());
-				}
+				if (aTrip instanceof ActiveTrip){
+					c.setTime(aTrip.getOrigin().getLeaves());
 				
+					c.setTimeInMillis(c.getTimeInMillis() + (aTrip.getRoute().getmDurationSecs()*1000));
+					aTrip.getDestination().setLeaves(new Date(c.getTimeInMillis()));
+					aTrip.getMode().setVacancy(aTrip.getMode().getCapacity());
+					aTrip.getMode().setKind("car");
+					aTrip.getPreferences().setAge("18-30");
+					try {
+						Log.d(TAG,"user: "+ DBPerson.getUser().getUsername() + " , passwd:"+ DBPerson.getUser().getPassword());
+//						Object value = client.call(Dycapo.getMethod(Dycapo.ADD_TRIP), aTrip.toHashMap());
+//						Response response = (Response) DycapoObjectsFactory.getDycapoObject(DycapoObjectsFactory.XMLRPC, value, true);
+						Log.d(TAG, aTrip.toJSONObject().toString());
+						
+						new AlertDialog.Builder(TripSettings.this).setTitle("User List").setPositiveButton("Ok", null)
+						.setCancelable(true).setMessage(aTrip.toJSONObject().toString()).show();
+						
+						Response response = (Response) DycapoServiceClient.callDycapo(DycapoServiceClient.POST, "trips/", aTrip.toJSONObject());
+						if (response.getType().toLowerCase().equals(Response.resolveType(Response.TRIP))){
+							Log.d(TAG, "Trip type");
+							aTrip.setId(((Trip)response.getValue()).getId());
+							Trip trip = aTrip;
+							Log.d(TAG, "Saving Dycapo Trip as Active");
+							DBTrip.saveActiveTrip(aTrip);
+							Log.d(TAG, "Saving Dycapo Trip as Normal");
+							DBTrip.saveTrip(trip);
+						
+							Intent intent = new Intent();
+							intent.setClass(TripSettings.this, Navigation.class);
+							intent.putExtras(TripSettings.this.getIntent().getExtras());
+							TripSettings.this.startActivity(intent);
+						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						throw new DycapoException(e.getMessage());
+					}
+				}
 		}catch (DycapoException e){
 				pd.dismiss();
 				Log.e(TAG, e.getMessage());
 				e.alertUser(TripSettings.this);
-		} finally{
-			Intent intent = new Intent();
-			intent.setClass(TripSettings.this, Navigation.class);
-			TripSettings.this.startActivity(intent);
 		}
 	
 	}};
@@ -464,7 +473,7 @@ public class TripSettings extends Activity implements OnClickListener {
     	
     	
     	
-    	DBTrip.saveActiveTrip(trip,true);
+    	DBTrip.saveActiveTripFromTrip(trip);
    
     	Log.d(TAG,"Trip Saved");
 

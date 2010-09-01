@@ -20,9 +20,13 @@ public abstract class DycapoObjectsFactory {
 		Response response = null;
 		switch (method){
 		case XMLRPC:
+			Log.d(TAG, "xmlrpc call");
 			response =  eu.fbk.dycapo.factories.xmlrpc.DycapoObjectsFetcher.fetchXMLRPCResponse(value);
+			break;
 		case REST:
+			Log.d(TAG, "json call");
 			response =  eu.fbk.dycapo.factories.json.DycapoObjectsFetcher.fetchJSONResponse(value);
+			break;
 		}
 		if (log) logResponse(response);
 		return response;

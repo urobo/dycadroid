@@ -4,8 +4,14 @@
 package eu.fbk.dycapo.services;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -15,12 +21,15 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.factories.DycapoObjectsFactory;
 import eu.fbk.dycapo.maputils.DirectionsResponseParser;
+import eu.fbk.dycapo.persistency.DBPerson;
 
 /**
  * @author riccardo
@@ -31,13 +40,13 @@ import eu.fbk.dycapo.maputils.DirectionsResponseParser;
  *	DELETE		Deletes the specified resource.
  */
 public abstract class DycapoServiceClient {
-	public static final String URL_BASIS = "https://test.dycapo.org";
+	public static final String URL_BASIS = "http://test.dycapo.org/api/";
 	
-	private static final int HEAD = 0;
-	private static final int GET = 1;
-	private static final int POST = 2;
-	private static final int PUT = 3;
-	private static final int DELETE = 4;
+	public static final int HEAD = 0;
+	public static final int GET = 1;
+	public static final int POST = 2;
+	public static final int PUT = 3;
+	public static final int DELETE = 4;
 	
 	public static final Object callDycapo(int method,String uri,JSONObject jsonObject) throws DycapoException, JSONException{
 		HttpResponse response = doJSONRequest(method,uri,jsonObject);
@@ -56,28 +65,42 @@ public abstract class DycapoServiceClient {
 	
 	private static final HttpResponse doJSONRequest(int method,String uri,JSONObject jsonObject){
 		DefaultHttpClient httpclient = new DefaultHttpClient();
-		HttpRequestBase request = null;
-		switch(method){
-		case HEAD:
-			request = new HttpHead();
-			break;
-		case GET:
-			request = new HttpGet();
-			break;
-		case POST:
-			request = new HttpPost();
-			break;
-		case PUT:
-			request = new HttpPut();
-			break;
-		case DELETE:
-			request = new HttpDelete();
-			break;
-		}
-		StringEntity se;
-		//se = new StringEntity(jsonObjSend.toString());
+		StringBuilder sb =new StringBuilder();
+		sb.append(URL_BASIS);
+		sb.append(uri);
+		URI uriF;
 		try {
-			HttpResponse response = (HttpResponse) httpclient.execute(request);
+			uriF = new URI(sb.toString());
+		
+			httpclient.getCredentialsProvider().setCredentials(
+		        new AuthScope(uriF.getHost(), uriF.getPort(),AuthScope.ANY_REALM),
+		        new UsernamePasswordCredentials(DBPerson.getUser().getUsername(), DBPerson.getUser().getPassword()));
+			HttpResponse response = null;
+
+			switch(method){
+			case HEAD:
+				HttpHead requestHead = new HttpHead();
+				break;
+			case GET:
+				HttpGet requestGet = new HttpGet();
+				break;
+			case POST:
+				StringEntity se;
+				se = new StringEntity(jsonObject.toString());
+				
+				se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+				HttpEntity e = se;
+				HttpPost requestPost = new HttpPost();
+				requestPost.setEntity(e);
+				response = (HttpResponse) httpclient.execute(requestPost);
+				break;
+			case PUT:
+				HttpPut requestPut = new HttpPut();
+				break;
+			case DELETE:
+				HttpDelete requestDelete = new HttpDelete();
+				break;
+			}
 			return response;
 		} catch (ClientProtocolException e) {
 	
@@ -85,6 +108,9 @@ public abstract class DycapoServiceClient {
 		} catch (IOException e) {
 			
 			e.printStackTrace();
+		} catch (URISyntaxException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 
 		return null;

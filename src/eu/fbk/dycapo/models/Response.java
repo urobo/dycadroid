@@ -16,7 +16,7 @@ public class Response {
 	public static final String VALUE = "value";
 	public static final String[] TYPES = {  "boolean",
 											"location",
-											"mode",
+											"modality",
 											"person",
 											"trip",
 											"person[]",

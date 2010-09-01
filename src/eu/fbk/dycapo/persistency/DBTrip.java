@@ -35,33 +35,19 @@ public final class DBTrip {
 		
 	}
 	
-	public static void saveActiveTrip (Trip trip,boolean asd){
-		 
+	public static void saveActiveTripFromTrip (Trip trip){
+		Log.d(TAG, "saving ActiveTrip from Trip");
 		ActiveTrip aTrip = new ActiveTrip(trip);
-		try {
-			DBTrip.saveTrip(trip);
-		} catch (DycapoException e) {
-			Log.e(TAG, e.getMessage());
-		}
 		aTrip.setActive(true);
-		
 		ObjectContainer db=DBProvider.getDatabase();
-	
-//		/final int id = aTrip.getId();
-//		List <ActiveTrip> duplicate = db.query(new Predicate<ActiveTrip>() {
-//		    public boolean match(ActiveTrip trip) {
-//		        return trip.getId() == id;
-//		    }
-//		});
-		
-	
 		db.delete(ActiveTrip.class);
 		db.store(aTrip);
 		db.commit();
+		Log.d(TAG, "Trip Saved!");
 	}
 	
 	public static void saveActiveTrip (ActiveTrip trip){
-		Log.d(TAG, "saving ActiveTrip from trip");
+		Log.d(TAG, "saving ActiveTrip from ActiveTrip");
 		ObjectContainer db=DBProvider.getDatabase();
 		db.delete(ActiveTrip.class);
 		db.store(trip);

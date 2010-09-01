@@ -20,13 +20,13 @@ import eu.fbk.dycapo.xmlrpc.XMLRPCModel;
  *
  */
 public class Mode implements DycapoJSONObjects,XMLRPCModel {
-	public static final String TAG = "Mode";
+	public static final String TAG = "Modality";
 	
 	public static final String KIND="kind";
 	public static final String CAPACITY="capacity";
 	public static final String VACANCY="vacancy";
 	public static final String MAKE="make";
-	public static final String MODEL="model";
+	public static final String MODEL="model_name";
 	public static final String YEAR="year";
 	public static final String COLOR="color";
 	public static final String LIC="lic";

@@ -74,16 +74,16 @@ public abstract class DycapoObjectsFetcher {
 						response.setValue(DycapoObjectsFetcher.extractPersons((Object[])responseValue));
 					
 					}else if (type.equals(Response.TYPES[6])){
-						Log.d(Tag.LOG +"+"+TAG+"."+Response.resolveType(Response.PERSONS), "type.equals(Response.TYPES[5]) == "+Response.resolveType(Response.PERSONS));
+						Log.d(Tag.LOG +"+"+TAG+"."+Response.resolveType(Response.MESSAGE), "type.equals(Response.TYPES[6]) == "+Response.resolveType(Response.MESSAGE));
 						HashMap<String,String> errorMap = (HashMap<String,String>)responseValue;
 						if (!errorMap.isEmpty()){
 							Set<String> keys = errorMap.keySet();
 							Iterator<String> i =  keys.iterator();
 							String errorMsg = "";
 							while(i.hasNext()){
-								errorMsg = i.next() +" "+ errorMap.get(i.next());
+								errorMsg = errorMap.get(i.next());
 							}
-							throw new DycapoException (errorMsg);
+							response.setValue(errorMsg);
 						}
 						
 					}

@@ -28,22 +28,22 @@
     		android:layout_height="wrap_content"
     		android:layout_alignTop="@id/myMapView1">
     		<Button
-    			android:id="@+id/Participants"
-    			android:text="Participants"
+    			android:id="@+id/navButton1"
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
+    			android:textColor="#000000"
     		/>
     		<Button
-    			android:id="@+id/startParticipation"
-    			android:text="Start Participation"
+    			android:id="@+id/navButton2"
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
+    			android:textColor="#000000"
     		/>
     		<Button
-    			android:id="@+id/endTrip"
-    			android:text="Finish"
+    			android:id="@+id/navButton3"
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
+    			android:textColor="#000000"
     		/>
     	</LinearLayout>
 </RelativeLayout>
