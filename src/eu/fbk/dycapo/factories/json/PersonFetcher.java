@@ -22,7 +22,11 @@ public abstract class PersonFetcher {
 		
 		Person result = new Person();
 		String message = "error PersonFetcher.fetchPerson : not enough parameters are given to define a person: missing ";
-		try{	
+		try{
+			
+			if (responseValue.has(DycapoObjectsFetcher.HREF))
+				result.setHref(responseValue.getString(DycapoObjectsFetcher.HREF));
+			
 			//must
 			//username
 			if (responseValue.has(Person.USERNAME))

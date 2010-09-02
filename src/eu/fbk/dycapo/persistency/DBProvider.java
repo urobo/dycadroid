@@ -11,6 +11,7 @@ import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Mode;
 import eu.fbk.dycapo.models.Person;
 import eu.fbk.dycapo.models.Preferences;
+import eu.fbk.dycapo.models.Search;
 import eu.fbk.dycapo.models.Trip;
 
 /**
@@ -82,6 +83,9 @@ public class DBProvider {
 			    
 			    dbConfiguration.objectClass(Route.class).cascadeOnUpdate(true);
 			    dbConfiguration.objectClass(Route.class).cascadeOnDelete(true);
+			    
+			    dbConfiguration.objectClass(Search.class).cascadeOnDelete(true);
+			    dbConfiguration.objectClass(Search.class).cascadeOnUpdate(true);
 			    
 			    dbConfiguration.objectClass(eu.fbk.dycapo.models.Participation.class).objectField(eu.fbk.dycapo.models.Participation.PERSON).indexed(true);
 			    dbConfiguration.objectClass(eu.fbk.dycapo.models.Participation.class).cascadeOnUpdate(true);

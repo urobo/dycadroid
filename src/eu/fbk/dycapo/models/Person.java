@@ -44,6 +44,7 @@ public class Person implements DycapoJSONObjects{
 	private Boolean blind;		//should
 	private Boolean deaf;		//should
 	private Boolean dog;		//should
+	protected String href;
 		
 	/**
 	 * 
@@ -311,6 +312,21 @@ public class Person implements DycapoJSONObjects{
 	 */
 	public void setDog(Boolean dog) {
 		this.dog = dog;
+	}
+
+	/**
+	 * @return the href
+	 */
+	public String getHref() {
+		return href;
+	}
+
+
+	/**
+	 * @param href the href to set
+	 */
+	public void setHref(String href) {
+		this.href = href;
 	}
 
 	@Override

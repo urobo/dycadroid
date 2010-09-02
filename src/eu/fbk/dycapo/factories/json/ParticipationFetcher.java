@@ -21,10 +21,14 @@ public abstract class ParticipationFetcher {
 	public static final Participation fetchParticipation(JSONObject jsonObject) throws DycapoException{
 		Participation participation = new Participation();
 		try {
-		if (jsonObject.has(Participation.PERSON))
-			participation.setPerson(PersonFetcher.fetchPerson(jsonObject.getJSONObject(Participation.PERSON)));
-		if (jsonObject.has(Participation.STATUS))
-			participation.setStatus(jsonObject.getString(Participation.STATUS));
+			if (jsonObject.has(DycapoObjectsFetcher.HREF))
+				participation.setHref(jsonObject.getString(DycapoObjectsFetcher.HREF));
+			
+			if (jsonObject.has(Participation.PERSON))
+				participation.setPerson(PersonFetcher.fetchPerson(jsonObject.getJSONObject(Participation.PERSON)));
+			
+			if (jsonObject.has(Participation.STATUS))
+				participation.setStatus(jsonObject.getString(Participation.STATUS));
 		} catch (JSONException e) {
 			Log.e(TAG, e.getMessage());
 			e.printStackTrace();

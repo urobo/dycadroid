@@ -38,6 +38,7 @@ public class Mode implements DycapoJSONObjects{
 	private String color;			//should
 	private String lic;				//should
 	private Double cost;			//should
+	protected String href;
 	
 	/**
 	 * @param kind
@@ -208,6 +209,19 @@ public class Mode implements DycapoJSONObjects{
 		this.cost = cost;
 	}
 
+	/**
+	 * @return the href
+	 */
+	public String getHref() {
+		return href;
+	}
+
+	/**
+	 * @param href the href to set
+	 */
+	public void setHref(String href) {
+		this.href = href;
+	}
 
 	@Override
 	public JSONObject toJSONObject() {

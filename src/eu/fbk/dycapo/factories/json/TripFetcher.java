@@ -6,6 +6,7 @@ package eu.fbk.dycapo.factories.json;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,8 +31,12 @@ public abstract class TripFetcher {
 			Trip result= new Trip();
 			String message = "error TripFetcher.fetchTrip : not enough parameters are given to define a Trip: missing ";
 			
+			if (responseValue.has(DycapoObjectsFetcher.HREF))
+				result.setHref(responseValue.getString(DycapoObjectsFetcher.HREF));
+			
 			if (responseValue.has(Trip.ID))
 				result.setId(responseValue.getInt(Trip.ID));
+			
 			else throw new DycapoException (message + Trip.ID);
 			
 			if(responseValue.has(Trip.EXPIRES))
@@ -108,6 +113,20 @@ public abstract class TripFetcher {
 		}catch(JSONException e){
 			e.printStackTrace();
 			
+		}
+		return null;
+	}
+	
+	public static final List<Trip> extractTrips(JSONArray value) throws DycapoException{
+		List<Trip> trips = new ArrayList<Trip>();
+		try {
+			for (int i = 0 ; i < value.length(); i++){
+				trips.add(fetchTrip(value.getJSONObject(i)));
+			}
+			return trips;
+		} catch (JSONException e) {
+			Log.e(TAG, e.getMessage());
+			e.printStackTrace();
 		}
 		return null;
 	}

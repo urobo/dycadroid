@@ -107,7 +107,7 @@ public class Preferences implements DycapoJSONObjects {
 	private Boolean drive;			//may
 	private Boolean ride;			//may
 	private Boolean pet;			//may
-	
+	protected String href;
 	/**
 	 * @return the age
 	 */
@@ -140,6 +140,20 @@ public class Preferences implements DycapoJSONObjects {
 		this.gender = gender;
 		this.drive = drive;
 		this.ride = ride;
+	}
+
+	/**
+	 * @return the href
+	 */
+	public String getHref() {
+		return href;
+	}
+
+	/**
+	 * @param href the href to set
+	 */
+	public void setHref(String href) {
+		this.href = href;
 	}
 
 	@Override

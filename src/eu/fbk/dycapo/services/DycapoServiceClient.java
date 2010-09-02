@@ -38,18 +38,71 @@ public abstract class DycapoServiceClient {
 	
 	private static final String TAG = "DycapoServiceClient";
 	
+	
+	/**
+	 * @param code
+	 * @return
+	 * @throws DycapoException 
+	 */
+	public static final void translateStatusCode(int code,boolean log) throws DycapoException
+	{
+		boolean eThrow = false;
+		String msg = null;
+		switch(code){
+		case 200:
+			msg = "Ok!";
+			break;
+		case 201:
+			msg = "Resource Created";
+			break;
+		case 204:
+			msg = "Resource Deleted";
+			break;
+		case 401:
+			msg = "Unauthorized! Invalid Credentials";
+			eThrow = true;
+			break;
+		case 403:
+			msg = "Forbidden";
+			eThrow = true;
+			break;
+		case 404:
+			msg = "Resource Not Found";
+			eThrow = true;
+			break;
+		case 415:
+			msg = "Unsupported Media Type";
+			eThrow = true;
+			break;
+		}
+		
+		if (log == true)
+			Log.d(TAG + ".translateStatusCode", "status code: "+code + "message: " + msg);
+		if (eThrow == true)
+			Log.e(TAG, msg);
+			throw new DycapoException ("status code : " + String.valueOf(code));
+	}
+	
+	
 	public static final String MESSAGE = "message";
 	public static final int HEAD = 0;
 	public static final int GET = 1;
 	public static final int POST = 2;
 	public static final int PUT = 3;
 	public static final int DELETE = 4;
-		
+	
+	
 	public static final String callDycapo(int method,String uri,JSONObject jsonObject,String username,String password) throws DycapoException, JSONException{
 		Log.d(TAG, jsonObject.toString());
 		HttpResponse response = doJSONRequest(method,uri,jsonObject,username,password);
+
 		try {
 			String stringResp = StreamConverter.convertStreamToString(response.getEntity().getContent());
+			try{
+				translateStatusCode(response.getStatusLine().getStatusCode(),true);
+			}catch(DycapoException e){
+				throw new DycapoException(e.getMessage() + " cause : " + stringResp);
+			}
 			return stringResp;
 		} catch (IllegalStateException e) {
 			e.printStackTrace();

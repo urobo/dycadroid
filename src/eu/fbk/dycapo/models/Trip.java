@@ -45,7 +45,7 @@ public class Trip implements DycapoJSONObjects {
 	protected Location origin;			//must
 	protected Location destination;		//must
 	protected ArrayList<Location> waypoints;		//must
-	
+	protected String href;
 	/**
 	 * @param expires
 	 * @param author
@@ -223,6 +223,21 @@ public class Trip implements DycapoJSONObjects {
 	 */
 	public void setWaypoints(ArrayList<Location> waypoints) {
 		this.waypoints = waypoints;
+	}
+
+	/**
+	 * @return the href
+	 */
+	public String getHref() {
+		return href;
+	}
+
+
+	/**
+	 * @param href the href to set
+	 */
+	public void setHref(String href) {
+		this.href = href;
 	}
 
 	@Override

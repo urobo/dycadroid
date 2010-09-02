@@ -17,8 +17,11 @@ public abstract class PreferencesFetcher {
 		Preferences result = new Preferences();
 		
 		try{
-		
-			if (jsonObject.has(Preferences.AGE))result.setAge(jsonObject.getString(Preferences.AGE));
+			if (jsonObject.has(DycapoObjectsFetcher.HREF))
+				result.setHref(jsonObject.getString(DycapoObjectsFetcher.HREF));
+			
+			if (jsonObject.has(Preferences.AGE))
+				result.setAge(jsonObject.getString(Preferences.AGE));
 		
 			if (jsonObject.has(Preferences.DRIVE))
 				result.setDrive(jsonObject.getBoolean(Preferences.DRIVE));

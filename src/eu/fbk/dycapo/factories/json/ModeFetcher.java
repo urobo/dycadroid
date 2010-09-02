@@ -17,13 +17,17 @@ public abstract class ModeFetcher {
 	public static final Mode fetchMode(JSONObject responseValue) throws DycapoException{
 
 		Mode result = new Mode();
-		try{	
-			if(responseValue.has(Mode.CAPACITY))
+		try{
+			
+			if (responseValue.has(DycapoObjectsFetcher.HREF))
+				result.setHref(responseValue.getString(DycapoObjectsFetcher.HREF));
+			
+			if (responseValue.has(Mode.CAPACITY))
 				result.setCapacity(responseValue.getInt(Mode.CAPACITY));
 			else 
 				throw new DycapoException("error ModeFetcher.fetchMode : Mode.CAPACITY is compulsory");
 			
-			if(responseValue.has(Mode.COLOR))
+			if (responseValue.has(Mode.COLOR))
 				result.setColor(responseValue.getString(Mode.COLOR));
 		
 			if (responseValue.has(Mode.COST))

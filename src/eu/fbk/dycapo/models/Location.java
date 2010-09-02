@@ -61,6 +61,7 @@ public class Location implements DycapoJSONObjects{
 	protected String recurs;			//may
 	protected String days;			//may
 	protected Date leaves; 			//must
+	protected String href;
 	/**
 	 * 
 	 */
@@ -267,6 +268,20 @@ public class Location implements DycapoJSONObjects{
 	 */
 	public void setLeaves(Date leaves) {
 		this.leaves = leaves;
+	}
+	
+	/**
+	 * @return the href
+	 */
+	public String getHref() {
+		return href;
+	}
+
+	/**
+	 * @param href the href to set
+	 */
+	public void setHref(String href) {
+		this.href = href;
 	}
 
 	@Override

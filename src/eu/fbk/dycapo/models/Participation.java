@@ -26,6 +26,7 @@ public class Participation implements DycapoJSONObjects{
 	
 	private Person person;
 	private String status;
+	protected String href;
 	/**
 	 * @return the person
 	 */
@@ -50,6 +51,20 @@ public class Participation implements DycapoJSONObjects{
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	/**
+	 * @return the href
+	 */
+	public String getHref() {
+		return href;
+	}
+	/**
+	 * @param href the href to set
+	 */
+	public void setHref(String href) {
+		this.href = href;
+	}
+	
 	@Override
 	public JSONObject toJSONObject() {
 		JSONObject result = new JSONObject();

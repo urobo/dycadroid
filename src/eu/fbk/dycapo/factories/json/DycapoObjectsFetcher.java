@@ -23,35 +23,8 @@ import eu.fbk.dycapo.models.Trip;
  */
 
 public abstract class DycapoObjectsFetcher {
-	private static final String TAG ="DycapoObjectsFetcher";
-	
-
-	
-	/**
-	 * @param code
-	 * @return
-	 */
-	public static final String translateStatusCode(int code)
-	{
-		switch(code){
-		case 200:
-			return "Ok";
-		case 201:
-			return "Resource Created";
-		case 204:
-			return "Resource Deleted";
-		case 401:
-			return "Unauthorized! Invalid Credentials";
-		case 403:
-			return "Forbidden";
-		case 404:
-			return "Resource Not Found";
-		case 415:
-			return "Unsupported Media Type";
-		}
-		return null;
-	}
-	
+	private static final String TAG = "DycapoObjectsFetcher";
+	public static final String HREF = "href";
 	/**
 	 * @param jsonArray
 	 * @return
