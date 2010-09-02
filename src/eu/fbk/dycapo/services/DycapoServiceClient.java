@@ -78,9 +78,10 @@ public abstract class DycapoServiceClient {
 		
 		if (log == true)
 			Log.d(TAG + ".translateStatusCode", "status code: "+code + "message: " + msg);
-		if (eThrow == true)
+		if (eThrow == true){
 			Log.e(TAG, msg);
 			throw new DycapoException ("status code : " + String.valueOf(code));
+		}
 	}
 	
 	
@@ -131,10 +132,10 @@ public abstract class DycapoServiceClient {
 
 			switch(method){
 			case HEAD:
-				HttpHead requestHead = new HttpHead();
+				
 				break;
 			case GET:
-				HttpGet requestGet = new HttpGet();
+				
 				break;
 			case POST:
 				StringEntity se;
@@ -147,10 +148,10 @@ public abstract class DycapoServiceClient {
 				response = (HttpResponse) httpclient.execute(requestPost);
 				break;
 			case PUT:
-				HttpPut requestPut = new HttpPut();
+			
 				break;
 			case DELETE:
-				HttpDelete requestDelete = new HttpDelete();
+				
 				break;
 			}
 			return response;
@@ -163,7 +164,7 @@ public abstract class DycapoServiceClient {
 			e.printStackTrace();
 			Log.e(TAG, e.getMessage());
 		} catch (URISyntaxException e1) {
-			// TODO Auto-generated catch block
+			
 			e1.printStackTrace();
 			Log.e(TAG, e1.getMessage());
 		}
