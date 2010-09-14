@@ -3,8 +3,14 @@
  */
 package eu.fbk.dycapo.activities.settings;
 
+import org.json.JSONException;
+
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,13 +23,16 @@ import eu.fbk.dycapo.models.Preferences;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBPrefs;
 import eu.fbk.dycapo.persistency.User;
+import eu.fbk.dycapo.services.DycapoServiceClient;
 
 /**
  * @author riccardo
  *
  */
 public class Prefs extends Activity implements OnClickListener{
-//	@SuppressWarnings("unchecked")
+	private static final String TAG = "Settings.Prefs";
+	private static Dialog pd;
+	//	@SuppressWarnings("unchecked")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,12 +41,7 @@ public class Prefs extends Activity implements OnClickListener{
         Button save = (Button)this.findViewById(R.id.savePrefsButton);
         save.setOnClickListener((OnClickListener) this);
         this.update();
-        
-//        Spinner s = (Spinner) findViewById(R.id.spinner);
-//        ArrayAdapter adapter = ArrayAdapter.createFromResource(
-//                this, R.array.genders, android.R.layout.simple_spinner_item);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        s.setAdapter(adapter);
+
     }
 	
 	public void update(){
@@ -75,39 +79,72 @@ public class Prefs extends Activity implements OnClickListener{
 	
 	@Override
 	public void onClick(View v) {
-		Preferences prefs= new Preferences();
-		User user = DBPerson.getUser();
-		
-				
-		user.setBlind( ((CheckBox)this.findViewById(R.id.checkBlind)).isChecked());
-		user.setDeaf(((CheckBox)this.findViewById(R.id.checkDeaf)).isChecked());
-		user.setDog(((CheckBox)this.findViewById(R.id.checkDog)).isChecked());
-		user.setSmoker(((CheckBox)this.findViewById(R.id.checkSmoker)).isChecked());
-		
-		try {
-			DBPerson.savePersonalPrefs(user);
-		} catch (DycapoException e) {
-			Log.d(Tag.LOG + ".SavePersonalPrefs", e.getMessage());
-		}
+		pd = ProgressDialog.show(Prefs.this, "Processing...", "Updating Personal Preferences", true, false);
+		new Thread(){
 
-		prefs.setNonsmoking(((CheckBox)this.findViewById(R.id.checkNonSmoking)).isChecked());
-		
-		boolean male=((CheckBox)this.findViewById(R.id.checkMale)).isChecked();
-		boolean female=((CheckBox)this.findViewById(R.id.checkFemale)).isChecked();
-		if ( male&&female || !male && !female)
-			prefs.setGender(Preferences.BOTH);
-		else if(male)
-			prefs.setGender(Preferences.MALE);
-		else if(female)
-			prefs.setGender(Preferences.FEMALE);
-		
+			/* (non-Javadoc)
+			 * @see java.lang.Thread#run()
+			 */
+			@Override
+			public void run() {
+				Preferences prefs= new Preferences();
+				User user = DBPerson.getUser();
+				
+						
+				user.setBlind( ((CheckBox)Prefs.this.findViewById(R.id.checkBlind)).isChecked());
+				user.setDeaf(((CheckBox)Prefs.this.findViewById(R.id.checkDeaf)).isChecked());
+				user.setDog(((CheckBox)Prefs.this.findViewById(R.id.checkDog)).isChecked());
+				user.setSmoker(((CheckBox)Prefs.this.findViewById(R.id.checkSmoker)).isChecked());
+				
+				
+
+				prefs.setNonsmoking(((CheckBox)Prefs.this.findViewById(R.id.checkNonSmoking)).isChecked());
+				
+				boolean male=((CheckBox)Prefs.this.findViewById(R.id.checkMale)).isChecked();
+				boolean female=((CheckBox)Prefs.this.findViewById(R.id.checkFemale)).isChecked();
+				if ( male&&female || !male && !female)
+					prefs.setGender(Preferences.BOTH);
+				else if(male)
+					prefs.setGender(Preferences.MALE);
+				else if(female)
+					prefs.setGender(Preferences.FEMALE);
+				
+				
+				try {
+					DBPrefs.savePrefs(prefs);
+					DBPerson.savePersonalPrefs(user);
+					user = DBPerson.getUser();
+					DycapoServiceClient.callDycapo(DycapoServiceClient.PUT, "persons/"+ user.getUsername(), user.toJSONObject() ,user.getUsername() , user.getPassword());
+					Prefs.this.updatePrefs.sendEmptyMessage(OK);
+				} catch (DycapoException e) {
+					e.alertUser(Prefs.this);
+					Log.d(Tag.LOG + ".SavePersonalPrefs", e.getMessage());
+				} catch (JSONException e) {
+					Log.e(TAG, e.getMessage());
+					e.printStackTrace();
+				}
+				
+				
+			}
 			
-		try{
-		
-		DBPrefs.savePrefs(prefs);
-		}catch (Exception e){
-			Log.d(Tag.LOG +".SavePrefs", e.getMessage());
-		}
+		}.start();
 		
 	}
+	
+	private static final int OK = 0;
+	protected Handler updatePrefs = new Handler(){
+
+		/* (non-Javadoc)
+		 * @see android.os.Handler#handleMessage(android.os.Message)
+		 */
+		@Override
+		public void handleMessage(Message msg) {
+			switch(msg.what){
+			case OK:
+				pd.dismiss();
+				break;
+			}
+		}
+		
+	};
 }

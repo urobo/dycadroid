@@ -32,6 +32,11 @@ public class Settings extends TabActivity implements OnClickListener{
 											"Car",
 											"Social"
 											};
+	public static final int ME = 0;
+	public static final int PREFS = 1;
+	public static final int CAR = 2;
+	public static final int SOCIAL = 3; 
+	public static final String TAB_FOCUS = "tab_focus";
 	
 	Menu myMenu= null;
 	TabHost tabHost= null;
@@ -60,6 +65,9 @@ public class Settings extends TabActivity implements OnClickListener{
 		    tabHost.addTab(tabHost.newTabSpec(eu.fbk.dycapo.activities.Settings.TAB_TAGS[3]).setContent(new Intent(this, Social.class)).
 		    		 setIndicator(eu.fbk.dycapo.activities.Settings.TAB_TAGS[3], getResources().getDrawable(android.R.drawable.ic_menu_send)));
 		    
+		    
+		    if (this.getIntent().hasExtra(TAB_FOCUS))
+		    	tabHost.setCurrentTab(this.getIntent().getIntExtra(TAB_FOCUS, ME));
 		}
 	
 }

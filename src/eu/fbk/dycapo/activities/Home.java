@@ -5,6 +5,7 @@ package eu.fbk.dycapo.activities;
 
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,8 +29,10 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 import eu.fbk.dycapo.exceptions.DycapoException;
+import eu.fbk.dycapo.factories.json.DycapoObjectsFetcher;
 import eu.fbk.dycapo.factories.json.UserMapper;
 import eu.fbk.dycapo.models.Person;
+import eu.fbk.dycapo.persistency.DBMode;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBProvider;
 import eu.fbk.dycapo.persistency.User;
@@ -42,32 +46,14 @@ public class Home extends Activity implements OnClickListener{
 	static final int DIALOG_CHOOSER = 0;
 	static final int DIALOG_REGISTER = 1;
 	static final int DIALOG_LOGIN= 2;
+	protected static final int FILL_SETTINGS = 0;
+	protected static final int SETTINGS_SAVED_CORRECTLY = 3;
 	 
 	private View layoutLogin=null;
 	private View layoutRegister=null;
-	private static String gender = null;
-	
+
 	Menu myMenu=null;
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 */
-	
-	private OnClickListener gender_listener = new OnClickListener() {
-        public void onClick(View v) {
-            // Perform action on clicks
-            RadioButton rb = (RadioButton) v;
-            switch(rb.getId()){
-            case R.id.maleGender:
-            	gender = Person.MALE;
-            	break;
-            case R.id.femaleGender:
-            	gender = Person.FEMALE;
-            	break;
-            }
-            
-        }
-    };
-    
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -142,15 +128,19 @@ public class Home extends Activity implements OnClickListener{
 						if (passwordIn instanceof String && !passwordIn.equals("")){
 						usr.setPassword(passwordIn);
 						} 	else throw new DycapoException ("Invalid Password");
-						//TODO test user credentials			
+						JSONObject temp = DycapoServiceClient.callDycapo(DycapoServiceClient.GET, "persons/"+ usr.getUsername(), null, usr.getUsername(), usr.getPassword());
+						usr.setHref(DycapoObjectsFetcher.buildPerson(temp).getHref());
 						DBPerson.saveMe(usr);
-						
+						Home.this.handleSuccess.sendEmptyMessage(0);
 					} catch (DycapoException e) {
 						e.alertUser(getBaseContext());
 						Message msg = new Message();
 						msg.what=Home.DIALOG_LOGIN;
 						msg.setTarget(handleFailure);
 						msg.sendToTarget();
+					} catch (JSONException e) {
+						Log.e(TAG, e.getMessage());
+						e.printStackTrace();
 					}	
 					
 				}
@@ -203,11 +193,12 @@ public class Home extends Activity implements OnClickListener{
 							usr.setGender(Person.MALE);
 						else if (female.isChecked())
 							usr.setGender(Person.FEMALE);
-					//TODO connect to dycapo via REST
+				
 						try {
-							Object response = DycapoServiceClient.callDycapo(DycapoServiceClient.POST, "persons", UserMapper.fromUserToJSONObject(usr),null,null);
-							
-							Toast.makeText(Home.this, response.getClass().getName(),Toast.LENGTH_LONG);
+							JSONObject response = DycapoServiceClient.callDycapo(DycapoServiceClient.POST, "persons", UserMapper.fromUserToJSONObject(usr),null,null);
+							usr.setHref(DycapoObjectsFetcher.buildPerson(response).getHref());
+							DBPerson.saveMe(usr);
+							Home.this.handleSuccess.sendEmptyMessage(0);
 						} catch (JSONException e) {
 							Toast.makeText(Home.this, e.getMessage(), Toast.LENGTH_LONG);
 							e.printStackTrace();
@@ -227,8 +218,26 @@ public class Home extends Activity implements OnClickListener{
 		}
 		return d;
 	}
+	private Handler handleSuccess = new Handler(){
+
+		/* (non-Javadoc)
+		 * @see android.os.Handler#handleMessage(android.os.Message)
+		 */
+		@Override
+		public void handleMessage(Message msg) {
+			Intent intent = new Intent();
+			intent.setClass(Home.this, Settings.class);
+			Home.this.startActivity(intent);
+		}
+		
+	};
 	
-	private Handler handleFailure= new Handler(){
+	
+	
+
+	
+	
+	private Handler handleFailure = new Handler(){
 
 		/* (non-Javadoc)
 		 * @see android.os.Handler#handleMessage(android.os.Message)
@@ -275,7 +284,14 @@ public class Home extends Activity implements OnClickListener{
 		switch(v.getId()){
 		case R.id.DriverButton:
 			role="driver";
-			break;
+			if (DBMode.getMode()== null){
+				
+				Intent intent = new Intent();
+				intent.setClass(Home.this, Settings.class);
+				intent.putExtra(Settings.TAB_FOCUS, Settings.CAR);
+				Home.this.startActivity(intent);
+				}
+			return;
 		case R.id.RiderButton:
 			role="rider";
 			break;
@@ -298,10 +314,8 @@ public class Home extends Activity implements OnClickListener{
 		int selected= item.getItemId();
 		Intent i = new Intent();
 		if(selected==1){
-			
 			i.setClass(this,Settings.class);
 			this.startActivity(i);
-			
 		}else if (selected==2){
 		
 			

@@ -5,6 +5,7 @@ package eu.fbk.dycapo.activities.settings;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -18,6 +19,8 @@ import eu.fbk.dycapo.persistency.DBMode;
  *
  */
 public class Car extends Activity implements OnClickListener{
+	private static final String TAG = "Settings.Car";
+
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,11 +66,18 @@ public class Car extends Activity implements OnClickListener{
 		input= ((EditText)this.findViewById(R.id.getModel)).getText().toString();
 		if (input instanceof String) car.setModel(input);
 		
-		int capacity;
-		capacity= Integer.parseInt(((EditText)this.findViewById(R.id.getCapacity)).getText().toString());
-		car.setCapacity(capacity);
+		int capacity = 0;
+		input = null;
+		input = ((EditText)this.findViewById(R.id.getCapacity)).getText().toString();
+		try{
+			if (input instanceof String)capacity= Integer.parseInt(input);
+			car.setCapacity(capacity);
 		
 		DBMode.saveMode(car);
+		}catch(NumberFormatException e){
+			Log.e(TAG, e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 }

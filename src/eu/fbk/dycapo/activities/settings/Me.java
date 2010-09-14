@@ -3,17 +3,30 @@
  */
 package eu.fbk.dycapo.activities.settings;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import eu.fbk.dycapo.activities.R;
+import eu.fbk.dycapo.exceptions.DycapoException;
+import eu.fbk.dycapo.factories.json.DycapoObjectsFetcher;
+import eu.fbk.dycapo.factories.json.UserMapper;
+import eu.fbk.dycapo.models.Person;
 import eu.fbk.dycapo.models.Preferences;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.User;
+import eu.fbk.dycapo.services.DycapoServiceClient;
 
 /**
  * @author riccardo
@@ -22,7 +35,9 @@ import eu.fbk.dycapo.persistency.User;
 public class Me extends Activity implements OnClickListener {
 	
 	
-	
+	protected static final String TAG = "Settings.Me";
+
+	private Dialog pd = null;
 	
 	private String gender=null;
 	private OnClickListener gender_listener = new OnClickListener() {
@@ -31,10 +46,10 @@ public class Me extends Activity implements OnClickListener {
             RadioButton rb = (RadioButton) v;
             switch(rb.getId()){
             case R.id.maleGender:
-            	gender = "male";
+            	gender = Person.MALE;
             	break;
             case R.id.femaleGender:
-            	gender = "female";
+            	gender = Person.FEMALE;
             	break;
             }
             
@@ -98,32 +113,73 @@ public class Me extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch(v.getId()){
 		case R.id.saveMeButton:
-			User readForm= new User();
-			String input;
-		
-		
-			input= ((EditText)this.findViewById(R.id.getAge)).getText().toString();
-			if (input instanceof String && !(input.equals("")))readForm.setAge(Integer.parseInt(input));
-	
-			input= ((EditText)this.findViewById(R.id.getEmail)).getText().toString();
-			if (input instanceof String && !input.equals(""))readForm.setEmail(input);
-		
-			input=((EditText)this.findViewById(R.id.getFirst_Name)).getText().toString();
-			if (input instanceof String && !input.equals(""))readForm.setFirst_name(input);
-	
-			readForm.setGender(this.gender);
-		
-			input=((EditText)this.findViewById(R.id.getLast_Name)).getText().toString();
-			if (input instanceof String && !input.equals(""))readForm.setLast_name(input);
+			pd = ProgressDialog.show(Me.this, "Processing...", "Updating Personal Info", true, false);
+			new Thread (){
 
-			DBPerson.updateMe(readForm);
+				/* (non-Javadoc)
+				 * @see java.lang.Thread#run()
+				 */
+				@Override
+				public void run() {
+					try {
+						User readForm= new User();
+						String input;
 		
-			input=null;
-			readForm=null;
+		
+						input= ((EditText)Me.this.findViewById(R.id.getAge)).getText().toString();
+						if (input instanceof String && !(input.equals("")))readForm.setAge(Integer.parseInt(input));
+	
+						input= ((EditText)Me.this.findViewById(R.id.getEmail)).getText().toString();
+						if (input instanceof String && !input.equals(""))readForm.setEmail(input);
+		
+						input=((EditText)Me.this.findViewById(R.id.getFirst_Name)).getText().toString();
+						if (input instanceof String && !input.equals(""))readForm.setFirst_name(input);
+	
+						readForm.setGender(Me.this.gender);
+		
+						input=((EditText)Me.this.findViewById(R.id.getLast_Name)).getText().toString();
+						if (input instanceof String && !input.equals(""))readForm.setLast_name(input);
+						
+						DBPerson.saveMe(readForm);			
+						JSONObject jsonObj = DycapoServiceClient.callDycapo(DycapoServiceClient.PUT, "persons/"+ DBPerson.getUser().getUsername(), UserMapper.fromUserToJSONObject(DBPerson.getUser()), DBPerson.getUser().getUsername(), DBPerson.getUser().getPassword());
+						readForm.setHref(DycapoObjectsFetcher.buildPerson(jsonObj).getHref());
+						DBPerson.saveMe(readForm);
+						
+						input=null;
+						readForm=null;
+						
+						Me.this.updateInfo.sendEmptyMessage(OK);
+					} catch (DycapoException e) {
+						Log.e(TAG, e.getMessage());
+						e.printStackTrace();
+					} catch (JSONException e) {
+						Log.e(TAG, e.getMessage());
+						e.printStackTrace();
+					}
+					
+				}
+				
+			}.start();
+			
+			
 			
 			break;
 		}
 	}
+	
+	private static final int OK = 0;
+	private Handler updateInfo = new Handler(){
 
+		/* (non-Javadoc)
+		 * @see android.os.Handler#handleMessage(android.os.Message)
+		 */
+		@Override
+		public void handleMessage(Message msg) {
+			switch(msg.what){
+			case OK:
+				pd.dismiss();
+			}
+		}
+	};
 
 }

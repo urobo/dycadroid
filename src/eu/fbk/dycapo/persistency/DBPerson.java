@@ -33,14 +33,15 @@ public final class DBPerson {
 		}
 		
 		//check only different params
-		found.setPassword(person.getPassword());
-		found.setGender(person.getGender());
+		if (person.getPassword() instanceof String)found.setPassword(person.getPassword());
+		if (person.getGender() instanceof String)found.setGender(person.getGender());
 		if (person.getAge() instanceof Integer)found.setAge(person.getAge());
 		if(person.getEmail() instanceof String)found.setEmail(person.getEmail());
 		if(person.getFirst_name() instanceof String)found.setFirst_name(person.getFirst_name());
 		if(person.getLast_name() instanceof String)found.setLast_name(person.getLast_name());
 		if(person.getPhone() instanceof String)found.setPhone(person.getPhone());
 		if(person.getUrl() instanceof String)found.setUrl(person.getUrl());
+		if(person.getHref() instanceof String)found.setHref(person.getHref());
 		db.store(found);
 		db.commit();
 		return true;

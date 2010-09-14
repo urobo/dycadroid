@@ -11,9 +11,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
@@ -93,8 +91,8 @@ public abstract class DycapoServiceClient {
 	public static final int DELETE = 4;
 	
 	
-	public static final String callDycapo(int method,String uri,JSONObject jsonObject,String username,String password) throws DycapoException, JSONException{
-		Log.d(TAG, jsonObject.toString());
+	public static final JSONObject callDycapo(int method,String uri,JSONObject jsonObject,String username,String password) throws DycapoException, JSONException{
+		Log.d(TAG,(jsonObject instanceof JSONObject)?jsonObject.toString():"no attachment");
 		HttpResponse response = doJSONRequest(method,uri,jsonObject,username,password);
 
 		try {
@@ -104,7 +102,7 @@ public abstract class DycapoServiceClient {
 			}catch(DycapoException e){
 				throw new DycapoException(e.getMessage() + " cause : " + stringResp);
 			}
-			return stringResp;
+			return new JSONObject(stringResp);
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 			Log.e(TAG, e.getMessage());
@@ -124,21 +122,26 @@ public abstract class DycapoServiceClient {
 		URI uriF;
 		try {
 			uriF = new URI(sb.toString());
-			if (username instanceof String || password instanceof String)
+			if (username instanceof String || password instanceof String){
 				httpclient.getCredentialsProvider().setCredentials(
 						new AuthScope(uriF.getHost(), uriF.getPort(),AuthScope.ANY_REALM),
 						new UsernamePasswordCredentials(username, password));
+				Log.d(TAG + " username :", username);
+				Log.d(TAG + " password :", password);
+			}
 			HttpResponse response = null;
-
+			StringEntity se;
 			switch(method){
 			case HEAD:
 				
 				break;
 			case GET:
-				
+				HttpGet getRequest = new HttpGet(uriF);
+				response = (HttpResponse) httpclient.execute(getRequest);
 				break;
+			
 			case POST:
-				StringEntity se;
+				
 				se = new StringEntity(jsonObject.toString());
 				
 				HttpPost requestPost = new HttpPost(uriF);
@@ -147,8 +150,16 @@ public abstract class DycapoServiceClient {
 				requestPost.setEntity(se);
 				response = (HttpResponse) httpclient.execute(requestPost);
 				break;
+		
 			case PUT:
-			
+				
+				se = new StringEntity(jsonObject.toString());
+				
+				HttpPut requestPut = new HttpPut(uriF);
+				requestPut.setHeader("Accept", "application/json");
+				requestPut.setHeader("Content-type", "application/json");
+				requestPut.setEntity(se);
+				response = (HttpResponse) httpclient.execute(requestPut);
 				break;
 			case DELETE:
 				
