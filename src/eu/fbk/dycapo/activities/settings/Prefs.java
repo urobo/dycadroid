@@ -115,7 +115,11 @@ public class Prefs extends Activity implements OnClickListener{
 					DBPrefs.savePrefs(prefs);
 					DBPerson.savePersonalPrefs(user);
 					user = DBPerson.getUser();
-					DycapoServiceClient.callDycapo(DycapoServiceClient.PUT, "persons/"+ user.getUsername(), UserMapper.fromUserToJSONObject(user) ,user.getUsername() , user.getPassword());
+					DycapoServiceClient.callDycapo(DycapoServiceClient.PUT, 
+							DycapoServiceClient.uriBuilder("persons/"+ user.getUsername()),
+							UserMapper.fromUserToJSONObject(user) ,
+							user.getUsername() , 
+							user.getPassword());
 					Prefs.this.updatePrefs.sendEmptyMessage(OK);
 				} catch (DycapoException e) {
 					e.alertUser(Prefs.this);

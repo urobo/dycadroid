@@ -15,6 +15,7 @@ import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Mode;
 import eu.fbk.dycapo.models.Participation;
 import eu.fbk.dycapo.models.Person;
+import eu.fbk.dycapo.models.Search;
 import eu.fbk.dycapo.models.Trip;
 
 /**
@@ -84,5 +85,10 @@ public abstract class DycapoObjectsFetcher {
 		Log.d(TAG, "buildParticipation");
 		return ParticipationFetcher.fetchParticipation(responseValue);
 	}
-
+	
+	
+	public static final Search buildSearch(JSONObject responseValue) throws DycapoException{
+		Log.d(TAG, "buildSearch");
+		return SearchFetcher.fetchSearch(responseValue);
+	}
 }

@@ -114,17 +114,20 @@ public abstract class DycapoServiceClient {
 		}
 		return null;
 	}
-	
-	private static final HttpResponse doJSONRequest(int method,String uri,JSONObject jsonObject,String username,String password){
-		DefaultHttpClient httpclient = new DefaultHttpClient();
+	public static final String uriBuilder(String puri){
 		StringBuilder sb =new StringBuilder();
 		sb.append(URL_BASIS);
-		sb.append(uri);
+		sb.append(puri);
 		sb.append("/");
+		return sb.toString();
+	}
+	private static final HttpResponse doJSONRequest(int method,String uri,JSONObject jsonObject,String username,String password){
+		DefaultHttpClient httpclient = new DefaultHttpClient();
+		
 		
 		URI uriF;
 		try {
-			uriF = new URI(sb.toString());
+			uriF = new URI(uri);
 			Log.d(TAG + " resource URI:", uriF.toString());
 			if (username instanceof String || password instanceof String){
 				USRN_PWD_CRD = new UsernamePasswordCredentials(username, password);

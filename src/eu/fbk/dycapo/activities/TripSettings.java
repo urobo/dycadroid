@@ -345,13 +345,10 @@ public class TripSettings extends Activity  {
 					try {
 												
 						Log.d(TAG, aTrip.toJSONObject().toString());
-						
-						new AlertDialog.Builder(TripSettings.this).setTitle("User List").setPositiveButton("Ok", null)
-						.setCancelable(true).setMessage(aTrip.toJSONObject().toString()).show();
-						
+											
 						//call dycapo rest
 						JSONObject response = DycapoServiceClient.callDycapo(DycapoServiceClient.POST, 
-																			"trips", 
+																			DycapoServiceClient.uriBuilder("trips"), 
 																			aTrip.toJSONObject(), 
 																			usr.getUsername(),
 																			usr.getPassword());

@@ -24,12 +24,30 @@ public class Search implements DycapoJSONObjects{
 	public static final String DESTINATION = "destination";
 	public static final String AUTHOR = "author";
 	public static final String TRIPS = "trips";
+	public static final String HREF = "href";
 	
 	private Location origin;
 	private Location destination;
 	private Person author;
 	private List<Trip> trips;
 	private String href;
+	
+	
+	/**
+	 * 
+	 */
+	public Search() {
+	}
+	/**
+	 * @param origin
+	 * @param destination
+	 * @param author
+	 */
+	public Search(Location origin, Location destination, Person author) {
+		this.origin = origin;
+		this.destination = destination;
+		this.author = author;
+	}
 	/**
 	 * @return the origin
 	 */
