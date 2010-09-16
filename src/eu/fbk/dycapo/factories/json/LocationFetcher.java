@@ -24,9 +24,9 @@ public abstract class LocationFetcher {
 			String message="error LocationFetcher.fetchLocation : not enough parameters are given to define a location: missing ";
 			Location result= new Location();
 			
-			if (responseValue.has(DycapoObjectsFetcher.HREF))
+			if (responseValue.has(DycapoObjectsFetcher.HREF))				
 				result.setHref(responseValue.getString(DycapoObjectsFetcher.HREF));
-			
+		
 			if (responseValue.has(Location.POINT)){
 				String point = responseValue.getString(Location.POINT);
 				

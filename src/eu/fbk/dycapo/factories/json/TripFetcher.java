@@ -37,7 +37,7 @@ public abstract class TripFetcher {
 			if (responseValue.has(Trip.ID))
 				result.setId(responseValue.getInt(Trip.ID));
 			
-			else throw new DycapoException (message + Trip.ID);
+		
 			
 			if(responseValue.has(Trip.EXPIRES))
 				try {

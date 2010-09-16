@@ -35,10 +35,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import eu.fbk.dycapo.bundles.SearchBundle;
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.factories.json.DycapoObjectsFetcher;
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Mode;
+import eu.fbk.dycapo.models.Search;
 import eu.fbk.dycapo.models.Trip;
 import eu.fbk.dycapo.persistency.ActiveTrip;
 import eu.fbk.dycapo.persistency.DBMode;
@@ -311,16 +313,54 @@ public class TripSettings extends Activity  {
 					
 				}.start();
 			}else {
-				
+				Intent i = new Intent();
+				i.setClass(this, SearchActivity.class);
+				i.putExtras(SearchBundle.toBundle(this.collectRiderDetails()));
+				this.startActivity(i);
 			}
 			
 		}else if (selected==2){
-		
+			
 		}
 		return super.onOptionsItemSelected(item);
 	}
 	
 	
+	private Search collectRiderDetails() {
+		Search search = new Search();
+		Location loc = new Location();
+    	String geoRssPoint = "";
+    	Date leaves = new Date();
+    	if (this.Origin instanceof Address){
+    		geoRssPoint = String.valueOf(Origin.getLatitude()) + ", " + String.valueOf(Origin.getLongitude());
+    		if (!geoRssPoint.equals(", ")) loc.setGeorss_point(geoRssPoint);
+    	}
+    	leaves.setYear(mYear);
+    	leaves.setMonth(mMonth);
+    	leaves.setDate(mDay);
+    	leaves.setHours(mHour);
+    	leaves.setMinutes(mMinute);
+    	leaves.setSeconds(0);
+    	
+    	loc.setLeaves(leaves);
+    	loc.setPoint(Location.ORIG);  	
+    	search.setOrigin(loc);
+    	
+    	loc = new Location();
+    	
+    	if (this.Destination instanceof Address){
+    		geoRssPoint = String.valueOf(Destination.getLatitude()) + ", " + String.valueOf(Destination.getLongitude());
+    		if (!geoRssPoint.equals(", ")) loc.setGeorss_point(geoRssPoint);
+    	}
+    	
+    	loc.setLeaves(leaves);
+    	loc.setPoint(Location.DEST);
+    	search.setDestination(loc);
+    	search.setAuthor(DBPerson.getUser());
+    	
+		return search;
+	}
+
 	private Handler handleRoute= new Handler(){
 
 		/* (non-Javadoc)

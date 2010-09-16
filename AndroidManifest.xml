@@ -17,6 +17,9 @@
     			   android:label="@string/settings"
     			   android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
+		<activity android:name=".SearchActivity"
+    			   android:label="Search">
+		</activity>
 		
 		<activity android:name=".settings.Me"
 					

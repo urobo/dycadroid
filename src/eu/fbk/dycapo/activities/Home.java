@@ -128,6 +128,7 @@ public class Home extends Activity implements OnClickListener{
 						if (passwordIn instanceof String && !passwordIn.equals("")){
 						usr.setPassword(passwordIn);
 						} 	else throw new DycapoException ("Invalid Password");
+						DBPerson.saveMe(usr);
 						JSONObject temp = DycapoServiceClient.callDycapo(DycapoServiceClient.GET, 
 								DycapoServiceClient.uriBuilder("persons/"+ usr.getUsername()), 
 								null, usr.getUsername(), 
@@ -198,6 +199,7 @@ public class Home extends Activity implements OnClickListener{
 							usr.setGender(Person.FEMALE);
 				
 						try {
+							DBPerson.saveMe(usr);
 							JSONObject response = DycapoServiceClient.callDycapo(DycapoServiceClient.POST, 
 									DycapoServiceClient.uriBuilder("persons"),
 									UserMapper.fromUserToJSONObject(usr),

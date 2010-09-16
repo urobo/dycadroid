@@ -9,8 +9,6 @@ import org.json.JSONObject;
 import android.util.Log;
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.factories.json.DycapoObjectsFetcher;
-import eu.fbk.dycapo.models.Location;
-import eu.fbk.dycapo.models.Person;
 import eu.fbk.dycapo.models.Search;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.User;
@@ -23,8 +21,8 @@ import eu.fbk.dycapo.services.DycapoServiceClient;
 public abstract class SearchTrip {
 	private static final String TAG = "SearchTrip";
 	
-	public static final Search searchTrips(Location origin, Location destination, Person author){
-		Search st = new Search(origin, destination, author);		
+	public static final Search searchTrips(Search st){
+				
 		User usr = DBPerson.getUser();
 		try {
 			JSONObject createSearch = DycapoServiceClient.callDycapo(DycapoServiceClient.POST, 
