@@ -5,7 +5,6 @@ package eu.fbk.dycapo.factories.json;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,7 +46,6 @@ public abstract class LocationFetcher {
 					Log.e(TAG, e.getMessage());
 					throw new DycapoException(e.getMessage());
 				}
-				result.setLeaves((Date)responseValue.get(Location.LEAVES));
 			}
 			else new DycapoException(message + Location.LEAVES);
 			

@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Mode;
 import eu.fbk.dycapo.models.Person;
@@ -18,6 +21,9 @@ import eu.fbk.dycapo.models.Trip;
  *
  */
 public class ActiveTrip extends Trip {
+	
+	public static final String ACTIVE = "active";
+	
 	private List<Participation> mParticipants;
 	private Boolean mActive;
 	private Route mRoute;
@@ -113,5 +119,22 @@ public class ActiveTrip extends Trip {
 	public void setRoute(Route route) {
 		this.mRoute = route;
 	}
+
+	/* (non-Javadoc)
+	 * @see eu.fbk.dycapo.models.Trip#toJSONObject()
+	 */
+	@Override
+	public JSONObject toJSONObject() {
+		JSONObject result = super.toJSONObject();
+		if (this.mActive instanceof Boolean)
+			try {
+				result.put(ActiveTrip.ACTIVE, this.mActive.booleanValue());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		return result;
+	}
+	
+	
 	
 }

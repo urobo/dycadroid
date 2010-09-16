@@ -29,7 +29,7 @@ public abstract class PreferencesFetcher {
 			if (jsonObject.has(Preferences.GENDER)){
 				int i = 0;
 				while (i<Preferences.GENDER_PREFS.length){
-					if ((jsonObject.getString(Preferences.GENDER)).toLowerCase().equals(Preferences.GENDER_TO[i]))
+					if ((jsonObject.getString(Preferences.GENDER)).toLowerCase().equals(Preferences.GENDER_PREFS[i]))
 						result.setGender(i);
 					i++;
 				}

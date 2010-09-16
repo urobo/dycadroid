@@ -9,7 +9,6 @@ import java.net.URISyntaxException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.Credentials;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;

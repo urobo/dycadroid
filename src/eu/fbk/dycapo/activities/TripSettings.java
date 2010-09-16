@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -25,11 +26,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -37,13 +36,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import eu.fbk.dycapo.exceptions.DycapoException;
+import eu.fbk.dycapo.factories.json.DycapoObjectsFetcher;
 import eu.fbk.dycapo.models.Location;
+import eu.fbk.dycapo.models.Mode;
 import eu.fbk.dycapo.models.Trip;
 import eu.fbk.dycapo.persistency.ActiveTrip;
 import eu.fbk.dycapo.persistency.DBMode;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBPrefs;
 import eu.fbk.dycapo.persistency.DBTrip;
+import eu.fbk.dycapo.persistency.User;
 import eu.fbk.dycapo.services.DycapoServiceClient;
 
 
@@ -51,14 +53,12 @@ import eu.fbk.dycapo.services.DycapoServiceClient;
  * @author riccardo
  *
  */
-public class TripSettings extends Activity implements android.content.DialogInterface.OnClickListener {
+public class TripSettings extends Activity  {
 	private static final String TAG = "TripSettings";
 	private String role = null;
 	private String location =null;
 	private List<Address> foundAddresses;
 	private Menu myMenu=null;
-	private View layoutVacancy = null;
-
 	private int id;
 	private Address Origin=null;
 	private Address Destination=null;
@@ -260,9 +260,10 @@ public class TripSettings extends Activity implements android.content.DialogInte
 
         // display the current date (this method is below)
         updateDisplay();
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-		layoutVacancy = inflater.inflate(R.layout.vacancy,(ViewGroup) findViewById(R.id.vacancyLayout));
-
+        if (!(this.getIntent().getStringExtra("role").equals("driver"))){
+        	((EditText)this.findViewById(R.id.setVacancy)).setVisibility(View.INVISIBLE);
+        	((TextView)this.findViewById(R.id.setVacancyTextView)).setVisibility(View.INVISIBLE);
+        }
 	}
 
 
@@ -292,14 +293,23 @@ public class TripSettings extends Activity implements android.content.DialogInte
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int selected= item.getItemId();
-		String role=this.getIntent().getExtras().getString("role");
-		//Intent i;
 		if(selected==1){
 			if (role.equals("driver")){
-				
+				pd =ProgressDialog.show(TripSettings.this, "Processing...", "Retrieving the Route", true, false);
 				getTrip();
-				this.showDialog(VACANCY_DIALOG_ID);				
-			
+					
+				new Thread (){
+
+					/* (non-Javadoc)
+					 * @see java.lang.Thread#run()
+					 */
+					@Override
+					public void run() {
+						eu.fbk.dycapo.maputils.Directions.getRoute(Origin, Destination, TripSettings.this);
+						handleRoute.sendEmptyMessage(0);
+					}
+					
+				}.start();
 			}else {
 				
 			}
@@ -318,44 +328,51 @@ public class TripSettings extends Activity implements android.content.DialogInte
 		 */
 		@Override
 		public void handleMessage(Message msg) {
-			pd.dismiss();
+			
 			
 			try {
 				ActiveTrip aTrip = DBTrip.getActiveTrip();
+				User usr = DBPerson.getUser();
 				Calendar c = Calendar.getInstance();
 				if (aTrip instanceof ActiveTrip){
 					c.setTime(aTrip.getOrigin().getLeaves());
 				
 					c.setTimeInMillis(c.getTimeInMillis() + (aTrip.getRoute().getmDurationSecs()*1000));
 					aTrip.getDestination().setLeaves(new Date(c.getTimeInMillis()));
-					aTrip.getMode().setVacancy(aTrip.getMode().getCapacity());
-					aTrip.getMode().setKind("car");
+					
+					aTrip.getMode().setKind("auto");
 					aTrip.getPreferences().setAge("18-30");
 					try {
-						Log.d(TAG,"user: "+ DBPerson.getUser().getUsername() + " , passwd:"+ DBPerson.getUser().getPassword());
-//						Object value = client.call(Dycapo.getMethod(Dycapo.ADD_TRIP), aTrip.toHashMap());
-//						Response response = (Response) DycapoObjectsFactory.getDycapoObject(DycapoObjectsFactory.XMLRPC, value, true);
+												
 						Log.d(TAG, aTrip.toJSONObject().toString());
 						
 						new AlertDialog.Builder(TripSettings.this).setTitle("User List").setPositiveButton("Ok", null)
 						.setCancelable(true).setMessage(aTrip.toJSONObject().toString()).show();
 						
-						Object response = DycapoServiceClient.callDycapo(DycapoServiceClient.POST, "trips", aTrip.toJSONObject(),DBPerson.getUser().getUsername(),DBPerson.getUser().getPassword());
-						if (response instanceof Trip){
-							Trip value = (Trip) response;
-							Log.d(TAG, "Trip type");
-							aTrip.setId(value.getId());
-							Trip trip = aTrip;
-							Log.d(TAG, "Saving Dycapo Trip as Active");
-							DBTrip.saveActiveTrip(aTrip);
-							Log.d(TAG, "Saving Dycapo Trip as Normal");
-							DBTrip.saveTrip(trip);
+						//call dycapo rest
+						JSONObject response = DycapoServiceClient.callDycapo(DycapoServiceClient.POST, 
+																			"trips", 
+																			aTrip.toJSONObject(), 
+																			usr.getUsername(),
+																			usr.getPassword());
+						Trip value= DycapoObjectsFetcher.buildTrip(response);
 						
-							Intent intent = new Intent();
-							intent.setClass(TripSettings.this, Navigation.class);
-							intent.putExtras(TripSettings.this.getIntent().getExtras());
-							TripSettings.this.startActivity(intent);
-						}
+						Log.d(TAG, "Trip type");
+						aTrip.setId(value.getId());
+						aTrip.setHref(value.getHref());
+						
+						Trip trip = aTrip;
+						
+						Log.d(TAG, "Saving Dycapo Trip as Active");
+						DBTrip.saveActiveTrip(aTrip);
+						Log.d(TAG, "Saving Dycapo Trip as Normal");
+						DBTrip.saveTrip(trip);
+						
+						Intent intent = new Intent();
+						intent.setClass(TripSettings.this, Navigation.class);
+						intent.putExtras(TripSettings.this.getIntent().getExtras());
+						TripSettings.this.startActivity(intent);
+						pd.dismiss();
 					} catch (JSONException e) {
 						e.printStackTrace();
 						throw new DycapoException(e.getMessage());
@@ -395,20 +412,15 @@ public class TripSettings extends Activity implements android.content.DialogInte
             return new DatePickerDialog(this,
                         mDateSetListener,
                         mYear, mMonth, mDay);
-       case TIME_DIALOG_ID:
+     	 case TIME_DIALOG_ID:
             return new TimePickerDialog(this,
                     mTimeSetListener, mHour, mMinute, false);
-       case VACANCY_DIALOG_ID:
-    	   AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	   builder.setView(layoutVacancy);
-    	   builder.setTitle("Free Seats");
-    	   builder.setPositiveButton("Done!", this);
-    	   return builder.create();
+            
         }
         return null;
     }
     
-    
+   
     public void getTrip(){
     
     	Trip trip = new Trip();
@@ -430,6 +442,17 @@ public class TripSettings extends Activity implements android.content.DialogInte
     	loc.setPoint(Location.ORIG);
     	trip.setOrigin(loc);
     	
+    	Mode car = DBMode.getMode();
+    	int vacancy = -1;
+    	String strvac = ((EditText)this.findViewById(R.id.setVacancy)).getText().toString();
+    	try{
+    		vacancy = Integer.parseInt(strvac);
+    	}catch (NumberFormatException e){
+    		vacancy = car.getCapacity()-1;
+    	}
+    	car.setVacancy(vacancy);
+    	trip.setMode(car);
+    	
     	loc = new Location();
     	
     	if (this.Destination instanceof Address){
@@ -445,11 +468,9 @@ public class TripSettings extends Activity implements android.content.DialogInte
     	
     	trip.setAuthor(DBPerson.getUser());
     	trip.setPreferences(DBPrefs.getPrefs());
-    	trip.setMode(DBMode.getMode());
+    	
     	Log.d(TAG, "saving");
-    	
-    	
-    	
+    	   	
     	DBTrip.saveActiveTripFromTrip(trip);
    
     	Log.d(TAG,"Trip Saved");
@@ -512,68 +533,4 @@ public class TripSettings extends Activity implements android.content.DialogInte
 		return Destination;
 	}
 	
-	private Handler showProcessingDialog = new Handler(){
-
-		/* (non-Javadoc)
-		 * @see android.os.Handler#handleMessage(android.os.Message)
-		 */
-		@Override
-		public void handleMessage(Message msg) {
-			pd =ProgressDialog.show(TripSettings.this, "Processing...", "Retrieving the Route", true, false);
-			Thread thr = new Thread(){
-
-				/* (non-Javadoc)
-				 * @see java.lang.Thread#run()
-				 */
-				@Override
-				public void run() {
-					
-					eu.fbk.dycapo.maputils.Directions.getRoute(Origin, Destination, TripSettings.this);
-					handleRoute.sendEmptyMessage(0);
-				} 
-				
-			};
-			thr.start();
-		}
-		
-	};
-	@Override
-	//FIXME
-	public void onClick(DialogInterface dialog, int which) {
-		switch(which){
-		case VACANCY_DIALOG_ID:
-			Log.d(TAG, "Reading Vacancy!");
-			String strVac = ((EditText)layoutVacancy.findViewById(R.id.setVacancy)).getText().toString();
-			ActiveTrip at = null;
-			
-			int vacancy = -1;
-			try{
-				at = DBTrip.getActiveTrip();
-				vacancy = Integer.parseInt(strVac);
-				Log.d(TAG, "vacancy = " + String.valueOf(vacancy));
-				at.getMode().setVacancy(vacancy);
-				Log.d(TAG, "saving active trip");
-				DBTrip.saveActiveTrip(at);
-				Log.d(TAG, "active trip saved!");
-				
-				this.showProcessingDialog.sendEmptyMessage(0);
-				dialog.dismiss();
-			}catch (DycapoException e1) {
-				Log.e(TAG, e1.getMessage());
-				e1.printStackTrace();
-				return;
-			}catch(NumberFormatException e){
-				vacancy = at.getMode().getCapacity()-1;
-				Log.d(TAG, "vacancy = " + String.valueOf(vacancy));
-				at.getMode().setVacancy(vacancy);
-				Log.d(TAG, "saving active trip");
-				DBTrip.saveActiveTrip(at);
-				Log.d(TAG, "active trip saved!");
-				
-				this.showProcessingDialog.sendEmptyMessage(0);
-				dialog.dismiss();
-			}
-			break;
-		}
-	}
 }

@@ -88,8 +88,8 @@ public class Preferences implements DycapoJSONObjects {
 
 
 
-	public static final String[] GENDER_PREFS={"male","female","both"};
-	public static final String[] GENDER_TO={"m","f","b"};
+	public static final String[] GENDER_PREFS={"M","F","B"};
+	
 	public static final int MALE=0;
 	public static final int FEMALE=1;
 	public static final int BOTH=2;
@@ -168,7 +168,7 @@ public class Preferences implements DycapoJSONObjects {
 				result.put(Preferences.DRIVE, this.drive.booleanValue());
 			
 			if (this.gender instanceof java.lang.Integer)
-				result.put(Preferences.GENDER, Preferences.GENDER_TO[this.gender]);
+				result.put(Preferences.GENDER, Preferences.GENDER_PREFS[this.gender]);
 			
 			if (this.nonsmoking instanceof java.lang.Boolean)
 				result.put(Preferences.NONSMOKING, this.nonsmoking.booleanValue());
