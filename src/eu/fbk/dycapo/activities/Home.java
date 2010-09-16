@@ -290,8 +290,9 @@ public class Home extends Activity implements OnClickListener{
 				intent.setClass(Home.this, Settings.class);
 				intent.putExtra(Settings.TAB_FOCUS, Settings.CAR);
 				Home.this.startActivity(intent);
+				return;
 				}
-			return;
+			break;
 		case R.id.RiderButton:
 			role="rider";
 			break;

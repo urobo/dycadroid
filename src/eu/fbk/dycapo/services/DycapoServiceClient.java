@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.Credentials;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
@@ -35,7 +36,7 @@ public abstract class DycapoServiceClient {
 	public static final String URL_BASIS = "http://test.dycapo.org/api/";
 	
 	private static final String TAG = "DycapoServiceClient";
-	
+	private static UsernamePasswordCredentials USRN_PWD_CRD= null;
 	
 	/**
 	 * @param code
@@ -58,6 +59,8 @@ public abstract class DycapoServiceClient {
 			break;
 		case 401:
 			msg = "Unauthorized! Invalid Credentials";
+			Log.d(TAG + " username in use:", USRN_PWD_CRD.getUserName());
+			Log.d(TAG + " password in use:", USRN_PWD_CRD.getPassword());
 			eThrow = true;
 			break;
 		case 403:
@@ -119,13 +122,16 @@ public abstract class DycapoServiceClient {
 		sb.append(URL_BASIS);
 		sb.append(uri);
 		sb.append("/");
+		
 		URI uriF;
 		try {
 			uriF = new URI(sb.toString());
+			Log.d(TAG + " resource URI:", uriF.toString());
 			if (username instanceof String || password instanceof String){
+				USRN_PWD_CRD = new UsernamePasswordCredentials(username, password);
 				httpclient.getCredentialsProvider().setCredentials(
 						new AuthScope(uriF.getHost(), uriF.getPort(),AuthScope.ANY_REALM),
-						new UsernamePasswordCredentials(username, password));
+						USRN_PWD_CRD);
 				Log.d(TAG + " username :", username);
 				Log.d(TAG + " password :", password);
 			}
@@ -164,6 +170,8 @@ public abstract class DycapoServiceClient {
 			case DELETE:
 				
 				break;
+			default :
+				
 			}
 			return response;
 		} catch (ClientProtocolException e) {

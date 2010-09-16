@@ -25,9 +25,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -49,13 +51,13 @@ import eu.fbk.dycapo.services.DycapoServiceClient;
  * @author riccardo
  *
  */
-public class TripSettings extends Activity implements OnClickListener {
+public class TripSettings extends Activity implements android.content.DialogInterface.OnClickListener {
 	private static final String TAG = "TripSettings";
 	private String role = null;
 	private String location =null;
 	private List<Address> foundAddresses;
 	private Menu myMenu=null;
-	private static EditText capacity = null;
+	private View layoutVacancy = null;
 
 	private int id;
 	private Address Origin=null;
@@ -77,6 +79,7 @@ public class TripSettings extends Activity implements OnClickListener {
     private int mMinute;
 
     static final int TIME_DIALOG_ID = 1;
+    static final int VACANCY_DIALOG_ID = 2;
 
 	private Thread thr; 
 	
@@ -257,23 +260,12 @@ public class TripSettings extends Activity implements OnClickListener {
 
         // display the current date (this method is below)
         updateDisplay();
-        
-        if (this.role.equals("driver")){
-        	//TODO:inflate layout for Capacity
-        }
-	}
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+		layoutVacancy = inflater.inflate(R.layout.vacancy,(ViewGroup) findViewById(R.id.vacancyLayout));
 
-	/* (non-Javadoc)
-	 * @see android.view.View.OnClickListener#onClick(android.view.View)
-	 */
-	@Override
-	public void onClick(View v) {
 	}
 
 
-	
-	
-	
 	
 	//MENU
 	private void addRegularMenuItems(Menu menu){
@@ -297,31 +289,16 @@ public class TripSettings extends Activity implements OnClickListener {
 		addRegularMenuItems(menu);
 		return true;
 	}
+	
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int selected= item.getItemId();
 		String role=this.getIntent().getExtras().getString("role");
 		//Intent i;
 		if(selected==1){
 			if (role.equals("driver")){
-				pd =ProgressDialog.show(TripSettings.this, "Processing...", "Retrieving the Route", true, false);
+				
 				getTrip();
-				
-				Thread thr = new Thread(){
-
-					/* (non-Javadoc)
-					 * @see java.lang.Thread#run()
-					 */
-					@Override
-					public void run() {
-						
-						eu.fbk.dycapo.maputils.Directions.getRoute(Origin, Destination, TripSettings.this);
-						handleRoute.sendEmptyMessage(0);
-					} 
-					
-				};
-				thr.start();
-				
-				
+				this.showDialog(VACANCY_DIALOG_ID);				
 			
 			}else {
 				
@@ -380,7 +357,6 @@ public class TripSettings extends Activity implements OnClickListener {
 							TripSettings.this.startActivity(intent);
 						}
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 						throw new DycapoException(e.getMessage());
 					}
@@ -422,6 +398,12 @@ public class TripSettings extends Activity implements OnClickListener {
        case TIME_DIALOG_ID:
             return new TimePickerDialog(this,
                     mTimeSetListener, mHour, mMinute, false);
+       case VACANCY_DIALOG_ID:
+    	   AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	   builder.setView(layoutVacancy);
+    	   builder.setTitle("Free Seats");
+    	   builder.setPositiveButton("Done!", this);
+    	   return builder.create();
         }
         return null;
     }
@@ -528,5 +510,70 @@ public class TripSettings extends Activity implements OnClickListener {
 	 */
 	public Address getDestination() {
 		return Destination;
+	}
+	
+	private Handler showProcessingDialog = new Handler(){
+
+		/* (non-Javadoc)
+		 * @see android.os.Handler#handleMessage(android.os.Message)
+		 */
+		@Override
+		public void handleMessage(Message msg) {
+			pd =ProgressDialog.show(TripSettings.this, "Processing...", "Retrieving the Route", true, false);
+			Thread thr = new Thread(){
+
+				/* (non-Javadoc)
+				 * @see java.lang.Thread#run()
+				 */
+				@Override
+				public void run() {
+					
+					eu.fbk.dycapo.maputils.Directions.getRoute(Origin, Destination, TripSettings.this);
+					handleRoute.sendEmptyMessage(0);
+				} 
+				
+			};
+			thr.start();
+		}
+		
+	};
+	@Override
+	//FIXME
+	public void onClick(DialogInterface dialog, int which) {
+		switch(which){
+		case VACANCY_DIALOG_ID:
+			Log.d(TAG, "Reading Vacancy!");
+			String strVac = ((EditText)layoutVacancy.findViewById(R.id.setVacancy)).getText().toString();
+			ActiveTrip at = null;
+			
+			int vacancy = -1;
+			try{
+				at = DBTrip.getActiveTrip();
+				vacancy = Integer.parseInt(strVac);
+				Log.d(TAG, "vacancy = " + String.valueOf(vacancy));
+				at.getMode().setVacancy(vacancy);
+				Log.d(TAG, "saving active trip");
+				DBTrip.saveActiveTrip(at);
+				Log.d(TAG, "active trip saved!");
+				
+				this.showProcessingDialog.sendEmptyMessage(0);
+				dialog.dismiss();
+			}catch (DycapoException e1) {
+				Log.e(TAG, e1.getMessage());
+				e1.printStackTrace();
+				return;
+			}catch(NumberFormatException e){
+				vacancy = at.getMode().getCapacity()-1;
+				Log.d(TAG, "vacancy = " + String.valueOf(vacancy));
+				at.getMode().setVacancy(vacancy);
+				Log.d(TAG, "saving active trip");
+				DBTrip.saveActiveTrip(at);
+				Log.d(TAG, "active trip saved!");
+				
+				this.showProcessingDialog.sendEmptyMessage(0);
+				dialog.dismiss();
+			}
+			break;
+		}
 	}
 }

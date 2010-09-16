@@ -18,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 import eu.fbk.dycapo.activities.R;
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.factories.json.DycapoObjectsFetcher;
@@ -109,6 +110,8 @@ public class Me extends Activity implements OnClickListener {
 			}
 		}
 	}
+	
+	private static final int ERROR = -1;
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()){
@@ -140,21 +143,36 @@ public class Me extends Activity implements OnClickListener {
 						input=((EditText)Me.this.findViewById(R.id.getLast_Name)).getText().toString();
 						if (input instanceof String && !input.equals(""))readForm.setLast_name(input);
 						
-						DBPerson.saveMe(readForm);			
-						JSONObject jsonObj = DycapoServiceClient.callDycapo(DycapoServiceClient.PUT, "persons/"+ DBPerson.getUser().getUsername(), UserMapper.fromUserToJSONObject(DBPerson.getUser()), DBPerson.getUser().getUsername(), DBPerson.getUser().getPassword());
+						DBPerson.saveMe(readForm);
+						User usr = DBPerson.getUser();
+						JSONObject jsonObj = DycapoServiceClient.callDycapo(DycapoServiceClient.PUT, "persons/"+ usr.getUsername(), UserMapper.fromUserToJSONObject(usr), usr.getUsername(), usr.getPassword());
 						readForm.setHref(DycapoObjectsFetcher.buildPerson(jsonObj).getHref());
 						DBPerson.saveMe(readForm);
 						
 						input=null;
 						readForm=null;
 						
+						
+					
 						Me.this.updateInfo.sendEmptyMessage(OK);
 					} catch (DycapoException e) {
 						Log.e(TAG, e.getMessage());
 						e.printStackTrace();
+						Message msg = new Message();
+						msg.what = ERROR;
+						Bundle data  = new Bundle();
+						data.putString("errorMsg", e.getMessage());
+						msg.setData(data);
+						Me.this.updateInfo.sendMessage(msg);
 					} catch (JSONException e) {
 						Log.e(TAG, e.getMessage());
 						e.printStackTrace();
+						Message msg = new Message();
+						msg.what = ERROR;
+						Bundle data  = new Bundle();
+						data.putString("errorMsg", e.getMessage());
+						msg.setData(data);
+						Me.this.updateInfo.sendMessage(msg);
 					}
 					
 				}
@@ -178,6 +196,10 @@ public class Me extends Activity implements OnClickListener {
 			switch(msg.what){
 			case OK:
 				pd.dismiss();
+				break;
+			case ERROR:
+				pd.dismiss();
+				Toast.makeText(Me.this, msg.getData().getString("errorMsg"), Toast.LENGTH_LONG);
 			}
 		}
 	};

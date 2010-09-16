@@ -19,6 +19,7 @@ import android.widget.CheckBox;
 import eu.fbk.dycapo.activities.R;
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.exceptions.Tag;
+import eu.fbk.dycapo.factories.json.UserMapper;
 import eu.fbk.dycapo.models.Preferences;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBPrefs;
@@ -114,7 +115,7 @@ public class Prefs extends Activity implements OnClickListener{
 					DBPrefs.savePrefs(prefs);
 					DBPerson.savePersonalPrefs(user);
 					user = DBPerson.getUser();
-					DycapoServiceClient.callDycapo(DycapoServiceClient.PUT, "persons/"+ user.getUsername(), user.toJSONObject() ,user.getUsername() , user.getPassword());
+					DycapoServiceClient.callDycapo(DycapoServiceClient.PUT, "persons/"+ user.getUsername(), UserMapper.fromUserToJSONObject(user) ,user.getUsername() , user.getPassword());
 					Prefs.this.updatePrefs.sendEmptyMessage(OK);
 				} catch (DycapoException e) {
 					e.alertUser(Prefs.this);
