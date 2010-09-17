@@ -6,6 +6,8 @@ package eu.fbk.dycapo.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
 
 /**
@@ -178,7 +180,7 @@ public class Preferences implements DycapoJSONObjects {
 			
 			if (this.pet instanceof Boolean) 
 				result.put(Preferences.PET, this.pet.booleanValue());
-			
+			Log.d(TAG,result.toString());
 			return result;
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

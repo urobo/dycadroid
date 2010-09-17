@@ -145,11 +145,20 @@ public class Me extends Activity implements OnClickListener {
 						
 						DBPerson.saveMe(readForm);
 						User usr = DBPerson.getUser();
+						String usrName = usr.getUsername();
+						
+						String usrPwd = usr.getPassword();
+						String uri = "persons/" + usrName;
+						Log.d(TAG, "username : " + usrName);
+						Log.d(TAG, "password : " + usrPwd);
+						Log.d(TAG, uri);
+						JSONObject jobj = UserMapper.fromUserToJSONObject(usr);
+						Log.d(TAG, jobj.toString());
 						JSONObject jsonObj = DycapoServiceClient.callDycapo(DycapoServiceClient.PUT, 
-								DycapoServiceClient.uriBuilder("persons/"+ usr.getUsername()),
-								UserMapper.fromUserToJSONObject(usr), 
-								usr.getUsername(), 
-								usr.getPassword());
+								DycapoServiceClient.uriBuilder(uri),
+								jobj, 
+								usrName, 
+								usrPwd);
 						readForm.setHref(DycapoObjectsFetcher.buildPerson(jsonObj).getHref());
 						DBPerson.saveMe(readForm);
 						

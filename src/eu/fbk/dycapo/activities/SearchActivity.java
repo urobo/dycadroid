@@ -67,14 +67,17 @@ public class SearchActivity extends ListActivity {
 		public void handleMessage(Message msg) {
 			switch(msg.what){
 			case 0:
-				SearchActivity.this.trips = SearchActivity.this.search.getTrips();
-				int size = SearchActivity.this.trips.size();
-				SearchActivity.this.tripsMeta = new String[size];
-				for (int i = 0; i < size; i++){
-					SearchActivity.this.tripsMeta[i] = SearchActivity.this.trips.get(i).getHref();
+				if ((SearchActivity.this.search.getTrips() instanceof List<?>)){
+					SearchActivity.this.trips = SearchActivity.this.search.getTrips();
+					int size = SearchActivity.this.trips.size();
+					SearchActivity.this.tripsMeta = new String[size];
+					for (int i = 0; i < size; i++){
+						SearchActivity.this.tripsMeta[i] = SearchActivity.this.trips.get(i).getHref();
+					}
+					SearchActivity.this.populateView();
 				}
-				pd.dismiss();
-				SearchActivity.this.populateView();
+					pd.dismiss();
+					
 				break;
 			}
 		}

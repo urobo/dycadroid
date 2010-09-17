@@ -77,6 +77,7 @@ public class Participation implements DycapoJSONObjects{
 			Log.e(TAG, e.getMessage());
 			e.printStackTrace();
 		}
+		Log.d(TAG,result.toString());
 		return result;
 	}
 	

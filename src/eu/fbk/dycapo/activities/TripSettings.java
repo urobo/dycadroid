@@ -327,6 +327,7 @@ public class TripSettings extends Activity  {
 	
 	
 	private Search collectRiderDetails() {
+		Calendar c = Calendar.getInstance();
 		Search search = new Search();
 		Location loc = new Location();
     	String geoRssPoint = "";
@@ -379,7 +380,7 @@ public class TripSettings extends Activity  {
 				
 					c.setTimeInMillis(c.getTimeInMillis() + (aTrip.getRoute().getmDurationSecs()*1000));
 					aTrip.getDestination().setLeaves(new Date(c.getTimeInMillis()));
-					
+					//aTrip.getDestination().setLeaves(new Date());
 					aTrip.getMode().setKind("auto");
 					aTrip.getPreferences().setAge("18-30");
 					try {

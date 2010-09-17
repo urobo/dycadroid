@@ -287,6 +287,7 @@ public class Trip implements DycapoJSONObjects {
 			if (this.updated instanceof java.util.Date)
 				result.put(Trip.UPDATED, formatter.format(this.updated));
 			
+			Log.d(TAG,result.toString());
 			return result;
 	
 		} catch (JSONException e) {

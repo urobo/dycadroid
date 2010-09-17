@@ -6,6 +6,8 @@ package eu.fbk.dycapo.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
 
 /**
@@ -258,7 +260,7 @@ public class Mode implements DycapoJSONObjects{
 			if (this.year instanceof java.lang.Integer)
 				if (this.year >= 0)
 					result.put(Mode.YEAR,this.year.intValue());
-			
+			Log.d(TAG,result.toString());
 			return result;
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

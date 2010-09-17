@@ -125,6 +125,7 @@ public class Search implements DycapoJSONObjects{
 			Log.e(TAG, e.getMessage());
 			e.printStackTrace();
 		}
+		Log.d(TAG,jsonObj.toString());
 		return jsonObj;
 	}
 	

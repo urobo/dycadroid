@@ -12,6 +12,7 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
@@ -32,8 +33,8 @@ import eu.fbk.dycapo.util.StreamConverter;
  *	DELETE		Deletes the specified resource.
  */
 public abstract class DycapoServiceClient {
-	public static final String URL_BASIS = "http://test.dycapo.org/api/";
-	
+	//public static final String URL_BASIS = "http://test.dycapo.org/api/";
+	public static final String URL_BASIS = "http://10.10.0.24/api/";
 	private static final String TAG = "DycapoServiceClient";
 	private static UsernamePasswordCredentials USRN_PWD_CRD= null;
 	
@@ -98,12 +99,14 @@ public abstract class DycapoServiceClient {
 		HttpResponse response = doJSONRequest(method,uri,jsonObject,username,password);
 
 		try {
+			
 			String stringResp = StreamConverter.convertStreamToString(response.getEntity().getContent());
 			try{
 				translateStatusCode(response.getStatusLine().getStatusCode(),true);
 			}catch(DycapoException e){
 				throw new DycapoException(e.getMessage() + " cause : " + stringResp);
 			}
+			
 			return new JSONObject(stringResp);
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
@@ -111,6 +114,11 @@ public abstract class DycapoServiceClient {
 		} catch (IOException e) {
 			e.printStackTrace();
 			Log.e(TAG, e.getMessage());
+		} catch (NullPointerException e){
+			e.printStackTrace();
+			
+		}finally {
+			USRN_PWD_CRD = null;
 		}
 		return null;
 	}
@@ -141,7 +149,8 @@ public abstract class DycapoServiceClient {
 			StringEntity se;
 			switch(method){
 			case HEAD:
-				
+				HttpHead headRequest = new HttpHead(uriF);
+				response = (HttpResponse) httpclient.execute(headRequest);
 				break;
 			case GET:
 				HttpGet getRequest = new HttpGet(uriF);

@@ -6,6 +6,8 @@ package eu.fbk.dycapo.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
 
 /**
@@ -360,6 +362,8 @@ public class Person implements DycapoJSONObjects{
 					result.put(Person.URL, this.url);
 				if (this.username instanceof java.lang.String)
 					result.put(Person.USERNAME, this.username);
+				
+				Log.d(TAG,result.toString());
 				return result;	
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

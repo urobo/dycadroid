@@ -4,6 +4,8 @@
 package eu.fbk.dycapo.activities;
 
 
+import java.util.Date;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,6 +33,7 @@ import android.widget.Toast;
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.factories.json.DycapoObjectsFetcher;
 import eu.fbk.dycapo.factories.json.UserMapper;
+import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Person;
 import eu.fbk.dycapo.persistency.DBMode;
 import eu.fbk.dycapo.persistency.DBPerson;
@@ -128,12 +131,24 @@ public class Home extends Activity implements OnClickListener{
 						if (passwordIn instanceof String && !passwordIn.equals("")){
 						usr.setPassword(passwordIn);
 						} 	else throw new DycapoException ("Invalid Password");
-						DBPerson.saveMe(usr);
-						JSONObject temp = DycapoServiceClient.callDycapo(DycapoServiceClient.GET, 
+						//DBPerson.saveMe(usr);
+						Location loc = new Location();
+						loc.setGeorss_point("-14.805422,67.716293");
+						loc.setPoint(Location.POSI);
+						loc.setLeaves(new Date());
+						
+						
+						DycapoServiceClient.callDycapo(DycapoServiceClient.HEAD, 
 								DycapoServiceClient.uriBuilder("persons/"+ usr.getUsername()), 
 								null, usr.getUsername(), 
 								usr.getPassword());
-						usr.setHref(DycapoObjectsFetcher.buildPerson(temp).getHref());
+//						DycapoServiceClient.callDycapo(DycapoServiceClient.POST, 
+//								DycapoServiceClient.uriBuilder("persons/"+usr.getUsername() +"/location"),
+//								loc.toJSONObject(), 
+//								usr.getUsername(), 
+//								usr.getPassword());
+						
+						usr.setHref(DycapoServiceClient.URL_BASIS + "persons/" + usr.getUsername());
 						DBPerson.saveMe(usr);
 						Home.this.handleSuccess.sendEmptyMessage(0);
 					} catch (DycapoException e) {

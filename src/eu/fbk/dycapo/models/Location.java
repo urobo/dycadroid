@@ -332,7 +332,7 @@ public class Location implements DycapoJSONObjects{
 			
 			if (this.town instanceof java.lang.String)
 				result.put(Location.TOWN, this.town);
-			
+			Log.d(TAG,result.toString());
 			return result;
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
