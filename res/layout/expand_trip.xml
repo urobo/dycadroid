@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/expandTrip"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content">
+  
+  <TableRow>
+        <TextView
+            android:layout_column="1"
+            android:text=" Author : "
+            android:gravity="left" />
+        <TextView
+           android:id="@+id/showAuthor"
+           android:gravity="right" />
+    </TableRow>
+  
+  <TableRow>
+        <TextView
+            android:layout_column="1"
+            android:text=" Expires : "
+            android:gravity="left" />
+        <TextView
+           android:id="@+id/showDateOfExpiration"
+           android:gravity="right" />
+    </TableRow>
+  
+  <TableRow>
+        <TextView
+            android:layout_column="1"
+            android:text=" Created : "
+            android:gravity="left" />
+        <TextView
+           android:id="@+id/showDateOfCreation"
+           android:gravity="right" />
+    </TableRow>
+  
+  <TableRow>
+        <TextView
+            android:layout_column="1"
+            android:text=" Reaches Dest at: "
+            android:gravity="left" />
+        <TextView
+           android:id="@+id/showArrivalTime"
+           android:gravity="right" />
+    </TableRow>
+
+  
+  <TableRow>
+        <TextView
+            android:layout_column="1"
+            android:text=" Vehicle "
+            android:gravity="center_horizontal"
+            android:textStyle="bold" />
+    </TableRow>
+ <TableRow>
+        <TextView
+            android:layout_column="1"
+            android:text=" Maker : "
+            android:gravity="left" />
+        <TextView
+           android:id="@+id/showMaker"
+           android:gravity="right" />
+    </TableRow>
+	<TableRow>
+        <TextView
+            android:layout_column="1"
+            android:text=" Model : "
+            android:gravity="left" />
+        <TextView
+           android:id="@+id/showModel"
+           android:gravity="right" />
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:layout_column="1"
+            android:text=" Lic.Plate : "
+            android:gravity="left" />
+        <TextView
+           android:id="@+id/showLic"
+           android:gravity="right" />
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:layout_column="1"
+            android:text=" Color : "
+            android:gravity="left" />
+        <TextView
+           android:id="@+id/showColor"
+           android:gravity="right" />
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:layout_column="1"
+            android:text=" Kind : "
+            android:gravity="left" />
+        <TextView
+           android:id="@+id/showKind"
+           android:gravity="right" />
+    </TableRow>  
+</TableLayout>

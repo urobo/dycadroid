@@ -38,6 +38,7 @@ public class Search implements DycapoJSONObjects{
 	 */
 	public Search() {
 	}
+	
 	/**
 	 * @param origin
 	 * @param destination
@@ -48,60 +49,70 @@ public class Search implements DycapoJSONObjects{
 		this.destination = destination;
 		this.author = author;
 	}
+	
 	/**
 	 * @return the origin
 	 */
 	public Location getOrigin() {
 		return origin;
 	}
+	
 	/**
 	 * @param origin the origin to set
 	 */
 	public void setOrigin(Location origin) {
 		this.origin = origin;
 	}
+	
 	/**
 	 * @return the destination
 	 */
 	public Location getDestination() {
 		return destination;
 	}
+	
 	/**
 	 * @param destination the destination to set
 	 */
 	public void setDestination(Location destination) {
 		this.destination = destination;
 	}
+	
 	/**
 	 * @return the author
 	 */
 	public Person getAuthor() {
 		return author;
 	}
+	
 	/**
 	 * @param author the author to set
 	 */
 	public void setAuthor(Person author) {
 		this.author = author;
 	}
+	
 	/**
 	 * @return the trips
 	 */
 	public List<Trip> getTrips() {
 		return trips;
 	}
+	
 	/**
 	 * @param trips the trips to set
 	 */
 	public void setTrips(List<Trip> trips) {
 		this.trips = trips;
 	}
+	
 	/**
 	 * @return the href
 	 */
 	public String getHref() {
 		return href;
 	}
+	
 	/**
 	 * @param href the href to set
 	 */

@@ -354,7 +354,7 @@ public class TripSettings extends Activity  {
     		if (!geoRssPoint.equals(", ")) loc.setGeorss_point(geoRssPoint);
     	}
     	
-    	loc.setLeaves(leaves);
+    	loc.setLeaves(c.getTime());
     	loc.setPoint(Location.DEST);
     	search.setDestination(loc);
     	search.setAuthor(DBPerson.getUser());

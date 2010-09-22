@@ -66,48 +66,43 @@ public class Navigation extends MapActivity implements OnClickListener{
 	if (this.role.equals("driver")){
 		this.button1.setText("Participants");
 		this.button2.setText("Finish Trip");
-	}else {
-		this.button1.setText("Show Driver");
-		this.button2.setText("Start Participation");
-	}
-	this.button3.setText("Cancel");
-	
-	try {
+		try {
 
-		mapView.getController().setZoom(15);
-				
-		//start thread
-		myProgressDialog = ProgressDialog.show(Navigation.this,     
-             "Please wait...", "Drawing Directions", true,true);
-		
-		new Thread(){
-
-			/* (non-Javadoc)
-			 * @see java.lang.Thread#run()
-			 */
-			@Override
-			public void run() {
-				DrawPath(mapView);
-			}
-		}.start();
-  
-				
-
-		
-				
-	} catch (Exception e) {
-		new AlertDialog.Builder(this)
-		.setMessage(e.getMessage())
-		.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			mapView.getController().setZoom(15);
+					
+			//start thread
+			myProgressDialog = ProgressDialog.show(Navigation.this,     
+	             "Please wait...", "Drawing Directions", true,true);
 			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			   finish();
-			}})
-			.show();
-		
-		}
+			new Thread(){
 
+				/* (non-Javadoc)
+				 * @see java.lang.Thread#run()
+				 */
+				@Override
+				public void run() {
+					DrawPath(mapView);
+				}
+			}.start();
+		} catch (Exception e) {
+			new AlertDialog.Builder(this)
+			.setMessage(e.getMessage())
+			.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+				   finish();
+				}})
+				.show();
+			
+			}
+		}else {
+		
+			this.button1.setText("Show Driver");
+			this.button2.setText("Start Participation");
+		}
+		this.button3.setText("Cancel");
+		
 	}
 
 	@Override
