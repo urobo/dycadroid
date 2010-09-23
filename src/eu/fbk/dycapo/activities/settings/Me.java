@@ -171,7 +171,7 @@ public class Me extends Activity implements OnClickListener {
 					} catch (DycapoException e) {
 						Log.e(TAG, e.getMessage());
 						e.printStackTrace();
-						Message msg = new Message();
+						Message msg = Message.obtain();
 						msg.what = ERROR;
 						Bundle data  = new Bundle();
 						data.putString("errorMsg", e.getMessage());
@@ -180,7 +180,7 @@ public class Me extends Activity implements OnClickListener {
 					} catch (JSONException e) {
 						Log.e(TAG, e.getMessage());
 						e.printStackTrace();
-						Message msg = new Message();
+						Message msg = Message.obtain();
 						msg.what = ERROR;
 						Bundle data  = new Bundle();
 						data.putString("errorMsg", e.getMessage());

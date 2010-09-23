@@ -8,19 +8,24 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 
+import eu.fbk.dycapo.bundles.LocationBundle;
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.maputils.Directions;
+import eu.fbk.dycapo.maputils.LocationService;
+import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.persistency.DBTrip;
 import eu.fbk.dycapo.persistency.Participation;
-import eu.fbk.dycapo.services.MapReceiver;
 
 /**
  * 
@@ -31,7 +36,7 @@ public class Navigation extends MapActivity implements OnClickListener{
 	private static final String TAG = "Navigation";
 	private static MapView mapView;
 	private static ProgressDialog myProgressDialog;
-	private static MapReceiver br= null;
+	private LocationService dls= null;
 	
 	private String role = null;
 	
@@ -44,6 +49,7 @@ public class Navigation extends MapActivity implements OnClickListener{
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.navigation);
 	
+	this.dls = new LocationService(this);
 	
 	Log.d(TAG, this.getIntent().getExtras().keySet().toString());
 	this.role = this.getIntent().getExtras().getString("role");
@@ -52,9 +58,7 @@ public class Navigation extends MapActivity implements OnClickListener{
 	mapView.setBuiltInZoomControls(true);
 	mapView.setSatellite(false);
 	mapView.setStreetView(true);
-	//Now try to find destination adress
 	
-	br  = new MapReceiver(mapView,Navigation.this);
 	
 	this.button1 = (Button) this.findViewById(R.id.navButton1);
 	this.button1.setOnClickListener(this);
@@ -163,19 +167,73 @@ public class Navigation extends MapActivity implements OnClickListener{
 					e.alertUser(this);
 				}
 				break;
+				
 			case R.id.navButton2:
 				if (this.role.equals("driver")){
 					
 				}else{
 					this.button2.setText("Finish Participation");
-				}break;
+				}
+				break;
+				
 			case R.id.navButton3:
 				if (this.role.equals("driver")){
 					
 				}else{
 					
-				}break;
+				}
+				break;
 			}
 	}
 	
+	
+	private static final int UPDATE_LOCATION = 0;
+	private static final int UPDATE_PARTICIPANTS_LOCATIONS = 1;
+	
+	public Handler myViewUpdateHandler = new Handler(){
+
+        public void handleMessage(Message msg) {
+                switch (msg.what) {
+                
+                
+                case UPDATE_LOCATION:
+                	final Message tmp = msg;
+                	
+                	new Thread(){
+
+                		/* (non-Javadoc)
+                		 * @see java.lang.Thread#run()
+                		 */
+                		@Override
+						public void run() {
+                			Bundle data = tmp.getData();
+                        	Location loc = LocationBundle.fromBundle(data.getBundle("location"));
+                        	LocationService.updatePosition(loc);
+                        	
+                        	double mLong = data.getDouble("longitude");
+                        	double mLat = data.getDouble("latitude");
+                        	
+                        	Navigation.this.updateUserPosition(new GeoPoint((int) (((double) mLat / 1E5) *1E6),
+                 		           (int) (((double) mLong / 1E5) * 1E6 )));
+                        	
+						}
+                	
+                	}.start();
+                
+                	break;
+                case UPDATE_PARTICIPANTS_LOCATIONS:
+                	break;
+           
+                }
+               	
+               
+
+                super.handleMessage(msg);
+        }
+	};
+	
+	
+	private void updateUserPosition(GeoPoint posi){
+		
+	}
 }

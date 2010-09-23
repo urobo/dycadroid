@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import eu.fbk.dycapo.bundles.SearchBundle;
+import eu.fbk.dycapo.models.Mode;
 import eu.fbk.dycapo.models.Search;
 import eu.fbk.dycapo.models.Trip;
 import eu.fbk.dycapo.util.SearchTrip;
@@ -39,6 +40,7 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 	private String[] tripsMeta;
 	private ProgressDialog pd;
 	private static View ExpandTripLayout = null;
+	private Dialog d;
 	
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -99,6 +101,32 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 	
 	
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onResume()
+	 */
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		SearchActivity.this.pd = ProgressDialog.show(SearchActivity.this, "Searching...", "Searching for a suitable Trip", true, false);
+		new Thread(){
+
+			/* (non-Javadoc)
+			 * @see java.lang.Thread#run()
+			 */
+			@Override
+			public void run() {
+				
+				SearchActivity.this.search = SearchTrip.searchTrips(search);
+				
+				searchResults.sendEmptyMessage(0);
+			}
+			
+		}.start();
+	}
+
+
+
 	private void populateView(){
 		
 		
@@ -109,9 +137,9 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 		lv.setOnItemClickListener(new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> parent, View view,
 		      int position, long id) {
-		      Dialog d;
+		      
 		      Trip trip = SearchActivity.this.trips.get(position);
-		      SimpleDateFormat formatter =new SimpleDateFormat();
+		      SimpleDateFormat formatter =new SimpleDateFormat("MM-dd hh:mm:ss");
 		      
 		      TextView tx = (TextView)ExpandTripLayout.findViewById(R.id.showAuthor);
 		      tx.setText(trip.getAuthor().getUsername());
@@ -125,6 +153,24 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 		      tx = (TextView)ExpandTripLayout.findViewById(R.id.showArrivalTime);
 		      tx.setText(formatter.format(trip.getDestination().getLeaves()));
 		      
+		      
+		      Mode car = trip.getMode();
+		      tx = (TextView)ExpandTripLayout.findViewById(R.id.showMaker);
+		      tx.setText(car.getMake());
+		      
+		      tx = (TextView)ExpandTripLayout.findViewById(R.id.showColor);
+		      tx.setText(car.getColor());
+		      
+		      tx = (TextView)ExpandTripLayout.findViewById(R.id.showKind);
+		      tx.setText(car.getKind());
+		      
+		      tx = (TextView)ExpandTripLayout.findViewById(R.id.showLic);
+		      tx.setText(car.getLic());
+		      
+		      tx = (TextView)ExpandTripLayout.findViewById(R.id.showModel);
+		      tx.setText(car.getModel());
+		      
+		      
 		      d = new AlertDialog.Builder(SearchActivity.this).setView(ExpandTripLayout).setCancelable(true)
 		      .setPositiveButton("Participate!", SearchActivity.this).setTitle("Trip").create();
 		      d.show();
@@ -137,12 +183,15 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
 		// TODO Auto-generated method stub
+		d.dismiss();
+		d= null;
 		Intent i = new Intent();
 		i.setClass(SearchActivity.this, Navigation.class);
 		Bundle data = new Bundle();
 		data.putString("role", "rider");
 		i.putExtras(data);
 		this.startActivity(i);
+		
 	}
 //	Dialog d;
 //	

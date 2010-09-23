@@ -8,6 +8,9 @@ import org.json.JSONObject;
 
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.models.Mode;
+import eu.fbk.dycapo.persistency.DBPerson;
+import eu.fbk.dycapo.persistency.User;
+import eu.fbk.dycapo.services.DycapoServiceClient;
 
 /**
  * @author riccardo
@@ -19,8 +22,10 @@ public abstract class ModeFetcher {
 		Mode result = new Mode();
 		try{
 			
-			if (responseValue.has(DycapoObjectsFetcher.HREF))
+			if (responseValue.has(DycapoObjectsFetcher.HREF)){
 				result.setHref(responseValue.getString(DycapoObjectsFetcher.HREF));
+				
+				}
 			
 			if (responseValue.has(Mode.CAPACITY))
 				result.setCapacity(responseValue.getInt(Mode.CAPACITY));

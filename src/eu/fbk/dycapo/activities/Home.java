@@ -153,7 +153,7 @@ public class Home extends Activity implements OnClickListener{
 						Home.this.handleSuccess.sendEmptyMessage(0);
 					} catch (DycapoException e) {
 						e.alertUser(getBaseContext());
-						Message msg = new Message();
+						Message msg = Message.obtain();
 						msg.what=Home.DIALOG_LOGIN;
 						msg.setTarget(handleFailure);
 						msg.sendToTarget();
@@ -230,7 +230,7 @@ public class Home extends Activity implements OnClickListener{
 						
 					} catch (DycapoException e) {
 						e.alertUser(getBaseContext());
-						Message msg = new Message();
+						Message msg = Message.obtain();
 						msg.what=Home.DIALOG_REGISTER;
 						msg.setTarget(handleFailure);
 						msg.sendToTarget();
