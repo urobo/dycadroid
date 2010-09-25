@@ -36,6 +36,7 @@ public class Navigation extends MapActivity implements OnClickListener{
 	private static final String TAG = "Navigation";
 	private static MapView mapView;
 	private static ProgressDialog myProgressDialog;
+	@SuppressWarnings("unused")
 	private LocationService dls= null;
 	
 	private String role = null;
@@ -197,29 +198,17 @@ public class Navigation extends MapActivity implements OnClickListener{
                 
                 
                 case UPDATE_LOCATION:
-                	final Message tmp = msg;
-                	
-                	new Thread(){
-
-                		/* (non-Javadoc)
-                		 * @see java.lang.Thread#run()
-                		 */
-                		@Override
-						public void run() {
-                			Bundle data = tmp.getData();
-                        	Location loc = LocationBundle.fromBundle(data.getBundle("location"));
-                        	LocationService.updatePosition(loc);
+                	                	
+                	Bundle data = msg.getData();
+                    Location loc = LocationBundle.fromBundle(data.getBundle("location"));
+                    LocationService.updatePosition(loc);
                         	
-                        	double mLong = data.getDouble("longitude");
-                        	double mLat = data.getDouble("latitude");
+                    double mLong = data.getDouble("longitude");
+                    double mLat = data.getDouble("latitude");
                         	
-                        	Navigation.this.updateUserPosition(new GeoPoint((int) (((double) mLat / 1E5) *1E6),
+                    Navigation.this.updateUserPosition(new GeoPoint((int) (((double) mLat / 1E5) *1E6),
                  		           (int) (((double) mLong / 1E5) * 1E6 )));
-                        	
-						}
-                	
-                	}.start();
-                
+                        	                
                 	break;
                 case UPDATE_PARTICIPANTS_LOCATIONS:
                 	break;

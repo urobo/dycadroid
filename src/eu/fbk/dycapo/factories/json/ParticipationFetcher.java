@@ -3,6 +3,10 @@
  */
 package eu.fbk.dycapo.factories.json;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,5 +38,14 @@ public abstract class ParticipationFetcher {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public static final List<Participation> fetchTripParticipations(JSONArray json) throws DycapoException, JSONException{
+		List<Participation> tparticipations = new ArrayList<Participation>();
+		int size = json.length();
+		for (int i = 0 ; i< size;i++){
+			tparticipations.add(fetchParticipation(json.getJSONObject(i)));
+		}
+		return tparticipations;
 	}
 }

@@ -8,9 +8,6 @@ import org.json.JSONObject;
 
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.models.Mode;
-import eu.fbk.dycapo.persistency.DBPerson;
-import eu.fbk.dycapo.persistency.User;
-import eu.fbk.dycapo.services.DycapoServiceClient;
 
 /**
  * @author riccardo

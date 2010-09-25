@@ -9,6 +9,7 @@ import com.db4o.config.Configuration;
 
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Mode;
+import eu.fbk.dycapo.models.Participation;
 import eu.fbk.dycapo.models.Person;
 import eu.fbk.dycapo.models.Preferences;
 import eu.fbk.dycapo.models.Search;
@@ -72,10 +73,7 @@ public class DBProvider {
 			    dbConfiguration.objectClass(User.class).objectField(Person.USERNAME).indexed(true);
 			    dbConfiguration.objectClass(User.class).cascadeOnUpdate(true);
 			    dbConfiguration.objectClass(User.class).cascadeOnDelete(true);
-			    
-			    dbConfiguration.objectClass(Participation.class).objectField(Participation.PARTICIPANT).indexed(true);
-			    dbConfiguration.objectClass(Participation.class).cascadeOnUpdate(true);
-			    dbConfiguration.objectClass(Participation.class).cascadeOnDelete(true);
+			
 			    
 			    dbConfiguration.objectClass(ActiveTrip.class).objectField(ActiveTrip.ID).indexed(true);
 			    dbConfiguration.objectClass(ActiveTrip.class).cascadeOnUpdate(true);
@@ -87,9 +85,9 @@ public class DBProvider {
 			    dbConfiguration.objectClass(Search.class).cascadeOnDelete(true);
 			    dbConfiguration.objectClass(Search.class).cascadeOnUpdate(true);
 			    
-			    dbConfiguration.objectClass(eu.fbk.dycapo.models.Participation.class).objectField(eu.fbk.dycapo.models.Participation.PERSON).indexed(true);
-			    dbConfiguration.objectClass(eu.fbk.dycapo.models.Participation.class).cascadeOnUpdate(true);
-			    dbConfiguration.objectClass(eu.fbk.dycapo.models.Participation.class).cascadeOnDelete(true);
+			    dbConfiguration.objectClass(Participation.class).objectField(eu.fbk.dycapo.models.Participation.PERSON).indexed(true);
+			    dbConfiguration.objectClass(Participation.class).cascadeOnUpdate(true);
+			    dbConfiguration.objectClass(Participation.class).cascadeOnDelete(true);
 			  			   
 			 	dbConfiguration.lockDatabaseFile(false);
 			    dbConfiguration.messageLevel(2);

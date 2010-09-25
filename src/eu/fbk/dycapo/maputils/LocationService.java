@@ -6,10 +6,13 @@ package eu.fbk.dycapo.maputils;
 import java.util.Calendar;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import eu.fbk.dycapo.activities.Navigation;
 import eu.fbk.dycapo.bundles.LocationBundle;
 import eu.fbk.dycapo.exceptions.DycapoException;
+import eu.fbk.dycapo.factories.json.DycapoObjectsFetcher;
+import eu.fbk.dycapo.models.Person;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.User;
 import eu.fbk.dycapo.services.DycapoServiceClient;
@@ -122,6 +125,27 @@ public class LocationService implements LocationListener {
 			Log.e(TAG, e.getMessage());
 			e.printStackTrace();
 		}
-	} 
+	}
+	
+	public static final eu.fbk.dycapo.models.Location getPosition (Person p){
+		User usr = DBPerson.getUser();
+		try {
+			JSONObject json = DycapoServiceClient.callDycapo(DycapoServiceClient.GET, 
+					DycapoServiceClient.uriBuilder("persons/" + p.getUsername() + "location"),
+					null,
+					usr.getUsername(), 
+					usr.getPassword());
+			eu.fbk.dycapo.models.Location ploc= DycapoObjectsFetcher.buildLocation(json);
+			return ploc;
+		} catch (DycapoException e) {
+			Log.e(TAG, e.getMessage());
+			e.printStackTrace();
+		} catch (JSONException e) {
+			Log.e(TAG,e.getMessage());
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
 
 }

@@ -52,7 +52,7 @@ public class DycapoOverlay extends Overlay {
 				i++;
 			}
 			
-			mapView.getController().animateTo(mRoute.get(0));
+			
 		}
 		return super.draw(canvas, mapView, shadow, when);
 		
