@@ -24,8 +24,8 @@ import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.maputils.Directions;
 import eu.fbk.dycapo.maputils.LocationService;
 import eu.fbk.dycapo.models.Location;
+import eu.fbk.dycapo.models.Participation;
 import eu.fbk.dycapo.persistency.DBTrip;
-import eu.fbk.dycapo.persistency.Participation;
 
 /**
  * 
@@ -155,7 +155,7 @@ public class Navigation extends MapActivity implements OnClickListener{
 					if (!parts.isEmpty()){
 						 participants = new String[parts.size()]; 
 						for (int i = 0 ; i< participants.length;i++){
-							participants[i] = parts.get(i).getmParticipant().getUsername();
+							participants[i] = parts.get(i).getPerson().getUsername();
 						}
 					}else{
 						participants = new String[1];

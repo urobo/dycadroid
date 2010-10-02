@@ -6,6 +6,7 @@ package eu.fbk.dycapo.factories.json;
 import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
@@ -90,5 +91,10 @@ public abstract class DycapoObjectsFetcher {
 	public static final Search buildSearch(JSONObject responseValue) throws DycapoException{
 		Log.d(TAG, "buildSearch");
 		return SearchFetcher.fetchSearch(responseValue);
+	}
+	
+	public static final List<Participation> extractTripParticipations(JSONArray json) throws DycapoException{
+		Log.d(TAG, "extractTripParticipations");
+		return ParticipationFetcher.fetchTripParticipations(json);
 	}
 }

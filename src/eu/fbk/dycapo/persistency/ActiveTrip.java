@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Mode;
+import eu.fbk.dycapo.models.Participation;
 import eu.fbk.dycapo.models.Person;
 import eu.fbk.dycapo.models.Preferences;
 import eu.fbk.dycapo.models.Trip;

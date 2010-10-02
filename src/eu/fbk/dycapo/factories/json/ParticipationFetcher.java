@@ -40,11 +40,16 @@ public abstract class ParticipationFetcher {
 		return null;
 	}
 	
-	public static final List<Participation> fetchTripParticipations(JSONArray json) throws DycapoException, JSONException{
+	public static final List<Participation> fetchTripParticipations(JSONArray json) throws DycapoException{
 		List<Participation> tparticipations = new ArrayList<Participation>();
-		int size = json.length();
-		for (int i = 0 ; i< size;i++){
-			tparticipations.add(fetchParticipation(json.getJSONObject(i)));
+		try{
+			int size = json.length();
+			for (int i = 0 ; i< size;i++){
+				tparticipations.add(fetchParticipation(json.getJSONObject(i)));
+			}
+		} catch (JSONException e) {
+			Log.e(TAG, e.getMessage());
+			e.printStackTrace();
 		}
 		return tparticipations;
 	}

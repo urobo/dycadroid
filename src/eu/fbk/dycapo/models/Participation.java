@@ -18,6 +18,8 @@ public class Participation implements DycapoJSONObjects{
 	private static final String TAG = "Participation";
 	public static final String PERSON = "person";
 	public static final String STATUS = "status";
+	public static final String HREF = "href";
+	
 	
 	protected static final String REQUEST = "request";
 	protected static final String ACCEPT = "accept";
