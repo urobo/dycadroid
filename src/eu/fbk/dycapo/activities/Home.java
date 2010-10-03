@@ -142,11 +142,7 @@ public class Home extends Activity implements OnClickListener{
 								DycapoServiceClient.uriBuilder("persons/"+ usr.getUsername()), 
 								null, usr.getUsername(), 
 								usr.getPassword());
-//						DycapoServiceClient.callDycapo(DycapoServiceClient.POST, 
-//								DycapoServiceClient.uriBuilder("persons/"+usr.getUsername() +"/location"),
-//								loc.toJSONObject(), 
-//								usr.getUsername(), 
-//								usr.getPassword());
+
 						
 						usr.setHref(DycapoServiceClient.URL_BASIS + "persons/" + usr.getUsername());
 						DBPerson.saveMe(usr);

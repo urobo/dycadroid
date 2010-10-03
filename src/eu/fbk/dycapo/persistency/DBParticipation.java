@@ -58,16 +58,26 @@ public class DBParticipation {
 		db.commit();
 	}
 	
+	@SuppressWarnings({ "serial" })
 	public static final void removeParticipation (Participation p){
+		final String pname = p.getPerson().getUsername();
 		ObjectContainer db = DBProvider.getDatabase();
-		Participation tmp = new Participation();
-		tmp.setPerson(p.getPerson());
-		
-		ObjectSet<Participation> ps = db.queryByExample(tmp);
-		if(ps.hasNext()){
-			db.delete(ps);
-			db.commit();	
-		}
-		tmp = null;
+		ObjectSet<Participation> result = db.query(new Predicate<Participation>() {
+		      public boolean match(Participation proto) {
+		          return proto.getPerson().getUsername().equals(pname);
+		    }
+		});
+		db.delete(result);
+		db.commit();
+	}
+	
+	public static final void saveParticipationList(List<Participation> pl){
+		ObjectContainer db = DBProvider.getDatabase();
+		ObjectSet<Participation> oldpl = db.queryByExample(Participation.class);
+		db.delete(oldpl);
+		int size = pl.size();
+		for (int i = 0 ; i< size; i++)
+			db.store(pl.get(i));
+		db.commit();
 	}
 }
