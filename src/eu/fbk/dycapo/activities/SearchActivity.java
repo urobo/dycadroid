@@ -28,6 +28,9 @@ import eu.fbk.dycapo.bundles.SearchBundle;
 import eu.fbk.dycapo.models.Mode;
 import eu.fbk.dycapo.models.Search;
 import eu.fbk.dycapo.models.Trip;
+import eu.fbk.dycapo.persistency.DBParticipation;
+import eu.fbk.dycapo.persistency.DBTrip;
+import eu.fbk.dycapo.util.ParticipationUtils;
 import eu.fbk.dycapo.util.SearchTrip;
 
 /**
@@ -36,6 +39,7 @@ import eu.fbk.dycapo.util.SearchTrip;
  */
 public class SearchActivity extends ListActivity implements OnClickListener {
 	private Search search;
+	private int currentPosition;
 	private List<Trip> trips;
 	private String[] tripsMeta;
 	private ProgressDialog pd;
@@ -138,6 +142,7 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 		public void onItemClick(AdapterView<?> parent, View view,
 		      int position, long id) {
 		      
+			  SearchActivity.this.currentPosition = position; 
 		      Trip trip = SearchActivity.this.trips.get(position);
 		      SimpleDateFormat formatter =new SimpleDateFormat("MM-dd hh:mm:ss");
 		      
@@ -182,9 +187,11 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
-		// TODO Auto-generated method stub
 		d.dismiss();
 		d= null;
+		DBParticipation.newTrip();
+		ParticipationUtils.postParticipation(this.trips.get(this.currentPosition));
+		DBTrip.saveActiveTripFromTrip(this.trips.get(this.currentPosition));
 		Intent i = new Intent();
 		i.setClass(SearchActivity.this, Navigation.class);
 		Bundle data = new Bundle();
@@ -193,25 +200,4 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 		this.startActivity(i);
 		
 	}
-//	Dialog d;
-//	
-//	Calendar c = Calendar.getInstance();
-//	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//	User usr = DBPerson.getUser();
-//	
-//	TextView tx = (TextView) ExpandTripLayout.findViewById(R.id.showArrivalTime);
-//	tx.setText(formatter.format(c.getTime()));
-//	
-//	tx = (TextView) ExpandTripLayout.findViewById(R.id.showAuthor);
-//	tx.setText(usr.getUsername());
-//	
-//	tx = (TextView) ExpandTripLayout.findViewById(R.id.showDateOfCreation);
-//	tx.setText(formatter.format(c.getTime()));
-//	
-//	tx = (TextView) ExpandTripLayout.findViewById(R.id.showDateOfExpiration);
-//	tx.setText(formatter.format(c.getTime()));
-//	
-//	d = new AlertDialog.Builder(SearchActivity.this).setView(ExpandTripLayout).setCancelable(true)
-//      .setPositiveButton("Participate!", SearchActivity.this).setTitle("Trip").create();
-//    d.show();
 }

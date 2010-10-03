@@ -21,10 +21,10 @@ public class Participation implements DycapoJSONObjects{
 	public static final String HREF = "href";
 	
 	
-	protected static final String REQUEST = "request";
-	protected static final String ACCEPT = "accept";
-	protected static final String START = "start";
-	protected static final String FINISH = "finish";
+	public static final String REQUESTED = "request";
+	public static final String ACCEPTED = "accept";
+	public static final String START = "start";
+	public static final String FINISH = "finish";
 	
 	private Person person;
 	private String status;

@@ -15,6 +15,7 @@ import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.factories.json.DycapoObjectsFetcher;
 import eu.fbk.dycapo.models.Participation;
 import eu.fbk.dycapo.models.Trip;
+import eu.fbk.dycapo.persistency.DBParticipation;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.User;
 import eu.fbk.dycapo.services.DycapoServiceClient;
@@ -68,4 +69,47 @@ public abstract class ParticipationUtils {
 		
 		return null;
 	}
+	
+	public static final void updateDycapoParticipation(Participation p){
+		User usr = DBPerson.getUser();
+		try {
+			DycapoServiceClient.callDycapo(
+					DycapoServiceClient.PUT, 
+					p.getHref(), 
+					p.toJSONObject(), 
+					usr.getUsername(), 
+					usr.getPassword());
+		} catch (DycapoException e) {
+			Log.e(TAG, e.getMessage());
+			e.printStackTrace();
+		} catch (JSONException e) {
+			Log.e(TAG, e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	public static final void postParticipation(Trip trip){
+		User usr = DBPerson.getUser();
+		Participation p = new Participation();
+		p.setPerson(usr);
+		p.setStatus(Participation.REQUESTED);
+		try {
+			JSONObject json = DycapoServiceClient.callDycapo(DycapoServiceClient.POST,
+					trip.getHref() + "participations/",
+					p.toJSONObject(),
+					usr.getUsername(), 
+					usr.getPassword());
+			p = DycapoObjectsFetcher.buildParticipation(json);
+			DBParticipation.addParticipation(p);
+			p = null;
+		} catch (DycapoException e) {
+			Log.e(TAG, e.getMessage());
+			e.printStackTrace();
+		} catch (JSONException e) {
+			Log.e(TAG, e.getMessage());
+			e.printStackTrace();
+		}
+		
+	}
+	
 }

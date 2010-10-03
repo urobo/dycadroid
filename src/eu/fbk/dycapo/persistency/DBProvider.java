@@ -3,6 +3,7 @@
  */
 package eu.fbk.dycapo.persistency;
 import android.content.Context;
+
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.config.Configuration;
@@ -31,8 +32,8 @@ public class DBProvider {
 		
 		@SuppressWarnings("deprecation")
 		public static ObjectContainer provideDB(){
-			
 			return Db4o.openFile(DBProvider.configure(), DBProvider.db4oDBFullPath());
+			
 		}
 		
 		public static ObjectContainer getDatabase(){
@@ -49,7 +50,7 @@ public class DBProvider {
 		 @SuppressWarnings("deprecation")
 		private static Configuration configure(){
 			 	dbConfiguration =Db4o.newConfiguration();
-			    			 	
+			    
 			 	dbConfiguration.objectClass(Trip.class).objectField(Trip.ID).indexed(true);
 			    dbConfiguration.objectClass(Trip.class).cascadeOnUpdate(true);
 			    dbConfiguration.objectClass(Trip.class).cascadeOnDelete(true);

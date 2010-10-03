@@ -6,6 +6,7 @@ package eu.fbk.dycapo.bundles;
 import eu.fbk.dycapo.models.Participation;
 import eu.fbk.dycapo.models.Person;
 import android.os.Bundle;
+import android.util.Log;
 
 /**
  * @author riccardo
@@ -16,7 +17,7 @@ public abstract class ParticipationBundle {
 	
 	public static final Bundle toBundle(Participation p){
 		Bundle data = new Bundle();
-		
+		Log.d(TAG, "toBundle");
 		if (p.getHref() instanceof String)
 			data.putString(Participation.HREF, p.getHref());
 		
@@ -31,7 +32,7 @@ public abstract class ParticipationBundle {
 	
 	public static final Participation fromBundle(Bundle data){
 		Participation p = new Participation();
-		
+		Log.d(TAG, "fromBundle");
 		if (data.containsKey(Participation.HREF))
 			p.setHref(data.getString(Participation.HREF));
 		

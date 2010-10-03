@@ -6,11 +6,9 @@ package eu.fbk.dycapo.factories.json;
 import java.util.List;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
-
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Mode;

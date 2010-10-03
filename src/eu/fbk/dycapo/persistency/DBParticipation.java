@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import com.db4o.query.Predicate;
 
 import eu.fbk.dycapo.models.Participation;
 
@@ -41,6 +42,20 @@ public class DBParticipation {
 		ObjectContainer db = DBProvider.getDatabase();
 		List<Participation> lp = db.queryByExample(Participation.class);
 		return lp;
+	}
+	
+	@SuppressWarnings({ "serial", "unchecked" })
+	public static final void updateParticipation (Participation p){
+		final String pname = p.getPerson().getUsername();
+		ObjectContainer db = DBProvider.getDatabase();
+		ObjectSet result = db.query(new Predicate<Participation>() {
+		      public boolean match(Participation proto) {
+		          return proto.getPerson().getUsername().equals(pname);
+		    }
+		});
+		db.delete(result);
+		db.store(p);
+		db.commit();
 	}
 	
 	public static final void removeParticipation (Participation p){
