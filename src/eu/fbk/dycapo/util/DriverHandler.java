@@ -5,27 +5,38 @@ package eu.fbk.dycapo.util;
 
 import java.util.List;
 
+import eu.fbk.dycapo.activities.Navigation;
+import eu.fbk.dycapo.bundles.ParticipationBundle;
+import eu.fbk.dycapo.models.Participation;
+import eu.fbk.dycapo.persistency.DBParticipation;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import eu.fbk.dycapo.activities.Navigation;
-import eu.fbk.dycapo.bundles.ParticipationBundle;
-import eu.fbk.dycapo.models.Participation;
-import eu.fbk.dycapo.persistency.DBParticipation;
 
 /**
  * @author riccardo
  *
  */
-public class DriverHandlers extends NavigationHandlers {
-	
+public class DriverHandler extends NavigationHandler {
 	public static final int PARTICIPATIONS_CHECKER_ID = 0;
-	public DriverHandlers(Navigation nav) {
+	
+	private static DriverHandler Instance = null;
+	
+	public static final DriverHandler getInstance(Navigation nav){
+		if (Instance instanceof DriverHandler){
+			Instance.setNav(nav);
+			return Instance;	
+		} else {
+			Instance = new DriverHandler(nav);
+			return Instance;
+		}
+	}
+	
+	private DriverHandler(Navigation nav) {
 		super(nav);
-		// TODO Auto-generated constructor stub
 	}
 	
 	private Handler participationChecker = new Handler(){

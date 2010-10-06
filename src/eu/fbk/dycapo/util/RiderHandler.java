@@ -3,27 +3,39 @@
  */
 package eu.fbk.dycapo.util;
 
-import android.app.AlertDialog;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import eu.fbk.dycapo.activities.Navigation;
 import eu.fbk.dycapo.bundles.ParticipationBundle;
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.models.Person;
 import eu.fbk.dycapo.persistency.DBParticipation;
 import eu.fbk.dycapo.persistency.DBTrip;
+import android.app.AlertDialog;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 
 /**
  * @author riccardo
  *
  */
-public class RiderHandlers extends NavigationHandlers{
+public class RiderHandler extends NavigationHandler {
+
 	private static final String TAG = "NavigationHandlers";
 	
+	private static RiderHandler Instance = null;
 	public static final int STATUS_CHANGED_ID = 0;
 	
-	public RiderHandlers(Navigation nav) {
+	public static final RiderHandler getInstance(Navigation nav){
+		if (Instance instanceof RiderHandler){
+			Instance.setNav(nav);
+			return Instance;	
+		} else {
+			Instance = new RiderHandler(nav);
+			return Instance;
+		}
+	}
+	
+	private RiderHandler(Navigation nav) {
 		super(nav);
 	}
 	
@@ -34,7 +46,7 @@ public class RiderHandlers extends NavigationHandlers{
 		 */
 		@Override
 		public void handleMessage(Message msg) {
-			RiderHandlers.this.nav.br.stopBroker();
+			RiderHandler.this.nav.br.stopBroker();
 			try {
 				Person driver = DBTrip.getActiveTrip().getAuthor();
 				String opnoun; 

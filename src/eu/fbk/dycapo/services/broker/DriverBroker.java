@@ -21,7 +21,7 @@ import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBTrip;
 import eu.fbk.dycapo.persistency.User;
 import eu.fbk.dycapo.services.DycapoServiceClient;
-import eu.fbk.dycapo.util.DriverHandlers;
+import eu.fbk.dycapo.util.DriverHandler;
 
 /**
  * @author riccardo
@@ -72,7 +72,7 @@ public class DriverBroker extends Broker {
 							usr.getPassword()).toString());
 					List<Participation>tmp = DycapoObjectsFetcher.extractTripParticipations(pl);
 					DBParticipation.saveParticipationList(tmp);
-					DriverBroker.this.nav.nh.getHandler(DriverHandlers.PARTICIPATIONS_CHECKER_ID).sendEmptyMessage(0);
+					DriverBroker.this.nav.nh.getHandler(DriverHandler.PARTICIPATIONS_CHECKER_ID).sendEmptyMessage(0);
 				} catch (DycapoException e) {
 					Log.e(TAG, e.getMessage());
 					e.printStackTrace();

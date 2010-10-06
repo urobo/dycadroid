@@ -27,7 +27,7 @@ import eu.fbk.dycapo.models.Participation;
 import eu.fbk.dycapo.persistency.DBParticipation;
 import eu.fbk.dycapo.services.broker.Broker;
 import eu.fbk.dycapo.util.Environment;
-import eu.fbk.dycapo.util.NavigationHandlers;
+import eu.fbk.dycapo.util.NavigationHandler;
 import eu.fbk.dycapo.util.ParticipationUtils;
 
 
@@ -46,7 +46,7 @@ public class Navigation extends MapActivity{
 	private int navRole;
 
 
-	public NavigationHandlers nh = null;
+	public NavigationHandler nh = null;
 	public Broker br = null;
 
 	private Button button1;
@@ -165,7 +165,9 @@ public class Navigation extends MapActivity{
 			break;
 		}
 		this.button3.setText("Cancel");
-
+		nh = NavigationHandler.HandlersFactory.getNavigationHandler(this.navRole, this);
+		br = Broker.BrokerFactory.getBroker(navRole, this);
+		br.startBroker();
 	}
 
 	private Handler handleCommonSuccess = new Handler() {

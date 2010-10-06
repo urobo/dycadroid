@@ -12,7 +12,7 @@ import eu.fbk.dycapo.bundles.ParticipationBundle;
 import eu.fbk.dycapo.models.Participation;
 import eu.fbk.dycapo.persistency.DBParticipation;
 import eu.fbk.dycapo.util.ParticipationUtils;
-import eu.fbk.dycapo.util.RiderHandlers;
+import eu.fbk.dycapo.util.RiderHandler;
 
 /**
  * @author riccardo
@@ -58,7 +58,7 @@ public class RiderBroker extends Broker{
 								p.getStatus().equals(Participation.ACCEPTED)){
 							Message msg = Message.obtain();
 							msg.setData(ParticipationBundle.toBundle(p));
-							RiderBroker.this.nav.nh.getHandler(RiderHandlers.STATUS_CHANGED_ID).sendMessage(msg);
+							RiderBroker.this.nav.nh.getHandler(RiderHandler.STATUS_CHANGED_ID).sendMessage(msg);
 						}
 					}
 					
