@@ -113,5 +113,39 @@ public abstract class ParticipationUtils {
 	}
 	
 	
+	public static final void acceptRideRequest(Participation p){
+		User usr = DBPerson.getUser();
+		try {
+			DycapoServiceClient.callDycapo(DycapoServiceClient.PUT,
+					p.getHref(),
+					p.toJSONObject(), 
+					usr.getUsername(),
+					usr.getPassword());
+		} catch (DycapoException e) {
+			Log.e(TAG, e.getMessage());
+			e.printStackTrace();
+		} catch (JSONException e) {
+			Log.e(TAG, e.getMessage());
+			e.printStackTrace();
+		}
+		
+	}
 	
+	public static final void refuseRideRequest(Participation p){
+		User usr = DBPerson.getUser();
+		try {
+			DycapoServiceClient.callDycapo(DycapoServiceClient.DELETE,
+					p.getHref(),
+					null, 
+					usr.getUsername(),
+					usr.getPassword());
+		} catch (DycapoException e) {
+			Log.e(TAG, e.getMessage());
+			e.printStackTrace();
+		} catch (JSONException e) {
+			Log.e(TAG, e.getMessage());
+			e.printStackTrace();
+		}
+		
+	}
 }

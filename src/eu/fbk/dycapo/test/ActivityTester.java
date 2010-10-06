@@ -46,6 +46,7 @@ public abstract class ActivityTester {
 			i.setClass(ctx, FastChoice.class);
 			break;
 		}
+		
 		return i;
 	}
 }

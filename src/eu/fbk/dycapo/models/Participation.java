@@ -82,5 +82,30 @@ public class Participation implements DycapoJSONObjects{
 		Log.d(TAG,result.toString());
 		return result;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		String result = "";
+		if (this.getStatus() instanceof String)
+			result += "Status : "+ this.status;
+		if (this.getPerson() instanceof Person){
+			result += "\n User : " + this.person.getUsername();
+			result += " Age : " + this.person.getAge();
+			result += " Gender : " + this.person.getGender();
+			result += " Info : ";
+			if (this.getPerson().getDeaf())
+				result += "D";
+			if (this.getPerson().getBlind())
+				result += "B";
+			if (this.getPerson().getDog())
+				result += "P";
+			if (this.getPerson().getSmoker())
+				result += "S";
+		}
+		return result;
+	}
+	
 	
 }

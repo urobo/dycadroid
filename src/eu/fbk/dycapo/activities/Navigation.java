@@ -3,8 +3,6 @@
  */
 package eu.fbk.dycapo.activities;
 
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -27,24 +25,26 @@ import eu.fbk.dycapo.maputils.LocationService;
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Participation;
 import eu.fbk.dycapo.persistency.DBParticipation;
-import eu.fbk.dycapo.persistency.DBTrip;
 import eu.fbk.dycapo.services.broker.Broker;
+import eu.fbk.dycapo.util.Environment;
 import eu.fbk.dycapo.util.NavigationHandlers;
 import eu.fbk.dycapo.util.ParticipationUtils;
+
 
 /**
  * 
  * @author riccardo
  * 
  */
-public class Navigation extends MapActivity implements OnClickListener {
+public class Navigation extends MapActivity{
 	private static final String TAG = "Navigation";
 	private static MapView mapView;
 	private static ProgressDialog myProgressDialog;
 	@SuppressWarnings("unused")
 	private LocationService dls = null;
+	
+	private int navRole;
 
-	private String role = null;
 
 	public NavigationHandlers nh = null;
 	public Broker br = null;
@@ -52,7 +52,47 @@ public class Navigation extends MapActivity implements OnClickListener {
 	private Button button1;
 	private Button button2;
 	private Button button3;
+	
+	
+	private OnClickListener startTrip = new OnClickListener() {
 
+		@Override
+		public void onClick(View v) {
+			myProgressDialog = ProgressDialog.show(Navigation.this,
+					"Please wait...", "Updating On the Server", true,
+					true);
+			new Thread() {
+
+				/*
+				 * (non-Javadoc)
+				 * 
+				 * @see java.lang.Thread#run()
+				 */
+				@Override
+				public void run() {
+					int what = 0;
+					Participation tmp = DBParticipation
+							.getParticipations().get(0);
+					if (riderOnBoard == false) {
+						tmp.setStatus(Participation.START);
+						Navigation.this.button2
+								.setText("Finish Participation");
+					} else {
+						tmp.setStatus(Participation.FINISH);
+						what = 1;
+					}
+					ParticipationUtils.updateDycapoParticipation(tmp);
+					DBParticipation.updateParticipation(tmp);
+					Navigation.this.handleCommonSuccess
+							.sendEmptyMessage(what);
+				}
+
+			}.start();
+
+		}
+
+	};
+	
 	private static boolean riderOnBoard = false;
 	
 	/* (non-Javadoc)
@@ -66,21 +106,22 @@ public class Navigation extends MapActivity implements OnClickListener {
 		this.dls = new LocationService(this);
 
 		Log.d(TAG, this.getIntent().getExtras().keySet().toString());
-		this.role = this.getIntent().getExtras().getString("role");
-
+		String tmp = this.getIntent().getExtras().getString("role");
+		if(tmp.equals("driver"))
+			this.navRole = Environment.DRIVER;
+		else this.navRole = Environment.RIDER;
 		mapView = (MapView) findViewById(R.id.myMapView1);
 		mapView.setBuiltInZoomControls(true);
 		mapView.setSatellite(false);
 		mapView.setStreetView(true);
 
 		this.button1 = (Button) this.findViewById(R.id.navButton1);
-		this.button1.setOnClickListener(this);
 		this.button2 = (Button) this.findViewById(R.id.navButton2);
-		this.button2.setOnClickListener(this);
 		this.button3 = (Button) this.findViewById(R.id.navButton3);
-		this.button3.setOnClickListener(this);
-
-		if (this.role.equals("driver")) {
+		
+		
+		switch(this.navRole){
+		case Environment.DRIVER:
 			this.button1.setText("Participants");
 			this.button2.setText("Finish Trip");
 			try {
@@ -114,51 +155,14 @@ public class Navigation extends MapActivity implements OnClickListener {
 										finish();
 									}
 								}).show();
-
 			}
-		} else {
-
+			break;
+		case Environment.RIDER:
 			this.button1.setText("Show Driver");
 			this.button2.setText("Start Participation");
 
-			this.button2.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					myProgressDialog = ProgressDialog.show(Navigation.this,
-							"Please wait...", "Updating On the Server", true,
-							true);
-					new Thread() {
-
-						/*
-						 * (non-Javadoc)
-						 * 
-						 * @see java.lang.Thread#run()
-						 */
-						@Override
-						public void run() {
-							int what = 0;
-							Participation tmp = DBParticipation
-									.getParticipations().get(0);
-							if (riderOnBoard == false) {
-								tmp.setStatus(Participation.START);
-								Navigation.this.button2
-										.setText("Finish Participation");
-							} else {
-								tmp.setStatus(Participation.FINISH);
-								what = 1;
-							}
-							ParticipationUtils.updateDycapoParticipation(tmp);
-							DBParticipation.updateParticipation(tmp);
-							Navigation.this.handleCommonSuccess
-									.sendEmptyMessage(what);
-						}
-
-					}.start();
-
-				}
-
-			});
+			this.button2.setOnClickListener(this.startTrip);
+			break;
 		}
 		this.button3.setText("Cancel");
 
@@ -217,51 +221,6 @@ public class Navigation extends MapActivity implements OnClickListener {
 		super.onResume();
 	}
 
-	@Override
-	public void onClick(View v) {
-
-		switch (v.getId()) {
-		case R.id.navButton1:
-			List<Participation> parts;
-			try {
-				parts = DBTrip.getActiveTrip().getmParticipants();
-				String[] participants = null;
-				if (!parts.isEmpty()) {
-					participants = new String[parts.size()];
-					for (int i = 0; i < participants.length; i++) {
-						participants[i] = parts.get(i).getPerson()
-								.getUsername();
-					}
-				} else {
-					participants = new String[1];
-					participants[0] = "There are no other users involved in participation";
-				}
-				new AlertDialog.Builder(this).setTitle("User List")
-						.setPositiveButton("Ok", null).setItems(participants,
-								null).setCancelable(true).show();
-			} catch (DycapoException e) {
-				e.printStackTrace();
-				e.alertUser(this);
-			}
-			break;
-
-		case R.id.navButton2:
-			if (this.role.equals("driver")) {
-
-			} else {
-				this.button2.setText("Finish Participation");
-			}
-			break;
-
-		case R.id.navButton3:
-			if (this.role.equals("driver")) {
-
-			} else {
-
-			}
-			break;
-		}
-	}
 
 	private static final int UPDATE_LOCATION = 0;
 	private static final int UPDATE_PARTICIPANTS_LOCATIONS = 1;

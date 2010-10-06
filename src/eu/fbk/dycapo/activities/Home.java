@@ -131,7 +131,7 @@ public class Home extends Activity implements OnClickListener{
 						if (passwordIn instanceof String && !passwordIn.equals("")){
 						usr.setPassword(passwordIn);
 						} 	else throw new DycapoException ("Invalid Password");
-						//DBPerson.saveMe(usr);
+						
 						Location loc = new Location();
 						loc.setGeorss_point("-14.805422,67.716293");
 						loc.setPoint(Location.POSI);

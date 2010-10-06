@@ -11,6 +11,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpPost;
@@ -33,8 +34,8 @@ import eu.fbk.dycapo.util.StreamConverter;
  *	DELETE		Deletes the specified resource.
  */
 public abstract class DycapoServiceClient {
-	//public static final String URL_BASIS = "http://test.dycapo.org/api/";
-	public static final String URL_BASIS = "http://10.7.199.16/api/";
+	public static final String URL_BASIS = "http://test.dycapo.org/api/";
+	//public static final String URL_BASIS = "http://10.7.199.16/api/";
 	private static final String TAG = "DycapoServiceClient";
 	private static UsernamePasswordCredentials USRN_PWD_CRD= null;
 	
@@ -179,7 +180,8 @@ public abstract class DycapoServiceClient {
 				response = (HttpResponse) httpclient.execute(requestPut);
 				break;
 			case DELETE:
-				
+				HttpDelete requestDelete = new HttpDelete(uriF);
+				response = (HttpResponse) httpclient.execute(requestDelete);
 				break;
 			default :
 				

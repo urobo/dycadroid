@@ -29,12 +29,26 @@ import eu.fbk.dycapo.util.DriverHandlers;
  */
 public class DriverBroker extends Broker {
 	private static final String TAG = "DriverBroker";
+	
+	private static DriverBroker Instance = null;
+	public static final DriverBroker getInstance(Navigation nav){
+		if(Instance instanceof DriverBroker){
+			Instance.setNav(nav);
+			return Instance;
+		}
+			
+		else {
+			Instance = new DriverBroker(nav);
+			return Instance;
+		}
+	}
+	
 	/**
 	 * @param role
 	 * @param nav
 	 */
-	public DriverBroker(int role, Navigation nav) {
-		super(role, nav);
+	private DriverBroker(Navigation nav) {
+		super(nav);
 		this.task = new Timer();
 	}
 

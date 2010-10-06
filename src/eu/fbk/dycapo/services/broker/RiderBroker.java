@@ -19,13 +19,24 @@ import eu.fbk.dycapo.util.RiderHandlers;
  *
  */
 public class RiderBroker extends Broker{
-
+	private static RiderBroker Instance = null;
+	public static final RiderBroker getInstance(Navigation nav){
+		if(Instance instanceof RiderBroker){
+			Instance.setNav(nav);
+			return Instance;
+		}
+			
+		else {
+			Instance = new RiderBroker(nav);
+			return Instance;
+		}
+	}
 	/**
 	 * @param role
 	 * @param nav
 	 */
-	public RiderBroker(int role, Navigation nav) {
-		super(role, nav);
+	private RiderBroker( Navigation nav) {
+		super(nav);
 		this.task = new Timer();
 	}
 

@@ -6,42 +6,27 @@ package eu.fbk.dycapo.services.broker;
 import java.util.Timer;
 
 import eu.fbk.dycapo.activities.Navigation;
+import eu.fbk.dycapo.util.Environment;
 
 /**
  * @author riccardo
  *
  */
 public abstract class Broker{
-	protected int role;
+	
 	protected Timer task = null;
 	protected Navigation nav = null;
 	
 	protected static final int SHORT_INTERVAL = 1000;
 	protected static final int LONG_INTERVAL = 60000;
-	protected static final int RIDER = 0;
-	protected static final int DRIVER = 1;
-	
-	public Broker(){
+
+	protected Broker(){
 		
 	}
 	
-	public Broker(int role,Navigation nav){
-		this.role = role;
+	protected Broker(Navigation nav){
+		
 		this.nav = nav;
-	}
-
-	/**
-	 * @return the role
-	 */
-	public int getRole() {
-		return role;
-	}
-
-	/**
-	 * @param role the role to set
-	 */
-	public void setRole(int role) {
-		this.role = role;
 	}
 
 	/**
@@ -78,5 +63,20 @@ public abstract class Broker{
 	
 	public void stopBroker(){
 		
+	}
+	
+	public abstract static class BrokerFactory{
+		public static final Broker getBroker(int role,Navigation nav){
+			Broker br = null;
+			switch(role){
+			case Environment.RIDER:
+				br = RiderBroker.getInstance(nav);
+				break;
+			case Environment.DRIVER:
+				br = DriverBroker.getInstance(nav);
+				break;
+			}
+			return br;
+		}
 	}
 }
