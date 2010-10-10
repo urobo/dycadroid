@@ -80,4 +80,17 @@ public class DBParticipation {
 			db.store(pl.get(i));
 		db.commit();
 	}
+	
+	@SuppressWarnings("serial")
+	public static final List<Participation> getActiveParcitipants(){
+		
+		ObjectContainer db = DBProvider.getDatabase();
+		List<Participation> result = db.query(new Predicate<Participation>() {
+		      public boolean match(Participation proto) {
+		          return proto.getStatus().equals(Participation.START)
+		          || proto.getStatus().equals(Participation.ACCEPTED);
+		    }
+		});
+		return result;
+	}
 }

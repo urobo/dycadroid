@@ -6,6 +6,7 @@ package eu.fbk.dycapo.activities;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,11 +18,14 @@ import android.widget.Button;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
+import com.google.android.maps.OverlayItem;
 
 import eu.fbk.dycapo.bundles.LocationBundle;
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.maputils.Directions;
+import eu.fbk.dycapo.maputils.DycapoItemizedOverlay;
 import eu.fbk.dycapo.maputils.LocationService;
+import eu.fbk.dycapo.maputils.PositionUpdater;
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Participation;
 import eu.fbk.dycapo.persistency.DBParticipation;
@@ -38,13 +42,28 @@ import eu.fbk.dycapo.util.ParticipationUtils;
  */
 public class Navigation extends MapActivity{
 	private static final String TAG = "Navigation";
-	private static MapView mapView;
+	private MapView mapView;
 	private static ProgressDialog myProgressDialog;
 	@SuppressWarnings("unused")
 	private LocationService dls = null;
-	
+	private PositionUpdater pu = null;
 	private int navRole;
+	private DycapoItemizedOverlay user_position;
 
+
+	/**
+	 * @return the mapView
+	 */
+	public MapView getMapView() {
+		return mapView;
+	}
+
+	/**
+	 * @param mapView the mapView to set
+	 */
+	public void setMapView(MapView mapView) {
+		this.mapView = mapView;
+	}
 
 	public NavigationHandler nh = null;
 	public Broker br = null;
@@ -166,8 +185,11 @@ public class Navigation extends MapActivity{
 		}
 		this.button3.setText("Cancel");
 		nh = NavigationHandler.HandlersFactory.getNavigationHandler(this.navRole, this);
+		pu = PositionUpdater.PositionUpdaterFactory.buildPoistionUpdater(navRole, this);
 		br = Broker.BrokerFactory.getBroker(navRole, this);
+		
 		br.startBroker();
+		pu.startPositionUpdater();
 	}
 
 	private Handler handleCommonSuccess = new Handler() {
@@ -225,7 +247,7 @@ public class Navigation extends MapActivity{
 
 
 	private static final int UPDATE_LOCATION = 0;
-	private static final int UPDATE_PARTICIPANTS_LOCATIONS = 1;
+	
 
 	public Handler myViewUpdateHandler = new Handler() {
 
@@ -247,16 +269,28 @@ public class Navigation extends MapActivity{
 						(int) (((double) mLong / 1E5) * 1E6)));
 
 				break;
-			case UPDATE_PARTICIPANTS_LOCATIONS:
-				break;
-
 			}
-
-			super.handleMessage(msg);
 		}
 	};
 
 	private void updateUserPosition(GeoPoint posi) {
-
+		if (this.user_position instanceof DycapoItemizedOverlay){
+			this.mapView.getOverlays().remove(this.user_position);
+			this.user_position = null;
+		}
+		Drawable drawable = null;
+		switch(this.navRole){
+		case Environment.RIDER:
+			this.getResources().getDrawable(R.drawable.rider);
+			break;
+		case Environment.DRIVER:
+			this.getResources().getDrawable(R.drawable.driver);
+			break;
+		}
+		
+		this.user_position = new DycapoItemizedOverlay(drawable);
+		OverlayItem overlayitem = new OverlayItem(posi, "You", "");
+		this.user_position.addOverlay(overlayitem);
+		this.mapView.getOverlays().add(this.user_position);
 	}
 }

@@ -3,70 +3,90 @@
  */
 package eu.fbk.dycapo.maputils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import eu.fbk.dycapo.activities.Navigation;
-import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Participation;
-import eu.fbk.dycapo.persistency.DBParticipation;
+import eu.fbk.dycapo.util.Environment;
 
 /**
  * @author riccardo
  *
  */
-public class PositionUpdater {
-	private static final String TAG= "PositionUpdater";
-	
-	private Navigation nav = null;
-	private Timer task = null;
+public abstract class PositionUpdater {
 	
 	protected static final int SHORT_INTERVAL = 1000;
 	protected static final int LONG_INTERVAL = 60000;
 	
+	protected DycapoItemizedOverlay itemizedoverlay = null;
+	protected Navigation nav =null;
+	protected Timer task = null;
+	
+	
+	
 	/**
-	 * @param nav
+	 * @return the itemizedoverlay
 	 */
-	private PositionUpdater(Navigation nav) {
-		this.nav = nav;
-		this.task = new Timer();
+	public DycapoItemizedOverlay getItemizedoverlay() {
+		return itemizedoverlay;
 	}
-
+	/**
+	 * @param itemizedoverlay the itemizedoverlay to set
+	 */
+	public void setItemizedoverlay(DycapoItemizedOverlay itemizedoverlay) {
+		this.itemizedoverlay = itemizedoverlay;
+	}
 	/**
 	 * @return the nav
 	 */
 	public Navigation getNav() {
 		return nav;
 	}
-
 	/**
 	 * @param nav the nav to set
 	 */
 	public void setNav(Navigation nav) {
 		this.nav = nav;
 	}
-	
-	public void startPositionUpdater(){
-		this.task.scheduleAtFixedRate(new TimerTask(){
-
-			@Override
-			public void run() {
-				List<Participation> lp = DBParticipation.getParticipations();
-				int size = lp.size();
-				List<Location> ppositions = new ArrayList<Location>();
-				for (int i = 0; i< size; i++){
-					if (lp.get(i).getStatus().equals(Participation.ACCEPTED)){
-						ppositions.add(LocationService.getPosition(lp.get(i).getPerson()));
-					}
-				//redraw
-				}
-			}}, 
-			SHORT_INTERVAL,
-			LONG_INTERVAL);
+	/**
+	 * @return the task
+	 */
+	public Timer getTask() {
+		return task;
 	}
-	public void stopPositionUpdater(){
+	/**
+	 * @param task the task to set
+	 */
+	public void setTask(Timer task) {
+		this.task = task;
+	}
+	
+	
+	protected PositionUpdater(Navigation nav){
+		this.nav=nav;
+	}
+	
+	public abstract void startPositionUpdater();
 		
+	
+	public abstract void stopPositionUpdater();
+	
+	
+	public abstract void drawParticipants (List<Participation> participants);
+	
+	public abstract static class PositionUpdaterFactory{
+		public static final PositionUpdater buildPoistionUpdater(int role, Navigation nav){
+			PositionUpdater pu = null;
+			switch(role){
+			case Environment.RIDER:
+				pu = RiderPositionService.getInstace(nav);
+				break;
+			case Environment.DRIVER:
+				pu = DriverPositionService.getInstace(nav);
+				break;
+			}
+			return pu;
+		}
 	}
 }

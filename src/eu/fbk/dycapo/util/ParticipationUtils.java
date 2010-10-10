@@ -121,6 +121,7 @@ public abstract class ParticipationUtils {
 					p.toJSONObject(), 
 					usr.getUsername(),
 					usr.getPassword());
+			DBParticipation.updateParticipation(p);
 		} catch (DycapoException e) {
 			Log.e(TAG, e.getMessage());
 			e.printStackTrace();
@@ -139,6 +140,7 @@ public abstract class ParticipationUtils {
 					null, 
 					usr.getUsername(),
 					usr.getPassword());
+			DBParticipation.removeParticipation(p);
 		} catch (DycapoException e) {
 			Log.e(TAG, e.getMessage());
 			e.printStackTrace();
