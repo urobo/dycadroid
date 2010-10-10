@@ -16,7 +16,7 @@ import com.google.android.maps.OverlayItem;
  * @author riccardo
  *
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "rawtypes" })
 public class DycapoItemizedOverlay extends ItemizedOverlay{
 	private ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
 	private Context mContext;

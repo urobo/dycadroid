@@ -3,22 +3,18 @@
  */
 package eu.fbk.dycapo.util;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import eu.fbk.dycapo.activities.Navigation;
-import eu.fbk.dycapo.bundles.ParticipationBundle;
-import eu.fbk.dycapo.maputils.LocationService;
-import eu.fbk.dycapo.maputils.PositionUpdater;
-import eu.fbk.dycapo.models.Location;
-import eu.fbk.dycapo.models.Participation;
-import eu.fbk.dycapo.persistency.DBParticipation;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import eu.fbk.dycapo.activities.Navigation;
+import eu.fbk.dycapo.bundles.ParticipationBundle;
+import eu.fbk.dycapo.models.Participation;
+import eu.fbk.dycapo.persistency.DBParticipation;
 
 /**
  * @author riccardo

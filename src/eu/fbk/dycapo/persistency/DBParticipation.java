@@ -44,7 +44,7 @@ public class DBParticipation {
 		return lp;
 	}
 	
-	@SuppressWarnings({ "serial", "unchecked" })
+	@SuppressWarnings({ "serial", "rawtypes" })
 	public static final void updateParticipation (Participation p){
 		final String pname = p.getPerson().getUsername();
 		ObjectContainer db = DBProvider.getDatabase();
