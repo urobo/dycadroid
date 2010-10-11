@@ -27,13 +27,11 @@ public class DriverHandler extends NavigationHandler {
 	private static DriverHandler Instance = null;
 	
 	public static final DriverHandler getInstance(Navigation nav){
-		if (Instance instanceof DriverHandler){
-			Instance.setNav(nav);
-			return Instance;	
-		} else {
-			Instance = new DriverHandler(nav);
-			return Instance;
-		}
+		if (Instance instanceof DriverHandler)
+			Instance = null;
+		Instance = new DriverHandler(nav);
+		return Instance;
+		
 	}
 	
 	private DriverHandler(Navigation nav) {

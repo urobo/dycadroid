@@ -102,6 +102,8 @@ public class Preferences implements DycapoJSONObjects {
 	public static final String DRIVE="drive";
 	public static final String RIDE="ride";
 	public static final String PET="pet";
+
+	public static final String HREF = "href";
 	
 	private String age;				//may
 	private Boolean nonsmoking;		//may

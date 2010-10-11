@@ -33,14 +33,10 @@ public class DriverBroker extends Broker {
 	private static DriverBroker Instance = null;
 	public static final DriverBroker getInstance(Navigation nav){
 		if(Instance instanceof DriverBroker){
-			Instance.setNav(nav);
-			return Instance;
+			Instance = null;
 		}
-			
-		else {
-			Instance = new DriverBroker(nav);
-			return Instance;
-		}
+		Instance = new DriverBroker(nav);
+		return Instance;
 	}
 	
 	/**

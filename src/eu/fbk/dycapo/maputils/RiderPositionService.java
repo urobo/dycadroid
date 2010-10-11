@@ -34,15 +34,12 @@ public class RiderPositionService extends PositionUpdater {
 	public static final RiderPositionService getInstace(Navigation nav){
 		if(Instance instanceof RiderPositionService){
 			Instance.stopPositionUpdater();
-			Instance.setNav(nav);
-			return Instance;
+			Instance = null;
 		}
-			
-		else {
-			Instance = new RiderPositionService(nav);
-			return Instance;
-		}
+		Instance = new RiderPositionService(nav);
+		return Instance;
 	}
+	
 	protected RiderPositionService(Navigation nav) {
 		super(nav);
 		this.task = new Timer();

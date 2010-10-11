@@ -26,13 +26,10 @@ public class RiderHandler extends NavigationHandler {
 	public static final int STATUS_CHANGED_ID = 0;
 	
 	public static final RiderHandler getInstance(Navigation nav){
-		if (Instance instanceof RiderHandler){
-			Instance.setNav(nav);
-			return Instance;	
-		} else {
-			Instance = new RiderHandler(nav);
-			return Instance;
-		}
+		if (Instance instanceof RiderHandler)
+			Instance = null;
+		Instance = new RiderHandler(nav);
+		return Instance;
 	}
 	
 	private RiderHandler(Navigation nav) {

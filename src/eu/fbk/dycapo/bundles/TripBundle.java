@@ -51,8 +51,8 @@ public abstract class TripBundle {
 		if (trip.getExpires() instanceof Date)
 			result.putString(Trip.EXPIRES, sdf.format(trip.getExpires()));
 		
-		if (trip.getId() instanceof Integer)
-			result.putInt(Trip.ID, trip.getId());
+		if (trip.getHref() instanceof String)
+			result.putString(Trip.HREF, trip.getHref());
 		
 		if (trip.getPublished() instanceof Date)
 			result.putString(Trip.PUBLISHED, sdf.format(trip.getPublished()));
@@ -101,8 +101,8 @@ public abstract class TripBundle {
 			}
 		}
 		
-		if (data.containsKey(Trip.ID))
-			trip.setId(data.getInt(Trip.ID));
+		if (data.containsKey(Trip.HREF))
+				trip.setHref(data.getString(Trip.HREF));
 		
 		if (data.containsKey(Trip.PUBLISHED)){
 			try {

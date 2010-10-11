@@ -30,6 +30,8 @@ public class Mode implements DycapoJSONObjects{
 	public static final String COLOR="color";
 	public static final String LIC="lic";
 	public static final String COST="cost";
+
+	public static final String HREF = "href";
 	
 	private String kind;			//must
 	private Integer capacity;		//must

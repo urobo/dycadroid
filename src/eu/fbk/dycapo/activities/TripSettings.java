@@ -396,7 +396,6 @@ public class TripSettings extends Activity  {
 						Trip value= DycapoObjectsFetcher.buildTrip(response);
 						
 						Log.d(TAG, "Trip type");
-						aTrip.setId(value.getId());
 						aTrip.setHref(value.getHref());
 						
 						Trip trip = aTrip;

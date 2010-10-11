@@ -21,16 +21,12 @@ import eu.fbk.dycapo.util.RiderHandler;
 public class RiderBroker extends Broker{
 	private static RiderBroker Instance = null;
 	public static final RiderBroker getInstance(Navigation nav){
-		if(Instance instanceof RiderBroker){
-			Instance.setNav(nav);
-			return Instance;
-		}
-			
-		else {
-			Instance = new RiderBroker(nav);
-			return Instance;
-		}
+		if(Instance instanceof RiderBroker)
+			Instance = null;
+		Instance = new RiderBroker(nav);
+		return Instance;
 	}
+	
 	/**
 	 * @param role
 	 * @param nav

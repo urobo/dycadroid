@@ -14,6 +14,9 @@ public abstract class ModeBundle {
 	public static final Bundle toBundle (Mode mode){
 		Bundle result = new Bundle();
 		
+		if (mode.getHref() instanceof String)
+			result.putString(Mode.HREF, mode.getHref());
+		
 		if (mode.getCapacity() instanceof Integer)
 			result.putInt(Mode.CAPACITY, mode.getCapacity());
 		
@@ -47,6 +50,10 @@ public abstract class ModeBundle {
 	public static final Mode fromBundle (Bundle data){
 		Mode mode = new Mode();
 		
+		
+		if (data.containsKey(Mode.HREF))
+			mode.setHref(data.getString(Mode.HREF));
+			
 		if (data.containsKey(Mode.CAPACITY))
 			mode.setCapacity(data.getInt(Mode.CAPACITY));
 		

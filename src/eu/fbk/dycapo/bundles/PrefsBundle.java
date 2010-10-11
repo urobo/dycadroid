@@ -14,6 +14,9 @@ public abstract class PrefsBundle {
 	public static final Bundle toBundle (Preferences prefs){
 		Bundle result = new Bundle();
 		
+		if (prefs.getHref() instanceof String)
+			result.putString(Preferences.HREF, prefs.getHref());
+		
 		if (prefs.getAge() instanceof String)
 			result.putString(Preferences.AGE, prefs.getAge());
 		
@@ -37,6 +40,9 @@ public abstract class PrefsBundle {
 	
 	public static final Preferences fromBundle (Bundle data){
 		Preferences prefs = new Preferences ();
+		
+		if (data.containsKey(Preferences.HREF))
+			prefs.setHref(data.getString(Preferences.HREF));
 		
 		if (data.containsKey(Preferences.AGE))
 			prefs.setAge(data.getString(Preferences.AGE));

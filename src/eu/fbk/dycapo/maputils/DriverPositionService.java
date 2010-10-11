@@ -30,14 +30,10 @@ public class DriverPositionService extends PositionUpdater {
 	public static final DriverPositionService getInstace(Navigation nav){
 		if(Instance instanceof DriverPositionService){
 			Instance.stopPositionUpdater();
-			Instance.setNav(nav);
-			return Instance;
+			Instance = null;
 		}
-			
-		else {
-			Instance = new DriverPositionService(nav);
-			return Instance;
-		}
+		Instance = new DriverPositionService(nav);
+		return Instance;
 	}
 	
 	protected DriverPositionService(Navigation nav) {

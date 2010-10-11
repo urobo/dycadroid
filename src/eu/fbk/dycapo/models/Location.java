@@ -20,6 +20,7 @@ import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
 public class Location implements DycapoJSONObjects{
 	public static final String TAG = "Location";
 	
+	public static final String HREF="href";
 	public static final String LABEL="label";
 	public static final String STREET="street";
 	public static final String POINT="point";

@@ -34,10 +34,8 @@ public abstract class TripFetcher {
 			if (responseValue.has(DycapoObjectsFetcher.HREF))
 				result.setHref(responseValue.getString(DycapoObjectsFetcher.HREF));
 			
-			if (responseValue.has(Trip.ID))
-				result.setId(responseValue.getInt(Trip.ID));
-			
-		
+			if (responseValue.has(Trip.ACTIVE))
+				result.setActive(responseValue.getBoolean(Trip.ACTIVE));
 			
 			if(responseValue.has(Trip.EXPIRES))
 				try {

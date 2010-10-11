@@ -51,7 +51,7 @@ public class DBProvider {
 		private static Configuration configure(){
 			 	dbConfiguration =Db4o.newConfiguration();
 			    
-			 	dbConfiguration.objectClass(Trip.class).objectField(Trip.ID).indexed(true);
+			 	dbConfiguration.objectClass(Trip.class).objectField(Trip.HREF).indexed(true);
 			    dbConfiguration.objectClass(Trip.class).cascadeOnUpdate(true);
 			    dbConfiguration.objectClass(Trip.class).cascadeOnDelete(true);
 			     
@@ -76,7 +76,7 @@ public class DBProvider {
 			    dbConfiguration.objectClass(User.class).cascadeOnDelete(true);
 			
 			    
-			    dbConfiguration.objectClass(ActiveTrip.class).objectField(ActiveTrip.ID).indexed(true);
+			    dbConfiguration.objectClass(ActiveTrip.class).objectField(ActiveTrip.HREF).indexed(true);
 			    dbConfiguration.objectClass(ActiveTrip.class).cascadeOnUpdate(true);
 			    dbConfiguration.objectClass(ActiveTrip.class).cascadeOnDelete(true);
 			    

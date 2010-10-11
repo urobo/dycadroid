@@ -32,6 +32,7 @@ public class Person implements DycapoJSONObjects{
 	
 	public static final String MALE = "M";
 	public static final String FEMALE = "F";
+	public static final String HREF = "href";
 	
 	private String username;	//must
 	private String email;		//may	

@@ -21,8 +21,8 @@ public final class DBTrip {
 	public static void saveTrip(Trip trip) throws DycapoException{
 		ObjectContainer db=DBProvider.getDatabase();
 		Trip checkDuplicate= new Trip();
-		if (trip.getId() instanceof Integer){
-			checkDuplicate.setId(trip.getId());
+		if (trip.getHref() instanceof String){
+			checkDuplicate.setHref(trip.getHref());
 			List<Trip> duplicate = db.queryByExample(checkDuplicate);
 			if (duplicate.isEmpty())db.store(trip);
 			else {

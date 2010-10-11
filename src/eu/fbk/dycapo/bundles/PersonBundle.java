@@ -15,6 +15,9 @@ public abstract class PersonBundle {
 	public static final Bundle toBundle (Person person){
 		Bundle result = new Bundle();
 		
+		if (person.getHref() instanceof String)
+			result.putString(Person.HREF, person.getHref());
+		
 		if (person.getAge() instanceof Integer)
 			result.putInt(Person.AGE, person.getAge());
 		
@@ -56,6 +59,9 @@ public abstract class PersonBundle {
 	
 	public static final Person fromBundle (Bundle data){
 		Person result = new Person ();
+		
+		if (data.containsKey(Person.HREF))
+			result.setHref(data.getString(Person.HREF));
 		
 		if (data.containsKey(Person.AGE))
 			result.setAge(data.getInt(Person.AGE));

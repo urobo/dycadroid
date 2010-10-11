@@ -22,6 +22,9 @@ public abstract class LocationBundle {
 		
 		Bundle result = new Bundle();
 		
+		if(location.getHref() instanceof String)
+			result.putString(Location.HREF, location.getHref());
+		
 		if(location.getCountry() instanceof String) 
 			result.putString(Location.COUNTRY, location.getCountry());
 		
@@ -69,6 +72,9 @@ public abstract class LocationBundle {
 	public static final Location fromBundle (Bundle data){
 		
 		Location location = new Location ();
+		
+		if(data.containsKey(Location.HREF))
+			location.setHref(data.getString(Location.HREF));
 		
 		if(data.containsKey(Location.COUNTRY))
 			location.setCountry(data.getString(Location.COUNTRY));

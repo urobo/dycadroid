@@ -25,7 +25,7 @@ import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
 public class Trip implements DycapoJSONObjects {
 	public static final String TAG = "Trip";
 	
-	public static final String ID="id";
+	
 	public static final String PUBLISHED="published";
 	public static final String UPDATED="updated";
 	public static final String EXPIRES="expires";
@@ -34,8 +34,13 @@ public class Trip implements DycapoJSONObjects {
 	public static final String MODE="modality";
 	public static final String PREFERENCES="preferences";
 	public static final String LOCATIONS="locations";
+
+	public static final String HREF = "href";
+
+
+	public static final String ACTIVE = "active";
 	
-	protected Integer id;
+	protected Boolean active; 			//must
 	protected Date published;			//may
 	protected Date updated;			//should
 	protected Date expires;			//must
@@ -46,6 +51,24 @@ public class Trip implements DycapoJSONObjects {
 	protected Location destination;		//must
 	protected ArrayList<Location> waypoints;		//must
 	protected String href;
+	
+	
+	/**
+	 * @return the active
+	 */
+	public Boolean getActive() {
+		return active;
+	}
+
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+
 	/**
 	 * @param expires
 	 * @param author
@@ -66,20 +89,6 @@ public class Trip implements DycapoJSONObjects {
 	}
 
 
-	/**
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
-	}
-
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 
 	/**
@@ -244,8 +253,8 @@ public class Trip implements DycapoJSONObjects {
 	public JSONObject toJSONObject() {
 		JSONObject result = new JSONObject();
 		try{
-			if (this.id instanceof Integer) 
-				result.put(Trip.ID, this.id.intValue());
+			if (this.active instanceof Boolean)
+				result.put(Trip.ACTIVE, this.active.booleanValue());
 			
 			if (this.author instanceof eu.fbk.dycapo.models.Person)
 				result.put(Trip.AUTHOR,this.author.toJSONObject());
