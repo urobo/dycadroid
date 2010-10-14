@@ -7,21 +7,15 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import android.util.Log;
 import eu.fbk.dycapo.activities.Navigation;
 import eu.fbk.dycapo.exceptions.DycapoException;
-import eu.fbk.dycapo.factories.json.DycapoObjectsFetcher;
 import eu.fbk.dycapo.models.Participation;
 import eu.fbk.dycapo.persistency.ActiveTrip;
 import eu.fbk.dycapo.persistency.DBParticipation;
-import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBTrip;
-import eu.fbk.dycapo.persistency.User;
-import eu.fbk.dycapo.services.DycapoServiceClient;
 import eu.fbk.dycapo.util.DriverHandler;
+import eu.fbk.dycapo.util.ParticipationUtils;
 
 /**
  * @author riccardo
@@ -58,24 +52,14 @@ public class DriverBroker extends Broker {
 			@Override
 			public void run() {
 				try {
-					User usr = DBPerson.getUser();
 					ActiveTrip at = DBTrip.getActiveTrip();
-					JSONArray pl =new JSONArray(DycapoServiceClient.callDycapo(
-							DycapoServiceClient.GET,
-							at.getHref() + "participations/", 
-							null, 
-							usr.getUsername(),
-							usr.getPassword()).toString());
-					List<Participation>tmp = DycapoObjectsFetcher.extractTripParticipations(pl);
+					List<Participation>tmp = ParticipationUtils.getListOfParticipations(at);
 					DBParticipation.saveParticipationList(tmp);
 					DriverBroker.this.nav.nh.getHandler(DriverHandler.PARTICIPATIONS_CHECKER_ID).sendEmptyMessage(0);
 				} catch (DycapoException e) {
 					Log.e(TAG, e.getMessage());
 					e.printStackTrace();
-				} catch (JSONException e) {
-					Log.e(TAG, e.getMessage());
-					e.printStackTrace();
-				}
+				} 
 			}
 			
 		},
