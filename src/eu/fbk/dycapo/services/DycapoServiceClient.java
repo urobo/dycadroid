@@ -18,6 +18,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -94,7 +95,34 @@ public abstract class DycapoServiceClient {
 	public static final int PUT = 3;
 	public static final int DELETE = 4;
 	
-	
+	public static final JSONArray callDycapoForDataCollections(int method,String uri,JSONObject jsonObject,String username,String password) throws DycapoException, JSONException{
+		Log.d(TAG,(jsonObject instanceof JSONObject)?jsonObject.toString():"no attachment");
+		HttpResponse response = doJSONRequest(method,uri,jsonObject,username,password);
+
+		try {
+			
+			String stringResp = StreamConverter.convertStreamToString(response.getEntity().getContent());
+			try{
+				translateStatusCode(response.getStatusLine().getStatusCode(),true);
+			}catch(DycapoException e){
+				throw new DycapoException(e.getMessage() + " cause : " + stringResp);
+			}
+			
+			return new JSONArray(stringResp);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+			Log.e(TAG, e.getMessage());
+		} catch (NullPointerException e){
+			e.printStackTrace();
+			
+		}finally {
+			USRN_PWD_CRD = null;
+		}
+		return null;
+	}
 	public static final JSONObject callDycapo(int method,String uri,JSONObject jsonObject,String username,String password) throws DycapoException, JSONException{
 		Log.d(TAG,(jsonObject instanceof JSONObject)?jsonObject.toString():"no attachment");
 		HttpResponse response = doJSONRequest(method,uri,jsonObject,username,password);

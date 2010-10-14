@@ -50,12 +50,12 @@ public abstract class ParticipationUtils {
 	public static final List<Participation> getListOfParticipations(Trip p){
 		User usr = DBPerson.getUser();
 		try {
-			JSONArray tps =new JSONArray(DycapoServiceClient.callDycapo(
+			JSONArray tps =DycapoServiceClient.callDycapoForDataCollections(
 					DycapoServiceClient.GET, 
 					p.getHref()+ "participations/",
 					null, 
 					usr.getUsername(), 
-					usr.getPassword()).toString());
+					usr.getPassword());
 			List<Participation> result = DycapoObjectsFetcher.extractTripParticipations(tps);
 			tps = null;
 			return result;
