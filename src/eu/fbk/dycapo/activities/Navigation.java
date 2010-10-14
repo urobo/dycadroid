@@ -265,8 +265,8 @@ public class Navigation extends MapActivity{
 				double mLat = data.getDouble("latitude");
 
 				Navigation.this.updateUserPosition(new GeoPoint(
-						(int) (((double) mLat / 1E5) * 1E6),
-						(int) (((double) mLong / 1E5) * 1E6)));
+						(int) ( mLat  * 1E6),
+						(int) ( mLong * 1E6)));
 
 				break;
 			}
@@ -281,10 +281,10 @@ public class Navigation extends MapActivity{
 		Drawable drawable = null;
 		switch(this.navRole){
 		case Environment.RIDER:
-			this.getResources().getDrawable(R.drawable.rider);
+			drawable = this.getResources().getDrawable(R.drawable.rider);
 			break;
 		case Environment.DRIVER:
-			this.getResources().getDrawable(R.drawable.driver);
+			drawable = this.getResources().getDrawable(R.drawable.driver);
 			break;
 		}
 		
@@ -292,5 +292,6 @@ public class Navigation extends MapActivity{
 		OverlayItem overlayitem = new OverlayItem(posi, "You", "");
 		this.user_position.addOverlay(overlayitem);
 		this.mapView.getOverlays().add(this.user_position);
+		//this.mapView.getHandler()
 	}
 }

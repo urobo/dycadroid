@@ -39,6 +39,7 @@ public class LocationService implements LocationListener {
 	}
 	
 	public void startLocationService(){
+		Log.d(TAG, "starting LocationService");
 		this.lmr = (LocationManager) this.SystemService.getSystemService(Context.LOCATION_SERVICE);
 		this.lmr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 5, this);
 	}
@@ -61,7 +62,7 @@ public class LocationService implements LocationListener {
             
             eu.fbk.dycapo.models.Location loc = new eu.fbk.dycapo.models.Location();
             
-            loc.setGeorss_point(String.valueOf(location.getLatitude())+","+ String.valueOf(location.getLongitude()));
+            loc.setGeorss_point(String.valueOf(location.getLongitude())+","+String.valueOf(location.getLatitude()) );
             loc.setLeaves(Calendar.getInstance().getTime());
             loc.setPoint(eu.fbk.dycapo.models.Location.POSI);
             
@@ -72,6 +73,7 @@ public class LocationService implements LocationListener {
             msg.setData(data);
            
             loc = null;
+            Log.d(TAG, "position is changed");
             this.SystemService.myViewUpdateHandler.sendMessage(msg);
         } catch (NullPointerException e) {
             Log.e(TAG, e.getMessage());

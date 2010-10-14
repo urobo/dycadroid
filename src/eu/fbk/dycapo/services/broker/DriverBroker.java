@@ -47,11 +47,13 @@ public class DriverBroker extends Broker {
 	 */
 	@Override
 	public void startBroker() {
+		Log.d(TAG, "starting broker!");
 		this.task.scheduleAtFixedRate(new TimerTask(){
 
 			@Override
 			public void run() {
 				try {
+					Log.d(TAG, "checking participations");
 					ActiveTrip at = DBTrip.getActiveTrip();
 					List<Participation>tmp = ParticipationUtils.getListOfParticipations(at);
 					DBParticipation.saveParticipationList(tmp);
