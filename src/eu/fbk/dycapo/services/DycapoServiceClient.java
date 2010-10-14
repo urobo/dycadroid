@@ -35,8 +35,8 @@ import eu.fbk.dycapo.util.StreamConverter;
  *	DELETE		Deletes the specified resource.
  */
 public abstract class DycapoServiceClient {
-	//public static final String URL_BASIS = "http://test.dycapo.org/api/";
-	public static final String URL_BASIS = "http://192.168.205.69/api/";
+	public static final String URL_BASIS = "http://test.dycapo.org/api/";
+	//public static final String URL_BASIS = "http://192.168.206.236/api/";
 	private static final String TAG = "DycapoServiceClient";
 	private static UsernamePasswordCredentials USRN_PWD_CRD= null;
 	
