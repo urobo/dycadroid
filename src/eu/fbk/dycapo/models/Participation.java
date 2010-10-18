@@ -19,13 +19,14 @@ public class Participation implements DycapoJSONObjects{
 	public static final String PERSON = "person";
 	public static final String STATUS = "status";
 	public static final String HREF = "href";
-	
+	public static final String ROLE = "role";
 	
 	public static final String REQUESTED = "request";
 	public static final String ACCEPTED = "accept";
 	public static final String START = "start";
 	public static final String FINISH = "finish";
 	
+	private String role;
 	private Person person;
 	private String status;
 	protected String href;
@@ -75,6 +76,9 @@ public class Participation implements DycapoJSONObjects{
 				result.put(PERSON, this.person.toJSONObject());
 			if (this.status instanceof String)
 				result.put(STATUS, this.status);
+			if (this.role instanceof String)
+				result.put(ROLE, this.role);
+			
 		} catch (JSONException e) {
 			Log.e(TAG, e.getMessage());
 			e.printStackTrace();
@@ -103,8 +107,22 @@ public class Participation implements DycapoJSONObjects{
 				result += "P";
 			if (this.getPerson().getSmoker())
 				result += "S";
+			if (this.role instanceof String)
+				result += " role: " + this.role;
 		}
 		return result;
+	}
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(String role) {
+		this.role = role;
+	}
+	/**
+	 * @return the role
+	 */
+	public String getRole() {
+		return role;
 	}
 	
 	

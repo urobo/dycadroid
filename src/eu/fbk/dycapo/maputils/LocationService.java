@@ -8,21 +8,19 @@ import java.util.Calendar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.util.Log;
 import eu.fbk.dycapo.activities.Navigation;
-import eu.fbk.dycapo.bundles.LocationBundle;
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.factories.json.DycapoObjectsFetcher;
 import eu.fbk.dycapo.models.Person;
 import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.User;
 import eu.fbk.dycapo.services.DycapoServiceClient;
-import android.content.Context;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.os.Message;
-import android.util.Log;
 
 /**
  * @author riccardo
@@ -48,7 +46,6 @@ public class LocationService implements LocationListener {
 		this.lmr.removeUpdates(this);
 	}
 	
-	private static final int UPDATE_LOCATION = 0;
 	/* (non-Javadoc)
 	 * @see android.location.LocationListener#onLocationChanged(android.location.Location)
 	 */
@@ -56,26 +53,14 @@ public class LocationService implements LocationListener {
 	public void onLocationChanged(Location location) {
         location = this.lmr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         try {
-            
-            Message msg = Message.obtain();
-            msg.what = UPDATE_LOCATION;
-            
             eu.fbk.dycapo.models.Location loc = new eu.fbk.dycapo.models.Location();
             
             loc.setGeorss_point(String.valueOf(location.getLongitude())+","+String.valueOf(location.getLatitude()) );
             loc.setLeaves(Calendar.getInstance().getTime());
             loc.setPoint(eu.fbk.dycapo.models.Location.POSI);
+            LocationService.updatePosition(loc);
             
-            Bundle data = new Bundle();
-            data.putBundle("location", LocationBundle.toBundle(loc));
-            data.putDouble("latitude", location.getLatitude());
-            data.putDouble("longitude", location.getLongitude());
-            msg.setData(data);
-           
-            loc = null;
-            Log.d(TAG, "position is changed");
-            this.SystemService.myViewUpdateHandler.sendMessage(msg);
-        } catch (NullPointerException e) {
+           } catch (NullPointerException e) {
             Log.e(TAG, e.getMessage());
             e.printStackTrace();
         }

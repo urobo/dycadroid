@@ -27,6 +27,8 @@ public abstract class ParticipationBundle {
 		if (p.getStatus() instanceof String)
 			data.putString(Participation.STATUS,p.getStatus());
 		
+		if (p.getRole() instanceof String)
+			data.putString(Participation.ROLE, p.getRole());
 		return data;
 	}
 	
@@ -41,6 +43,9 @@ public abstract class ParticipationBundle {
 		
 		if (data.containsKey(Participation.STATUS))
 			p.setStatus(data.getString(Participation.STATUS));
+		
+		if (data.containsKey(Participation.ROLE))
+			p.setRole(data.getString(Participation.ROLE));
 		
 		return p;
 	}

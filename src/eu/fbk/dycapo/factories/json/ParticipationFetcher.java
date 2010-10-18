@@ -33,6 +33,9 @@ public abstract class ParticipationFetcher {
 			
 			if (jsonObject.has(Participation.STATUS))
 				participation.setStatus(jsonObject.getString(Participation.STATUS));
+			
+			if (jsonObject.has(Participation.ROLE))
+				participation.setRole(jsonObject.getString(Participation.ROLE));
 		} catch (JSONException e) {
 			Log.e(TAG, e.getMessage());
 			e.printStackTrace();
