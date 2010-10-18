@@ -91,7 +91,7 @@ public abstract class ParticipationUtils {
 	public static final void postParticipation(Trip trip){
 		User usr = DBPerson.getUser();
 		Participation p = new Participation();
-		p.setPerson(usr);
+		p.setAuthor(usr);
 		p.setStatus(Participation.REQUESTED);
 		try {
 			JSONObject json = DycapoServiceClient.callDycapo(DycapoServiceClient.POST,

@@ -58,6 +58,7 @@ public class DriverBroker extends Broker {
 					List<Participation>tmp = ParticipationUtils.getListOfParticipations(at);
 					DBParticipation.saveParticipationList(tmp);
 					DriverBroker.this.nav.nh.getHandler(DriverHandler.PARTICIPATIONS_CHECKER_ID).sendEmptyMessage(0);
+					DriverBroker.this.nav.getHandleCommonSuccess().sendEmptyMessage(0);
 				} catch (DycapoException e) {
 					Log.e(TAG, e.getMessage());
 					e.printStackTrace();

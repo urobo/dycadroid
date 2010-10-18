@@ -25,7 +25,7 @@ public class DBParticipation {
 	public static final void addParticipation(Participation p){
 		ObjectContainer db = DBProvider.getDatabase();
 		Participation tmp = new Participation();
-		tmp.setPerson(p.getPerson());
+		tmp.setAuthor(p.getAuthor());
 		
 		List<Participation> ps = db.queryByExample(tmp);
 		if (!ps.isEmpty()){
@@ -46,11 +46,11 @@ public class DBParticipation {
 	
 	@SuppressWarnings({ "serial", "rawtypes" })
 	public static final void updateParticipation (Participation p){
-		final String pname = p.getPerson().getUsername();
+		final String pname = p.getAuthor().getUsername();
 		ObjectContainer db = DBProvider.getDatabase();
 		ObjectSet result = db.query(new Predicate<Participation>() {
 		      public boolean match(Participation proto) {
-		          return proto.getPerson().getUsername().equals(pname);
+		          return proto.getAuthor().getUsername().equals(pname);
 		    }
 		});
 		db.delete(result);
@@ -60,11 +60,11 @@ public class DBParticipation {
 	
 	@SuppressWarnings({ "serial" })
 	public static final void removeParticipation (Participation p){
-		final String pname = p.getPerson().getUsername();
+		final String pname = p.getAuthor().getUsername();
 		ObjectContainer db = DBProvider.getDatabase();
 		ObjectSet<Participation> result = db.query(new Predicate<Participation>() {
 		      public boolean match(Participation proto) {
-		          return proto.getPerson().getUsername().equals(pname);
+		          return proto.getAuthor().getUsername().equals(pname);
 		    }
 		});
 		db.delete(result);

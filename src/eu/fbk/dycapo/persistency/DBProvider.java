@@ -86,7 +86,7 @@ public class DBProvider {
 			    dbConfiguration.objectClass(Search.class).cascadeOnDelete(true);
 			    dbConfiguration.objectClass(Search.class).cascadeOnUpdate(true);
 			    
-			    dbConfiguration.objectClass(Participation.class).objectField(eu.fbk.dycapo.models.Participation.PERSON).indexed(true);
+			    dbConfiguration.objectClass(Participation.class).objectField(eu.fbk.dycapo.models.Participation.AUTHOR).indexed(true);
 			    dbConfiguration.objectClass(Participation.class).cascadeOnUpdate(true);
 			    dbConfiguration.objectClass(Participation.class).cascadeOnDelete(true);
 			  			   

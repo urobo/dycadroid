@@ -28,8 +28,8 @@ public abstract class ParticipationFetcher {
 			if (jsonObject.has(DycapoObjectsFetcher.HREF))
 				participation.setHref(jsonObject.getString(DycapoObjectsFetcher.HREF));
 			
-			if (jsonObject.has(Participation.PERSON))
-				participation.setPerson(PersonFetcher.fetchPerson(jsonObject.getJSONObject(Participation.PERSON)));
+			if (jsonObject.has(Participation.AUTHOR))
+				participation.setAuthor(PersonFetcher.fetchPerson(jsonObject.getJSONObject(Participation.AUTHOR)));
 			
 			if (jsonObject.has(Participation.STATUS))
 				participation.setStatus(jsonObject.getString(Participation.STATUS));

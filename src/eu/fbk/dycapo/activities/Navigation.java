@@ -5,7 +5,6 @@ package eu.fbk.dycapo.activities;
 
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -30,9 +29,7 @@ import eu.fbk.dycapo.maputils.DycapoItemizedOverlay;
 import eu.fbk.dycapo.maputils.LocationService;
 import eu.fbk.dycapo.models.Participation;
 import eu.fbk.dycapo.models.Person;
-import eu.fbk.dycapo.models.Trip;
 import eu.fbk.dycapo.persistency.DBParticipation;
-import eu.fbk.dycapo.persistency.DBTrip;
 import eu.fbk.dycapo.services.broker.Broker;
 import eu.fbk.dycapo.util.Environment;
 import eu.fbk.dycapo.util.NavigationHandler;
@@ -45,27 +42,12 @@ import eu.fbk.dycapo.util.ParticipationUtils;
  */
 public class Navigation extends MapActivity{
 	private static final String TAG = "Navigation";
-	private MapView mapView;
+	
 	private static ProgressDialog myProgressDialog;
 	@SuppressWarnings("unused")
 	private LocationService dls = null;
 	private int navRole;
 	private DycapoItemizedOverlay itemized = null;
-	private Timer mapUpdater;
-	/**
-	 * @return the mapView
-	 */
-	public MapView getMapView() {
-		return mapView;
-	}
-
-	/**
-	 * @param mapView the mapView to set
-	 */
-	public void setMapView(MapView mapView) {
-		this.mapView = mapView;
-	}
-
 	public NavigationHandler nh = null;
 	public Broker br = null;
 
@@ -131,7 +113,7 @@ public class Navigation extends MapActivity{
 		if(tmp.equals("driver"))
 			this.navRole = Environment.DRIVER;
 		else this.navRole = Environment.RIDER;
-		mapView = (MapView) findViewById(R.id.myMapView1);
+		MapView mapView = (MapView) findViewById(R.id.myMapView1);
 		mapView.setBuiltInZoomControls(true);
 		mapView.setSatellite(false);
 		mapView.setStreetView(true);
@@ -162,9 +144,8 @@ public class Navigation extends MapActivity{
 					 */
 					@Override
 					public void run() {
-						DrawPath(mapView);
-						Navigation.this.handleCommonSuccess.sendEmptyMessage(0);
-						Thread.yield();
+						DrawPath((MapView)Navigation.this.findViewById(R.id.myMapView1));
+						Navigation.this.handleCommonSuccess.sendEmptyMessage(1);
 					}
 				}.start();
 			} catch (Exception e) {
@@ -189,7 +170,7 @@ public class Navigation extends MapActivity{
 		}
 		this.button3.setText("Cancel");
 		br = Broker.BrokerFactory.getBroker(navRole, this);
-		this.mapUpdater = new Timer();
+		new Timer();
 		br.startBroker();
 	}
 
@@ -204,61 +185,57 @@ public class Navigation extends MapActivity{
 		public void handleMessage(Message msg) {
 			myProgressDialog.dismiss();
 			switch(msg.what){
-			case 0:
-				Navigation.this.mapUpdater.scheduleAtFixedRate(new TimerTask(){
+			case 0:				
+				Log.d(TAG, "handling map update");
+				List<Participation> list = DBParticipation.getParticipations();
+				MapView map = (MapView) Navigation.this
+						.findViewById(R.id.myMapView1);
+				GeoPoint point;
+				Drawable drawable = null;
+				OverlayItem overlayitem;
+				if (Navigation.this.itemized instanceof DycapoItemizedOverlay) {
+					map.getOverlays().remove(Navigation.this.itemized);
+					itemized = null;
+				}
+				
+				switch (Navigation.this.navRole){
+				case Environment.RIDER:
+					drawable = Navigation.this.getResources().getDrawable(R.drawable.rider);
+					break;
+				case Environment.DRIVER:
+					drawable = Navigation.this.getResources().getDrawable(R.drawable.driver);
+					break;
+				}
+				
+				itemized = new DycapoItemizedOverlay(drawable);
+				for (int i = 0; i < list.size(); i++) {
+					if (list.get(i).getStatus().equals(Participation.ACCEPTED)
+							|| list.get(i).getStatus()
+									.equals(Participation.START)) {
+						Person tmp = list.get(i).getAuthor();
+						tmp.setPosition(LocationService.getPosition(tmp));
+						
+						String geo_point = tmp.getPosition().getGeorss_point();
+						int coma = geo_point.indexOf(",");
+						double mLat = Double.parseDouble(geo_point.substring(0,
+								coma));
+						double mLong = Double.parseDouble(geo_point.substring(
+								coma + 1, geo_point.length()));
 
-					@Override
-					public void run() {
-						Trip trip;
-						try {
-							trip = DBTrip.getActiveTrip();
-							List<Participation> list = ParticipationUtils.getListOfParticipations(trip);
-							MapView map = (MapView) Navigation.this.findViewById(R.id.myMapView1);
-							GeoPoint point;
-							Drawable drawable = null;
-							OverlayItem overlayitem;
-							if (Navigation.this.itemized instanceof DycapoItemizedOverlay){
-								map.getOverlays().remove(Navigation.this.itemized);
-								itemized = null;
-							}
-							itemized = new DycapoItemizedOverlay(drawable);
-							for (int i = 0 ; i<list.size();i++){
-								if(list.get(i).getStatus().equals(Participation.ACCEPTED) ||
-										list.get(i).getStatus().equals(Participation.START)){
-									Person tmp = list.get(i).getPerson();
-									tmp.setPosition(LocationService.getPosition(tmp));
-									if (list.get(i).getRole().equals("driver"))
-										drawable = Navigation.this.getResources().getDrawable(R.drawable.driver);
-									else
-										drawable = Navigation.this.getResources().getDrawable(R.drawable.rider);
-									
-									String geo_point = tmp.getPosition().getGeorss_point();
-							    	int coma = geo_point.indexOf(",");
-									double mLat = Double.parseDouble(geo_point.substring(0, coma));
-									double mLong = Double.parseDouble(geo_point.substring(coma+1,geo_point.length()));
-									
-							    	point = new GeoPoint(
-											(int) (((double) mLat / 1E5) * 1E6),
-											(int) (((double) mLong / 1E5) * 1E6));
-							    	
-							    	overlayitem = new OverlayItem(point,
-							    			list.get(i).getPerson().getUsername(),
-							    			list.get(i).toString());
-							    	
-							    	itemized.addOverlay(overlayitem);
-								}
-								map.getOverlays().add(itemized);
-								
-							}
-						} catch (DycapoException e) {
-							Log.e(TAG, e.getMessage());
-							e.printStackTrace();
-						}
-						
-						
-					}}, 
-					0, 
-					60000);
+						point = new GeoPoint(
+								(int) (((double) mLat / 1E5) * 1E6),
+								(int) (((double) mLong / 1E5) * 1E6));
+
+						overlayitem = new OverlayItem(point, list.get(i)
+								.getAuthor().getUsername(), list.get(i)
+								.toString());
+
+						itemized.addOverlay(overlayitem);
+					}
+					map.getOverlays().add(itemized);
+
+				}
+
 				break;
 			case 1:
 				break;
@@ -267,6 +244,23 @@ public class Navigation extends MapActivity{
 
 	};
 
+	/**
+	 * @return the handleCommonSuccess
+	 */
+	public Handler getHandleCommonSuccess() {
+		return handleCommonSuccess;
+	}
+
+	/**
+	 * @param handleCommonSuccess the handleCommonSuccess to set
+	 */
+	public void setHandleCommonSuccess(Handler handleCommonSuccess) {
+		this.handleCommonSuccess = handleCommonSuccess;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.google.android.maps.MapActivity#isRouteDisplayed()
+	 */
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;

@@ -4,6 +4,7 @@
 package eu.fbk.dycapo.maputils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -18,7 +19,7 @@ import com.google.android.maps.OverlayItem;
  */
 @SuppressWarnings({ "rawtypes" })
 public class DycapoItemizedOverlay extends ItemizedOverlay{
-	private ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
+	private List<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
 	private Context mContext;
 
 	public DycapoItemizedOverlay(Drawable defaultMarker) {
@@ -43,11 +44,11 @@ public class DycapoItemizedOverlay extends ItemizedOverlay{
 		  return mOverlays.get(i);
 	}
 
-	
 	public void addOverlay(OverlayItem overlay) {
 	    mOverlays.add(overlay);
 	    populate();
 	}
+	
 	/* (non-Javadoc)
 	 * @see com.google.android.maps.ItemizedOverlay#onTap(com.google.android.maps.GeoPoint, com.google.android.maps.MapView)
 	 */

@@ -91,7 +91,7 @@ public class RiderList extends ListActivity {
 			current = p;
 			AlertDialog alert = null;
 			alert = new AlertDialog.Builder(RiderList.this)
-				.setTitle(p.getPerson().getUsername() +" "+ p.getStatus())
+				.setTitle(p.getAuthor().getUsername() +" "+ p.getStatus())
 				.setMessage(generateMessage(p))
 				.setPositiveButton("Accept", acceptRide)
 				.setNegativeButton("Refuse", refuseRide).create();
@@ -101,18 +101,18 @@ public class RiderList extends ListActivity {
 	}
 	private static final String generateMessage(Participation p){
 		String message = "";
-		if (p.getPerson() instanceof Person){
-			message += p.getPerson().getUsername() + " wants to share a Ride";
-			message += " Age : " + p.getPerson().getAge();
-			message += " Gender : " + p.getPerson().getGender();
+		if (p.getAuthor() instanceof Person){
+			message += p.getAuthor().getUsername() + " wants to share a Ride";
+			message += " Age : " + p.getAuthor().getAge();
+			message += " Gender : " + p.getAuthor().getGender();
 			message += " Info : ";
-			if (p.getPerson().getDeaf())
+			if (p.getAuthor().getDeaf())
 				message += "D";
-			if (p.getPerson().getBlind())
+			if (p.getAuthor().getBlind())
 				message += "B";
-			if (p.getPerson().getDog())
+			if (p.getAuthor().getDog())
 				message += "P";
-			if (p.getPerson().getSmoker())
+			if (p.getAuthor().getSmoker())
 				message += "S";
 		}
 		return message;

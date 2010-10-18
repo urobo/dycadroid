@@ -16,7 +16,7 @@ import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
  */
 public class Participation implements DycapoJSONObjects{
 	private static final String TAG = "Participation";
-	public static final String PERSON = "person";
+	public static final String AUTHOR = "AUTHOR";
 	public static final String STATUS = "status";
 	public static final String HREF = "href";
 	public static final String ROLE = "role";
@@ -27,20 +27,20 @@ public class Participation implements DycapoJSONObjects{
 	public static final String FINISH = "finish";
 	
 	private String role;
-	private Person person;
+	private Person author;
 	private String status;
 	protected String href;
 	/**
 	 * @return the person
 	 */
-	public Person getPerson() {
-		return person;
+	public Person getAuthor() {
+		return author;
 	}
 	/**
 	 * @param person the person to set
 	 */
-	public void setPerson(Person person) {
-		this.person = person;
+	public void setAuthor(Person person) {
+		this.author = person;
 	}
 	/**
 	 * @return the status
@@ -72,8 +72,8 @@ public class Participation implements DycapoJSONObjects{
 	public JSONObject toJSONObject() {
 		JSONObject result = new JSONObject();
 		try {
-			if (this.person instanceof Person)
-				result.put(PERSON, this.person.toJSONObject());
+			if (this.author instanceof Person)
+				result.put(AUTHOR, this.author.toJSONObject());
 			if (this.status instanceof String)
 				result.put(STATUS, this.status);
 			if (this.role instanceof String)
@@ -94,18 +94,18 @@ public class Participation implements DycapoJSONObjects{
 		String result = "";
 		if (this.getStatus() instanceof String)
 			result += "Status : "+ this.status;
-		if (this.getPerson() instanceof Person){
-			result += "\n User : " + this.person.getUsername();
-			result += " Age : " + this.person.getAge();
-			result += " Gender : " + this.person.getGender();
+		if (this.getAuthor() instanceof Person){
+			result += "\n User : " + this.author.getUsername();
+			result += " Age : " + this.author.getAge();
+			result += " Gender : " + this.author.getGender();
 			result += " Info : ";
-			if (this.getPerson().getDeaf())
+			if (this.getAuthor().getDeaf())
 				result += "D";
-			if (this.getPerson().getBlind())
+			if (this.getAuthor().getBlind())
 				result += "B";
-			if (this.getPerson().getDog())
+			if (this.getAuthor().getDog())
 				result += "P";
-			if (this.getPerson().getSmoker())
+			if (this.getAuthor().getSmoker())
 				result += "S";
 			if (this.role instanceof String)
 				result += " role: " + this.role;

@@ -21,8 +21,8 @@ public abstract class ParticipationBundle {
 		if (p.getHref() instanceof String)
 			data.putString(Participation.HREF, p.getHref());
 		
-		if (p.getPerson() instanceof Person)
-			data.putBundle(Participation.PERSON, PersonBundle.toBundle(p.getPerson()));
+		if (p.getAuthor() instanceof Person)
+			data.putBundle(Participation.AUTHOR, PersonBundle.toBundle(p.getAuthor()));
 		
 		if (p.getStatus() instanceof String)
 			data.putString(Participation.STATUS,p.getStatus());
@@ -38,8 +38,8 @@ public abstract class ParticipationBundle {
 		if (data.containsKey(Participation.HREF))
 			p.setHref(data.getString(Participation.HREF));
 		
-		if (data.containsKey(Participation.PERSON))
-			p.setPerson(PersonBundle.fromBundle(data.getBundle(Participation.PERSON)));
+		if (data.containsKey(Participation.AUTHOR))
+			p.setAuthor(PersonBundle.fromBundle(data.getBundle(Participation.AUTHOR)));
 		
 		if (data.containsKey(Participation.STATUS))
 			p.setStatus(data.getString(Participation.STATUS));

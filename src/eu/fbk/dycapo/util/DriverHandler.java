@@ -11,6 +11,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import eu.fbk.dycapo.activities.Navigation;
 import eu.fbk.dycapo.bundles.ParticipationBundle;
 import eu.fbk.dycapo.models.Participation;
@@ -22,7 +23,7 @@ import eu.fbk.dycapo.persistency.DBParticipation;
  */
 public class DriverHandler extends NavigationHandler {
 	public static final int PARTICIPATIONS_CHECKER_ID = 0;
-	
+	public static final String TAG = "DriverHandler";
 	
 	private static DriverHandler Instance = null;
 	
@@ -45,6 +46,7 @@ public class DriverHandler extends NavigationHandler {
 		 */
 		@Override
 		public void handleMessage(Message msg) {
+			Log.d(TAG, "checking for new particiaptions");
 			List<Participation> pl = DBParticipation.getParticipations();
 			Bundle data = new Bundle();
 			int i = 0;
