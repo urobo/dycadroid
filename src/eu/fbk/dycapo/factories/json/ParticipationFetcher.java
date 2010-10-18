@@ -25,17 +25,25 @@ public abstract class ParticipationFetcher {
 	public static final Participation fetchParticipation(JSONObject jsonObject) throws DycapoException{
 		Participation participation = new Participation();
 		try {
-			if (jsonObject.has(DycapoObjectsFetcher.HREF))
+			if (jsonObject.has(DycapoObjectsFetcher.HREF)){
 				participation.setHref(jsonObject.getString(DycapoObjectsFetcher.HREF));
+				Log.d(TAG, participation.getHref());
+			}
 			
-			if (jsonObject.has(Participation.AUTHOR))
+			if (jsonObject.has(Participation.AUTHOR)){
 				participation.setAuthor(PersonFetcher.fetchPerson(jsonObject.getJSONObject(Participation.AUTHOR)));
+				Log.d(TAG, participation.getAuthor().toString());
+			}
 			
-			if (jsonObject.has(Participation.STATUS))
+			if (jsonObject.has(Participation.STATUS)){
 				participation.setStatus(jsonObject.getString(Participation.STATUS));
+				Log.d(TAG, participation.getStatus());
+			}
 			
-			if (jsonObject.has(Participation.ROLE))
+			if (jsonObject.has(Participation.ROLE)){
 				participation.setRole(jsonObject.getString(Participation.ROLE));
+				Log.d(TAG, participation.getRole());
+			}
 		} catch (JSONException e) {
 			Log.e(TAG, e.getMessage());
 			e.printStackTrace();

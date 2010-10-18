@@ -33,7 +33,6 @@ public class LocationService implements LocationListener {
 	
 	public LocationService(Navigation sservice){
 		this.SystemService = sservice;
-		this.startLocationService();
 	}
 	
 	public void startLocationService(){
