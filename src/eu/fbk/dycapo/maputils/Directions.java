@@ -16,12 +16,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.content.Context;
 import android.location.Address;
 import android.util.Log;
-
-import com.google.android.maps.MapView;
-
 import eu.fbk.dycapo.exceptions.DycapoException;
-import eu.fbk.dycapo.persistency.ActiveTrip;
-import eu.fbk.dycapo.persistency.DBTrip;
 
 
 /**

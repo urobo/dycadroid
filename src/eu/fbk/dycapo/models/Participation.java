@@ -16,7 +16,7 @@ import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
  */
 public class Participation implements DycapoJSONObjects{
 	private static final String TAG = "Participation";
-	public static final String AUTHOR = "AUTHOR";
+	public static final String AUTHOR = "author";
 	public static final String STATUS = "status";
 	public static final String HREF = "href";
 	public static final String ROLE = "role";

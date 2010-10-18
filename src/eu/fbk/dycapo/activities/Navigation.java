@@ -4,7 +4,6 @@
 package eu.fbk.dycapo.activities;
 
 import java.util.List;
-import java.util.Timer;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -24,7 +23,6 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
 
 import eu.fbk.dycapo.exceptions.DycapoException;
-import eu.fbk.dycapo.maputils.Directions;
 import eu.fbk.dycapo.maputils.DycapoItemizedOverlay;
 import eu.fbk.dycapo.maputils.DycapoOverlay;
 import eu.fbk.dycapo.maputils.LocationService;
