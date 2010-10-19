@@ -14,10 +14,10 @@ import eu.fbk.dycapo.models.Participation;
 import eu.fbk.dycapo.persistency.ActiveTrip;
 import eu.fbk.dycapo.persistency.DBParticipation;
 import eu.fbk.dycapo.persistency.DBTrip;
-import eu.fbk.dycapo.util.DriverHandler;
 import eu.fbk.dycapo.util.Environment;
-import eu.fbk.dycapo.util.NavigationHandler;
 import eu.fbk.dycapo.util.ParticipationUtils;
+import eu.fbk.dycapo.util.handlers.DriverHandler;
+import eu.fbk.dycapo.util.handlers.NavigationHandler;
 
 /**
  * @author riccardo

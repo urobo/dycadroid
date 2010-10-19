@@ -17,9 +17,9 @@ import eu.fbk.dycapo.models.Trip;
 import eu.fbk.dycapo.persistency.DBParticipation;
 import eu.fbk.dycapo.persistency.DBTrip;
 import eu.fbk.dycapo.util.Environment;
-import eu.fbk.dycapo.util.NavigationHandler;
 import eu.fbk.dycapo.util.ParticipationUtils;
-import eu.fbk.dycapo.util.RiderHandler;
+import eu.fbk.dycapo.util.handlers.NavigationHandler;
+import eu.fbk.dycapo.util.handlers.RiderHandler;
 
 /**
  * @author riccardo

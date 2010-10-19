@@ -1,7 +1,7 @@
 /**
  * 
  */
-package eu.fbk.dycapo.util;
+package eu.fbk.dycapo.util.handlers;
 
 import java.util.List;
 
@@ -16,6 +16,7 @@ import eu.fbk.dycapo.activities.Navigation;
 import eu.fbk.dycapo.bundles.ParticipationBundle;
 import eu.fbk.dycapo.models.Participation;
 import eu.fbk.dycapo.persistency.DBParticipation;
+import eu.fbk.dycapo.util.DycapoNotification;
 
 /**
  * @author riccardo

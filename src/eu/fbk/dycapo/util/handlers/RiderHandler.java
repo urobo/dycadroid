@@ -1,7 +1,7 @@
 /**
  * 
  */
-package eu.fbk.dycapo.util;
+package eu.fbk.dycapo.util.handlers;
 
 import eu.fbk.dycapo.activities.Navigation;
 import eu.fbk.dycapo.bundles.ParticipationBundle;
