@@ -265,9 +265,46 @@ public class Mode implements DycapoJSONObjects{
 			Log.d(TAG,result.toString());
 			return result;
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+			Log.e(TAG, e.getMessage());
 			e.printStackTrace();
 		}
 		return null;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder out = new StringBuilder();
+		if (this.capacity instanceof Integer)
+			out.append(CAPACITY + " : " + this.capacity.intValue());
+				
+		if (this.color instanceof java.lang.String)
+			out.append(COLOR + " : " + this.color);
+		
+		if (this.cost instanceof java.lang.Double)
+			out.append(COST + " : " + this.cost.doubleValue());
+		
+		if (this.kind instanceof java.lang.String)
+			out.append(KIND + " : " + this.kind);
+		
+		if (this.lic instanceof java.lang.String)
+			out.append(LIC + " : " + this.lic);
+		
+		if (this.make instanceof java.lang.String)
+			out.append(MAKE + " : " + this.make);
+		
+		if (this.model instanceof java.lang.String)
+			out.append(MODEL + " : " + this.model);
+		
+		if (this.vacancy instanceof java.lang.Integer)	
+			out.append(VACANCY + " : " + this.vacancy.intValue());
+	
+		if (this.year instanceof java.lang.Integer)
+			out.append(YEAR + " : " + this.year.intValue());
+		return out.toString();
+	}
+	
+	
 }

@@ -300,9 +300,59 @@ public class Trip implements DycapoJSONObjects {
 			return result;
 	
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder out = new StringBuilder();
+		
+		if (this.active instanceof Boolean)
+			out.append(ACTIVE + " : "+ this.active.booleanValue() + "\n");
+		
+		if (this.author instanceof eu.fbk.dycapo.models.Person)
+			out.append(AUTHOR + " : "+ this.author.toString() + "\n");
+		
+		if (this.origin instanceof eu.fbk.dycapo.models.Location)
+			out.append("origin : "+ this.origin.toString()+ "\n");
+		
+		if (this.destination instanceof eu.fbk.dycapo.models.Location)
+			out.append("destination : "+ this.destination.toString() + "\n");
+		
+		if (this.mode instanceof eu.fbk.dycapo.models.Mode)
+			out.append(MODE + " : "+ this.mode.toString() + "\n");
+		
+		if (this.preferences instanceof eu.fbk.dycapo.models.Preferences)
+			out.append(PREFERENCES + " : "+ this.preferences.toString() + "\n");
+		
+	    if (this.waypoints instanceof ArrayList<?>){
+	    	int size= this.waypoints.size();
+	    	
+	    	for (int i = 0 ; i< size ; i++)
+	    		out.append("waypoint : "+ this.waypoints.toString() + "\n");
+	    	
+	    }
+		
+		SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+		
+		
+		if (this.expires instanceof java.util.Date){
+			out.append(EXPIRES + " : "+ formatter.format(this.expires) + "\n");
+			Log.i(Trip.EXPIRES, formatter.format(this.expires));
+		}
+			
+		if (this.published instanceof java.util.Date)
+			out.append(PUBLISHED + " : "+ formatter.format(this.published) + "\n");
+		
+		if (this.updated instanceof java.util.Date)
+			out.append(UPDATED + " : "+ formatter.format(this.updated) + "\n");
+		return out.toString();
+	}
+	
 }

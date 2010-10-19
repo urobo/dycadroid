@@ -191,4 +191,32 @@ public class Preferences implements DycapoJSONObjects {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder out = new StringBuilder();
+		
+		if (this.age instanceof java.lang.String)
+			out.append(AGE + " : " + this.age +"\n");
+		
+		if (this.drive instanceof java.lang.Boolean)
+			out.append(DRIVE + " : " + this.drive.booleanValue()+"\n");
+		
+		if (this.gender instanceof java.lang.Integer)
+			out.append(GENDER + " : " + GENDER_PREFS[this.gender]+"\n");
+		
+		if (this.nonsmoking instanceof java.lang.Boolean)
+			out.append(NONSMOKING + " : " + this.nonsmoking.booleanValue()+"\n");
+		
+		if (this.ride instanceof java.lang.Boolean)
+			out.append(RIDE + " : " + this.ride.booleanValue()+"\n");
+		
+		if (this.pet instanceof Boolean) 
+			out.append(PET + " : " + this.pet.booleanValue()+"\n");
+		
+		return out.toString();
+	}
+	
 }

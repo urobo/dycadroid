@@ -341,4 +341,61 @@ public class Location implements DycapoJSONObjects{
 		}
 		return null;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder out = new StringBuilder();
+		if (this.country instanceof java.lang.String)
+    		out.append(COUNTRY + " : " + this.country + "\n");
+		
+		if (this.days instanceof java.lang.String)
+			out.append(DAYS + " : " + this.days + "\n");
+	
+		if (this.georss_point instanceof java.lang.String)
+			out.append(GEORSS_POINT + " : " + this.georss_point + "\n");
+	
+		if (this.label instanceof java.lang.String)
+			out.append(LABEL + " : " + this.label + "\n");
+	
+		if (this.leaves instanceof java.util.Date){
+			SimpleDateFormat formatter
+			= new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+			
+			
+			out.append(LEAVES + " : " + formatter.format(this.leaves) + "\n");
+			Log.i("sdf",formatter.format(this.leaves));
+			}
+		
+		Log.i("date",this.leaves.toString());
+		
+		if (this.offset instanceof Integer)
+			out.append(OFFSET + " : " + this.offset.intValue() + "\n");
+		
+		if (this.point instanceof Integer)
+			out.append(POINT + " : " + POINT_TYPE[this.point] + "\n");
+		
+		if (this.postcode instanceof Integer)
+			out.append(POSTCODE + " : "+ this.postcode.intValue() + "\n");
+		
+		if (this.recurs instanceof java.lang.String)
+			out.append(RECURS + " : "+ this.recurs + "\n");
+		
+		if (this.region instanceof java.lang.String)
+			out.append(REGION + " : "+ this.region + "\n");
+		
+		if (this.street instanceof java.lang.String)
+			out.append(STREET + " : "+ this.street + "\n");
+		
+		if (this.subregion instanceof java.lang.String)
+			out.append(SUBREGION + " : "+ this.subregion + "\n");
+		
+		if (this.town instanceof java.lang.String)
+			out.append(TOWN + " : "+ this.town + "\n");
+		
+		return out.toString();
+	}
+	
 }

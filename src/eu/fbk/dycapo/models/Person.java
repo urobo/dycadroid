@@ -380,8 +380,34 @@ public class Person implements DycapoJSONObjects{
 	 */
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		StringBuilder out = new StringBuilder();
+		if (this.age instanceof Integer)
+			out.append(AGE + " : " + this.age.intValue() + "\n" );
+		if (this.blind instanceof Boolean)
+			out.append(BLIND + " : " + this.blind.booleanValue() + "\n" );
+		if (this.deaf instanceof Boolean)
+			out.append(DEAF + " : " + this.deaf.booleanValue() + "\n" );
+		if (this.dog instanceof Boolean)
+			out.append(DOG + " : " + this.dog.booleanValue() + "\n" );
+		if (this.email instanceof java.lang.String)
+			out.append(EMAIL + " : " + this.email + "\n" );
+		if (this.first_name instanceof java.lang.String)
+			out.append(FIRST_NAME + " : " + this.first_name + "\n" );
+		if (this.gender instanceof java.lang.String)
+			out.append(GENDER + " : " + this.gender + "\n" );
+		if (this.last_name instanceof java.lang.String)
+			out.append(LAST_NAME + " : " + this.last_name + "\n" );
+		if (this.phone instanceof java.lang.String)
+			out.append(PHONE + " : " + this.phone + "\n" );
+		if (this.position instanceof Location)
+			out.append(POSITION + " : " + this.position.toString() + "\n" );
+		if (this.smoker instanceof Boolean)
+			out.append(SMOKER + " : " + this.smoker.booleanValue() + "\n" );
+		if (this.url instanceof java.lang.String)
+			out.append(URL+ " : " + this.url + "\n" );
+		if (this.username instanceof java.lang.String)
+			out.append(USERNAME + " : " + this.username + "\n" );
+		return out.toString();
 	}
 	
 

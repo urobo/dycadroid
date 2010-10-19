@@ -65,12 +65,4 @@ public class RiderHandler extends NavigationHandler {
 		
 	};
 
-	@Override
-	public Handler getHandler(int code) {
-		switch (code){
-		case STATUS_CHANGED_ID:
-			return this.handleStatusChange;
-		}
-		return null;
-	}
 }

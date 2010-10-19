@@ -33,7 +33,6 @@ import eu.fbk.dycapo.persistency.DBParticipation;
 import eu.fbk.dycapo.persistency.DBTrip;
 import eu.fbk.dycapo.services.broker.Broker;
 import eu.fbk.dycapo.util.Environment;
-import eu.fbk.dycapo.util.NavigationHandler;
 import eu.fbk.dycapo.util.ParticipationUtils;
 
 /**
@@ -48,7 +47,7 @@ public class Navigation extends MapActivity{
 	private LocationService dls = null;
 	private int navRole;
 	private DycapoItemizedOverlay itemized = null;
-	public NavigationHandler nh = null;
+
 	public Broker br = null;
 	private MapView mapView;
 
@@ -180,7 +179,7 @@ public class Navigation extends MapActivity{
 		
 	}
 
-	private Handler handleCommonSuccess = new Handler() {
+	public Handler handleCommonSuccess = new Handler() {
 
 		/*
 		 * (non-Javadoc)
@@ -206,10 +205,10 @@ public class Navigation extends MapActivity{
 				
 				switch (Navigation.this.navRole){
 				case Environment.RIDER:
-					drawable = Navigation.this.getResources().getDrawable(R.drawable.rider);
+					drawable = Navigation.this.getResources().getDrawable(R.drawable.driver);
 					break;
 				case Environment.DRIVER:
-					drawable = Navigation.this.getResources().getDrawable(R.drawable.driver);
+					drawable = Navigation.this.getResources().getDrawable(R.drawable.rider);
 					break;
 				}
 				
@@ -250,19 +249,7 @@ public class Navigation extends MapActivity{
 
 	};
 
-	/**
-	 * @return the handleCommonSuccess
-	 */
-	public Handler getHandleCommonSuccess() {
-		return handleCommonSuccess;
-	}
 
-	/**
-	 * @param handleCommonSuccess the handleCommonSuccess to set
-	 */
-	public void setHandleCommonSuccess(Handler handleCommonSuccess) {
-		this.handleCommonSuccess = handleCommonSuccess;
-	}
 
 	/* (non-Javadoc)
 	 * @see com.google.android.maps.MapActivity#isRouteDisplayed()

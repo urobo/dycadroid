@@ -15,6 +15,8 @@ import eu.fbk.dycapo.persistency.ActiveTrip;
 import eu.fbk.dycapo.persistency.DBParticipation;
 import eu.fbk.dycapo.persistency.DBTrip;
 import eu.fbk.dycapo.util.DriverHandler;
+import eu.fbk.dycapo.util.Environment;
+import eu.fbk.dycapo.util.NavigationHandler;
 import eu.fbk.dycapo.util.ParticipationUtils;
 
 /**
@@ -23,8 +25,9 @@ import eu.fbk.dycapo.util.ParticipationUtils;
  */
 public class DriverBroker extends Broker {
 	private static final String TAG = "DriverBroker";
-	
+	private DriverHandler dh = null;
 	private static DriverBroker Instance = null;
+	
 	public static final DriverBroker getInstance(Navigation nav){
 		if(Instance instanceof DriverBroker){
 			Instance = null;
@@ -40,6 +43,7 @@ public class DriverBroker extends Broker {
 	private DriverBroker(Navigation nav) {
 		super(nav);
 		this.task = new Timer();
+		this.dh = (DriverHandler) NavigationHandler.HandlersFactory.getNavigationHandler(Environment.DRIVER, this.nav);
 	}
 
 	/* (non-Javadoc)
@@ -57,8 +61,8 @@ public class DriverBroker extends Broker {
 					ActiveTrip at = DBTrip.getActiveTrip();
 					List<Participation>tmp = ParticipationUtils.getListOfParticipations(at);
 					DBParticipation.saveParticipationList(tmp);
-					DriverBroker.this.nav.nh.getHandler(DriverHandler.PARTICIPATIONS_CHECKER_ID).sendEmptyMessage(0);
-					DriverBroker.this.nav.getHandleCommonSuccess().sendEmptyMessage(0);
+					DriverBroker.this.dh.participationChecker.sendEmptyMessage(0);
+					DriverBroker.this.nav.handleCommonSuccess.sendEmptyMessage(0);
 				} catch (DycapoException e) {
 					Log.e(TAG, e.getMessage());
 					e.printStackTrace();

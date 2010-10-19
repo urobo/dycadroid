@@ -86,6 +86,21 @@ public class Participation implements DycapoJSONObjects{
 		Log.d(TAG,result.toString());
 		return result;
 	}
+	
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
+	/**
+	 * @return the role
+	 */
+	public String getRole() {
+		return role;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -112,18 +127,4 @@ public class Participation implements DycapoJSONObjects{
 		}
 		return result;
 	}
-	/**
-	 * @param role the role to set
-	 */
-	public void setRole(String role) {
-		this.role = role;
-	}
-	/**
-	 * @return the role
-	 */
-	public String getRole() {
-		return role;
-	}
-	
-	
 }

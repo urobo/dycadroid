@@ -139,6 +139,27 @@ public class Search implements DycapoJSONObjects{
 		Log.d(TAG,jsonObj.toString());
 		return jsonObj;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder out = new StringBuilder();
+		if (this.author instanceof Person)
+			out.append(AUTHOR + " : " + this.getAuthor().toString() + "\n");
+		
+		if (this.origin instanceof Location)
+			out.append(ORIGIN + " : " + this.getOrigin().toString() + "\n");
+		
+		if (this.destination instanceof Location)
+			out.append(DESTINATION + " : " + this.getDestination().toString() + "\n");
+		
+		if (this.trips instanceof List<?>)
+			for (int i = 0 ; i< this.trips.size() ; i++)
+				out.append("trip : " +  this.trips.get(i).toString()+ "\n");
+		return out.toString();
+	}
 	
 	
 }

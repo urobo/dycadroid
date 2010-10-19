@@ -39,7 +39,7 @@ public class DriverHandler extends NavigationHandler {
 		super(nav);
 	}
 	
-	private Handler participationChecker = new Handler(){
+	public Handler participationChecker = new Handler(){
 
 		/* (non-Javadoc)
 		 * @see android.os.Handler#handleMessage(android.os.Message)
@@ -68,19 +68,5 @@ public class DriverHandler extends NavigationHandler {
 		}
 		
 	};
-	
-
-	/* (non-Javadoc)
-	 * @see eu.fbk.dycapo.util.NavigationHandlers#getHandler(int)
-	 */
-	@Override
-	public Handler getHandler(int code) {
-		switch(code){
-		case PARTICIPATIONS_CHECKER_ID:
-			return this.participationChecker;
-
-		}
-		return null;
-	}
 
 }
