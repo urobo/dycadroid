@@ -53,8 +53,9 @@ public class LocationService implements LocationListener {
         location = this.lmr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         try {
             eu.fbk.dycapo.models.Location loc = new eu.fbk.dycapo.models.Location();
-            
-            loc.setGeorss_point(String.valueOf(location.getLongitude())+","+String.valueOf(location.getLatitude()) );
+            Log.d(TAG, "longitude : " + location.getLongitude());
+            Log.d(TAG, "latitude : " + location.getLatitude());
+            loc.setGeorss_point(String.valueOf((double)location.getLongitude())+","+String.valueOf((double)location.getLatitude()));
             loc.setLeaves(Calendar.getInstance().getTime());
             loc.setPoint(eu.fbk.dycapo.models.Location.POSI);
             LocationService.updatePosition(loc);

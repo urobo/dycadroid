@@ -11,8 +11,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import eu.fbk.dycapo.exceptions.DycapoException;
-import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Person;
+import eu.fbk.dycapo.persistency.DBPerson;
+import eu.fbk.dycapo.persistency.User;
+import eu.fbk.dycapo.services.DycapoServiceClient;
 
 /**
  * @author riccardo
@@ -47,9 +49,15 @@ public abstract class PersonFetcher {
 				result.setPhone(responseValue.getString(Person.PHONE));
 			if (responseValue.has(Person.POSITION))
 				if(responseValue.getJSONObject(Person.POSITION).has(DycapoObjectsFetcher.HREF)){
-					Location loc = new Location();
-					loc.setHref(responseValue.getJSONObject(Person.POSITION).getString(DycapoObjectsFetcher.HREF));
-					result.setPosition(loc);
+					User usr = DBPerson.getUser();
+					String url = responseValue.getJSONObject(Person.POSITION).getString(DycapoObjectsFetcher.HREF);
+					JSONObject json= DycapoServiceClient.callDycapo(DycapoServiceClient.GET, 
+							url, 
+							null, 
+							usr.getUsername(),
+							usr.getPassword());
+					
+					result.setPosition(LocationFetcher.fetchLocation(json));
 				}
 			
 			

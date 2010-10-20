@@ -4,6 +4,8 @@
 package eu.fbk.dycapo.activities;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -76,11 +78,11 @@ public class Navigation extends MapActivity{
 					Participation tmp = DBParticipation
 							.getParticipations().get(0);
 					if (riderOnBoard == false) {
-						tmp.setStatus(Participation.START);
+						tmp.setStatus(Participation.STARTED);
 						Navigation.this.button2
 								.setText("Finish Participation");
 					} else {
-						tmp.setStatus(Participation.FINISH);
+						tmp.setStatus(Participation.FINISHED);
 						what = 1;
 					}
 					ParticipationUtils.updateDycapoParticipation(tmp);
@@ -176,9 +178,71 @@ public class Navigation extends MapActivity{
 			break;
 		}
 		this.button3.setText("Cancel");
-		
-	}
+		this.mapUpdate.scheduleAtFixedRate(new TimerTask(){
 
+			@Override
+			public void run() {
+				Log.d(TAG, "handling map update");
+				List<Participation> list = DBParticipation.getParticipations();
+				MapView map = (MapView) Navigation.this
+						.findViewById(R.id.myMapView1);
+				GeoPoint point;
+				Drawable drawable = null;
+				OverlayItem overlayitem;
+				if (Navigation.this.itemized instanceof DycapoItemizedOverlay) {
+					map.getOverlays().remove(Navigation.this.itemized);
+					itemized = null;
+				}
+				
+				switch (Navigation.this.navRole){
+				case Environment.RIDER:
+					Log.d(TAG, "rider");
+					drawable = Navigation.this.getResources().getDrawable(R.drawable.driver);
+					break;
+				case Environment.DRIVER:
+					Log.d(TAG, "driver");
+					drawable = Navigation.this.getResources().getDrawable(R.drawable.rider);
+					break;
+				}
+				
+				itemized = new DycapoItemizedOverlay(drawable);
+				Log.d(TAG,String.valueOf(list.size()));
+				for (int i = 0; i < list.size(); i++) {
+					if (list.get(i).getStatus().equals(Participation.ACCEPTED)
+							|| list.get(i).getStatus()
+									.equals(Participation.STARTED)) {
+						Person tmp = list.get(i).getAuthor();
+						tmp.setPosition(LocationService.getPosition(tmp));
+						
+						String geo_point = tmp.getPosition().getGeorss_point();
+						int coma = geo_point.indexOf(",");
+						double mLat = Double.parseDouble(geo_point.substring(0,
+								coma));
+						
+						double mLong = Double.parseDouble(geo_point.substring(
+								coma + 1, geo_point.length()));
+						
+						Log.d(TAG,"latitude : " + String.valueOf(mLat));
+						Log.d(TAG,"longitude : " + String.valueOf(mLong));
+						point = new GeoPoint(
+								(int) (((double) mLat ) * 1E6),
+								(int) (((double) mLong ) * 1E6));
+
+						overlayitem = new OverlayItem(point, list.get(i)
+								.getAuthor().getUsername(), list.get(i)
+								.toString());
+
+						itemized.addOverlay(overlayitem);
+					}
+					map.getOverlays().add(itemized);
+				}
+			}
+			
+		},
+		5000,
+		60000);
+	}
+	public Timer mapUpdate = new Timer();
 	public Handler handleCommonSuccess = new Handler() {
 
 		/*
@@ -216,7 +280,7 @@ public class Navigation extends MapActivity{
 				for (int i = 0; i < list.size(); i++) {
 					if (list.get(i).getStatus().equals(Participation.ACCEPTED)
 							|| list.get(i).getStatus()
-									.equals(Participation.START)) {
+									.equals(Participation.STARTED)) {
 						Person tmp = list.get(i).getAuthor();
 						tmp.setPosition(LocationService.getPosition(tmp));
 						

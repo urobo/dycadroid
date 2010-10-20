@@ -49,6 +49,7 @@ public abstract class ParticipationUtils {
 	
 	public static final List<Participation> getListOfParticipations(Trip p){
 		User usr = DBPerson.getUser();
+		Log.d(TAG, p.getHref());
 		try {
 			JSONArray tps =DycapoServiceClient.callDycapoForDataCollections(
 					DycapoServiceClient.GET, 

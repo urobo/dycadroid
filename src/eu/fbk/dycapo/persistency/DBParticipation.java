@@ -5,6 +5,8 @@ package eu.fbk.dycapo.persistency;
 
 import java.util.List;
 
+import android.util.Log;
+
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Predicate;
@@ -16,6 +18,7 @@ import eu.fbk.dycapo.models.Participation;
  *
  */
 public class DBParticipation {
+	private static final String TAG = "DBParticipation";
 	
 	public static final void newTrip(){
 		ObjectContainer db = DBProvider.getDatabase();
@@ -76,8 +79,10 @@ public class DBParticipation {
 		ObjectSet<Participation> oldpl = db.queryByExample(Participation.class);
 		db.delete(oldpl);
 		int size = pl.size();
-		for (int i = 0 ; i< size; i++)
+		for (int i = 0 ; i< size; i++){
+			Log.d(TAG, pl.get(i).toString());
 			db.store(pl.get(i));
+			}
 		db.commit();
 	}
 	
@@ -87,7 +92,7 @@ public class DBParticipation {
 		ObjectContainer db = DBProvider.getDatabase();
 		List<Participation> result = db.query(new Predicate<Participation>() {
 		      public boolean match(Participation proto) {
-		          return proto.getStatus().equals(Participation.START)
+		          return proto.getStatus().equals(Participation.STARTED)
 		          || proto.getStatus().equals(Participation.ACCEPTED);
 		    }
 		});

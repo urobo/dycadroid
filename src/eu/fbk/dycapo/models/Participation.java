@@ -23,13 +23,20 @@ public class Participation implements DycapoJSONObjects{
 	
 	public static final String REQUESTED = "request";
 	public static final String ACCEPTED = "accept";
-	public static final String START = "start";
-	public static final String FINISH = "finish";
+	public static final String STARTED = "start";
+	public static final String FINISHED = "finish";
 	
 	private String role;
 	private Person author;
 	private String status;
 	protected String href;
+	
+	/**
+	 * 
+	 */
+	public Participation() {
+	
+	}
 	/**
 	 * @return the person
 	 */

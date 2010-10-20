@@ -61,6 +61,7 @@ public class DriverBroker extends Broker {
 					ActiveTrip at = DBTrip.getActiveTrip();
 					List<Participation>tmp = ParticipationUtils.getListOfParticipations(at);
 					DBParticipation.saveParticipationList(tmp);
+					Log.d(TAG, "sending messages");
 					DriverBroker.this.dh.participationChecker.sendEmptyMessage(0);
 					DriverBroker.this.nav.handleCommonSuccess.sendEmptyMessage(0);
 				} catch (DycapoException e) {

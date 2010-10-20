@@ -71,7 +71,7 @@ public class RiderBroker extends Broker{
 								RiderBroker.this.rh.handleStatusChange.sendMessage(msg);
 							}
 						}else if (oldStatus.equals(Participation.ACCEPTED) ||
-									oldStatus.equals(Participation.START)){
+									oldStatus.equals(Participation.STARTED)){
 							try {
 								Trip trip  = DBTrip.getActiveTrip();
 								List<Participation> list = ParticipationUtils.getListOfParticipations(trip);
@@ -81,7 +81,7 @@ public class RiderBroker extends Broker{
 								Log.e(TAG, e.getMessage());
 								e.printStackTrace();
 							}	
-						}else if (oldStatus.equals(Participation.FINISH)){
+						}else if (oldStatus.equals(Participation.FINISHED)){
 							this.cancel();
 						}
 					}
