@@ -20,21 +20,22 @@ import eu.fbk.dycapo.models.Location;
 public abstract class LocationFetcher {
 	private static final String TAG ="LocationFetcher";
 	public static final Location fetchLocation(JSONObject responseValue) throws DycapoException{
-		try{	
-			String message="error LocationFetcher.fetchLocation : not enough parameters are given to define a location: missing ";
-			Location result= new Location();
+		Location result= new Location();
+		try{
 			
-			if (responseValue.has(DycapoObjectsFetcher.HREF))				
+			Log.d(TAG,"fetching location");
+						
+			if (responseValue.has(DycapoObjectsFetcher.HREF)){		
 				result.setHref(responseValue.getString(DycapoObjectsFetcher.HREF));
-		
+				Log.d(TAG, result.getHref());
+			}
 			if (responseValue.has(Location.POINT)){
 				String point = responseValue.getString(Location.POINT);
 				
-				if (point.equals(Location.POINT_TYPE[0]))result.setPoint(0);
-				else if (point.equals(Location.POINT_TYPE[1]))result.setPoint(1);
-				else if (point.equals(Location.POINT_TYPE[2]))result.setPoint(2);
-				else if (point.equals(Location.POINT_TYPE[3]))result.setPoint(3);
-			} else new DycapoException(message + Location.POINT);
+				for (int i = 0 ; i < Location.POINT_TYPE.length ; i++)
+					if (point.equals(Location.POINT_TYPE[i])) result.setPoint(i);
+				Log.d(TAG,Location.getPointType(result.getPoint()));
+			}
 			
 			SimpleDateFormat parser = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
 
@@ -42,21 +43,28 @@ public abstract class LocationFetcher {
 			{
 				try {
 					result.setLeaves(parser.parse(responseValue.getString(Location.LEAVES)));
+					Log.d(TAG, result.getLeaves().toGMTString());
 				} catch (ParseException e) {
 					Log.e(TAG, e.getMessage());
 					throw new DycapoException(e.getMessage());
 				}
 			}
-			else new DycapoException(message + Location.LEAVES);
+		
 			
-			if(responseValue.has(Location.LABEL))
+			if(responseValue.has(Location.LABEL)){
 				result.setLabel(responseValue.getString(Location.LABEL));
-			
-			if (responseValue.has(Location.COUNTRY))
+				Log.d(TAG, result.getLabel());
+			}
+
+			if (responseValue.has(Location.COUNTRY)){
 				result.setCountry(responseValue.getString(Location.COUNTRY));
+				Log.d(TAG, result.getCountry());
+			}
 			
-			if (responseValue.has(Location.REGION))
+			if (responseValue.has(Location.REGION)){
 				result.setRegion(responseValue.getString(Location.REGION));
+				Log.d(TAG, result.getRegion());
+			}
 			
 			if (responseValue.has(Location.SUBREGION))
 				result.setSubregion(responseValue.getString(Location.SUBREGION));
@@ -64,35 +72,34 @@ public abstract class LocationFetcher {
 			if (responseValue.has(Location.RECURS))
 				result.setRecurs(responseValue.getString(Location.RECURS));
 			
-			if (responseValue.has(Location.DAYS))
+			if (responseValue.has(Location.DAYS)){
 				result.setDays(responseValue.getString(Location.DAYS));
+				Log.d(TAG, result.getDays());
+			}
 			
-			if (responseValue.has(Location.OFFSET))
+			if (responseValue.has(Location.OFFSET)){
 				result.setOffset(responseValue.getInt(Location.OFFSET));
+				Log.d(TAG, result.getOffset().toString());
+			}
 			
-			// if location defined via georss_point
 			if (responseValue.has(Location.GEORSS_POINT)){
 				result.setGeorss_point(responseValue.getString(Location.GEORSS_POINT));
-			} else {
-				message += Location.GEORSS_POINT + "or provide ";
-				// else it must contain street,town and postcode
-				// if all street, town and postcode are present
-				if (	responseValue.has(Location.STREET) &&
-						responseValue.has(Location.TOWN) &&
-						responseValue.has(Location.POSTCODE)  ){
-					result.setStreet(responseValue.getString(Location.STREET));
-					result.setTown(responseValue.getString(Location.TOWN));
+				Log.d(TAG, result.getGeorss_point());
+			}
+			
+			if (responseValue.has(Location.STREET)){
+				result.setStreet(responseValue.getString(Location.STREET));
+				Log.d(TAG, result.getStreet());
+			}
+			
+			if (responseValue.has(Location.TOWN)){ 
+				result.setTown(responseValue.getString(Location.TOWN));
+				Log.d(TAG, result.getTown());
+			}
+			
+			if (responseValue.has(Location.POSTCODE)){ 
 					result.setPostcode(responseValue.getInt(Location.POSTCODE));
-				}else{ 
-					//else if one is missing error message composed and an exception will be raised
-					if (!responseValue.has(Location.STREET))
-						message+= " " + Location.STREET;
-					if (!responseValue.has(Location.TOWN))
-						message+= " " + Location.TOWN;
-					if (!responseValue.has(Location.POSTCODE));
-						message+= " " + Location.POSTCODE;
-					throw new DycapoException (message);
-				}	
+					Log.d(TAG, result.getPostcode().toString());
 			}
 			return result;
 		}catch(JSONException e){

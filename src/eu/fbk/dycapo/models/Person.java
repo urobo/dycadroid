@@ -34,20 +34,20 @@ public class Person implements DycapoJSONObjects{
 	public static final String FEMALE = "F";
 	public static final String HREF = "href";
 	
-	private String username;	//must
-	private String email;		//may	
-	private String first_name;	//should
-	private String last_name;	//should
-	private String url;			//may
-	private String phone;		//should
-	private Location position;	//may
-	private Integer age;			//should
-	private String gender;		//should
-	private Boolean smoker;		//may
-	private Boolean blind;		//should
-	private Boolean deaf;		//should
-	private Boolean dog;		//should
-	protected String href;
+	private String username = null;	//must
+	private String email = null;		//may	
+	private String first_name = null;	//should
+	private String last_name = null;	//should
+	private String url = null;			//may
+	private String phone = null;		//should
+	private Location position = null;	//may
+	private Integer age = null;			//should
+	private String gender = null;		//should
+	private Boolean smoker = null;		//may
+	private Boolean blind = null;		//should
+	private Boolean deaf = null;		//should
+	private Boolean dog = null;		//should
+	protected String href = null;
 		
 	/**
 	 * 
@@ -367,7 +367,7 @@ public class Person implements DycapoJSONObjects{
 				Log.d(TAG,result.toString());
 				return result;	
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				Log.e(TAG, e.getMessage());
 				e.printStackTrace();
 			}
 				
@@ -380,33 +380,33 @@ public class Person implements DycapoJSONObjects{
 	 */
 	@Override
 	public String toString() {
-		StringBuilder out = new StringBuilder();
+		String out = "";
 		if (this.age instanceof Integer)
-			out.append(AGE + " : " + this.age.intValue() + "\n" );
+			out+= (AGE + " : " + this.age.intValue());
 		if (this.blind instanceof Boolean)
-			out.append(BLIND + " : " + this.blind.booleanValue() + "\n" );
+			out+=(BLIND + " : " + this.blind.booleanValue());
 		if (this.deaf instanceof Boolean)
-			out.append(DEAF + " : " + this.deaf.booleanValue() + "\n" );
+			out+=(DEAF + " : " + this.deaf.booleanValue());
 		if (this.dog instanceof Boolean)
-			out.append(DOG + " : " + this.dog.booleanValue() + "\n" );
+			out+=(DOG + " : " + this.dog.booleanValue());
 		if (this.email instanceof java.lang.String)
-			out.append(EMAIL + " : " + this.email + "\n" );
+			out+=(EMAIL + " : " + this.email );
 		if (this.first_name instanceof java.lang.String)
-			out.append(FIRST_NAME + " : " + this.first_name + "\n" );
+			out+=(FIRST_NAME + " : " + this.first_name );
 		if (this.gender instanceof java.lang.String)
-			out.append(GENDER + " : " + this.gender + "\n" );
+			out+=(GENDER + " : " + this.gender );
 		if (this.last_name instanceof java.lang.String)
-			out.append(LAST_NAME + " : " + this.last_name + "\n" );
+			out+=(LAST_NAME + " : " + this.last_name );
 		if (this.phone instanceof java.lang.String)
-			out.append(PHONE + " : " + this.phone + "\n" );
+			out+=(PHONE + " : " + this.phone );
 		if (this.position instanceof Location)
-			out.append(POSITION + " : " + this.position.toString() + "\n" );
+			out+=(POSITION + " : " + this.position.toString()  );
 		if (this.smoker instanceof Boolean)
-			out.append(SMOKER + " : " + this.smoker.booleanValue() + "\n" );
+			out+=(SMOKER + " : " + this.smoker.booleanValue() );
 		if (this.url instanceof java.lang.String)
-			out.append(URL+ " : " + this.url + "\n" );
+			out+=(URL+ " : " + this.url );
 		if (this.username instanceof java.lang.String)
-			out.append(USERNAME + " : " + this.username + "\n" );
+			out+=(USERNAME + " : " + this.username );
 		return out.toString();
 	}
 	

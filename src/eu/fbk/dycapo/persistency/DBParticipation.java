@@ -76,11 +76,11 @@ public class DBParticipation {
 	
 	public static final void saveParticipationList(List<Participation> pl){
 		ObjectContainer db = DBProvider.getDatabase();
-		ObjectSet<Participation> oldpl = db.queryByExample(Participation.class);
-		db.delete(oldpl);
+		db.delete(Participation.class);
 		int size = pl.size();
+		Log.d(TAG, "saving participation list. size : "+  String.valueOf(size));
 		for (int i = 0 ; i< size; i++){
-			Log.d(TAG, pl.get(i).toString());
+			Log.d(TAG, "saving "+ String.valueOf(i)+ "-th participation");
 			db.store(pl.get(i));
 			}
 		db.commit();

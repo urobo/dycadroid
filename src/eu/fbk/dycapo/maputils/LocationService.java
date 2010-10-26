@@ -118,7 +118,7 @@ public class LocationService implements LocationListener {
 		User usr = DBPerson.getUser();
 		try {
 			JSONObject json = DycapoServiceClient.callDycapo(DycapoServiceClient.GET, 
-					DycapoServiceClient.uriBuilder("persons/" + p.getUsername() + "location"),
+					DycapoServiceClient.uriBuilder("persons/" + p.getUsername() + "/location"),
 					null,
 					usr.getUsername(), 
 					usr.getPassword());

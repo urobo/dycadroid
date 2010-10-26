@@ -49,20 +49,20 @@ public class Location implements DycapoJSONObjects{
 		return null;
 	}
 	
-	protected String label;			//may
-	protected String street;			//should*
-	protected Integer point;				//must
-	protected String country;			//may
-	protected String region;			//may
-	protected String town;			//should*
-	protected Integer postcode;			//should*
-	protected String subregion;		//may
-	protected String georss_point;	//should*
-	protected Integer offset;				//should
-	protected String recurs;			//may
-	protected String days;			//may
-	protected Date leaves; 			//must
-	protected String href;
+	protected String label = null;			//may
+	protected String street = null;			//should*
+	protected Integer point = null;				//must
+	protected String country = null;			//may
+	protected String region = null;			//may
+	protected String town = null;			//should*
+	protected Integer postcode = null;			//should*
+	protected String subregion = null;		//may
+	protected String georss_point = null;	//should*
+	protected Integer offset = null;				//should
+	protected String recurs = null;			//may
+	protected String days = null;			//may
+	protected Date leaves = null; 			//must
+	protected String href = null;
 	/**
 	 * 
 	 */
@@ -349,51 +349,51 @@ public class Location implements DycapoJSONObjects{
 	public String toString() {
 		StringBuilder out = new StringBuilder();
 		if (this.country instanceof java.lang.String)
-    		out.append(COUNTRY + " : " + this.country + "\n");
+    		out.append(COUNTRY + " : " + this.country );
 		
 		if (this.days instanceof java.lang.String)
-			out.append(DAYS + " : " + this.days + "\n");
+			out.append(DAYS + " : " + this.days );
 	
 		if (this.georss_point instanceof java.lang.String)
-			out.append(GEORSS_POINT + " : " + this.georss_point + "\n");
+			out.append(GEORSS_POINT + " : " + this.georss_point );
 	
 		if (this.label instanceof java.lang.String)
-			out.append(LABEL + " : " + this.label + "\n");
+			out.append(LABEL + " : " + this.label );
 	
 		if (this.leaves instanceof java.util.Date){
 			SimpleDateFormat formatter
 			= new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
 			
 			
-			out.append(LEAVES + " : " + formatter.format(this.leaves) + "\n");
+			out.append(LEAVES + " : " + formatter.format(this.leaves) );
 			Log.i("sdf",formatter.format(this.leaves));
 			}
 		
 		Log.i("date",this.leaves.toString());
 		
 		if (this.offset instanceof Integer)
-			out.append(OFFSET + " : " + this.offset.intValue() + "\n");
+			out.append(OFFSET + " : " + this.offset.intValue() );
 		
 		if (this.point instanceof Integer)
-			out.append(POINT + " : " + POINT_TYPE[this.point] + "\n");
+			out.append(POINT + " : " + POINT_TYPE[this.point] );
 		
 		if (this.postcode instanceof Integer)
-			out.append(POSTCODE + " : "+ this.postcode.intValue() + "\n");
+			out.append(POSTCODE + " : "+ this.postcode.intValue() );
 		
 		if (this.recurs instanceof java.lang.String)
-			out.append(RECURS + " : "+ this.recurs + "\n");
+			out.append(RECURS + " : "+ this.recurs );
 		
 		if (this.region instanceof java.lang.String)
-			out.append(REGION + " : "+ this.region + "\n");
+			out.append(REGION + " : "+ this.region );
 		
 		if (this.street instanceof java.lang.String)
-			out.append(STREET + " : "+ this.street + "\n");
+			out.append(STREET + " : "+ this.street);
 		
 		if (this.subregion instanceof java.lang.String)
-			out.append(SUBREGION + " : "+ this.subregion + "\n");
+			out.append(SUBREGION + " : "+ this.subregion );
 		
 		if (this.town instanceof java.lang.String)
-			out.append(TOWN + " : "+ this.town + "\n");
+			out.append(TOWN + " : "+ this.town);
 		
 		return out.toString();
 	}

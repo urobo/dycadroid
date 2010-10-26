@@ -285,7 +285,8 @@ public class Navigation extends MapActivity{
 						tmp.setPosition(LocationService.getPosition(tmp));
 						
 						String geo_point = tmp.getPosition().getGeorss_point();
-						int coma = geo_point.indexOf(",");
+						int coma = geo_point.indexOf(" ");
+						Log.d(TAG, geo_point);
 						double mLat = Double.parseDouble(geo_point.substring(0,
 								coma));
 						double mLong = Double.parseDouble(geo_point.substring(

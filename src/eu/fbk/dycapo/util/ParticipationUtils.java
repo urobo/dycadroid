@@ -58,7 +58,8 @@ public abstract class ParticipationUtils {
 					usr.getUsername(), 
 					usr.getPassword());
 			List<Participation> result = DycapoObjectsFetcher.extractTripParticipations(tps);
-			tps = null;
+			if (result.isEmpty())Log.d(TAG, "participation list is empty");
+			else Log.d(TAG, String.valueOf(result.size()));
 			return result;
 		} catch (DycapoException e) {
 			Log.e(TAG, e.getMessage());

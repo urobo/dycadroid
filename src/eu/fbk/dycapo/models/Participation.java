@@ -116,22 +116,29 @@ public class Participation implements DycapoJSONObjects{
 		String result = "";
 		if (this.getStatus() instanceof String)
 			result += "Status : "+ this.status;
-		if (this.getAuthor() instanceof Person){
-			result += "\n User : " + this.author.getUsername();
-			result += " Age : " + this.author.getAge();
-			result += " Gender : " + this.author.getGender();
+		Person p = this.getAuthor();
+		if (p instanceof Person){
+			if (p.getUsername() instanceof String)
+				result += " User : " + this.author.getUsername();
+			if (p.getAge() instanceof Integer)
+				result += " Age : " + this.author.getAge();
+			if (p.getGender() instanceof String)
+				result += " Gender : " + this.author.getGender();
+			
 			result += " Info : ";
-			if (this.getAuthor().getDeaf())
-				result += "D";
-			if (this.getAuthor().getBlind())
-				result += "B";
-			if (this.getAuthor().getDog())
-				result += "P";
-			if (this.getAuthor().getSmoker())
-				result += "S";
+			if (p.getDeaf() instanceof Boolean)
+				result += (p.getDeaf().booleanValue())?"D":"";
+			if (p.getBlind() instanceof Boolean)
+				result += (p.getBlind().booleanValue())?"B":"";
+			if (p.getDog() instanceof Boolean)
+				result += (p.getDog().booleanValue())?"P":"";
+			if (p.getSmoker() instanceof Boolean)
+				result += (p.getSmoker().booleanValue())?"S":"";
 			if (this.role instanceof String)
 				result += " role: " + this.role;
 		}
+		if (result.equals(""))
+			return "participation is empty";
 		return result;
 	}
 }
