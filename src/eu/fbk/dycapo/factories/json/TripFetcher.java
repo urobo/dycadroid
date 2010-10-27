@@ -14,7 +14,6 @@ import org.json.JSONObject;
 
 import android.util.Log;
 import eu.fbk.dycapo.exceptions.DycapoException;
-import eu.fbk.dycapo.exceptions.Tag;
 import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Trip;
 
@@ -67,16 +66,16 @@ public abstract class TripFetcher {
 			else throw new DycapoException (message + Trip.AUTHOR);
 			
 			if(responseValue.has(Trip.MODE)){
-				Log.d(Tag.DYCAPOFACTORIES +"."+ Tag.DYCAPOMODE, Tag.DYCAPOMODE + " present");
+				Log.d(TAG +"."+ Trip.MODE, Trip.MODE + " present");
 				result.setMode(ModeFetcher.fetchMode(responseValue.getJSONObject(Trip.MODE)));
-				Log.d(Tag.DYCAPOFACTORIES +"."+ Tag.DYCAPOMODE, Tag.DYCAPOMODE + " fetched");
+				Log.d(TAG , Trip.MODE + " fetched");
 			}else throw new DycapoException(message + Trip.MODE);
 			
 			
 			if (responseValue.has(Trip.PREFERENCES)){
-				Log.d(Tag.DYCAPOFACTORIES +"."+ Tag.DYCAPOPREFERENCES, Tag.DYCAPOPREFERENCES + " present");
+				Log.d(TAG +"."+ Trip.PREFERENCES, Trip.PREFERENCES + " present");
 				result.setPreferences(PreferencesFetcher.fetchPreferences(responseValue.getJSONObject(Trip.PREFERENCES)));
-				Log.d(Tag.DYCAPOFACTORIES +"."+ Tag.DYCAPOPREFERENCES, Tag.DYCAPOPREFERENCES + " fetched");
+				Log.d(TAG+"."+ Trip.PREFERENCES, Trip.PREFERENCES + " fetched");
 			}else throw new DycapoException(message + Trip.PREFERENCES);
 			
 			if (responseValue.has(Trip.LOCATIONS)){				
