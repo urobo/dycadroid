@@ -15,15 +15,15 @@ import eu.fbk.dycapo.activities.TripSettings;
 
 /**
  * @author riccardo
- *
+ * 
  */
 public abstract class ActivityTester {
 	public static final int ACTIVITIES = 5;
-	
-	public static final Intent testActivity (Context ctx,int id){
+
+	public static final Intent testActivity(Context ctx, int id) {
 		Intent i = new Intent();
 		Bundle bundle = new Bundle();
-		switch(id){
+		switch (id) {
 		case R.id.testHome:
 			i.setClass(ctx, Home.class);
 			break;
@@ -46,7 +46,7 @@ public abstract class ActivityTester {
 			i.setClass(ctx, FastChoice.class);
 			break;
 		}
-		
+
 		return i;
 	}
 }

@@ -11,22 +11,22 @@ import android.widget.Toast;
 
 /**
  * @author riccardo
- *
+ * 
  */
 
-public class DycapoException extends Exception{
+public class DycapoException extends Exception {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5829304590186552132L;
-	
+
 	/**
 	 * 
 	 */
 	public DycapoException() {
 		super();
 	}
-	
+
 	/**
 	 * @param detailMessage
 	 * @param throwable
@@ -35,7 +35,7 @@ public class DycapoException extends Exception{
 		super(detailMessage, throwable);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	/**
 	 * @param detailMessage
 	 */
@@ -43,7 +43,7 @@ public class DycapoException extends Exception{
 		super(detailMessage);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	/**
 	 * @param throwable
 	 */
@@ -51,15 +51,17 @@ public class DycapoException extends Exception{
 		super(throwable);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	/**
 	 * @param e
 	 */
 	public DycapoException(Exception e) {
 		super(e);
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Throwable#fillInStackTrace()
 	 */
 	@Override
@@ -68,7 +70,9 @@ public class DycapoException extends Exception{
 		return super.fillInStackTrace();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Throwable#getCause()
 	 */
 	@Override
@@ -77,7 +81,9 @@ public class DycapoException extends Exception{
 		return super.getCause();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Throwable#getLocalizedMessage()
 	 */
 	@Override
@@ -86,7 +92,9 @@ public class DycapoException extends Exception{
 		return super.getLocalizedMessage();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Throwable#getMessage()
 	 */
 	@Override
@@ -95,7 +103,9 @@ public class DycapoException extends Exception{
 		return super.getMessage();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Throwable#getStackTrace()
 	 */
 	@Override
@@ -104,7 +114,9 @@ public class DycapoException extends Exception{
 		return super.getStackTrace();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Throwable#initCause(java.lang.Throwable)
 	 */
 	@Override
@@ -113,7 +125,9 @@ public class DycapoException extends Exception{
 		return super.initCause(throwable);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Throwable#printStackTrace()
 	 */
 	@Override
@@ -122,7 +136,9 @@ public class DycapoException extends Exception{
 		super.printStackTrace();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Throwable#printStackTrace(java.io.PrintStream)
 	 */
 	@Override
@@ -131,7 +147,9 @@ public class DycapoException extends Exception{
 		super.printStackTrace(err);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Throwable#printStackTrace(java.io.PrintWriter)
 	 */
 	@Override
@@ -140,7 +158,9 @@ public class DycapoException extends Exception{
 		super.printStackTrace(err);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Throwable#setStackTrace(java.lang.StackTraceElement[])
 	 */
 	@Override
@@ -149,7 +169,9 @@ public class DycapoException extends Exception{
 		super.setStackTrace(trace);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Throwable#toString()
 	 */
 	@Override
@@ -158,7 +180,9 @@ public class DycapoException extends Exception{
 		return super.toString();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
@@ -167,7 +191,9 @@ public class DycapoException extends Exception{
 		return super.clone();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -176,7 +202,9 @@ public class DycapoException extends Exception{
 		return super.equals(o);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#finalize()
 	 */
 	@Override
@@ -185,7 +213,9 @@ public class DycapoException extends Exception{
 		super.finalize();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -194,16 +224,17 @@ public class DycapoException extends Exception{
 		return super.hashCode();
 	}
 
-	public void alertUser(Context context){
+	public void alertUser(Context context) {
 		Toast.makeText(context, this.getMessage(), Toast.LENGTH_LONG).show();
 	}
 
-	public void alertUser(Context context, String title){
-		Toast.makeText(context, title+": "+this.getMessage(), Toast.LENGTH_LONG).show();
+	public void alertUser(Context context, String title) {
+		Toast.makeText(context, title + ": " + this.getMessage(),
+				Toast.LENGTH_LONG).show();
 	}
-	
 
-	public static void createAlert(Context context, String title, String message){
-		Toast.makeText(context, title+": "+ message, Toast.LENGTH_LONG).show();
+	public static void createAlert(Context context, String title, String message) {
+		Toast.makeText(context, title + ": " + message, Toast.LENGTH_LONG)
+				.show();
 	}
 }

@@ -18,23 +18,20 @@ import android.location.Address;
 import android.util.Log;
 import eu.fbk.dycapo.exceptions.DycapoException;
 
-
 /**
  * @author riccardo
  */
-public final class Directions{
-	
+public final class Directions {
+
 	private static StringBuilder sb = null;
 	private static InputStream is = null;
 	private static final String TAG = "Directions";
 
-	
-	public static final void getRoute (Address src,Address dest,Context ctx)
-    { 
-		//http://maps.google.com/maps/api/directions/json?origin=Via+Sommarive,Trento&destination=Viale+Europa,170,39100+Bolzano+BZ&sensor=true
+	public static final void getRoute(Address src, Address dest, Context ctx) {
+		// http://maps.google.com/maps/api/directions/json?origin=Via+Sommarive,Trento&destination=Viale+Europa,170,39100+Bolzano+BZ&sensor=true
 		sb = new StringBuilder();
 		sb.append("http://maps.google.com/maps/api/directions/json?");
-		
+
 		sb.append("origin=");
 		sb.append(src.getAddressLine(0).replace(" ", "+"));
 		sb.append(",");
@@ -44,7 +41,7 @@ public final class Directions{
 		sb.append(",");
 		sb.append(dest.getAddressLine(1).replace(" ", "+"));
 		sb.append("&sensor=true");
-		
+
 		String url = sb.toString();
 		Log.d(TAG, url);
 		HttpClient client = new DefaultHttpClient();
@@ -57,7 +54,7 @@ public final class Directions{
 			DirectionsResponseParser.parseDirections(is);
 			is.close();
 		} catch (ClientProtocolException e) {
-			
+
 			Log.e(TAG, e.getMessage());
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -66,12 +63,11 @@ public final class Directions{
 		} catch (DycapoException e) {
 			Log.e(TAG, e.getMessage());
 		}
-    }
-	
-	
-	
-	public static void getComplexRoute(Address source,Address dest, Address wayps,Context ctx){
-		
+	}
+
+	public static void getComplexRoute(Address source, Address dest,
+			Address wayps, Context ctx) {
+
 	}
 
 }

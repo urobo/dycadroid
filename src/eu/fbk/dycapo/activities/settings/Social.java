@@ -3,19 +3,19 @@
  */
 package eu.fbk.dycapo.activities.settings;
 
-import eu.fbk.dycapo.activities.R;
 import android.app.Activity;
 import android.os.Bundle;
+import eu.fbk.dycapo.activities.R;
 
 /**
  * @author riccardo
- *
+ * 
  */
 public class Social extends Activity {
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        this.setContentView(R.layout.social);
-    }
+		this.setContentView(R.layout.social);
+	}
 }

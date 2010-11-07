@@ -10,13 +10,13 @@ import eu.fbk.dycapo.persistency.User;
 
 /**
  * @author riccardo
- *
+ * 
  */
 public abstract class UserMapper {
-	public static final JSONObject fromUserToJSONObject(User usr){
+	public static final JSONObject fromUserToJSONObject(User usr) {
 		JSONObject usrTJSON = usr.toJSONObject();
 		try {
-			usrTJSON.put(User.PASSWORD , usr.getPassword());
+			usrTJSON.put(User.PASSWORD, usr.getPassword());
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

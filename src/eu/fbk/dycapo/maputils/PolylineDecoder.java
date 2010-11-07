@@ -12,48 +12,49 @@ import com.google.android.maps.GeoPoint;
 
 /**
  * @author riccardo
- *
+ * 
  */
 public final class PolylineDecoder {
-	
-	private static final String TAG ="PolylineDecoder";
+
+	private static final String TAG = "PolylineDecoder";
+
 	public static List<GeoPoint> decodePolyline(String encoded) {
-			
-		  Log.d(TAG, "decoding : "+ encoded);
-		  List<GeoPoint> poly = new ArrayList<GeoPoint>();
-		  int index = 0, 
-		  
-		  len = encoded.length();
-		  int lat = 0, lng = 0;
 
-		  while (index < len) {
-		      int b, shift = 0, result = 0;
-		      do {
-		          b = encoded.charAt(index++) - 63;
-		          result |= (b & 0x1f) << shift;
-		          shift += 5;
-		      } while (b >= 0x20);
-		      int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-		      lat += dlat;
+		Log.d(TAG, "decoding : " + encoded);
+		List<GeoPoint> poly = new ArrayList<GeoPoint>();
+		int index = 0,
 
-		      shift = 0;
-		      result = 0;
-		      do {
-		          b = encoded.charAt(index++) - 63;
-		          result |= (b & 0x1f) << shift;
-		          shift += 5;
-		      } while (b >= 0x20);
-		      int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-		      lng += dlng;
+		len = encoded.length();
+		int lat = 0, lng = 0;
 
-		      GeoPoint p = new GeoPoint((int) (((double) lat / 1E5) *1E6),
-		           (int) (((double) lng / 1E5) * 1E6 ));
-		      
-		      Log.d(TAG, p.toString());
-		      poly.add(p);
-		  }
+		while (index < len) {
+			int b, shift = 0, result = 0;
+			do {
+				b = encoded.charAt(index++) - 63;
+				result |= (b & 0x1f) << shift;
+				shift += 5;
+			} while (b >= 0x20);
+			int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+			lat += dlat;
 
-		  return poly;
+			shift = 0;
+			result = 0;
+			do {
+				b = encoded.charAt(index++) - 63;
+				result |= (b & 0x1f) << shift;
+				shift += 5;
+			} while (b >= 0x20);
+			int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+			lng += dlng;
+
+			GeoPoint p = new GeoPoint((int) (((double) lat / 1E5) * 1E6),
+					(int) (((double) lng / 1E5) * 1E6));
+
+			Log.d(TAG, p.toString());
+			poly.add(p);
 		}
+
+		return poly;
+	}
 
 }

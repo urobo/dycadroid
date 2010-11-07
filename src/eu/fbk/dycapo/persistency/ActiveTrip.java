@@ -16,12 +16,10 @@ import eu.fbk.dycapo.models.Trip;
 
 /**
  * @author riccardo
- *
+ * 
  */
 public class ActiveTrip extends Trip {
-	
 
-	
 	private List<Participation> mParticipants;
 
 	private Route mRoute;
@@ -30,7 +28,7 @@ public class ActiveTrip extends Trip {
 	 * 
 	 */
 	public ActiveTrip() {
-		
+
 		super();
 		this.mParticipants = new ArrayList<Participation>();
 		this.setActive(true);
@@ -46,28 +44,28 @@ public class ActiveTrip extends Trip {
 	 */
 	public ActiveTrip(Date expires, Person author, Mode mode,
 			Preferences preferences, Location origin, Location destination) {
-		
+
 		super(expires, author, mode, preferences, origin, destination);
 		this.mParticipants = new ArrayList<Participation>();
 		this.setActive(true);
-		
+
 	}
-	
-	public ActiveTrip (Trip trip){
+
+	public ActiveTrip(Trip trip) {
 		if (trip.getHref() instanceof String)
 			this.href = trip.getHref();
-		
+
 		this.author = trip.getAuthor();
-		
+
 		this.destination = trip.getDestination();
 		this.origin = trip.getOrigin();
 		this.preferences = trip.getPreferences();
 		this.mode = trip.getMode();
 		this.waypoints = trip.getWaypoints();
-		
+
 		this.expires = trip.getExpires();
 		this.published = trip.getPublished();
-		this.updated =	trip.getUpdated();
+		this.updated = trip.getUpdated();
 		this.mParticipants = new ArrayList<Participation>();
 		this.setActive(true);
 		this.mRoute = null;
@@ -81,12 +79,13 @@ public class ActiveTrip extends Trip {
 	}
 
 	/**
-	 * @param mParticipants the mParticipants to set
+	 * @param mParticipants
+	 *            the mParticipants to set
 	 */
 	public void setmParticipants(ArrayList<Participation> mParticipants) {
 		this.mParticipants = mParticipants;
 	}
-	
+
 	/**
 	 * @return the route
 	 */
@@ -95,10 +94,11 @@ public class ActiveTrip extends Trip {
 	}
 
 	/**
-	 * @param route the route to set
+	 * @param route
+	 *            the route to set
 	 */
 	public void setRoute(Route route) {
 		this.mRoute = route;
 	}
-	
+
 }

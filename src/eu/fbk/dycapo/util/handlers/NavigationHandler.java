@@ -8,12 +8,12 @@ import eu.fbk.dycapo.util.Environment;
 
 /**
  * @author riccardo
- *
+ * 
  */
 public abstract class NavigationHandler {
 	protected Navigation nav = null;
-	
-	public NavigationHandler(Navigation nav){
+
+	public NavigationHandler(Navigation nav) {
 		this.nav = nav;
 	}
 
@@ -25,21 +25,23 @@ public abstract class NavigationHandler {
 	}
 
 	/**
-	 * @param nav the nav to set
+	 * @param nav
+	 *            the nav to set
 	 */
 	public void setNav(Navigation nav) {
 		this.nav = nav;
 	}
 
-	public abstract static class HandlersFactory{
-		public static final NavigationHandler getNavigationHandler(int role, Navigation nav){
+	public abstract static class HandlersFactory {
+		public static final NavigationHandler getNavigationHandler(int role,
+				Navigation nav) {
 			NavigationHandler nh = null;
-			switch(role){
+			switch (role) {
 			case Environment.RIDER:
-				nh = RiderHandler.getInstance(nav);
+				nh = new RiderHandler(nav);
 				break;
 			case Environment.DRIVER:
-				nh = DriverHandler.getInstance(nav);
+				nh = new DriverHandler(nav);
 				break;
 			}
 			return nh;

@@ -15,96 +15,101 @@ import eu.fbk.dycapo.models.Location;
 
 /**
  * @author riccardo
- *
+ * 
  */
 public abstract class LocationFetcher {
-	private static final String TAG ="LocationFetcher";
-	public static final Location fetchLocation(JSONObject responseValue) throws DycapoException{
-		Location result= new Location();
-		try{
-			
-			Log.d(TAG,"fetching location");
-						
-			if (responseValue.has(DycapoObjectsFetcher.HREF)){		
-				result.setHref(responseValue.getString(DycapoObjectsFetcher.HREF));
-				Log.d(TAG, result.getHref());
-			}
-			if (responseValue.has(Location.POINT)){
-				String point = responseValue.getString(Location.POINT);
-				
-				for (int i = 0 ; i < Location.POINT_TYPE.length ; i++)
-					if (point.equals(Location.POINT_TYPE[i])) result.setPoint(i);
-				Log.d(TAG,Location.getPointType(result.getPoint()));
-			}
-			
-			SimpleDateFormat parser = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+	private static final String TAG = "LocationFetcher";
 
-			if (responseValue.has(Location.LEAVES))
-			{
+	public static final Location fetchLocation(JSONObject responseValue)
+			throws DycapoException {
+		Location result = new Location();
+		try {
+
+			Log.d(TAG, "fetching location");
+
+			if (responseValue.has(DycapoObjectsFetcher.HREF)) {
+				result.setHref(responseValue
+						.getString(DycapoObjectsFetcher.HREF));
+				// Log.d(TAG, result.getHref());
+			}
+			if (responseValue.has(Location.POINT)) {
+				String point = responseValue.getString(Location.POINT);
+
+				for (int i = 0; i < Location.POINT_TYPE.length; i++)
+					if (point.equals(Location.POINT_TYPE[i]))
+						result.setPoint(i);
+				// Log.d(TAG, Location.getPointType(result.getPoint()));
+			}
+
+			SimpleDateFormat parser = new SimpleDateFormat(
+					"yyyy-MM-dd hh:mm:ss");
+
+			if (responseValue.has(Location.LEAVES)) {
 				try {
-					result.setLeaves(parser.parse(responseValue.getString(Location.LEAVES)));
-					Log.d(TAG, result.getLeaves().toGMTString());
+					result.setLeaves(parser.parse(responseValue
+							.getString(Location.LEAVES)));
+					// Log.d(TAG, result.getLeaves().toGMTString());
 				} catch (ParseException e) {
 					Log.e(TAG, e.getMessage());
 					throw new DycapoException(e.getMessage());
 				}
 			}
-		
-			
-			if(responseValue.has(Location.LABEL)){
+
+			if (responseValue.has(Location.LABEL)) {
 				result.setLabel(responseValue.getString(Location.LABEL));
-				Log.d(TAG, result.getLabel());
+				// Log.d(TAG, result.getLabel());
 			}
 
-			if (responseValue.has(Location.COUNTRY)){
+			if (responseValue.has(Location.COUNTRY)) {
 				result.setCountry(responseValue.getString(Location.COUNTRY));
-				Log.d(TAG, result.getCountry());
+				// Log.d(TAG, result.getCountry());
 			}
-			
-			if (responseValue.has(Location.REGION)){
+
+			if (responseValue.has(Location.REGION)) {
 				result.setRegion(responseValue.getString(Location.REGION));
-				Log.d(TAG, result.getRegion());
+				// Log.d(TAG, result.getRegion());
 			}
-			
+
 			if (responseValue.has(Location.SUBREGION))
 				result.setSubregion(responseValue.getString(Location.SUBREGION));
-			
+
 			if (responseValue.has(Location.RECURS))
 				result.setRecurs(responseValue.getString(Location.RECURS));
-			
-			if (responseValue.has(Location.DAYS)){
+
+			if (responseValue.has(Location.DAYS)) {
 				result.setDays(responseValue.getString(Location.DAYS));
-				Log.d(TAG, result.getDays());
+				// Log.d(TAG, result.getDays());
 			}
-			
-			if (responseValue.has(Location.OFFSET)){
+
+			if (responseValue.has(Location.OFFSET)) {
 				result.setOffset(responseValue.getInt(Location.OFFSET));
-				Log.d(TAG, result.getOffset().toString());
+				// Log.d(TAG, result.getOffset().toString());
 			}
-			
-			if (responseValue.has(Location.GEORSS_POINT)){
-				result.setGeorss_point(responseValue.getString(Location.GEORSS_POINT));
-				Log.d(TAG, result.getGeorss_point());
+
+			if (responseValue.has(Location.GEORSS_POINT)) {
+				result.setGeorss_point(responseValue
+						.getString(Location.GEORSS_POINT));
+				// Log.d(TAG, result.getGeorss_point());
 			}
-			
-			if (responseValue.has(Location.STREET)){
+
+			if (responseValue.has(Location.STREET)) {
 				result.setStreet(responseValue.getString(Location.STREET));
-				Log.d(TAG, result.getStreet());
+				// Log.d(TAG, result.getStreet());
 			}
-			
-			if (responseValue.has(Location.TOWN)){ 
+
+			if (responseValue.has(Location.TOWN)) {
 				result.setTown(responseValue.getString(Location.TOWN));
-				Log.d(TAG, result.getTown());
+				// Log.d(TAG, result.getTown());
 			}
-			
-			if (responseValue.has(Location.POSTCODE)){ 
-					result.setPostcode(responseValue.getInt(Location.POSTCODE));
-					Log.d(TAG, result.getPostcode().toString());
+
+			if (responseValue.has(Location.POSTCODE)) {
+				result.setPostcode(responseValue.getInt(Location.POSTCODE));
+				// Log.d(TAG, result.getPostcode().toString());
 			}
 			return result;
-		}catch(JSONException e){
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-			return null;
+		return null;
 	}
 }

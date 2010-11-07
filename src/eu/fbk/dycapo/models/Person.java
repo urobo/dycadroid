@@ -7,57 +7,56 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
-
 import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
 
 /**
  * @author riccardo
- *
+ * 
  */
-public class Person implements DycapoJSONObjects{
+public class Person implements DycapoJSONObjects {
 	public static final String TAG = "Person";
-	public static final String USERNAME="username";
-	public static final String EMAIL="email";
-	public static final String FIRST_NAME="first_name";
-	public static final String LAST_NAME="last_name";
-	public static final String URL="url";
-	public static final String PHONE="phone";
-	public static final String POSITION="location";
-	public static final String AGE="age";
-	public static final String GENDER="gender";
-	public static final String SMOKER="smoker";
-	public static final String BLIND="blind";
-	public static final String DEAF="deaf";
-	public static final String DOG="dog";
-	
+	public static final String USERNAME = "username";
+	public static final String EMAIL = "email";
+	public static final String FIRST_NAME = "first_name";
+	public static final String LAST_NAME = "last_name";
+	public static final String URL = "url";
+	public static final String PHONE = "phone";
+	public static final String POSITION = "location";
+	public static final String AGE = "age";
+	public static final String GENDER = "gender";
+	public static final String SMOKER = "smoker";
+	public static final String BLIND = "blind";
+	public static final String DEAF = "deaf";
+	public static final String DOG = "dog";
+
 	public static final String MALE = "M";
 	public static final String FEMALE = "F";
 	public static final String HREF = "href";
-	
-	private String username = null;	//must
-	private String email = null;		//may	
-	private String first_name = null;	//should
-	private String last_name = null;	//should
-	private String url = null;			//may
-	private String phone = null;		//should
-	private Location position = null;	//may
-	private Integer age = null;			//should
-	private String gender = null;		//should
-	private Boolean smoker = null;		//may
-	private Boolean blind = null;		//should
-	private Boolean deaf = null;		//should
-	private Boolean dog = null;		//should
+
+	private String username = null; // must
+	private String email = null; // may
+	private String first_name = null; // should
+	private String last_name = null; // should
+	private String url = null; // may
+	private String phone = null; // should
+	private Location position = null; // may
+	private Integer age = null; // should
+	private String gender = null; // should
+	private Boolean smoker = null; // may
+	private Boolean blind = null; // should
+	private Boolean deaf = null; // should
+	private Boolean dog = null; // should
 	protected String href = null;
-		
+
 	/**
 	 * 
 	 */
 	public Person() {
 	}
-	
-	
-	public Person(String username, String email, String firstName, String lastName, int age, String gender,
-			boolean smoker, boolean blind, boolean deaf, boolean dog) {
+
+	public Person(String username, String email, String firstName,
+			String lastName, int age, String gender, boolean smoker,
+			boolean blind, boolean deaf, boolean dog) {
 		this.username = username;
 		this.email = email;
 		this.first_name = firstName;
@@ -69,13 +68,11 @@ public class Person implements DycapoJSONObjects{
 		this.deaf = deaf;
 		this.dog = dog;
 	}
-	
-
 
 	/**
 	 * @param username
 	 * @param email
-	 
+	 * 
 	 * @param firstName
 	 * @param lastName
 	 * @param uri
@@ -88,10 +85,10 @@ public class Person implements DycapoJSONObjects{
 	 * @param deaf
 	 * @param dog
 	 */
-	public Person(String username, String email,
-			String firstName, String lastName, String url, String phone,
-			Location position, int age, String gender, boolean smoker,
-			boolean blind, boolean deaf, boolean dog) {
+	public Person(String username, String email, String firstName,
+			String lastName, String url, String phone, Location position,
+			int age, String gender, boolean smoker, boolean blind,
+			boolean deaf, boolean dog) {
 		this.username = username;
 		this.email = email;
 		this.first_name = firstName;
@@ -107,9 +104,6 @@ public class Person implements DycapoJSONObjects{
 		this.dog = dog;
 	}
 
-
-
-
 	/**
 	 * @return the username
 	 */
@@ -117,14 +111,13 @@ public class Person implements DycapoJSONObjects{
 		return username;
 	}
 
-
 	/**
-	 * @param username the username to set
+	 * @param username
+	 *            the username to set
 	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
 
 	/**
 	 * @return the email
@@ -133,14 +126,13 @@ public class Person implements DycapoJSONObjects{
 		return email;
 	}
 
-
 	/**
-	 * @param email the email to set
+	 * @param email
+	 *            the email to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 
 	/**
 	 * @return the first_name
@@ -149,14 +141,13 @@ public class Person implements DycapoJSONObjects{
 		return first_name;
 	}
 
-
 	/**
-	 * @param firstName the first_name to set
+	 * @param firstName
+	 *            the first_name to set
 	 */
 	public void setFirst_name(String firstName) {
 		first_name = firstName;
 	}
-
 
 	/**
 	 * @return the last_name
@@ -165,14 +156,13 @@ public class Person implements DycapoJSONObjects{
 		return last_name;
 	}
 
-
 	/**
-	 * @param lastName the last_name to set
+	 * @param lastName
+	 *            the last_name to set
 	 */
 	public void setLast_name(String lastName) {
 		last_name = lastName;
 	}
-
 
 	/**
 	 * @return the url
@@ -181,14 +171,13 @@ public class Person implements DycapoJSONObjects{
 		return url;
 	}
 
-
 	/**
-	 * @param url the url to set
+	 * @param url
+	 *            the url to set
 	 */
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
 
 	/**
 	 * @return the phone
@@ -197,14 +186,13 @@ public class Person implements DycapoJSONObjects{
 		return phone;
 	}
 
-
 	/**
-	 * @param phone the phone to set
+	 * @param phone
+	 *            the phone to set
 	 */
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
 
 	/**
 	 * @return the position
@@ -213,14 +201,13 @@ public class Person implements DycapoJSONObjects{
 		return position;
 	}
 
-
 	/**
-	 * @param position the position to set
+	 * @param position
+	 *            the position to set
 	 */
 	public void setPosition(Location position) {
 		this.position = position;
 	}
-
 
 	/**
 	 * @return the age
@@ -229,14 +216,13 @@ public class Person implements DycapoJSONObjects{
 		return age;
 	}
 
-
 	/**
-	 * @param age the age to set
+	 * @param age
+	 *            the age to set
 	 */
 	public void setAge(Integer age) {
 		this.age = age;
 	}
-
 
 	/**
 	 * @return the gender
@@ -245,14 +231,13 @@ public class Person implements DycapoJSONObjects{
 		return gender;
 	}
 
-
 	/**
-	 * @param gender the gender to set
+	 * @param gender
+	 *            the gender to set
 	 */
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-
 
 	/**
 	 * @return the smoker
@@ -261,14 +246,13 @@ public class Person implements DycapoJSONObjects{
 		return smoker;
 	}
 
-
 	/**
-	 * @param smoker the smoker to set
+	 * @param smoker
+	 *            the smoker to set
 	 */
 	public void setSmoker(Boolean smoker) {
 		this.smoker = smoker;
 	}
-
 
 	/**
 	 * @return the blind
@@ -277,14 +261,13 @@ public class Person implements DycapoJSONObjects{
 		return blind;
 	}
 
-
 	/**
-	 * @param blind the blind to set
+	 * @param blind
+	 *            the blind to set
 	 */
 	public void setBlind(Boolean blind) {
 		this.blind = blind;
 	}
-
 
 	/**
 	 * @return the deaf
@@ -293,14 +276,13 @@ public class Person implements DycapoJSONObjects{
 		return deaf;
 	}
 
-
 	/**
-	 * @param deaf the deaf to set
+	 * @param deaf
+	 *            the deaf to set
 	 */
 	public void setDeaf(Boolean deaf) {
 		this.deaf = deaf;
 	}
-
 
 	/**
 	 * @return the dog
@@ -309,9 +291,9 @@ public class Person implements DycapoJSONObjects{
 		return dog;
 	}
 
-
 	/**
-	 * @param dog the dog to set
+	 * @param dog
+	 *            the dog to set
 	 */
 	public void setDog(Boolean dog) {
 		this.dog = dog;
@@ -324,9 +306,9 @@ public class Person implements DycapoJSONObjects{
 		return href;
 	}
 
-
 	/**
-	 * @param href the href to set
+	 * @param href
+	 *            the href to set
 	 */
 	public void setHref(String href) {
 		this.href = href;
@@ -335,80 +317,80 @@ public class Person implements DycapoJSONObjects{
 	@Override
 	public JSONObject toJSONObject() {
 		JSONObject result = new JSONObject();
-		
-			try {
-				if (this.age instanceof Integer)
-					result.put(Person.AGE, this.age);
-				if (this.blind instanceof Boolean)
-					result.put(Person.BLIND, this.blind.booleanValue());
-				if (this.deaf instanceof Boolean)
-					result.put(Person.DEAF, this.deaf.booleanValue());
-				if (this.dog instanceof Boolean)
-					result.put(Person.DOG, this.dog.booleanValue());
-				if (this.email instanceof java.lang.String)
-					result.put(Person.EMAIL, this.email);
-				if (this.first_name instanceof java.lang.String)
-					result.put(Person.FIRST_NAME, this.first_name);
-				if (this.gender instanceof java.lang.String)
-					result.put(Person.GENDER, this.gender);
-				if (this.last_name instanceof java.lang.String)
-					result.put(Person.LAST_NAME, this.last_name);
-				if (this.phone instanceof java.lang.String)
-					result.put(Person.PHONE, this.phone);
-				if (this.position instanceof Location)
-					result.put(Person.POSITION, this.position.toJSONObject());
-				if (this.smoker instanceof Boolean)
-					result.put(Person.SMOKER, this.smoker.booleanValue());
-				if (this.url instanceof java.lang.String)
-					result.put(Person.URL, this.url);
-				if (this.username instanceof java.lang.String)
-					result.put(Person.USERNAME, this.username);
-				
-				Log.d(TAG,result.toString());
-				return result;	
-			} catch (JSONException e) {
-				Log.e(TAG, e.getMessage());
-				e.printStackTrace();
-			}
-				
+
+		try {
+			if (this.age instanceof Integer)
+				result.put(Person.AGE, this.age);
+			if (this.blind instanceof Boolean)
+				result.put(Person.BLIND, this.blind.booleanValue());
+			if (this.deaf instanceof Boolean)
+				result.put(Person.DEAF, this.deaf.booleanValue());
+			if (this.dog instanceof Boolean)
+				result.put(Person.DOG, this.dog.booleanValue());
+			if (this.email instanceof java.lang.String)
+				result.put(Person.EMAIL, this.email);
+			if (this.first_name instanceof java.lang.String)
+				result.put(Person.FIRST_NAME, this.first_name);
+			if (this.gender instanceof java.lang.String)
+				result.put(Person.GENDER, this.gender);
+			if (this.last_name instanceof java.lang.String)
+				result.put(Person.LAST_NAME, this.last_name);
+			if (this.phone instanceof java.lang.String)
+				result.put(Person.PHONE, this.phone);
+			if (this.position instanceof Location)
+				result.put(Person.POSITION, this.position.toJSONObject());
+			if (this.smoker instanceof Boolean)
+				result.put(Person.SMOKER, this.smoker.booleanValue());
+			if (this.url instanceof java.lang.String)
+				result.put(Person.URL, this.url);
+			if (this.username instanceof java.lang.String)
+				result.put(Person.USERNAME, this.username);
+
+			Log.d(TAG, result.toString());
+			return result;
+		} catch (JSONException e) {
+			Log.e(TAG, e.getMessage());
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		String out = "";
 		if (this.age instanceof Integer)
-			out+= (AGE + " : " + this.age.intValue());
+			out += (AGE + " : " + this.age.intValue());
 		if (this.blind instanceof Boolean)
-			out+=(BLIND + " : " + this.blind.booleanValue());
+			out += (BLIND + " : " + this.blind.booleanValue());
 		if (this.deaf instanceof Boolean)
-			out+=(DEAF + " : " + this.deaf.booleanValue());
+			out += (DEAF + " : " + this.deaf.booleanValue());
 		if (this.dog instanceof Boolean)
-			out+=(DOG + " : " + this.dog.booleanValue());
+			out += (DOG + " : " + this.dog.booleanValue());
 		if (this.email instanceof java.lang.String)
-			out+=(EMAIL + " : " + this.email );
+			out += (EMAIL + " : " + this.email);
 		if (this.first_name instanceof java.lang.String)
-			out+=(FIRST_NAME + " : " + this.first_name );
+			out += (FIRST_NAME + " : " + this.first_name);
 		if (this.gender instanceof java.lang.String)
-			out+=(GENDER + " : " + this.gender );
+			out += (GENDER + " : " + this.gender);
 		if (this.last_name instanceof java.lang.String)
-			out+=(LAST_NAME + " : " + this.last_name );
+			out += (LAST_NAME + " : " + this.last_name);
 		if (this.phone instanceof java.lang.String)
-			out+=(PHONE + " : " + this.phone );
+			out += (PHONE + " : " + this.phone);
 		if (this.position instanceof Location)
-			out+=(POSITION + " : " + this.position.toString()  );
+			out += (POSITION + " : " + this.position.toString());
 		if (this.smoker instanceof Boolean)
-			out+=(SMOKER + " : " + this.smoker.booleanValue() );
+			out += (SMOKER + " : " + this.smoker.booleanValue());
 		if (this.url instanceof java.lang.String)
-			out+=(URL+ " : " + this.url );
+			out += (URL + " : " + this.url);
 		if (this.username instanceof java.lang.String)
-			out+=(USERNAME + " : " + this.username );
+			out += (USERNAME + " : " + this.username);
 		return out.toString();
 	}
-	
 
 }

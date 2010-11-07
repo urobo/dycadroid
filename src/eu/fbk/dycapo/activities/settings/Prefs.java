@@ -27,98 +27,120 @@ import eu.fbk.dycapo.services.DycapoServiceClient;
 
 /**
  * @author riccardo
- *
+ * 
  */
-public class Prefs extends Activity implements OnClickListener{
+public class Prefs extends Activity implements OnClickListener {
 	private static final String TAG = "Settings.Prefs";
 	private static Dialog pd;
-	//	@SuppressWarnings("unchecked")
+
+	// @SuppressWarnings("unchecked")
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        this.setContentView(R.layout.prefs);
-        Button save = (Button)this.findViewById(R.id.savePrefsButton);
-        save.setOnClickListener((OnClickListener) this);
-        this.update();
+		this.setContentView(R.layout.prefs);
+		Button save = (Button) this.findViewById(R.id.savePrefsButton);
+		save.setOnClickListener((OnClickListener) this);
+		this.update();
 
-    }
-	
-	public void update(){
-		User user= DBPerson.getUser();
-		if(user instanceof User){
-		if(user.getBlind() instanceof Boolean) ((CheckBox)this.findViewById(R.id.checkBlind)).setChecked(user.getBlind());
-		if(user.getDeaf() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkDeaf)).setChecked(user.getDeaf());
-		if(user.getSmoker() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkSmoker)).setChecked(user.getSmoker());
-		if(user.getDog() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkDog)).setChecked(user.getDog());
-	
-		}
-		
-		Preferences prefs= DBPrefs.getPrefs();
-		if (prefs instanceof Preferences){
-			if(prefs.getNonsmoking() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkNonSmoking)).setChecked(prefs.getNonsmoking());
-			if(prefs.getPet() instanceof Boolean)((CheckBox)this.findViewById(R.id.checkPet)).setChecked(prefs.getPet());
-		
-			Integer gender = prefs.getGender();
-			if(gender instanceof Integer) {
-				if (gender.intValue()==Preferences.MALE)
-					((CheckBox)this.findViewById(R.id.checkMale)).setChecked(true);
-				else if (gender.intValue()==Preferences.FEMALE)
-					((CheckBox)this.findViewById(R.id.checkFemale)).setChecked(true);
-				else{
-					((CheckBox)this.findViewById(R.id.checkFemale)).setChecked(true);
-					((CheckBox)this.findViewById(R.id.checkMale)).setChecked(true);
-				}
-			
-			}
-		
-
-		
-	 }
 	}
-	
+
+	public void update() {
+		User user = DBPerson.getUser();
+		if (user instanceof User) {
+			if (user.getBlind() instanceof Boolean)
+				((CheckBox) this.findViewById(R.id.checkBlind)).setChecked(user
+						.getBlind());
+			if (user.getDeaf() instanceof Boolean)
+				((CheckBox) this.findViewById(R.id.checkDeaf)).setChecked(user
+						.getDeaf());
+			if (user.getSmoker() instanceof Boolean)
+				((CheckBox) this.findViewById(R.id.checkSmoker))
+						.setChecked(user.getSmoker());
+			if (user.getDog() instanceof Boolean)
+				((CheckBox) this.findViewById(R.id.checkDog)).setChecked(user
+						.getDog());
+
+		}
+
+		Preferences prefs = DBPrefs.getPrefs();
+		if (prefs instanceof Preferences) {
+			if (prefs.getNonsmoking() instanceof Boolean)
+				((CheckBox) this.findViewById(R.id.checkNonSmoking))
+						.setChecked(prefs.getNonsmoking());
+			if (prefs.getPet() instanceof Boolean)
+				((CheckBox) this.findViewById(R.id.checkPet)).setChecked(prefs
+						.getPet());
+
+			Integer gender = prefs.getGender();
+			if (gender instanceof Integer) {
+				if (gender.intValue() == Preferences.MALE)
+					((CheckBox) this.findViewById(R.id.checkMale))
+							.setChecked(true);
+				else if (gender.intValue() == Preferences.FEMALE)
+					((CheckBox) this.findViewById(R.id.checkFemale))
+							.setChecked(true);
+				else {
+					((CheckBox) this.findViewById(R.id.checkFemale))
+							.setChecked(true);
+					((CheckBox) this.findViewById(R.id.checkMale))
+							.setChecked(true);
+				}
+
+			}
+
+		}
+	}
+
 	@Override
 	public void onClick(View v) {
-		pd = ProgressDialog.show(Prefs.this, "Processing...", "Updating Personal Preferences", true, false);
-		new Thread(){
+		pd = ProgressDialog.show(Prefs.this, "Processing...",
+				"Updating Personal Preferences", true, false);
+		new Thread() {
 
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see java.lang.Thread#run()
 			 */
 			@Override
 			public void run() {
-				Preferences prefs= new Preferences();
+				Preferences prefs = new Preferences();
 				User user = DBPerson.getUser();
-				
-						
-				user.setBlind( ((CheckBox)Prefs.this.findViewById(R.id.checkBlind)).isChecked());
-				user.setDeaf(((CheckBox)Prefs.this.findViewById(R.id.checkDeaf)).isChecked());
-				user.setDog(((CheckBox)Prefs.this.findViewById(R.id.checkDog)).isChecked());
-				user.setSmoker(((CheckBox)Prefs.this.findViewById(R.id.checkSmoker)).isChecked());
-				
-				
 
-				prefs.setNonsmoking(((CheckBox)Prefs.this.findViewById(R.id.checkNonSmoking)).isChecked());
-				
-				boolean male=((CheckBox)Prefs.this.findViewById(R.id.checkMale)).isChecked();
-				boolean female=((CheckBox)Prefs.this.findViewById(R.id.checkFemale)).isChecked();
-				if ( male&&female || !male && !female)
+				user.setBlind(((CheckBox) Prefs.this
+						.findViewById(R.id.checkBlind)).isChecked());
+				user.setDeaf(((CheckBox) Prefs.this
+						.findViewById(R.id.checkDeaf)).isChecked());
+				user.setDog(((CheckBox) Prefs.this.findViewById(R.id.checkDog))
+						.isChecked());
+				user.setSmoker(((CheckBox) Prefs.this
+						.findViewById(R.id.checkSmoker)).isChecked());
+
+				prefs.setNonsmoking(((CheckBox) Prefs.this
+						.findViewById(R.id.checkNonSmoking)).isChecked());
+
+				boolean male = ((CheckBox) Prefs.this
+						.findViewById(R.id.checkMale)).isChecked();
+				boolean female = ((CheckBox) Prefs.this
+						.findViewById(R.id.checkFemale)).isChecked();
+				if (male && female || !male && !female)
 					prefs.setGender(Preferences.BOTH);
-				else if(male)
+				else if (male)
 					prefs.setGender(Preferences.MALE);
-				else if(female)
+				else if (female)
 					prefs.setGender(Preferences.FEMALE);
-				
-				
+
 				try {
 					DBPrefs.savePrefs(prefs);
 					DBPerson.savePersonalPrefs(user);
 					user = DBPerson.getUser();
-					DycapoServiceClient.callDycapo(DycapoServiceClient.PUT, 
-							DycapoServiceClient.uriBuilder("persons/"+ user.getUsername()),
-							UserMapper.fromUserToJSONObject(user) ,
-							user.getUsername() , 
-							user.getPassword());
+					DycapoServiceClient.callDycapo(
+							DycapoServiceClient.PUT,
+							DycapoServiceClient.uriBuilder("persons/"
+									+ user.getUsername()),
+							UserMapper.fromUserToJSONObject(user),
+							user.getUsername(), user.getPassword());
 					Prefs.this.updatePrefs.sendEmptyMessage(OK);
 				} catch (DycapoException e) {
 					e.alertUser(Prefs.this);
@@ -127,28 +149,29 @@ public class Prefs extends Activity implements OnClickListener{
 					Log.e(TAG, e.getMessage());
 					e.printStackTrace();
 				}
-				
-				
-			}
-			
-		}.start();
-		
-	}
-	
-	private static final int OK = 0;
-	protected Handler updatePrefs = new Handler(){
 
-		/* (non-Javadoc)
+			}
+
+		}.start();
+
+	}
+
+	private static final int OK = 0;
+	protected Handler updatePrefs = new Handler() {
+
+		/*
+		 * (non-Javadoc)
+		 * 
 		 * @see android.os.Handler#handleMessage(android.os.Message)
 		 */
 		@Override
 		public void handleMessage(Message msg) {
-			switch(msg.what){
+			switch (msg.what) {
 			case OK:
 				pd.dismiss();
 				break;
 			}
 		}
-		
+
 	};
 }

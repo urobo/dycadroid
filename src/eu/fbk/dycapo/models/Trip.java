@@ -3,7 +3,6 @@
  */
 package eu.fbk.dycapo.models;
 
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,44 +14,39 @@ import org.json.JSONObject;
 import android.util.Log;
 import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
 
-
 /**
  * @author riccardo
- *
+ * 
  */
-
 
 public class Trip implements DycapoJSONObjects {
 	public static final String TAG = "Trip";
-	
-	
-	public static final String PUBLISHED="published";
-	public static final String UPDATED="updated";
-	public static final String EXPIRES="expires";
-	public static final String CONTENT="content";
-	public static final String AUTHOR="author";
-	public static final String MODE="modality";
-	public static final String PREFERENCES="preferences";
-	public static final String LOCATIONS="locations";
+
+	public static final String PUBLISHED = "published";
+	public static final String UPDATED = "updated";
+	public static final String EXPIRES = "expires";
+	public static final String CONTENT = "content";
+	public static final String AUTHOR = "author";
+	public static final String MODE = "modality";
+	public static final String PREFERENCES = "preferences";
+	public static final String LOCATIONS = "locations";
 
 	public static final String HREF = "href";
 
-
 	public static final String ACTIVE = "active";
-	
-	protected Boolean active; 			//must
-	protected Date published;			//may
-	protected Date updated;			//should
-	protected Date expires;			//must
-	protected Person author;			//must
-	protected Mode mode;					//must
-	protected Preferences preferences;	//must
-	protected Location origin;			//must
-	protected Location destination;		//must
-	protected ArrayList<Location> waypoints;		//must
+
+	protected Boolean active; // must
+	protected Date published; // may
+	protected Date updated; // should
+	protected Date expires; // must
+	protected Person author; // must
+	protected Mode mode; // must
+	protected Preferences preferences; // must
+	protected Location origin; // must
+	protected Location destination; // must
+	protected ArrayList<Location> waypoints; // must
 	protected String href;
-	
-	
+
 	/**
 	 * @return the active
 	 */
@@ -60,21 +54,21 @@ public class Trip implements DycapoJSONObjects {
 		return active;
 	}
 
-
 	/**
-	 * @param active the active to set
+	 * @param active
+	 *            the active to set
 	 */
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
-
 
 	/**
 	 * @param expires
 	 * @param author
 	 * @param content
 	 */
-	public Trip(Date expires, Person author,Mode mode, Preferences preferences, Location origin,Location destination) {
+	public Trip(Date expires, Person author, Mode mode,
+			Preferences preferences, Location origin, Location destination) {
 		this.expires = expires;
 		this.author = author;
 		this.destination = destination;
@@ -82,14 +76,10 @@ public class Trip implements DycapoJSONObjects {
 		this.mode = mode;
 		this.preferences = preferences;
 	}
-	
-	
+
 	public Trip() {
-		
+
 	}
-
-
-
 
 	/**
 	 * @return the published
@@ -98,14 +88,13 @@ public class Trip implements DycapoJSONObjects {
 		return published;
 	}
 
-
 	/**
-	 * @param published the published to set
+	 * @param published
+	 *            the published to set
 	 */
 	public void setPublished(Date published) {
 		this.published = published;
 	}
-
 
 	/**
 	 * @return the updated
@@ -114,14 +103,13 @@ public class Trip implements DycapoJSONObjects {
 		return updated;
 	}
 
-
 	/**
-	 * @param updated the updated to set
+	 * @param updated
+	 *            the updated to set
 	 */
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
-
 
 	/**
 	 * @return the expires
@@ -130,14 +118,13 @@ public class Trip implements DycapoJSONObjects {
 		return expires;
 	}
 
-
 	/**
-	 * @param expires the expires to set
+	 * @param expires
+	 *            the expires to set
 	 */
 	public void setExpires(Date expires) {
 		this.expires = expires;
 	}
-
 
 	/**
 	 * @return the author
@@ -146,14 +133,13 @@ public class Trip implements DycapoJSONObjects {
 		return author;
 	}
 
-
 	/**
-	 * @param author the author to set
+	 * @param author
+	 *            the author to set
 	 */
 	public void setAuthor(Person author) {
 		this.author = author;
 	}
-
 
 	/**
 	 * @return the mode
@@ -162,14 +148,13 @@ public class Trip implements DycapoJSONObjects {
 		return mode;
 	}
 
-
 	/**
-	 * @param mode the mode to set
+	 * @param mode
+	 *            the mode to set
 	 */
 	public void setMode(Mode mode) {
 		this.mode = mode;
 	}
-
 
 	/**
 	 * @return the preferences
@@ -178,14 +163,13 @@ public class Trip implements DycapoJSONObjects {
 		return preferences;
 	}
 
-
 	/**
-	 * @param preferences the preferences to set
+	 * @param preferences
+	 *            the preferences to set
 	 */
 	public void setPreferences(Preferences preferences) {
 		this.preferences = preferences;
 	}
-
 
 	/**
 	 * @return the origin
@@ -194,14 +178,13 @@ public class Trip implements DycapoJSONObjects {
 		return origin;
 	}
 
-
 	/**
-	 * @param origin the origin to set
+	 * @param origin
+	 *            the origin to set
 	 */
 	public void setOrigin(Location origin) {
 		this.origin = origin;
 	}
-
 
 	/**
 	 * @return the destination
@@ -210,14 +193,13 @@ public class Trip implements DycapoJSONObjects {
 		return destination;
 	}
 
-
 	/**
-	 * @param destination the destination to set
+	 * @param destination
+	 *            the destination to set
 	 */
 	public void setDestination(Location destination) {
 		this.destination = destination;
 	}
-
 
 	/**
 	 * @return the waypoints
@@ -226,9 +208,9 @@ public class Trip implements DycapoJSONObjects {
 		return waypoints;
 	}
 
-
 	/**
-	 * @param waypoints the waypoints to set
+	 * @param waypoints
+	 *            the waypoints to set
 	 */
 	public void setWaypoints(ArrayList<Location> waypoints) {
 		this.waypoints = waypoints;
@@ -241,9 +223,9 @@ public class Trip implements DycapoJSONObjects {
 		return href;
 	}
 
-
 	/**
-	 * @param href the href to set
+	 * @param href
+	 *            the href to set
 	 */
 	public void setHref(String href) {
 		this.href = href;
@@ -252,107 +234,107 @@ public class Trip implements DycapoJSONObjects {
 	@Override
 	public JSONObject toJSONObject() {
 		JSONObject result = new JSONObject();
-		try{
+		try {
 			if (this.active instanceof Boolean)
 				result.put(Trip.ACTIVE, this.active.booleanValue());
-			
+
 			if (this.author instanceof eu.fbk.dycapo.models.Person)
-				result.put(Trip.AUTHOR,this.author.toJSONObject());
-			
+				result.put(Trip.AUTHOR, this.author.toJSONObject());
+
 			JSONArray locations = new JSONArray();
-			
+
 			if (this.origin instanceof eu.fbk.dycapo.models.Location)
 				locations.put(this.origin.toJSONObject());
-			
+
 			if (this.destination instanceof eu.fbk.dycapo.models.Location)
 				locations.put(this.destination.toJSONObject());
-			
+
 			if (this.mode instanceof eu.fbk.dycapo.models.Mode)
 				result.put(Trip.MODE, this.mode.toJSONObject());
-			
+
 			if (this.preferences instanceof eu.fbk.dycapo.models.Preferences)
-				result.put(Trip.PREFERENCES,this.preferences.toJSONObject());
-			
-		    if (this.waypoints instanceof ArrayList<?>){
-		    	int size= this.waypoints.size();
-		    	
-		    	for (int i = 0 ; i< size ; i++)
-		    		locations.put(this.waypoints.get(i).toJSONObject());
-		    	
-		    }
-		    result.put(Trip.LOCATIONS, locations);
-			
-			SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
-			
-			
-			if (this.expires instanceof java.util.Date){
-				result.put(Trip.EXPIRES,formatter.format(this.expires));
+				result.put(Trip.PREFERENCES, this.preferences.toJSONObject());
+
+			if (this.waypoints instanceof ArrayList<?>) {
+				int size = this.waypoints.size();
+
+				for (int i = 0; i < size; i++)
+					locations.put(this.waypoints.get(i).toJSONObject());
+
+			}
+			result.put(Trip.LOCATIONS, locations);
+
+			SimpleDateFormat formatter = new SimpleDateFormat(
+					"yyyy-MM-dd hh:mm:ss");
+
+			if (this.expires instanceof java.util.Date) {
+				result.put(Trip.EXPIRES, formatter.format(this.expires));
 				Log.i(Trip.EXPIRES, formatter.format(this.expires));
 			}
-				
+
 			if (this.published instanceof java.util.Date)
-				result.put(Trip.PUBLISHED,formatter.format(this.published));
-			
+				result.put(Trip.PUBLISHED, formatter.format(this.published));
+
 			if (this.updated instanceof java.util.Date)
 				result.put(Trip.UPDATED, formatter.format(this.updated));
-			
-			Log.d(TAG,result.toString());
+
+			Log.d(TAG, result.toString());
 			return result;
-	
+
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		StringBuilder out = new StringBuilder();
-		
+
 		if (this.active instanceof Boolean)
-			out.append(ACTIVE + " : "+ this.active.booleanValue() + "\n");
-		
+			out.append(ACTIVE + " : " + this.active.booleanValue());
+
 		if (this.author instanceof eu.fbk.dycapo.models.Person)
-			out.append(AUTHOR + " : "+ this.author.toString() + "\n");
-		
+			out.append(AUTHOR + " : " + this.author.toString());
+
 		if (this.origin instanceof eu.fbk.dycapo.models.Location)
-			out.append("origin : "+ this.origin.toString()+ "\n");
-		
+			out.append("origin : " + this.origin.toString());
+
 		if (this.destination instanceof eu.fbk.dycapo.models.Location)
-			out.append("destination : "+ this.destination.toString() + "\n");
-		
+			out.append("destination : " + this.destination.toString());
+
 		if (this.mode instanceof eu.fbk.dycapo.models.Mode)
-			out.append(MODE + " : "+ this.mode.toString() + "\n");
-		
+			out.append(MODE + " : " + this.mode.toString());
+
 		if (this.preferences instanceof eu.fbk.dycapo.models.Preferences)
-			out.append(PREFERENCES + " : "+ this.preferences.toString() + "\n");
-		
-	    if (this.waypoints instanceof ArrayList<?>){
-	    	int size= this.waypoints.size();
-	    	
-	    	for (int i = 0 ; i< size ; i++)
-	    		out.append("waypoint : "+ this.waypoints.toString() + "\n");
-	    	
-	    }
-		
-		SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
-		
-		
-		if (this.expires instanceof java.util.Date){
-			out.append(EXPIRES + " : "+ formatter.format(this.expires) + "\n");
+			out.append(PREFERENCES + " : " + this.preferences.toString());
+
+		if (this.waypoints instanceof ArrayList<?>) {
+			int size = this.waypoints.size();
+
+			for (int i = 0; i < size; i++)
+				out.append("waypoint : " + this.waypoints.toString());
+
+		}
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+		if (this.expires instanceof java.util.Date) {
+			out.append(EXPIRES + " : " + formatter.format(this.expires));
 			Log.i(Trip.EXPIRES, formatter.format(this.expires));
 		}
-			
+
 		if (this.published instanceof java.util.Date)
-			out.append(PUBLISHED + " : "+ formatter.format(this.published) + "\n");
-		
+			out.append(PUBLISHED + " : " + formatter.format(this.published));
+
 		if (this.updated instanceof java.util.Date)
-			out.append(UPDATED + " : "+ formatter.format(this.updated) + "\n");
+			out.append(UPDATED + " : " + formatter.format(this.updated));
 		return out.toString();
 	}
-	
+
 }

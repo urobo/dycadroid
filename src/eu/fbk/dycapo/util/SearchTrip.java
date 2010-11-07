@@ -16,29 +16,27 @@ import eu.fbk.dycapo.services.DycapoServiceClient;
 
 /**
  * @author riccardo
- *
+ * 
  */
 public abstract class SearchTrip {
 	private static final String TAG = "SearchTrip";
-	
-	public static final Search searchTrips(Search st){
-				
+
+	public static final Search searchTrips(Search st) {
+
 		User usr = DBPerson.getUser();
 		try {
-			JSONObject createSearch = DycapoServiceClient.callDycapo(DycapoServiceClient.POST, 
-															DycapoServiceClient.uriBuilder("searches"), 
-															st.toJSONObject(),
-															usr.getUsername(),
-															usr.getPassword());
+			JSONObject createSearch = DycapoServiceClient.callDycapo(
+					DycapoServiceClient.POST,
+					DycapoServiceClient.uriBuilder("searches"),
+					st.toJSONObject(), usr.getUsername(), usr.getPassword());
 			st.setHref(DycapoObjectsFetcher.buildSearch(createSearch).getHref());
-			
-			JSONObject retrieveSearch = DycapoServiceClient.callDycapo(DycapoServiceClient.GET,
-															st.getHref(), 
-															null, 
-															usr.getUsername(), 
-															usr.getPassword());
-			st.setTrips(DycapoObjectsFetcher.buildSearch(retrieveSearch).getTrips());
-			
+
+			JSONObject retrieveSearch = DycapoServiceClient.callDycapo(
+					DycapoServiceClient.GET, st.getHref(), null,
+					usr.getUsername(), usr.getPassword());
+			st.setTrips(DycapoObjectsFetcher.buildSearch(retrieveSearch)
+					.getTrips());
+
 			return st;
 		} catch (DycapoException e) {
 			Log.e(TAG, e.getMessage());
