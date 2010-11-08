@@ -28,18 +28,13 @@ public final class Directions {
 	private static final String TAG = "Directions";
 
 	public static final void getRoute(Address src, Address dest, Context ctx) {
-		// http://maps.google.com/maps/api/directions/json?origin=Via+Sommarive,Trento&destination=Viale+Europa,170,39100+Bolzano+BZ&sensor=true
 		sb = new StringBuilder();
 		sb.append("http://maps.google.com/maps/api/directions/json?");
 
 		sb.append("origin=");
-		sb.append(src.getAddressLine(0).replace(" ", "+"));
-		sb.append(",");
-		sb.append(src.getAddressLine(1).replace(" ", "+"));
+		sb.append(src.getLatitude() + "," + src.getLongitude());
 		sb.append("&destination=");
-		sb.append(dest.getAddressLine(0).replace(" ", "+"));
-		sb.append(",");
-		sb.append(dest.getAddressLine(1).replace(" ", "+"));
+		sb.append(dest.getLatitude() + "," + dest.getLongitude());
 		sb.append("&sensor=true");
 
 		String url = sb.toString();

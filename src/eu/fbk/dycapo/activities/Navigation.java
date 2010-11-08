@@ -51,10 +51,8 @@ public class Navigation extends MapActivity {
 	private int navRole;
 	private DycapoItemizedOverlay items = null;
 	private DycapoItemizedOverlay me = null;
-	private Drawable driverMarker = this.getResources().getDrawable(
-			R.drawable.dyca03);
-	private Drawable riderMarker = this.getResources().getDrawable(
-			R.drawable.dyca04);
+	private Drawable driverMarker = null;
+	private Drawable riderMarker = null;
 
 	public Broker br = null;
 	private MapView mapView;
@@ -62,6 +60,47 @@ public class Navigation extends MapActivity {
 	private Button button1;
 	private Button button2;
 	private Button button3;
+	private Thread updateStatus = new Thread() {
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.lang.Thread#run()
+		 */
+		@Override
+		public void run() {
+			int what = 0;
+			Participation tmp = DBParticipation.getParticipations().get(0);
+			if (riderOnBoard == false) {
+				tmp.setStatus(Participation.STARTED);
+				Navigation.this.button2.setText("Finish Participation");
+			} else {
+				tmp.setStatus(Participation.FINISHED);
+				what = 1;
+			}
+			ParticipationUtils.updateDycapoParticipation(tmp);
+			DBParticipation.updateParticipation(tmp);
+			Navigation.this.handleCommonSuccess.sendEmptyMessage(what);
+		}
+
+	};
+
+	private Thread pathDrawer = new Thread() {
+
+		/*
+		 * (non-Javadoc) null
+		 * 
+		 * @see java.lang.Thread#run()
+		 */
+		@Override
+		public void run() {
+			DrawPath();
+			((MapView) Navigation.this.findViewById(R.id.myMapView1))
+					.postInvalidate();
+			Navigation.this.handleCommonSuccess.sendEmptyMessage(1);
+
+		}
+	};
 
 	private OnClickListener startTrip = new OnClickListener() {
 
@@ -69,31 +108,7 @@ public class Navigation extends MapActivity {
 		public void onClick(View v) {
 			myProgressDialog = ProgressDialog.show(Navigation.this,
 					"Please wait...", "Updating On the Server", true, true);
-			new Thread() {
-
-				/*
-				 * (non-Javadoc)
-				 * 
-				 * @see java.lang.Thread#run()
-				 */
-				@Override
-				public void run() {
-					int what = 0;
-					Participation tmp = DBParticipation.getParticipations()
-							.get(0);
-					if (riderOnBoard == false) {
-						tmp.setStatus(Participation.STARTED);
-						Navigation.this.button2.setText("Finish Participation");
-					} else {
-						tmp.setStatus(Participation.FINISHED);
-						what = 1;
-					}
-					ParticipationUtils.updateDycapoParticipation(tmp);
-					DBParticipation.updateParticipation(tmp);
-					Navigation.this.handleCommonSuccess.sendEmptyMessage(what);
-				}
-
-			}.start();
+			Navigation.this.updateStatus.start();
 
 		}
 
@@ -118,6 +133,8 @@ public class Navigation extends MapActivity {
 		else
 			this.navRole = Environment.RIDER;
 
+		this.driverMarker = this.getResources().getDrawable(R.drawable.dyca03);
+		this.riderMarker = this.getResources().getDrawable(R.drawable.dyca04);
 		this.dls = new LocationService(this);
 		this.br = Broker.BrokerFactory.getBroker(navRole, this);
 
@@ -148,23 +165,7 @@ public class Navigation extends MapActivity {
 				myProgressDialog = ProgressDialog.show(Navigation.this,
 						"Please wait...", "Drawing Directions", true, true);
 
-				new Thread() {
-
-					/*
-					 * (non-Javadoc) null
-					 * 
-					 * @see java.lang.Thread#run()
-					 */
-					@Override
-					public void run() {
-						DrawPath();
-						((MapView) Navigation.this
-								.findViewById(R.id.myMapView1))
-								.postInvalidate();
-						Navigation.this.handleCommonSuccess.sendEmptyMessage(1);
-
-					}
-				}.start();
+				this.pathDrawer.start();
 			} catch (Exception e) {
 				new AlertDialog.Builder(this)
 						.setMessage(e.getMessage())
@@ -329,6 +330,7 @@ public class Navigation extends MapActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		this.mapView.postInvalidate();
 	}
 
 }

@@ -62,7 +62,7 @@ public class LocationService implements LocationListener {
 			Log.d(TAG, "longitude : " + location.getLongitude());
 			Log.d(TAG, "latitude : " + location.getLatitude());
 			loc.setGeorss_point(String.valueOf((double) location.getLongitude())
-					+ "," + String.valueOf((double) location.getLatitude()));
+					+ " " + String.valueOf((double) location.getLatitude()));
 			loc.setLeaves(Calendar.getInstance().getTime());
 			loc.setPoint(eu.fbk.dycapo.models.Location.POSI);
 			LocationService.updatePosition(loc);

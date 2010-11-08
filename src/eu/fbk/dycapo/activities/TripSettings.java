@@ -359,7 +359,7 @@ public class TripSettings extends Activity {
 		String geoRssPoint = "";
 		Date leaves = new Date();
 		if (this.Origin instanceof Address) {
-			geoRssPoint = String.valueOf(Origin.getLatitude()) + ", "
+			geoRssPoint = String.valueOf(Origin.getLatitude()) + " "
 					+ String.valueOf(Origin.getLongitude());
 			if (!geoRssPoint.equals(", "))
 				loc.setGeorss_point(geoRssPoint);

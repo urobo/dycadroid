@@ -6,9 +6,9 @@ package eu.fbk.dycapo.maputils;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.widget.Toast;
 
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
@@ -64,8 +64,10 @@ public class DycapoItemizedOverlay extends ItemizedOverlay {
 	public boolean onTap(int index) {
 		// TODO Auto-generated method stub
 		OverlayItem item = mOverlays.get(index);
-		Toast.makeText(mContext, item.getTitle() + " : " + item.getSnippet(),
-				Toast.LENGTH_LONG).show();
+		AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+		dialog.setTitle(item.getTitle());
+		dialog.setMessage(item.getSnippet());
+		dialog.show();
 		return true;
 	}
 
