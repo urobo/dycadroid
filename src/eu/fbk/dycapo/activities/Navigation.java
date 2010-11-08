@@ -231,8 +231,8 @@ public class Navigation extends MapActivity {
 			GeoPoint point;
 			OverlayItem overlayitem;
 			List<Overlay> mapoverlays = Navigation.this.mapView.getOverlays();
-			mapoverlays.remove(Navigation.this.items);
-			mapoverlays.remove(Navigation.this.me);
+			if(mapoverlays.contains(Navigation.this.items))mapoverlays.remove(Navigation.this.items);
+			if(mapoverlays.contains(Navigation.this.me))mapoverlays.remove(Navigation.this.me);
 
 			Navigation.this.me.clearOverlays();
 			Navigation.this.items.clearOverlays();
@@ -264,7 +264,7 @@ public class Navigation extends MapActivity {
 				else
 					items.addOverlay(overlayitem);
 			}
-			map.getOverlays().add(items);
+			if(items.size() != 0)map.getOverlays().add(items);
 			map.getOverlays().add(me);
 			Log.d(TAG, "sending PostInvalidate");
 			map.postInvalidate();
