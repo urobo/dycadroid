@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
+import eu.fbk.dycapo.util.GeoGuard;
 
 /**
  * @author riccardo
@@ -216,7 +217,7 @@ public class Location implements DycapoJSONObjects {
 	 *            the georss_point to set
 	 */
 	public void setGeorss_point(String georssPoint) {
-		georss_point = georssPoint;
+		georss_point = GeoGuard.validateGeoRSSPoint(georssPoint);
 	}
 
 	/**

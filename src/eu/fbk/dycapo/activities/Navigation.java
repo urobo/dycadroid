@@ -36,6 +36,7 @@ import eu.fbk.dycapo.persistency.DBPerson;
 import eu.fbk.dycapo.persistency.DBTrip;
 import eu.fbk.dycapo.services.broker.Broker;
 import eu.fbk.dycapo.util.Environment;
+import eu.fbk.dycapo.util.GeoGuard;
 import eu.fbk.dycapo.util.ParticipationUtils;
 
 /**
@@ -153,8 +154,8 @@ public class Navigation extends MapActivity {
 
 		switch (this.navRole) {
 		case Environment.DRIVER:
-			this.items = new DycapoItemizedOverlay(this.riderMarker);
-			this.me = new DycapoItemizedOverlay(this.driverMarker);
+			this.items = new DycapoItemizedOverlay(this.riderMarker, this);
+			this.me = new DycapoItemizedOverlay(this.driverMarker, this);
 			this.button1.setText("Participants");
 			this.button2.setText("Finish Trip");
 			try {
@@ -182,8 +183,8 @@ public class Navigation extends MapActivity {
 
 			break;
 		case Environment.RIDER:
-			this.items = new DycapoItemizedOverlay(this.driverMarker);
-			this.me = new DycapoItemizedOverlay(this.riderMarker);
+			this.items = new DycapoItemizedOverlay(this.driverMarker, this);
+			this.me = new DycapoItemizedOverlay(this.riderMarker, this);
 			this.button1.setText("Show Driver");
 			this.button2.setText("Start Participation");
 
@@ -243,22 +244,8 @@ public class Navigation extends MapActivity {
 				tmp.setPosition(LocationService.getPosition(tmp));
 
 				String geo_point = tmp.getPosition().getGeorss_point();
-				int coma = geo_point.indexOf(" ");
 
-				Log.d(TAG, "String latitude : " + geo_point.substring(0, coma));
-				double mLat = Double.parseDouble(geo_point.substring(0, coma)) + 0.000000;
-				Log.d(TAG,
-						"Stirng longitude : "
-								+ geo_point.substring(coma + 1,
-										geo_point.length()));
-				double mLong = Double.parseDouble(geo_point.substring(coma + 1,
-						geo_point.length())) + 0.000000;
-
-				Log.d(TAG, "latitude : " + String.valueOf(mLat));
-				Log.d(TAG, "longitude : " + String.valueOf(mLong));
-
-				point = new GeoPoint((int) (((double) mLat) * 1E6),
-						(int) (((double) mLong) * 1E6));
+				point = GeoGuard.parseGeoRSSPoint(geo_point);
 				Log.d(TAG,
 						"point Latitude : "
 								+ String.valueOf(((double) point

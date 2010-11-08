@@ -361,7 +361,7 @@ public class TripSettings extends Activity {
 		if (this.Origin instanceof Address) {
 			geoRssPoint = String.valueOf(Origin.getLatitude()) + " "
 					+ String.valueOf(Origin.getLongitude());
-			if (!geoRssPoint.equals(", "))
+			if (!geoRssPoint.equals(" "))
 				loc.setGeorss_point(geoRssPoint);
 		}
 		leaves.setYear(mYear);
@@ -496,10 +496,11 @@ public class TripSettings extends Activity {
 		String geoRssPoint = "";
 		Date leaves = new Date();
 		if (this.Origin instanceof Address) {
-			geoRssPoint = String.valueOf(Origin.getLatitude()) + ", "
+			geoRssPoint = String.valueOf(Origin.getLatitude()) + " "
 					+ String.valueOf(Origin.getLongitude());
-			if (!geoRssPoint.equals(", "))
-				loc.setGeorss_point(geoRssPoint);
+			if (!geoRssPoint.equals(" "))
+				Log.d(TAG, "geo_rss_point : " + geoRssPoint);
+			loc.setGeorss_point(geoRssPoint);
 		}
 		leaves.setYear(mYear);
 		leaves.setMonth(mMonth);
@@ -527,10 +528,11 @@ public class TripSettings extends Activity {
 		loc = new Location();
 
 		if (this.Destination instanceof Address) {
-			geoRssPoint = String.valueOf(Destination.getLatitude()) + ", "
+			geoRssPoint = String.valueOf(Destination.getLatitude()) + " "
 					+ String.valueOf(Destination.getLongitude());
-			if (!geoRssPoint.equals(", "))
-				loc.setGeorss_point(geoRssPoint);
+			if (!geoRssPoint.equals(" "))
+				Log.d(TAG, "geo_rss_point : " + geoRssPoint);
+			loc.setGeorss_point(geoRssPoint);
 		}
 
 		loc.setLeaves(leaves);
