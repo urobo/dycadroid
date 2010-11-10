@@ -38,11 +38,7 @@ public abstract class SearchFetcher {
 						.getJSONObject(Search.ORIGIN)));
 
 			if (jsonobj.has(Search.TRIPS)) {
-				// search.setTrips(TripFetcher.extractTrips(jsonobj.getJSONArray(Search.TRIPS)));
-				List<Trip> ltrip = new ArrayList<Trip>();
-				ltrip.add(TripFetcher.fetchTrip(jsonobj
-						.getJSONObject(Search.TRIPS)));
-				search.setTrips(ltrip);
+				search.setTrips(TripFetcher.extractTrips(jsonobj.getJSONArray(Search.TRIPS)));
 			}
 			if (jsonobj.has(DycapoObjectsFetcher.HREF))
 				search.setHref(jsonobj.getString(DycapoObjectsFetcher.HREF));
