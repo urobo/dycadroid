@@ -32,7 +32,10 @@ public abstract class TripFetcher {
 
 			Trip result = new Trip();
 			String message = "error TripFetcher.fetchTrip : not enough parameters are given to define a Trip: missing ";
-
+			
+			if (responseValue.has(Trip.ID))
+				result.setId(responseValue.getInt(Trip.ID));
+			
 			if (responseValue.has(DycapoObjectsFetcher.HREF))
 				result.setHref(responseValue
 						.getString(DycapoObjectsFetcher.HREF));

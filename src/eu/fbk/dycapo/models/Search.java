@@ -162,7 +162,7 @@ public class Search implements DycapoJSONObjects {
 
 		if (this.trips instanceof List<?>)
 			for (int i = 0; i < this.trips.size(); i++)
-				out.append("trip : " + this.trips.get(i).toString());
+				out.append("trip : " + this.trips.get(i).toVerboseString());
 		return out.toString();
 	}
 

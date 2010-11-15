@@ -22,6 +22,7 @@ import eu.fbk.dycapo.factories.json.DycapoJSONObjects;
 public class Trip implements DycapoJSONObjects {
 	public static final String TAG = "Trip";
 
+	public static final String ID = "id";
 	public static final String PUBLISHED = "published";
 	public static final String UPDATED = "updated";
 	public static final String EXPIRES = "expires";
@@ -35,6 +36,7 @@ public class Trip implements DycapoJSONObjects {
 
 	public static final String ACTIVE = "active";
 
+	protected Integer id; //if daniel puts it inside the trip
 	protected Boolean active; // must
 	protected Date published; // may
 	protected Date updated; // should
@@ -79,6 +81,20 @@ public class Trip implements DycapoJSONObjects {
 
 	public Trip() {
 
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	/**
@@ -295,30 +311,51 @@ public class Trip implements DycapoJSONObjects {
 	@Override
 	public String toString() {
 		StringBuilder out = new StringBuilder();
+		
+		if (this.id instanceof Integer)
+			out.append(ID + " : " + this.id.toString() + "\n");
+		
+		if (this.author instanceof eu.fbk.dycapo.models.Person)
+			out.append(AUTHOR + " : " + this.author.getUsername() + "\n");
 
-		if (this.active instanceof Boolean)
-			out.append(ACTIVE + " : " + this.active.booleanValue());
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		
+		if (this.published instanceof java.util.Date)
+			out.append(PUBLISHED + " : " + formatter.format(this.published) + "\n");
+		
+		if (this.expires instanceof java.util.Date) {
+			out.append(EXPIRES + " : " + formatter.format(this.expires) + "\n");
+			Log.i(Trip.EXPIRES, formatter.format(this.expires));
+		}
+
+		
+		
+		return out.toString();
+	}
+	
+	public String toVerboseString(){
+		StringBuilder out = new StringBuilder();
 
 		if (this.author instanceof eu.fbk.dycapo.models.Person)
-			out.append(AUTHOR + " : " + this.author.toString());
+			out.append(AUTHOR + " : " + this.author.toString()+ "\n");
 
 		if (this.origin instanceof eu.fbk.dycapo.models.Location)
-			out.append("origin : " + this.origin.toString());
+			out.append("origin : " + this.origin.toString()+ "\n");
 
 		if (this.destination instanceof eu.fbk.dycapo.models.Location)
-			out.append("destination : " + this.destination.toString());
+			out.append("destination : " + this.destination.toString()+ "\n");
 
 		if (this.mode instanceof eu.fbk.dycapo.models.Mode)
-			out.append(MODE + " : " + this.mode.toString());
+			out.append(MODE + " : " + this.mode.toString()+ "\n");
 
 		if (this.preferences instanceof eu.fbk.dycapo.models.Preferences)
-			out.append(PREFERENCES + " : " + this.preferences.toString());
+			out.append(PREFERENCES + " : " + this.preferences.toString()+ "\n");
 
 		if (this.waypoints instanceof ArrayList<?>) {
 			int size = this.waypoints.size();
 
 			for (int i = 0; i < size; i++)
-				out.append("waypoint : " + this.waypoints.toString());
+				out.append("waypoint : " + this.waypoints.toString()+ "\n");
 
 		}
 
@@ -326,15 +363,14 @@ public class Trip implements DycapoJSONObjects {
 
 		if (this.expires instanceof java.util.Date) {
 			out.append(EXPIRES + " : " + formatter.format(this.expires));
-			Log.i(Trip.EXPIRES, formatter.format(this.expires));
+			Log.i(Trip.EXPIRES, formatter.format(this.expires)+ "\n");
 		}
 
 		if (this.published instanceof java.util.Date)
-			out.append(PUBLISHED + " : " + formatter.format(this.published));
+			out.append(PUBLISHED + " : " + formatter.format(this.published)+ "\n");
 
 		if (this.updated instanceof java.util.Date)
-			out.append(UPDATED + " : " + formatter.format(this.updated));
+			out.append(UPDATED + " : " + formatter.format(this.updated)+ "\n");
 		return out.toString();
 	}
-
 }

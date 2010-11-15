@@ -3,16 +3,12 @@
  */
 package eu.fbk.dycapo.factories.json;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
 import eu.fbk.dycapo.exceptions.DycapoException;
 import eu.fbk.dycapo.models.Search;
-import eu.fbk.dycapo.models.Trip;
 
 /**
  * @author riccardo

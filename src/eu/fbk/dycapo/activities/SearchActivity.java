@@ -41,11 +41,13 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 	private Search search;
 	private int currentPosition;
 	private List<Trip> trips;
-	private String[] tripsMeta;
 	private ProgressDialog pd;
 	private static View ExpandTripLayout = null;
 	private Dialog d;
 
+	
+	
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -56,62 +58,17 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 
 		super.onCreate(savedInstanceState);
 		Bundle data = this.getIntent().getExtras();
-		final Search search = SearchBundle.fromBundle(data);
+		this.search = SearchBundle.fromBundle(data);
 		SearchActivity.this.pd = ProgressDialog.show(SearchActivity.this,
 				"Searching...", "Searching for a suitable Trip", true, false);
 		LayoutInflater inflater = (LayoutInflater) SearchActivity.this
 				.getSystemService(LAYOUT_INFLATER_SERVICE);
 		ExpandTripLayout = inflater.inflate(R.layout.expand_trip,
 				(ViewGroup) findViewById(R.id.expandTrip));
-
-		new Thread() {
-
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see java.lang.Thread#run()
-			 */
-			@Override
-			public void run() {
-
-				SearchActivity.this.search = SearchTrip.searchTrips(search);
-
-				searchResults.sendEmptyMessage(0);
-			}
-
-		}.start();
-
+		this.searchTrips.start();
 	}
 
-	private Handler searchResults = new Handler() {
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see android.os.Handler#handleMessage(android.os.Message)
-		 */
-		@Override
-		public void handleMessage(Message msg) {
-			switch (msg.what) {
-			case 0:
-				if ((SearchActivity.this.search.getTrips() instanceof List<?>)) {
-					SearchActivity.this.trips = SearchActivity.this.search
-							.getTrips();
-					int size = SearchActivity.this.trips.size();
-					SearchActivity.this.tripsMeta = new String[size];
-					for (int i = 0; i < size; i++) {
-						SearchActivity.this.tripsMeta[i] = SearchActivity.this.trips
-								.get(i).getHref();
-					}
-					SearchActivity.this.populateView();
-				}
-				pd.dismiss();
-
-				break;
-			}
-		}
-
-	};
+	
 
 	/*
 	 * (non-Javadoc)
@@ -124,28 +81,13 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 		super.onResume();
 		SearchActivity.this.pd = ProgressDialog.show(SearchActivity.this,
 				"Searching...", "Searching for a suitable Trip", true, false);
-		new Thread() {
-
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see java.lang.Thread#run()
-			 */
-			@Override
-			public void run() {
-
-				SearchActivity.this.search = SearchTrip.searchTrips(search);
-
-				searchResults.sendEmptyMessage(0);
-			}
-
-		}.start();
+		this.searchTrips.start();
 	}
 
 	private void populateView() {
 
-		setListAdapter(new ArrayAdapter<String>(this, R.layout.search,
-				tripsMeta));
+		setListAdapter(new ArrayAdapter<Trip>(this, R.layout.search,
+				this.trips));
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 
@@ -215,4 +157,45 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 		this.startActivity(i);
 
 	}
+	
+	Thread searchTrips = new Thread() {
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.lang.Thread#run()
+		 */
+		@Override
+		public void run() {
+
+			SearchActivity.this.search = SearchTrip.searchTrips(search);
+
+			searchResults.sendEmptyMessage(0);
+		}
+
+	};
+	
+	private Handler searchResults = new Handler() {
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see android.os.Handler#handleMessage(android.os.Message)
+		 */
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case 0:
+				if ((SearchActivity.this.search.getTrips() instanceof List<?>)) {
+					SearchActivity.this.trips = SearchActivity.this.search
+							.getTrips();
+					SearchActivity.this.populateView();
+				}
+				pd.dismiss();
+
+				break;
+			}
+		}
+
+	};
 }

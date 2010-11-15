@@ -34,8 +34,7 @@ public abstract class SearchTrip {
 			JSONObject retrieveSearch = DycapoServiceClient.callDycapo(
 					DycapoServiceClient.GET, st.getHref(), null,
 					usr.getUsername(), usr.getPassword());
-			st.setTrips(DycapoObjectsFetcher.buildSearch(retrieveSearch)
-					.getTrips());
+			st = DycapoObjectsFetcher.buildSearch(retrieveSearch);
 
 			return st;
 		} catch (DycapoException e) {
