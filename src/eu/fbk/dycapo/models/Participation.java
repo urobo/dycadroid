@@ -90,8 +90,8 @@ public class Participation implements DycapoJSONObjects {
 				result.put(AUTHOR, this.author.toJSONObject());
 			if (this.status instanceof String)
 				result.put(STATUS, this.status);
-//			if (this.role instanceof String)
-//				result.put(ROLE, this.role);
+			// if (this.role instanceof String)
+			// result.put(ROLE, this.role);
 
 		} catch (JSONException e) {
 			Log.e(TAG, e.getMessage());

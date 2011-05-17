@@ -28,6 +28,7 @@ import eu.fbk.dycapo.factories.bundles.ParticipationBundle;
 import eu.fbk.dycapo.maputils.DycapoItemizedOverlay;
 import eu.fbk.dycapo.maputils.DycapoOverlay;
 import eu.fbk.dycapo.maputils.LocationService;
+import eu.fbk.dycapo.models.Location;
 import eu.fbk.dycapo.models.Participation;
 import eu.fbk.dycapo.models.Person;
 import eu.fbk.dycapo.persistency.ActiveTrip;
@@ -231,8 +232,10 @@ public class Navigation extends MapActivity {
 			GeoPoint point;
 			OverlayItem overlayitem;
 			List<Overlay> mapoverlays = Navigation.this.mapView.getOverlays();
-			if(mapoverlays.contains(Navigation.this.items))mapoverlays.remove(Navigation.this.items);
-			if(mapoverlays.contains(Navigation.this.me))mapoverlays.remove(Navigation.this.me);
+			if (mapoverlays.contains(Navigation.this.items))
+				mapoverlays.remove(Navigation.this.items);
+			if (mapoverlays.contains(Navigation.this.me))
+				mapoverlays.remove(Navigation.this.me);
 
 			Navigation.this.me.clearOverlays();
 			Navigation.this.items.clearOverlays();
@@ -241,30 +244,35 @@ public class Navigation extends MapActivity {
 			for (int i = 0; i < list.size(); i++) {
 				Person tmp = list.get(i).getAuthor();
 				Log.d(TAG, tmp.getUsername());
-				tmp.setPosition(LocationService.getPosition(tmp));
+				if (LocationService.getPosition(tmp) instanceof Location) {
+					tmp.setPosition(LocationService.getPosition(tmp));
 
-				String geo_point = tmp.getPosition().getGeorss_point();
+					String geo_point = tmp.getPosition().getGeorss_point();
 
-				point = GeoGuard.parseGeoRSSPoint(geo_point);
-				Log.d(TAG,
-						"point Latitude : "
-								+ String.valueOf(((double) point
-										.getLatitudeE6()) / 1E6));
-				Log.d(TAG,
-						"point Longitude : "
-								+ String.valueOf(((double) point
-										.getLongitudeE6()) / 1E6));
+					point = GeoGuard.parseGeoRSSPoint(geo_point);
+					Log.d(TAG,
+							"point Latitude : "
+									+ String.valueOf(((double) point
+											.getLatitudeE6()) / 1E6));
+					Log.d(TAG,
+							"point Longitude : "
+									+ String.valueOf(((double) point
+											.getLongitudeE6()) / 1E6));
 
-				Log.d(TAG, list.get(i).getAuthor().getUsername());
-				overlayitem = new OverlayItem(point, list.get(i).getAuthor()
-						.getUsername(), list.get(i).getAuthor().getHref());
+					Log.d(TAG, list.get(i).getAuthor().getUsername());
+					overlayitem = new OverlayItem(point, list.get(i)
+							.getAuthor().getUsername(), list.get(i).getAuthor()
+							.getHref());
 
-				if (tmp.getUsername().equals(DBPerson.getUser().getUsername()))
-					me.addOverlay(overlayitem);
-				else
-					items.addOverlay(overlayitem);
+					if (tmp.getUsername().equals(
+							DBPerson.getUser().getUsername()))
+						me.addOverlay(overlayitem);
+					else
+						items.addOverlay(overlayitem);
+				}
 			}
-			if(items.size() != 0)map.getOverlays().add(items);
+			if (items.size() != 0)
+				map.getOverlays().add(items);
 			map.getOverlays().add(me);
 			Log.d(TAG, "sending PostInvalidate");
 			map.postInvalidate();

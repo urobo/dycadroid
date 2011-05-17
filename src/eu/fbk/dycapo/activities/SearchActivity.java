@@ -45,9 +45,6 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 	private static View ExpandTripLayout = null;
 	private Dialog d;
 
-	
-	
-	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -68,8 +65,6 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 		this.searchTrips.start();
 	}
 
-	
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -86,8 +81,7 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 
 	private void populateView() {
 
-		setListAdapter(new ArrayAdapter<Trip>(this, R.layout.search,
-				this.trips));
+		setListAdapter(new ArrayAdapter<Trip>(this, R.layout.search, this.trips));
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 
@@ -157,7 +151,7 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 		this.startActivity(i);
 
 	}
-	
+
 	Thread searchTrips = new Thread() {
 
 		/*
@@ -174,7 +168,7 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 		}
 
 	};
-	
+
 	private Handler searchResults = new Handler() {
 
 		/*
