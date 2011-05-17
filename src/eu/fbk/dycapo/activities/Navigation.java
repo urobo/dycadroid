@@ -273,7 +273,9 @@ public class Navigation extends MapActivity {
 			}
 			if (items.size() != 0)
 				map.getOverlays().add(items);
-			map.getOverlays().add(me);
+			if (me.size() != 0)
+				map.getOverlays().add(me);
+			
 			Log.d(TAG, "sending PostInvalidate");
 			map.postInvalidate();
 		}
